@@ -62,18 +62,20 @@ Es gibt keine automatisierten Tests für Foundry-Module dieser Art. Funktionalit
 - **Design:** Nutzer liefert Referenz/Beschreibung für das Sheet-Layout (steht noch aus).
 - **Versionierung:** lokales Git-Repo wurde initialisiert (`git init`, noch kein erster Commit).
 
-## Layout des Hero-Sheets (Stand 2026-08-10)
+## Layout des Hero-Sheets (Stand 2026-08-10, v2 "Almanach")
 
-Ein Heldenkarte + Talentkarte kombinierender "Heldenbogen" (kein Tab-Wechsel), orientiert an den physischen Aventuria-Karten (Referenzbild vom Nutzer: Held "Brutack Parinor", Set "Kelche der Macht"). Struktur (`templates/hero-sheet.hbs`):
+Die erste Version (v1) lehnte sich eng an die physischen Karten an (Icon-Badges, Pergament-Textur, Original-Icons/-Fonts von `aventuria`). Der Nutzer fand das Ergebnis "nicht schick" (siehe Screenshot-Feedback: die Ausrüstungs-Zeile mit 4 nativen Formularelementen nebeneinander war unübersichtlich). Daraufhin wurden drei Gestaltungsrichtungen als Artifact-Mockup vorgelegt (A "Kartennah", B "Almanach", C "Feldbuch") – **Nutzer hat sich für B entschieden.**
 
-1. Header: Portrait, Name, Profession, Stufe (Icon `level-N.webp`), Buttons "Probe würfeln"/"Schadenswurf" (rufen `actor.system.rollTest()`/`rollDamage()` aus dem AventuriaHero-Datenmodell auf).
-2. Eigenschaften-Reihe: Nahkampf/Fernkampf/Magie/Ausweichen als Icon-Badges + Lebenspunkte (aktuell/maximum) – Lebenspunkte stehen nicht auf der physischen Karte (dort per Rad getrackt), sind aber fürs digitale Sheet nötig.
-3. Grundausrüstung + Sekundäre Ausrüstung nebeneinander (Name, Ausdauerkosten, Angriffstyp, Schaden, Erschöpfen).
+v2 "Almanach"-Look: flache, ruhige Fläche statt Pergament-Textur, weiße Kachel-Panels mit dünnen Rahmen, ein einziger Akzentton (Petrol/Verdigris `#2f5d57`), Georgia-Serif für den Namen, Segoe UI für UI-Labels. **Verzichtet bewusst auf Bild-Icons** (kein `assets/icons/*.webp` mehr im Sheet) – Eigenschaften/Kategorien werden über Text-Label + große Zahl bzw. Punkt-Pips/Text-Chips dargestellt statt über Icons. Struktur (`templates/hero-sheet.hbs`):
+
+1. Header: Portrait, Name, Profession, Stufe als Badge-Pille (Select im Badge-Look), Buttons "Probe würfeln"/"Schadenswurf" (rufen `actor.system.rollTest()`/`rollDamage()` auf).
+2. Eigenschaften-Reihe: 5 Kacheln (Nahkampf/Fernkampf/Magie/Ausweichen/Lebenspunkte), Label + große Zahl, kein Icon.
+3. Grundausrüstung + Sekundäre Ausrüstung als Kachel-Paar: Name + Angriffstyp als Tag-Select, darunter Kosten/Schaden/Erschöpfen-Toggle (Checkbox+Label-Pattern, IDs mit `actor.id` präfixiert wegen möglicher mehrfach offener Sheets).
 4. Sonderfertigkeit (Name + Rich-Text-Editor für die Beschreibung).
-5. Talente (8 Werte) + Talentkarten-Bild + Tabelle "Erlaubte Aktionskarten" (klickbare Icon-Zellen zum Umschalten je Kategorie).
-6. Footer: Set, Set-Nummer (Heldenkarte), Talente-Set-Nummer.
+5. Talente (8 Werte als Kachel-Grid) + Talentkarten-Bild + Kategorien als Punkt-Pips (Nahkampf/Fernkampf/Rüstung/Zauber/Liturgie, je nach Gewichtsklasse) und Text-Chips (Sonstiges: Ausrüstung/Vorteil/Nachteil/Talent/Begleiter) – beide klickbar zum Umschalten.
+6. Footer: Set, Set-Nummer, Talente-Set-Nummer als reiner Text.
 
-Verwendet die bereits im `aventuria`-Modul vorhandenen Icons (`modules/aventuria/assets/icons/*.webp`) und Fonts (`Aventuria`, `Gentium Basic`, bereits global registriert von `aventuria`) direkt – keine Assets dupliziert. Einzige Ausnahme: für `disadvantage` gibt es kein passendes Icon im Basismodul, dafür Font-Awesome-Fallback (`fa-thumbs-down`). Gottheits-/Professions-Icon (Peraine-Symbol etc.) bewusst weggelassen für v1, später ergänzbar.
+Gottheits-/Professions-Icon (Peraine-Symbol etc.) weiterhin bewusst weggelassen.
 
 Datenmodell-Referenz (`AventuriaHero.defineSchema()` in `modules/aventuria/dist/index.js`, Subtype-Key `aventuria.hero`): `skillImage`, `lifePoints.{value,max}`, `profession`, `close`/`ranged`/`magic`/`dodge` (Number, teils `initial:null`), `level` (Choices 1/2/3 → "I"/"II"/"III"), `basicEquipment`/`secondEquipment.{name,damage,attackType,endurance,exhaust}`, `specialAbility.{name,description}` (description = HTMLField), `skills.{body,craft,knowledge,perception,persuade,stealth,survival,willpower}`, `categories` (SetField, Werte aus `CONFIG.Aventuria.cardCategories`), `edition`, `serialNumber`, `serialNumberSkill`.
 
@@ -86,4 +88,4 @@ Datenmodell-Referenz (`AventuriaHero.defineSchema()` in `modules/aventuria/dist/
 
 ## Status
 
-Erste Version des Hero-Sheets ist implementiert (`module.json`, `scripts/aventuria-helpers.mjs`, `scripts/sheets/hero-sheet.mjs`, `templates/hero-sheet.hbs`, `styles/aventuria-helpers.css`, `lang/de.json`). **Noch nicht in Foundry getestet** – das kann nur der Nutzer im Browser machen (Sheet aktivieren, Rechtsklick auf einen Hero-Actor > "Sheet konfigurieren" > "Aventuria Helfer: Heldenbogen" wählen). Nächste Schritte: Rückmeldung/Screenshots vom Nutzer einholen, danach Feinschliff (Styling, evtl. Bugfixes), danach Phase 3 (Macros).
+v2 "Almanach"-Version des Hero-Sheets ist implementiert und im laufenden Foundry mit einem echten Hero-Actor (Karmal Eternius) getestet worden – v1 lief funktional korrekt, wurde aber optisch überarbeitet. **Das neue CSS/Template (v2) ist noch nicht im Browser gegenprüft**, nur v1 wurde bereits live gesehen. Nächster Schritt: Nutzer testet v2, dann Feinschliff, danach Phase 3 (Macros).

@@ -1,239 +1,359 @@
 .aventuria-helpers.hero-sheet {
-  --av-parchment: url("../../aventuria/assets/layout/box-parchment.webp");
-  --av-red: #7a2626;
-  --av-gold: #8a6a1f;
-  --av-purple: #4f3572;
-  --av-green: #2e6b4f;
-  --av-ink: #2b2117;
-  font-family: "Gentium Basic", serif;
-  color: var(--av-ink);
+  --paper: #f4efe4;
+  --panel: #ffffff;
+  --ink: #231f1a;
+  --muted: #6b6459;
+  --line: #d8d1c1;
+  --accent: #2f5d57;
+  --accent-ink: #eef4f2;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: var(--ink);
 }
 
 .aventuria-helpers.hero-sheet .window-content {
-  background: var(--av-parchment);
-  background-size: cover;
+  background: var(--paper);
 }
 
 .aventuria-hero-sheet {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding: 0.5rem;
+  gap: 0.9rem;
+  padding: 0.5rem 0.25rem;
 }
 
 .aventuria-hero-sheet input,
 .aventuria-hero-sheet select {
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(43, 33, 23, 0.4);
-  border-radius: 3px;
-  color: var(--av-ink);
   font-family: inherit;
+  color: inherit;
 }
 
 .aventuria-hero-sheet input:disabled,
-.aventuria-hero-sheet select:disabled {
-  background: transparent;
-  border-color: transparent;
+.aventuria-hero-sheet select:disabled,
+.aventuria-hero-sheet button:disabled {
+  opacity: 0.6;
+  cursor: default;
 }
 
 /* ---------- Header ---------- */
 
-.aventuria-hero-sheet .sheet-header {
+.aventuria-hero-sheet .s-head {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  border-bottom: 2px solid var(--av-gold);
-  padding-bottom: 0.5rem;
+  gap: 0.9rem;
 }
 
-.aventuria-hero-sheet .portrait {
-  width: 84px;
-  height: 84px;
-  border: 2px solid var(--av-gold);
-  border-radius: 50%;
+.aventuria-hero-sheet .s-portrait {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
   object-fit: cover;
   cursor: pointer;
+  flex: none;
 }
 
-.aventuria-hero-sheet .header-fields {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.aventuria-hero-sheet .hero-name {
-  font-family: "Aventuria", serif;
-  font-size: 1.4rem;
-  padding: 0.15rem 0.4rem;
-}
-
-.aventuria-hero-sheet .subline {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.aventuria-hero-sheet .profession {
-  flex: 1;
-  font-style: italic;
-}
-
-.aventuria-hero-sheet .level-badge {
-  position: relative;
-  width: 36px;
-  height: 36px;
-}
-
-.aventuria-hero-sheet .level-badge img {
-  width: 100%;
-  height: 100%;
-}
-
-.aventuria-hero-sheet .level-badge select {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.aventuria-hero-sheet .roll-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.aventuria-hero-sheet .roll-buttons button {
-  font-family: inherit;
-  white-space: nowrap;
-}
-
-/* ---------- Attributes ---------- */
-
-.aventuria-hero-sheet .attributes-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.aventuria-hero-sheet .attribute,
-.aventuria-hero-sheet .life-points {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.2rem 0.5rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.5);
-  border: 2px solid var(--av-gold);
-}
-
-.aventuria-hero-sheet .attribute img,
-.aventuria-hero-sheet .life-points img {
-  width: 22px;
-  height: 22px;
-}
-
-.aventuria-hero-sheet .attribute.close { border-color: var(--av-red); }
-.aventuria-hero-sheet .attribute.ranged { border-color: var(--av-gold); }
-.aventuria-hero-sheet .attribute.magic { border-color: var(--av-purple); }
-.aventuria-hero-sheet .attribute.dodge { border-color: var(--av-green); }
-
-.aventuria-hero-sheet .attribute input {
-  width: 2.5rem;
-  text-align: center;
-}
-
-.aventuria-hero-sheet .life-points {
-  margin-left: auto;
-}
-
-.aventuria-hero-sheet .life-points input {
-  width: 2.5rem;
-  text-align: center;
-}
-
-/* ---------- Equipment ---------- */
-
-.aventuria-hero-sheet .equipment-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
-}
-
-.aventuria-hero-sheet .equipment-box {
-  border: 1px solid var(--av-gold);
-  border-radius: 4px;
-  padding: 0.35rem;
-  background: rgba(255, 255, 255, 0.35);
-}
-
-.aventuria-hero-sheet .equipment-name {
-  width: 100%;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-
-.aventuria-hero-sheet .equipment-row {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.aventuria-hero-sheet .equipment-row .damage {
+.aventuria-hero-sheet .s-id {
   flex: 1;
   min-width: 0;
 }
 
-.aventuria-hero-sheet .cost,
-.aventuria-hero-sheet .exhaust {
+.aventuria-hero-sheet .s-name {
+  display: block;
+  width: 100%;
+  font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  background: none;
+  border: none;
+  color: var(--ink);
+  padding: 0;
+  margin-bottom: 0.2rem;
+}
+
+.aventuria-hero-sheet .s-subline {
   display: flex;
   align-items: center;
+  gap: 0.6rem;
+}
+
+.aventuria-hero-sheet .s-profession {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  color: var(--muted);
+  padding: 0;
+  font-size: 0.88rem;
+}
+
+.aventuria-hero-sheet .s-level {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 0.15rem 0.3rem 0.15rem 0.5rem;
+  border-radius: 3px;
+}
+
+.aventuria-hero-sheet .s-level select {
+  appearance: none;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  padding: 0 0.1rem;
+}
+
+.aventuria-hero-sheet .s-level select option {
+  color: var(--ink);
+}
+
+.aventuria-hero-sheet .s-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex: none;
+}
+
+.aventuria-hero-sheet .s-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.aventuria-hero-sheet .s-btn.ghost {
+  background: none;
+  color: var(--accent);
+}
+
+/* ---------- Attributes ---------- */
+
+.aventuria-hero-sheet .s-attrs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) 1.3fr;
+  gap: 0.6rem;
+}
+
+.aventuria-hero-sheet .attr {
+  display: flex;
+  flex-direction: column;
   gap: 0.15rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.5rem 0.65rem;
 }
 
-.aventuria-hero-sheet .cost img,
-.aventuria-hero-sheet .exhaust img {
-  width: 18px;
-  height: 18px;
+.aventuria-hero-sheet .attr .k {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-weight: 600;
 }
 
-.aventuria-hero-sheet .cost input {
-  width: 2.2rem;
+.aventuria-hero-sheet .attr input {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 0;
+  width: 100%;
+  font-variant-numeric: tabular-nums;
+}
+
+.aventuria-hero-sheet .attr.life .lp {
+  display: flex;
+  align-items: baseline;
+  gap: 0.2rem;
+}
+
+.aventuria-hero-sheet .attr.life .lp input {
+  width: 2.4rem;
+  font-size: 1.25rem;
+}
+
+.aventuria-hero-sheet .attr.life .lp i {
+  font-style: normal;
+  color: var(--muted);
+}
+
+/* ---------- Equipment ---------- */
+
+.aventuria-hero-sheet .s-equipment {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.aventuria-hero-sheet .equip {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.55rem 0.65rem;
+}
+
+.aventuria-hero-sheet .equip-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.aventuria-hero-sheet .equip-name {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  border-bottom: 1px dotted var(--line);
+  font-weight: 700;
+  padding: 0 0 0.15rem;
+}
+
+.aventuria-hero-sheet .tag-select {
+  appearance: none;
+  flex: none;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  background: none;
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  padding: 0.1rem 0.35rem;
+}
+
+.aventuria-hero-sheet .equip-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.aventuria-hero-sheet .equip-meta input {
+  background: none;
+  border: none;
+  border-bottom: 1px dotted var(--line);
+  color: var(--ink);
+  font-weight: 600;
+  padding: 0 0 0.05rem;
+}
+
+.aventuria-hero-sheet .equip-meta input[type="number"] {
+  width: 2rem;
   text-align: center;
+}
+
+.aventuria-hero-sheet .equip-meta input[type="text"] {
+  width: 4.5rem;
+}
+
+.aventuria-hero-sheet .toggle-wrap {
+  position: relative;
+  margin-left: auto;
+}
+
+.aventuria-hero-sheet .toggle-wrap input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.aventuria-hero-sheet .toggle {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.aventuria-hero-sheet .toggle-wrap input:checked + .toggle {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+.aventuria-hero-sheet .toggle-wrap input:disabled + .toggle {
+  cursor: default;
 }
 
 /* ---------- Special ability ---------- */
 
-.aventuria-hero-sheet .special-ability {
-  border: 1px solid var(--av-gold);
-  border-radius: 4px;
-  padding: 0.35rem;
-  background: rgba(255, 255, 255, 0.35);
+.aventuria-hero-sheet .s-ability {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.55rem 0.65rem;
+}
+
+.aventuria-hero-sheet .ability-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
 }
 
 .aventuria-hero-sheet .ability-name {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
   font-weight: 700;
-  font-family: "Aventuria", serif;
-  margin-bottom: 0.25rem;
+  padding: 0;
 }
 
-.aventuria-hero-sheet .special-ability .editor {
-  min-height: 4rem;
+.aventuria-hero-sheet .tag {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  flex: none;
+  white-space: nowrap;
+}
+
+.aventuria-hero-sheet .s-ability .editor {
+  min-height: 3.5rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
 }
 
 /* ---------- Skills + skill card ---------- */
 
-.aventuria-hero-sheet .skills-and-card {
+.aventuria-hero-sheet .s-lower {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 0.9rem;
 }
 
-.aventuria-hero-sheet .skills-grid {
+.aventuria-hero-sheet .skills {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.35rem;
+  gap: 0.4rem 0.7rem;
   align-content: start;
 }
 
@@ -241,107 +361,128 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.35rem;
-  border-bottom: 1px dotted rgba(43, 33, 23, 0.4);
-}
-
-.aventuria-hero-sheet .skill-label {
+  gap: 0.4rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0.35rem 0.55rem;
   font-size: 0.85rem;
 }
 
 .aventuria-hero-sheet .skill input {
-  width: 2.5rem;
-  text-align: center;
+  width: 2rem;
+  background: none;
+  border: none;
+  font-weight: 700;
+  text-align: right;
+  padding: 0;
+  font-variant-numeric: tabular-nums;
 }
 
 .aventuria-hero-sheet .skill-card {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.5rem;
 }
 
-.aventuria-hero-sheet .skill-portrait {
+.aventuria-hero-sheet .skill-card-img {
   width: 100%;
-  height: 120px;
+  height: 96px;
   object-fit: cover;
-  border: 2px solid var(--av-gold);
-  border-radius: 4px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
   cursor: pointer;
 }
 
-.aventuria-hero-sheet .category-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.8rem;
+.aventuria-hero-sheet .cat-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
 }
 
-.aventuria-hero-sheet .category-table caption {
-  text-align: left;
-  font-weight: 700;
-  margin-bottom: 0.2rem;
+.aventuria-hero-sheet .cat-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.82rem;
 }
 
-.aventuria-hero-sheet .category-table th {
-  text-align: left;
-  font-weight: 600;
-  padding: 0.1rem 0.3rem;
-  white-space: nowrap;
+.aventuria-hero-sheet .cat-row .k {
+  width: 5.2rem;
+  flex: none;
+  color: var(--muted);
 }
 
-.aventuria-hero-sheet .category-table td {
-  padding: 0.1rem 0.15rem;
+.aventuria-hero-sheet .pips {
+  display: flex;
+  gap: 0.3rem;
 }
 
-.aventuria-hero-sheet .category-cell {
-  width: 24px;
-  height: 24px;
+.aventuria-hero-sheet .pip {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  background: none;
   padding: 0;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  background: transparent;
-  opacity: 0.3;
   cursor: pointer;
 }
 
-.aventuria-hero-sheet .category-cell.active {
-  opacity: 1;
-  border-color: var(--av-gold);
-  background: rgba(255, 255, 255, 0.5);
+.aventuria-hero-sheet .pip.on {
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
-.aventuria-hero-sheet .category-cell:disabled {
-  cursor: default;
+.aventuria-hero-sheet .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
 }
 
-.aventuria-hero-sheet .category-cell img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.aventuria-hero-sheet .tagbtn {
+  font: inherit;
+  font-size: 0.7rem;
+  padding: 0.08rem 0.4rem;
+  border-radius: 3px;
+  border: 1px solid var(--line);
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.aventuria-hero-sheet .tagbtn.on {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* ---------- Footer ---------- */
 
-.aventuria-hero-sheet .sheet-footer {
+.aventuria-hero-sheet .s-foot {
   display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  border-top: 2px solid var(--av-gold);
-  padding-top: 0.4rem;
-  font-size: 0.85rem;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--muted);
 }
 
-.aventuria-hero-sheet .sheet-footer label {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
+.aventuria-hero-sheet .s-foot input {
+  width: 3.2rem;
+  background: none;
+  border: none;
+  border-bottom: 1px dotted var(--line);
+  color: var(--ink);
+  font-weight: 600;
+  padding: 0 0 0.05rem;
 }
 
-.aventuria-hero-sheet .sheet-footer img {
-  width: 16px;
-  height: 16px;
-}
-
-.aventuria-hero-sheet .sheet-footer input {
-  width: 3.5rem;
-  text-align: center;
+@media (max-width: 620px) {
+  .aventuria-hero-sheet .s-attrs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .aventuria-hero-sheet .s-equipment,
+  .aventuria-hero-sheet .s-lower {
+    grid-template-columns: 1fr;
+  }
 }
