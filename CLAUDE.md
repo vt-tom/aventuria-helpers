@@ -62,6 +62,28 @@ Es gibt keine automatisierten Tests für Foundry-Module dieser Art. Funktionalit
 - **Design:** Nutzer liefert Referenz/Beschreibung für das Sheet-Layout (steht noch aus).
 - **Versionierung:** lokales Git-Repo wurde initialisiert (`git init`, noch kein erster Commit).
 
+## Layout des Hero-Sheets (Stand 2026-08-10)
+
+Ein Heldenkarte + Talentkarte kombinierender "Heldenbogen" (kein Tab-Wechsel), orientiert an den physischen Aventuria-Karten (Referenzbild vom Nutzer: Held "Brutack Parinor", Set "Kelche der Macht"). Struktur (`templates/hero-sheet.hbs`):
+
+1. Header: Portrait, Name, Profession, Stufe (Icon `level-N.webp`), Buttons "Probe würfeln"/"Schadenswurf" (rufen `actor.system.rollTest()`/`rollDamage()` aus dem AventuriaHero-Datenmodell auf).
+2. Eigenschaften-Reihe: Nahkampf/Fernkampf/Magie/Ausweichen als Icon-Badges + Lebenspunkte (aktuell/maximum) – Lebenspunkte stehen nicht auf der physischen Karte (dort per Rad getrackt), sind aber fürs digitale Sheet nötig.
+3. Grundausrüstung + Sekundäre Ausrüstung nebeneinander (Name, Ausdauerkosten, Angriffstyp, Schaden, Erschöpfen).
+4. Sonderfertigkeit (Name + Rich-Text-Editor für die Beschreibung).
+5. Talente (8 Werte) + Talentkarten-Bild + Tabelle "Erlaubte Aktionskarten" (klickbare Icon-Zellen zum Umschalten je Kategorie).
+6. Footer: Set, Set-Nummer (Heldenkarte), Talente-Set-Nummer.
+
+Verwendet die bereits im `aventuria`-Modul vorhandenen Icons (`modules/aventuria/assets/icons/*.webp`) und Fonts (`Aventuria`, `Gentium Basic`, bereits global registriert von `aventuria`) direkt – keine Assets dupliziert. Einzige Ausnahme: für `disadvantage` gibt es kein passendes Icon im Basismodul, dafür Font-Awesome-Fallback (`fa-thumbs-down`). Gottheits-/Professions-Icon (Peraine-Symbol etc.) bewusst weggelassen für v1, später ergänzbar.
+
+Datenmodell-Referenz (`AventuriaHero.defineSchema()` in `modules/aventuria/dist/index.js`, Subtype-Key `aventuria.hero`): `skillImage`, `lifePoints.{value,max}`, `profession`, `close`/`ranged`/`magic`/`dodge` (Number, teils `initial:null`), `level` (Choices 1/2/3 → "I"/"II"/"III"), `basicEquipment`/`secondEquipment.{name,damage,attackType,endurance,exhaust}`, `specialAbility.{name,description}` (description = HTMLField), `skills.{body,craft,knowledge,perception,persuade,stealth,survival,willpower}`, `categories` (SetField, Werte aus `CONFIG.Aventuria.cardCategories`), `edition`, `serialNumber`, `serialNumberSkill`.
+
+## Registrierte Sheet-API (bestätigt aus `uts.mjs`/`dist/index.js` dieser konkreten Foundry-v14-Installation)
+
+- Basis-Klasse: `foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheet)`.
+- Registrierung: `foundry.documents.collections.Actors.registerSheet(scope, SheetClass, { types, makeDefault, label })` (nicht mehr `DocumentSheetConfig.registerSheet`).
+- Rich-Text: `foundry.applications.ux.TextEditor.implementation.enrichHTML(...)`.
+- Bild-Editieren: `data-action="editImage" data-edit="<path>"` auf einem `<img>` – funktioniert generisch für jeden Dateipfad (nicht nur `img`), genutzt für `system.skillImage`.
+
 ## Status
 
-Projekt befindet sich in der Planungsphase. Noch kein `module.json`, kein Code. Nächster Schritt: Nutzer beschreibt gewünschtes Sheet-Layout, danach Umsetzung des Hero-Sheets (Phase 2 aus dem Projektablauf).
+Erste Version des Hero-Sheets ist implementiert (`module.json`, `scripts/aventuria-helpers.mjs`, `scripts/sheets/hero-sheet.mjs`, `templates/hero-sheet.hbs`, `styles/aventuria-helpers.css`, `lang/de.json`). **Noch nicht in Foundry getestet** – das kann nur der Nutzer im Browser machen (Sheet aktivieren, Rechtsklick auf einen Hero-Actor > "Sheet konfigurieren" > "Aventuria Helfer: Heldenbogen" wählen). Nächste Schritte: Rückmeldung/Screenshots vom Nutzer einholen, danach Feinschliff (Styling, evtl. Bugfixes), danach Phase 3 (Macros).

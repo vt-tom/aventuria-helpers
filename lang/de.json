@@ -1,0 +1,19 @@
+{
+  "AVENTURIA_HELPERS": {
+    "HeroSheet": {
+      "Label": "Aventuria Helfer: Heldenbogen",
+      "Categories": {
+        "Close": "Nahkampf",
+        "Ranged": "Fernkampf",
+        "Armor": "Rüstung",
+        "Spell": "Zauber",
+        "Chant": "Liturgie",
+        "Other": "Sonstiges"
+      },
+      "SkillCard": "Talentkarte",
+      "SkillImageTooltip": "Bild der Talentkarte ändern",
+      "SerialNumber": "Set Nr.",
+      "SerialNumberSkill": "Talente Set Nr."
+    }
+  }
+}

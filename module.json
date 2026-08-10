@@ -1,0 +1,37 @@
+{
+  "id": "aventuria-helpers",
+  "title": "Aventuria Helfer",
+  "description": "Zusätzliche Macros und ein alternatives Heldenbogen-Sheet für das Aventuria-Modul.",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "14"
+  },
+  "authors": [],
+  "esmodules": [
+    "scripts/aventuria-helpers.mjs"
+  ],
+  "styles": [
+    "styles/aventuria-helpers.css"
+  ],
+  "languages": [
+    {
+      "lang": "de",
+      "path": "lang/de.json",
+      "name": "Deutsch (German)"
+    }
+  ],
+  "relationships": {
+    "requires": [
+      {
+        "id": "aventuria",
+        "type": "module"
+      }
+    ],
+    "systems": [
+      {
+        "id": "universal-tabletop-system",
+        "type": "system"
+      }
+    ]
+  }
+}
