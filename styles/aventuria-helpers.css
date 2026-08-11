@@ -208,13 +208,13 @@
 }
 
 .aventuria-hero-sheet .tag .icon-badge {
-  width: 17px;
+  width: 30px;
   height: 17px;
 }
 
 .aventuria-hero-sheet .tag .icon-badge img {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
 }
 
 .aventuria-hero-sheet .tag select {
@@ -463,7 +463,7 @@
 
 .aventuria-hero-sheet .attr .badge {
   box-sizing: border-box !important;
-  width: 26px !important;
+  width: 30px !important;
   height: 26px !important;
   padding: 0 !important;
   border: none !important;

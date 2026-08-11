@@ -152,6 +152,16 @@ Nutzer-Feedback: Bei "Erschöpfen" und "Verwendet" war nicht erkennbar, ob der a
 
 Beide teilen sich bewusst denselben Status-Begriff "Bereit" für den Grundzustand – ein wiedererkennbares Vokabular über beide Toggles hinweg. Der **Tooltip** beschreibt stattdessen die Klick-**Aktion** ("Als erschöpft markieren" / "Bereit machen" / "Als nicht verwendet markieren") – neue Keys `MarkExhausted`, `MakeReady`, `MarkUnused`. `.toggle` hat jetzt `min-width:5.6rem`, damit der Button beim Textwechsel nicht sichtbar in der Breite springt.
 
+## Lebenspunkte bleiben im Spielmodus editierbar (Stand 2026-08-11)
+
+Nutzerwunsch: Lebenspunkte (aktuell/maximum) sollen sich auch bei aktivem Spielmodus ändern lassen – im Gegensatz zu echten Charakterwerten ändern sich LeP ständig während des Spiels (Schaden, Heilung), sind also eher Spielzustand.
+
+**Wichtiger Unterschied zu den bisherigen `always-active`-Elementen:** Lock-Switch, Verwendet, Erschöpfen etc. sind alle **Flag-basiert** und laufen über eigene Action-Handler (`actor.setFlag()`/gezieltes `actor.update()`), die komplett unabhängig vom Formular-Submit-Mechanismus sind. Die Lebenspunkte sind aber ein **echtes Schema-Feld** (`system.lifePoints.value`/`.max`), das bisher über natives `name="system...."` + Foundry's `submitOnChange`-Formularbindung lief. Nur das `disabled`-Attribut per `_onRender()` zu entfernen hätte hier vermutlich **nicht gereicht** – der Verdacht: Foundry's eigener `_onChangeForm`-Handler prüft beim Absenden vermutlich zusätzlich `this.isEditable` (und nicht nur das `disabled`-Attribut im DOM), und `this.isEditable` ist während des Spielmodus bewusst `false` (siehe Getter-Override). Ein wieder aktiviertes, aber weiterhin `name`-gebundenes Feld hätte also im UI editierbar ausgesehen, aber beim Ändern trotzdem nichts gespeichert.
+
+**Lösung:** Die beiden Felder haben jetzt **kein `name`-Attribut mehr** (raus aus der normalen Formular-Bindung) und tragen stattdessen `class="always-active lp-input" data-field="value|max"`. In `_onRender()` wird ein eigener `change`-Listener angehängt, der direkt `actor.update({"system.lifePoints.<field>": ...})` aufruft – komplett am Formular-Submit-Pfad vorbei, dadurch unabhängig davon, ob/wie tief Foundry intern `isEditable` beim Absenden erneut prüft. Foundries eigene Dokumenten-Berechtigungsprüfung (echte Besitzrechte, nicht das eigene Lock-Flag) greift bei `actor.update()` ganz normal weiter.
+
+**Nebenbei-Fix (Berechtigungs-Korrektheit):** `_onRender()`s Re-Enable-Schleife für `.always-active` prüft jetzt zuerst `super.isEditable` (echte Foundry-Berechtigung, ohne das eigene Lock-Flag) und bricht sonst ab. Vorher wurden Lock-Switch/Proben-Buttons/Toggles auch für Nutzer *ohne* jegliche Bearbeitungsrechte am Actor (z.B. reiner Beobachter-Zugriff) blind wieder aktiviert – die serverseitige Foundry-Berechtigungsprüfung hätte die eigentlichen `update()`/`setFlag()`-Aufrufe zwar ohnehin abgelehnt, aber Chat-Nachrichten (Proben-Würfe) wären z.B. trotzdem ohne echte Berechtigung erstellbar gewesen. Jetzt bleibt für solche Nutzer alles korrekt gesperrt.
+
 ## Deutlichere Hover-Effekte (Stand 2026-08-11)
 
 Nutzer-Feedback: Der Hover-Effekt der Eigenschaften-Proben-Medaillons war zu unauffällig, und der reine Textfarb-Wechsel bei den Talent-Proben wirkte nicht überzeugend. Fixes:

@@ -87,9 +87,9 @@
           <label class="attr life" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.lifePoints.label'}}">
             <span class="badge"><img src="{{icons.life}}" alt=""></span>
             <span class="lp">
-              <input type="number" name="system.lifePoints.value" value="{{system.lifePoints.value}}" {{#unless editable}}disabled{{/unless}}>
+              <input type="number" value="{{system.lifePoints.value}}" class="always-active lp-input" data-field="value" {{#unless editable}}disabled{{/unless}}>
               <i>/</i>
-              <input type="number" name="system.lifePoints.max" value="{{system.lifePoints.max}}" {{#unless editable}}disabled{{/unless}}>
+              <input type="number" value="{{system.lifePoints.max}}" class="always-active lp-input" data-field="max" {{#unless editable}}disabled{{/unless}}>
             </span>
           </label>
         </div>

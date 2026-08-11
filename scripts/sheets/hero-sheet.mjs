@@ -179,14 +179,28 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
    * When the sheet isn't editable (e.g. "Spielmodus" active), the framework disables
    * every form-associated element it finds, including plain action buttons. Re-enable
    * the ones that must stay usable regardless of the lock (switching the lock itself
-   * back off, changing tabs, rolling, marking the special ability used) - anything
-   * carrying the shared `always-active` class.
+   * back off, changing tabs, rolling, marking the special ability used, tracking life
+   * points) - anything carrying the shared `always-active` class. Gated on the real
+   * Foundry permission (`super.isEditable`, ignoring our own lock flag) so a user with
+   * no actual edit rights on this actor doesn't get these re-enabled too.
    * @inheritdoc
    */
   async _onRender(context, options) {
     await super._onRender(context, options);
+    if (!super.isEditable) return;
     for (const el of this.element.querySelectorAll(".always-active")) {
       el.disabled = false;
+    }
+    // Life points intentionally have no `name` attribute (see hero-sheet.hbs): the
+    // form's own submitOnChange handling re-checks `this.isEditable` - which is
+    // false during Spielmodus by design - so a normal bound field would never
+    // actually submit even once re-enabled above. Updating the actor directly here
+    // sidesteps that and always works as long as the user has real edit rights.
+    for (const el of this.element.querySelectorAll(".lp-input")) {
+      el.addEventListener("change", (event) => {
+        const field = event.currentTarget.dataset.field;
+        this.actor.update({ [`system.lifePoints.${field}`]: Number(event.currentTarget.value) || 0 });
+      });
     }
   }
 
