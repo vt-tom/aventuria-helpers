@@ -39,8 +39,31 @@
 .aventuria-hero-sheet input:disabled,
 .aventuria-hero-sheet select:disabled,
 .aventuria-hero-sheet button:disabled {
-  opacity: 0.6;
   cursor: default;
+}
+
+/* Editable fields get a visible affordance (tint + underline, brighter on
+   hover/focus); locked/read-only fields stay plain, full-opacity text so the
+   sheet reads cleanly in "Spielmodus". Uses currentColor so it works both on
+   white panels and on the solid-fill attribute chips. */
+.aventuria-hero-sheet input:not([type="checkbox"]):not(:disabled),
+.aventuria-hero-sheet select:not(:disabled) {
+  border-radius: 3px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+  background: color-mix(in srgb, currentColor 7%, transparent);
+}
+
+.aventuria-hero-sheet input:not([type="checkbox"]):not(:disabled):hover,
+.aventuria-hero-sheet select:not(:disabled):hover {
+  border-bottom-color: color-mix(in srgb, currentColor 65%, transparent);
+}
+
+.aventuria-hero-sheet input:not([type="checkbox"]):not(:disabled):focus,
+.aventuria-hero-sheet select:not(:disabled):focus {
+  outline: none;
+  border-bottom-color: currentColor;
+  background: color-mix(in srgb, currentColor 14%, transparent);
 }
 
 .aventuria-hero-sheet img {
@@ -460,8 +483,6 @@
   flex: 1;
   min-width: 0;
   font-weight: 700;
-  border-bottom: 1px dotted var(--line);
-  padding-bottom: 0.1rem;
 }
 
 .aventuria-hero-sheet .equip-meta {
@@ -475,7 +496,6 @@
 
 .aventuria-hero-sheet .equip-meta input,
 .aventuria-hero-sheet .freetext {
-  border-bottom: 1px dotted var(--line);
   font-weight: 600;
   padding: 0 0 0.05rem;
   color: var(--ink);
@@ -645,7 +665,6 @@
 }
 
 .aventuria-hero-sheet .s-foot input {
-  border-bottom: 1px dotted var(--line);
   color: var(--ink);
   font-weight: 600;
   padding: 0 0 0.05rem;
