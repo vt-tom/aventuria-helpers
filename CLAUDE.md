@@ -186,3 +186,15 @@ Nutzer-Feedback: Die Beschreibung der Sonderfertigkeit (Rich-Text) ließ sich ni
 **Merke für künftige Rich-Text-Felder in diesem Modul:** immer `<prose-mirror>`, nie `<div data-edit>`.
 
 Nächster Schritt: Nutzer testet, ob sich die Sonderfertigkeits-Beschreibung jetzt bearbeiten und speichern lässt (inkl. Verhalten im Spielmodus – sollte dort gesperrt bleiben), danach Phase 3 (Macros).
+
+## Drei weitere Tabs: Bilder, Items, Effekte (Stand 2026-08-11)
+
+Nutzerwunsch: zusätzlich zu Held/Talente drei weitere Tabs im selben Icon-Rail – Bilder (Charakterbild + Token-Bild nebeneinander), Items und Effekte (letztere "wie im Original-Sheet"). Rail hat jetzt 5 Tab-Icons + Lock-Switch unten. `tab`/`tabs`-Mechanismus (Grid-Stack, gleiche Höhe für alle Tabs, kein Fenster-Resize beim Wechseln) ist bereits generisch für beliebig viele Tabs ausgelegt – keine Änderung an der Kernlogik nötig, nur mehr `<section class="tab">`-Blöcke + mehr Rail-Buttons mit `data-tab="..."`.
+
+- **Bilder-Tab:** Zwei große Bild-Slots nebeneinander (`actor.img` / `actor.prototypeToken.texture.src`), beide über den bereits bewährten generischen `data-action="editImage" data-edit="<pfad>"`-Mechanismus änderbar (funktioniert für jeden Dokumentpfad, nicht nur `img` – hier zusätzlich für den verschachtelten Token-Textur-Pfad genutzt).
+- **Items- und Effekte-Tab:** "Wie im Original-Sheet" wörtlich umgesetzt – Logik 1:1 aus `UTSActorSheet` (`uts.mjs`) übernommen, da das die vom Nutzer gemeinte Referenz ist: `viewDoc`/`createDoc`/`deleteDoc`/`toggleEffect`-Actions, `_getEmbeddedDocument()`-Helper (Dokument über `[data-document-class]`+`data-item-id`/`data-effect-id`+`data-parent-id` am `<li>` auflösen), `_getItems()` (Items nach Subtyp gruppiert, leere "base"-Gruppe ausgeblendet), `prepareActiveEffectCategories()` (Temporär/Passiv/Inaktiv-Gruppierung). Templates dafür (`items.hbs`/`effects.hbs` von UTS) als Referenz genutzt, aber komplett neu in der eigenen Optik (`.doc-list`/`.doc-group`/`.doc-row`) statt UTS' generischem Grau-Look gebaut.
+- Wiederverwendete System-Locale-Keys von `universal-tabletop-system` (da als `relationships.systems`-Abhängigkeit sowieso geladen, genau wie zuvor schon `AVENTURIA.*`-Keys aus `aventuria` wiederverwendet wurden): `UTS.Sheets.Tabs.items`/`.effects` (Rail-Tooltips), `UTS.Effect.Temporary`/`.Passive`/`.Inactive`/`.Toggle`/`.Label`. Plus Foundry-Core-Keys `DOCUMENT.Create`/`.New`/`.Update`/`.Delete`/`.ActiveEffect` (immer verfügbar, systemunabhängig).
+- `.doc-rows` hat `max-height:220px; overflow-y:auto` – bewusste Ausnahme vom "kein Scrollen"-Prinzip der Haupt-Tabs, da Items-/Effekte-Listen theoretisch unbegrenzt lang werden können und sonst das ganze Fenster (über den Grid-Stack-Höhenausgleich) unkontrolliert mitwachsen würde.
+- `getDocumentClass` als globale Funktion bestätigt genutzt (exakt wie in `uts.mjs`), ebenso `game.documentTypes.Item` (pro Welt/System skaliert, keine Sorge vor "Item-Typ-Flut" durch fremde Module).
+
+Nächster Schritt: Nutzer testet alle drei neuen Tabs live (Bild-Wechsel für Charakter- und Token-Bild, Item anlegen/öffnen/löschen, Effekt anlegen/umschalten/löschen), danach Phase 3 (Macros).

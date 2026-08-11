@@ -19,6 +19,33 @@
       aria-selected="{{tabs.talente.active}}"
       data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.skills.label'}}"
     ><img src="{{icons.talent}}" alt="{{localize 'AVENTURIA.Models.Hero.FIELDS.skills.label'}}"></button>
+    <button
+      type="button"
+      class="railbtn always-active {{#if tabs.images.active}}active{{/if}}"
+      data-action="switchTab"
+      data-tab="images"
+      role="tab"
+      aria-selected="{{tabs.images.active}}"
+      data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.ImagesTab'}}"
+    ><i class="fa-solid fa-images"></i></button>
+    <button
+      type="button"
+      class="railbtn always-active {{#if tabs.items.active}}active{{/if}}"
+      data-action="switchTab"
+      data-tab="items"
+      role="tab"
+      aria-selected="{{tabs.items.active}}"
+      data-tooltip="{{localize 'UTS.Sheets.Tabs.items'}}"
+    ><i class="fa-solid fa-box-open"></i></button>
+    <button
+      type="button"
+      class="railbtn always-active {{#if tabs.effects.active}}active{{/if}}"
+      data-action="switchTab"
+      data-tab="effects"
+      role="tab"
+      aria-selected="{{tabs.effects.active}}"
+      data-tooltip="{{localize 'UTS.Sheets.Tabs.effects'}}"
+    ><i class="fa-solid fa-bolt"></i></button>
 
     <button
       type="button"
@@ -232,6 +259,113 @@
             </tr>
           </tbody>
         </table>
+      </section>
+
+      <!-- ============================ BILDER ============================ -->
+      <section class="tab {{#if tabs.images.active}}active{{/if}}" id="tab-images">
+        <div class="image-gallery">
+          <figure class="image-slot">
+            <img
+              src="{{actor.img}}"
+              alt="{{localize 'AVENTURIA_HELPERS.HeroSheet.CharacterArt'}}"
+              {{#if editable}}data-action="editImage" data-edit="img"{{/if}}
+            >
+            <figcaption>{{localize "AVENTURIA_HELPERS.HeroSheet.CharacterArt"}}</figcaption>
+          </figure>
+          <figure class="image-slot">
+            <img
+              src="{{actor.prototypeToken.texture.src}}"
+              alt="{{localize 'AVENTURIA_HELPERS.HeroSheet.TokenArt'}}"
+              {{#if editable}}data-action="editImage" data-edit="prototypeToken.texture.src"{{/if}}
+            >
+            <figcaption>{{localize "AVENTURIA_HELPERS.HeroSheet.TokenArt"}}</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============================ ITEMS ============================ -->
+      <section class="tab {{#if tabs.items.active}}active{{/if}}" id="tab-items">
+        <div class="doc-list">
+          {{#each itemTypes as |group type|}}
+            <div class="doc-group">
+              <div class="doc-group-head">
+                <span>{{group.label}}</span>
+                {{#if ../editable}}
+                  <button
+                    type="button"
+                    class="doc-add"
+                    data-action="createDoc"
+                    data-document-class="Item"
+                    data-type="{{type}}"
+                    data-tooltip="{{localize 'DOCUMENT.New' type=group.label}}"
+                  ><i class="fa-solid fa-plus"></i></button>
+                {{/if}}
+              </div>
+              <ul class="doc-rows">
+                {{#each group.items}}
+                  <li class="doc-row" data-item-id="{{this._id}}" data-document-class="Item">
+                    <img src="{{this.img}}" alt="{{this.name}}">
+                    <span class="doc-name">{{this.name}}</span>
+                    <span class="doc-controls">
+                      <button type="button" data-action="viewDoc" data-tooltip="{{localize 'DOCUMENT.Update' type=this.name}}"><i class="fa-solid fa-pen"></i></button>
+                      {{#if ../../editable}}
+                        <button type="button" data-action="deleteDoc" data-tooltip="{{localize 'DOCUMENT.Delete' type=this.name}}"><i class="fa-solid fa-trash"></i></button>
+                      {{/if}}
+                    </span>
+                  </li>
+                {{else}}
+                  <li class="doc-empty">{{localize "AVENTURIA_HELPERS.HeroSheet.NoItems"}}</li>
+                {{/each}}
+              </ul>
+            </div>
+          {{/each}}
+        </div>
+      </section>
+
+      <!-- ============================ EFFEKTE ============================ -->
+      <section class="tab {{#if tabs.effects.active}}active{{/if}}" id="tab-effects">
+        <div class="doc-list">
+          {{#each effects as |section sid|}}
+            <div class="doc-group">
+              <div class="doc-group-head">
+                <span>{{localize section.label}}</span>
+                {{#if ../editable}}
+                  <button
+                    type="button"
+                    class="doc-add"
+                    data-action="createDoc"
+                    data-document-class="ActiveEffect"
+                    {{#if (eq section.type "inactive")}}data-disabled="true"{{/if}}
+                    {{#if (eq section.type "temporary")}}data-duration.rounds="1"{{/if}}
+                    data-origin="{{../actor.uuid}}"
+                    data-img="icons/svg/aura.svg"
+                    data-tooltip="{{localize 'DOCUMENT.New' type=(localize 'UTS.Effect.Label')}}"
+                  ><i class="fa-solid fa-plus"></i></button>
+                {{/if}}
+              </div>
+              <ul class="doc-rows">
+                {{#each section.effects}}
+                  <li class="doc-row" data-effect-id="{{this.id}}" data-parent-id="{{this.parent.id}}" data-document-class="ActiveEffect">
+                    <img src="{{this.img}}" alt="{{this.name}}">
+                    <span class="doc-name">{{this.name}}</span>
+                    <span class="doc-duration">{{this.duration.label}}</span>
+                    <span class="doc-controls">
+                      {{#if ../../editable}}
+                        <button type="button" data-action="toggleEffect" data-tooltip="{{localize 'UTS.Effect.Toggle'}}"><i class="fa-solid {{#if this.disabled}}fa-check{{else}}fa-xmark{{/if}}"></i></button>
+                      {{/if}}
+                      <button type="button" data-action="viewDoc" data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'DOCUMENT.ActiveEffect')}}"><i class="fa-solid fa-pen"></i></button>
+                      {{#if ../../editable}}
+                        <button type="button" data-action="deleteDoc" data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'DOCUMENT.ActiveEffect')}}"><i class="fa-solid fa-trash"></i></button>
+                      {{/if}}
+                    </span>
+                  </li>
+                {{else}}
+                  <li class="doc-empty">{{localize "AVENTURIA_HELPERS.HeroSheet.NoEffects"}}</li>
+                {{/each}}
+              </ul>
+            </div>
+          {{/each}}
+        </div>
       </section>
 
     </div>

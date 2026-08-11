@@ -102,6 +102,16 @@
   display: block;
 }
 
+.aventuria-hero-sheet .railbtn i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+
 .aventuria-hero-sheet .railbtn.active {
   opacity: 1;
   background: var(--panel);
@@ -815,6 +825,166 @@
 .aventuria-hero-sheet .s-foot input[type="number"] {
   width: 3rem;
   text-align: center;
+}
+
+/* ---------- Bilder tab ---------- */
+
+.aventuria-hero-sheet .image-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  height: 100%;
+}
+
+.aventuria-hero-sheet .image-slot {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.6rem;
+}
+
+.aventuria-hero-sheet .image-slot img {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+  background: var(--paper);
+}
+
+.aventuria-hero-sheet .image-slot img[data-action="editImage"] {
+  cursor: pointer;
+}
+
+.aventuria-hero-sheet .image-slot figcaption {
+  text-align: center;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* ---------- Items / Effekte tabs ---------- */
+
+.aventuria-hero-sheet .doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.aventuria-hero-sheet .doc-group {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.5rem 0.6rem;
+}
+
+.aventuria-hero-sheet .doc-group-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.aventuria-hero-sheet .doc-add {
+  margin-left: auto;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 0.7rem;
+}
+
+.aventuria-hero-sheet .doc-add:hover,
+.aventuria-hero-sheet .doc-add:focus-visible {
+  border-color: var(--gold);
+  color: var(--gold);
+  outline: none;
+}
+
+.aventuria-hero-sheet .doc-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.aventuria-hero-sheet .doc-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.35rem;
+  border-radius: 5px;
+  font-size: 0.82rem;
+}
+
+.aventuria-hero-sheet .doc-row:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.aventuria-hero-sheet .doc-row img {
+  width: 22px;
+  height: 22px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex: none;
+}
+
+.aventuria-hero-sheet .doc-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.aventuria-hero-sheet .doc-duration {
+  flex: none;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.aventuria-hero-sheet .doc-controls {
+  display: flex;
+  gap: 0.3rem;
+  flex: none;
+}
+
+.aventuria-hero-sheet .doc-controls button {
+  border: none;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.15rem;
+  font-size: 0.78rem;
+}
+
+.aventuria-hero-sheet .doc-controls button:hover,
+.aventuria-hero-sheet .doc-controls button:focus-visible {
+  color: var(--gold);
+  outline: none;
+}
+
+.aventuria-hero-sheet .doc-empty {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-style: italic;
+  padding: 0.2rem 0.35rem;
 }
 
 /* ============================================================ */

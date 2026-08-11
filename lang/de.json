@@ -22,7 +22,12 @@
       "Ready": "Bereit",
       "Exhausted": "Erschöpft",
       "MarkExhausted": "Als erschöpft markieren",
-      "MakeReady": "Bereit machen"
+      "MakeReady": "Bereit machen",
+      "ImagesTab": "Bilder",
+      "CharacterArt": "Charakterbild",
+      "TokenArt": "Token-Bild",
+      "NoItems": "Keine Items",
+      "NoEffects": "Keine Effekte"
     },
     "Attributes": {
       "Close": "Nahkampf",

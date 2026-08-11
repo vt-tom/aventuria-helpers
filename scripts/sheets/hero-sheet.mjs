@@ -40,6 +40,28 @@ const OTHER_CATEGORIES = ["equipment", "advantage", "disadvantage", "talent", "c
 const ATTACK_TYPE_ICONS = { close: "close-combat.webp", ranged: "ranged-combat.webp", magic: "magic.webp" };
 
 /**
+ * Groups an actor's Active Effects into temporary/passive/inactive buckets, same
+ * split UTSActorSheet uses for its own effects tab.
+ * @param {Iterable<ActiveEffect>} effects
+ */
+function prepareActiveEffectCategories(effects) {
+  const categories = {
+    temporary: { type: "temporary", label: game.i18n.localize("UTS.Effect.Temporary"), effects: [] },
+    passive: { type: "passive", label: game.i18n.localize("UTS.Effect.Passive"), effects: [] },
+    inactive: { type: "inactive", label: game.i18n.localize("UTS.Effect.Inactive"), effects: [] },
+  };
+  for (const e of effects) {
+    if (!e.active) categories.inactive.effects.push(e);
+    else if (e.isTemporary) categories.temporary.effects.push(e);
+    else categories.passive.effects.push(e);
+  }
+  for (const c of Object.values(categories)) {
+    c.effects.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+  }
+  return categories;
+}
+
+/**
  * Alternative actor sheet for the Aventuria `hero` actor subtype: a two-tab "Held"/
  * "Talente" sheet with a side icon rail, styled in the physical card's colors
  * (solid jewel-tone fills for contrast) and using the original Aventuria icon set.
@@ -66,6 +88,10 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
       switchTab: AventuriaHelpersHeroSheet.#switchTab,
       toggleLock: AventuriaHelpersHeroSheet.#toggleLock,
       toggleAbilityUsed: AventuriaHelpersHeroSheet.#toggleAbilityUsed,
+      viewDoc: AventuriaHelpersHeroSheet.#viewDoc,
+      createDoc: AventuriaHelpersHeroSheet.#createDoc,
+      deleteDoc: AventuriaHelpersHeroSheet.#deleteDoc,
+      toggleEffect: AventuriaHelpersHeroSheet.#toggleEffect,
     },
     form: { submitOnChange: true },
   };
@@ -124,7 +150,12 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
       tabs: {
         held: { active: this.tab === "held" },
         talente: { active: this.tab === "talente" },
+        images: { active: this.tab === "images" },
+        items: { active: this.tab === "items" },
+        effects: { active: this.tab === "effects" },
       },
+      itemTypes: this.#getItems(),
+      effects: prepareActiveEffectCategories(this.actor.allApplicableEffects()),
       icons: {
         close: ICONS + "close-combat.webp",
         ranged: ICONS + "ranged-combat.webp",
@@ -169,6 +200,40 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
   #attackTypeIcon(attackType) {
     const file = ATTACK_TYPE_ICONS[attackType];
     return file ? ICONS + file : null;
+  }
+
+  /**
+   * Groups the actor's embedded Items by subtype, same shape UTSActorSheet's own
+   * items tab uses.
+   * @returns {object}
+   */
+  #getItems() {
+    const types = Object.fromEntries(
+      game.documentTypes.Item.map((t) => [t, { label: game.i18n.localize(CONFIG.Item.typeLabels[t]), items: [] }]),
+    );
+    for (const item of this.actor.items) {
+      types[item.type].items.push(item);
+    }
+    if (types.base?.items.length === 0) delete types.base;
+    return types;
+  }
+
+  /**
+   * Fetches the embedded Item or ActiveEffect represented by a `[data-document-class]`
+   * row, for the shared viewDoc/deleteDoc/toggleEffect actions.
+   * @param {HTMLElement} target
+   * @returns {Item|ActiveEffect}
+   */
+  #getEmbeddedDocument(target) {
+    const docRow = target.closest("[data-document-class]");
+    if (docRow.dataset.documentClass === "Item") {
+      return this.actor.items.get(docRow.dataset.itemId);
+    } else if (docRow.dataset.documentClass === "ActiveEffect") {
+      const parent =
+        docRow.dataset.parentId === this.actor.id ? this.actor : this.actor.items.get(docRow.dataset.parentId);
+      return parent.effects.get(docRow.dataset.effectId);
+    }
+    console.warn("Aventuria Helfer | Could not find document class for", docRow);
   }
 
   /**
@@ -307,5 +372,56 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
   static async #toggleAbilityUsed() {
     const used = this.actor.getFlag("aventuria-helpers", "specialAbilityUsed");
     await this.actor.setFlag("aventuria-helpers", "specialAbilityUsed", !used);
+  }
+
+  /**
+   * Opens an embedded Item's or ActiveEffect's own sheet.
+   * @this AventuriaHelpersHeroSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #viewDoc(event, target) {
+    this.#getEmbeddedDocument(target)?.sheet.render(true);
+  }
+
+  /**
+   * Deletes an embedded Item or ActiveEffect.
+   * @this AventuriaHelpersHeroSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #deleteDoc(event, target) {
+    if (!this.isEditable) return;
+    await this.#getEmbeddedDocument(target)?.delete();
+  }
+
+  /**
+   * Creates a new embedded Item or ActiveEffect using the initial data encoded in
+   * the triggering button's dataset (same convention as UTSActorSheet).
+   * @this AventuriaHelpersHeroSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #createDoc(event, target) {
+    if (!this.isEditable) return;
+    const docCls = getDocumentClass(target.dataset.documentClass);
+    const docData = { name: docCls.defaultName({ type: target.dataset.type, parent: this.actor }) };
+    for (const [dataKey, value] of Object.entries(target.dataset)) {
+      if (["action", "documentClass"].includes(dataKey)) continue;
+      foundry.utils.setProperty(docData, dataKey, value);
+    }
+    await docCls.create(docData, { parent: this.actor });
+  }
+
+  /**
+   * Toggles an ActiveEffect's disabled state.
+   * @this AventuriaHelpersHeroSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #toggleEffect(event, target) {
+    if (!this.isEditable) return;
+    const effect = this.#getEmbeddedDocument(target);
+    await effect?.update({ disabled: !effect.disabled });
   }
 }
