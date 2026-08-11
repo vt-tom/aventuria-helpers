@@ -13,7 +13,9 @@
       "SkillCard": "Talentkarte",
       "SkillImageTooltip": "Bild der Talentkarte ändern",
       "SerialNumber": "Set Nr.",
-      "SerialNumberSkill": "Talente Set Nr."
+      "SerialNumberSkill": "Talente Set Nr.",
+      "Lock": "Spielmodus (Sheet sperren)",
+      "Unlock": "Spielmodus beenden (Sheet entsperren)"
     }
   }
 }

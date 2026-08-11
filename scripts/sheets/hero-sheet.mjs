@@ -58,6 +58,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
       rollDamage: AventuriaHelpersHeroSheet.#rollDamage,
       toggleCategory: AventuriaHelpersHeroSheet.#toggleCategory,
       switchTab: AventuriaHelpersHeroSheet.#switchTab,
+      toggleLock: AventuriaHelpersHeroSheet.#toggleLock,
     },
     form: { submitOnChange: true },
   };
@@ -68,6 +69,31 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
       template: "modules/aventuria-helpers/templates/hero-sheet.hbs",
     },
   };
+
+  /* -------------------------------------------------- */
+
+  /**
+   * Whether this hero's data can be edited from this sheet. Combines Foundry's own
+   * permission check with the module's own "Spielmodus"/lock flag, which lets an
+   * owner freeze the sheet against accidental changes during play without affecting
+   * their actual document permissions.
+   * @inheritdoc
+   */
+  get isEditable() {
+    return super.isEditable && !this.actor.getFlag("aventuria-helpers", "locked");
+  }
+
+  /** @inheritdoc */
+  _getHeaderControls() {
+    const controls = super._getHeaderControls();
+    const locked = !!this.actor.getFlag("aventuria-helpers", "locked");
+    controls.unshift({
+      icon: locked ? "fa-solid fa-lock" : "fa-solid fa-lock-open",
+      label: locked ? "AVENTURIA_HELPERS.HeroSheet.Unlock" : "AVENTURIA_HELPERS.HeroSheet.Lock",
+      action: "toggleLock",
+    });
+    return controls;
+  }
 
   /* -------------------------------------------------- */
 
@@ -181,5 +207,15 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
   static async #switchTab(event, target) {
     this.tab = target.dataset.tab;
     await this.render();
+  }
+
+  /**
+   * Toggles the "Spielmodus" lock, which makes the sheet read-only without touching
+   * the actor's actual ownership/permissions.
+   * @this AventuriaHelpersHeroSheet
+   */
+  static async #toggleLock() {
+    const locked = this.actor.getFlag("aventuria-helpers", "locked");
+    await this.actor.setFlag("aventuria-helpers", "locked", !locked);
   }
 }

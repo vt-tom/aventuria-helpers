@@ -147,6 +147,7 @@
   letter-spacing: inherit;
   color: inherit;
   appearance: none;
+  text-align:center;
 }
 
 .aventuria-hero-sheet .tag select option {
