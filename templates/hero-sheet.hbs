@@ -19,6 +19,14 @@
       aria-selected="{{tabs.talente.active}}"
       data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.skills.label'}}"
     ><img src="{{icons.talent}}" alt="{{localize 'AVENTURIA.Models.Hero.FIELDS.skills.label'}}"></button>
+
+    <button
+      type="button"
+      class="lock-switch {{#if locked}}on{{/if}}"
+      data-action="toggleLock"
+      aria-pressed="{{locked}}"
+      data-tooltip="{{#if locked}}{{localize 'AVENTURIA_HELPERS.HeroSheet.Unlock'}}{{else}}{{localize 'AVENTURIA_HELPERS.HeroSheet.Lock'}}{{/if}}"
+    ><span class="knob"></span></button>
   </nav>
 
   <div class="sheet-main">

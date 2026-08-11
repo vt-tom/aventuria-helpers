@@ -72,6 +72,11 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
 
   /* -------------------------------------------------- */
 
+  /** Whether the "Spielmodus" lock is currently on for this actor. */
+  get locked() {
+    return !!this.actor.getFlag("aventuria-helpers", "locked");
+  }
+
   /**
    * Whether this hero's data can be edited from this sheet. Combines Foundry's own
    * permission check with the module's own "Spielmodus"/lock flag, which lets an
@@ -80,19 +85,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
    * @inheritdoc
    */
   get isEditable() {
-    return super.isEditable && !this.actor.getFlag("aventuria-helpers", "locked");
-  }
-
-  /** @inheritdoc */
-  _getHeaderControls() {
-    const controls = super._getHeaderControls();
-    const locked = !!this.actor.getFlag("aventuria-helpers", "locked");
-    controls.unshift({
-      icon: locked ? "fa-solid fa-lock" : "fa-solid fa-lock-open",
-      label: locked ? "AVENTURIA_HELPERS.HeroSheet.Unlock" : "AVENTURIA_HELPERS.HeroSheet.Lock",
-      action: "toggleLock",
-    });
-    return controls;
+    return super.isEditable && !this.locked;
   }
 
   /* -------------------------------------------------- */
@@ -107,6 +100,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
       system,
       editable: this.isEditable,
       owner: this.actor.isOwner,
+      locked: this.locked,
       config: CONFIG.Aventuria,
       levelChoices: { 1: "I", 2: "II", 3: "III" },
       tabs: {
