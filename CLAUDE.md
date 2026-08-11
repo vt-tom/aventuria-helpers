@@ -93,4 +93,11 @@ Datenmodell-Referenz (`AventuriaHero.defineSchema()` in `modules/aventuria/dist/
 
 ## Status
 
-v4 "Icon-Tabs"-Version des Hero-Sheets ist implementiert, **aber noch nicht in Foundry getestet** (v1 und v3/"Kartenpaar" wurden live mit einem echten Hero-Actor, Karmal Eternius, geprüft; v4 basiert auf einer Reihe von Artifact-Mockups, die vom Nutzer final freigegeben wurden, aber noch nicht live gegengeprüft). Nächster Schritt: Nutzer testet v4 live (insbesondere: Tab-Wechsel über die Icon-Leiste, gleichbleibende Fenstergröße, Lesbarkeit der Farbflächen, alle Original-Icon-Pfade korrekt aufgelöst), dann Feinschliff, danach Phase 3 (Macros).
+v4 "Icon-Tabs"-Version wurde live in Foundry getestet (Karmal Eternius, beide Tabs per Screenshot geprüft). Grundlayout funktioniert, Icons/Farben kommen an. Erste Live-Test-Runde ergab 5 Detail-Korrekturen (umgesetzt):
+
+- Footer-Textfeld für `edition` war fix auf 3.2rem (wie die Zahlenfelder) und schnitt lange Set-Namen ab → eigene, breitere Breite für `input[type="text"]` im Footer.
+- Beide Tabs brauchten internes Scrollen → Ursache war die feste Fenster-Default-Höhe (640px) kombiniert mit `.tab-stack{overflow-y:auto}`. Scrollbarkeit entfernt (`.tab-stack` ohne `flex`/`overflow`, `.sheet-main` ohne `overflow:hidden`), Fenster-Default auf `height:800` erhöht (`scripts/sheets/hero-sheet.mjs`) – Inhalt bestimmt jetzt natürlich die Höhe, kein erzwungener innerer Scrollbereich mehr.
+- "Probe würfeln"/"Schadenswurf" standen nebeneinander → jetzt `.s-actions{flex-direction:column}`, untereinander.
+- Lebenspunkte- und Eigenschaften-Werte (Nahkampf/Fernkampf/Magie/Ausweichen) waren linksbündig in ihren Zahlenfeldern → `text-align:center` ergänzt.
+
+Nächster Schritt: Nutzer testet diese Korrekturen live, danach ggf. weiterer Feinschliff, danach Phase 3 (Macros).

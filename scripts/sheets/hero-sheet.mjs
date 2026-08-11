@@ -51,7 +51,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
   /** @inheritdoc */
   static DEFAULT_OPTIONS = {
     classes: ["aventuria-helpers", "hero-sheet"],
-    position: { width: 640, height: 640 },
+    position: { width: 660, height: 800 },
     window: { resizable: true },
     actions: {
       rollTest: AventuriaHelpersHeroSheet.#rollTest,
@@ -66,7 +66,6 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
   static PARTS = {
     sheet: {
       template: "modules/aventuria-helpers/templates/hero-sheet.hbs",
-      scrollable: [".tab-stack"],
     },
   };
 
