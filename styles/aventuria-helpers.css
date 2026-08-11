@@ -648,6 +648,29 @@
   font-variant-numeric: tabular-nums;
 }
 
+.aventuria-hero-sheet .skill-roll {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: color 120ms ease;
+}
+
+.aventuria-hero-sheet .skill-roll:hover,
+.aventuria-hero-sheet .skill-roll:focus-visible {
+  color: var(--gold);
+  outline: none;
+  text-decoration: underline;
+}
+
+.aventuria-hero-sheet .skill-roll:active {
+  transform: scale(0.97);
+}
+
 /* ---------- Categories table with real icons ---------- */
 
 .aventuria-hero-sheet table.cats {

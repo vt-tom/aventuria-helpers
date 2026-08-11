@@ -8,21 +8,21 @@ const ATTRIBUTES = {
   dodge: { icon: "dodge.webp", label: "AVENTURIA_HELPERS.Attributes.Dodge" },
 };
 
-/**
- * Rolls an Aventuria attribute Probe (1d20 vs. the attribute's value, roll-under):
- * prompts for a situational modifier, then posts a chat card with the result and
- * whether the Probe was passed. Positive modifiers are subtracted from the roll
- * (easier), negative modifiers are added (harder).
- * @param {Actor} actor
- * @param {"close"|"ranged"|"magic"|"dodge"} key
- */
-export async function rollAttribute(actor, key) {
-  const def = ATTRIBUTES[key];
-  const target = actor.system[key];
-  if (!def || target == null) return;
+/** Aventuria has no per-skill artwork, so every skill Probe reuses the talent-card icon. */
+const SKILL_ICON = "talent.webp";
 
-  const label = game.i18n.localize(def.label);
-  const icon = ICONS + def.icon;
+/**
+ * Prompts for a situational modifier, rolls 1d20 against it, and posts a chat card
+ * with the result and whether the Probe was passed (roll-under: total <= target).
+ * Positive modifiers are subtracted from the roll (easier), negative modifiers are
+ * added (harder).
+ * @param {Actor} actor
+ * @param {string} label     Localized name of the thing being tested.
+ * @param {string} icon      Icon path shown in the dialog and chat card.
+ * @param {number} target    The value the roll is tested against.
+ */
+async function rollProbe(actor, label, icon, target) {
+  if (target == null) return;
 
   const result = await foundry.applications.api.Dialog.input({
     window: {
@@ -78,4 +78,28 @@ export async function rollAttribute(actor, key) {
     sound: CONFIG.sounds.dice,
     content,
   });
+}
+
+/**
+ * Rolls a Probe for one of the four attribute chips (Nahkampf/Fernkampf/Magie/Ausweichen).
+ * @param {Actor} actor
+ * @param {"close"|"ranged"|"magic"|"dodge"} key
+ */
+export async function rollAttribute(actor, key) {
+  const def = ATTRIBUTES[key];
+  if (!def) return;
+  await rollProbe(actor, game.i18n.localize(def.label), ICONS + def.icon, actor.system[key]);
+}
+
+/**
+ * Rolls a Probe for one of the eight Talente.
+ * @param {Actor} actor
+ * @param {"body"|"craft"|"knowledge"|"perception"|"persuade"|"stealth"|"survival"|"willpower"} key
+ */
+export async function rollSkill(actor, key) {
+  if (!(key in actor.system.skills)) return;
+  // DataModel field labels are already localized in place via LOCALIZATION_PREFIXES,
+  // same as how aventuria's own rollTest() uses them.
+  const label = actor.system.schema.getField(["skills", key]).label;
+  await rollProbe(actor, label, ICONS + SKILL_ICON, actor.system.skills[key]);
 }

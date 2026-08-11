@@ -164,7 +164,7 @@
         <div class="skills">
           {{#each system.skills as |value key|}}
             <label class="skill">
-              <span>{{localize (concat "AVENTURIA.Models.Hero.FIELDS.skills." key ".label")}}</span>
+              <button type="button" class="skill-roll" data-action="rollSkill" data-skill="{{key}}" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}">{{localize (concat "AVENTURIA.Models.Hero.FIELDS.skills." key ".label")}}</button>
               <input type="number" name="system.skills.{{key}}" value="{{value}}" {{#unless editable}}disabled{{/unless}}>
             </label>
           {{/each}}

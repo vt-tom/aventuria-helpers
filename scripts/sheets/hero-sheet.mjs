@@ -1,4 +1,4 @@
-import { rollAttribute } from "../attribute-roll.mjs";
+import { rollAttribute, rollSkill } from "../probe-roll.mjs";
 
 const { api, sheets } = foundry.applications;
 
@@ -59,6 +59,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
       rollTest: AventuriaHelpersHeroSheet.#rollTest,
       rollDamage: AventuriaHelpersHeroSheet.#rollDamage,
       rollAttribute: AventuriaHelpersHeroSheet.#rollAttribute,
+      rollSkill: AventuriaHelpersHeroSheet.#rollSkill,
       toggleCategory: AventuriaHelpersHeroSheet.#toggleCategory,
       switchTab: AventuriaHelpersHeroSheet.#switchTab,
       toggleLock: AventuriaHelpersHeroSheet.#toggleLock,
@@ -169,7 +170,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
    */
   async _onRender(context, options) {
     await super._onRender(context, options);
-    for (const el of this.element.querySelectorAll(".lock-switch, .railbtn, .s-btn, .roll-badge")) {
+    for (const el of this.element.querySelectorAll(".lock-switch, .railbtn, .s-btn, .roll-badge, .skill-roll")) {
       el.disabled = false;
     }
   }
@@ -202,6 +203,16 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
    */
   static async #rollAttribute(event, target) {
     await rollAttribute(this.actor, target.dataset.attribute);
+  }
+
+  /**
+   * Rolls a Probe for one of the eight Talente.
+   * @this AventuriaHelpersHeroSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #rollSkill(event, target) {
+    await rollSkill(this.actor, target.dataset.skill);
   }
 
   /**
