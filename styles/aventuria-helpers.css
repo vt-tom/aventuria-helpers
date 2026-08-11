@@ -114,31 +114,38 @@
 .aventuria-hero-sheet .lock-switch {
   appearance: none;
   display: block;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   margin-top: auto;
   flex: none;
-  width: 36px;
-  height: 20px;
-  min-width: 36px;
-  max-width: 36px;
-  padding: 0;
-  border: none;
+  width: 36px !important;
+  height: 20px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
+  min-height: 20px !important;
+  max-height: 20px !important;
+  padding: 0 !important;
+  border: none !important;
   border-radius: 999px;
   background: var(--line);
   cursor: pointer;
   position: relative;
+  line-height: normal;
   transition: background 150ms ease;
 }
 
+/* Vertically centered via top:50%/translateY rather than a fixed "top" so it
+   stays centered even if something outside this stylesheet nudges the
+   track's height. */
 .aventuria-hero-sheet .lock-switch .knob {
   position: absolute;
-  top: 2px;
+  top: 50%;
   left: 2px;
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transform: translateY(-50%);
   transition: transform 150ms ease;
 }
 
@@ -147,7 +154,7 @@
 }
 
 .aventuria-hero-sheet .lock-switch.on .knob {
-  transform: translateX(16px);
+  transform: translateY(-50%) translateX(16px);
 }
 
 @media (prefers-reduced-motion: reduce) {
