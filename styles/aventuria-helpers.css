@@ -112,11 +112,16 @@
 /* "Spielmodus" switch, pinned to the bottom of the rail */
 
 .aventuria-hero-sheet .lock-switch {
+  appearance: none;
+  display: block;
+  box-sizing: border-box;
   margin-top: auto;
   flex: none;
   width: 36px;
   height: 20px;
-  padding: 2px;
+  min-width: 36px;
+  max-width: 36px;
+  padding: 0;
   border: none;
   border-radius: 999px;
   background: var(--line);
@@ -126,7 +131,9 @@
 }
 
 .aventuria-hero-sheet .lock-switch .knob {
-  display: block;
+  position: absolute;
+  top: 2px;
+  left: 2px;
   width: 16px;
   height: 16px;
   border-radius: 50%;

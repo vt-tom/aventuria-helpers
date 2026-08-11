@@ -157,6 +157,20 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
     return file ? ICONS + file : null;
   }
 
+  /**
+   * When the sheet isn't editable (e.g. "Spielmodus" active), the framework disables
+   * every form-associated element it finds, including plain action buttons. Re-enable
+   * the ones that must stay usable regardless of the lock (switching the lock itself
+   * back off, changing tabs, rolling).
+   * @inheritdoc
+   */
+  async _onRender(context, options) {
+    await super._onRender(context, options);
+    for (const el of this.element.querySelectorAll(".lock-switch, .railbtn, .s-btn")) {
+      el.disabled = false;
+    }
+  }
+
   /* -------------------------------------------------- */
   /*   Event handlers                                   */
   /* -------------------------------------------------- */
