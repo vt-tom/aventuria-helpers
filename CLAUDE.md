@@ -191,7 +191,7 @@ Nächster Schritt: Nutzer testet, ob sich die Sonderfertigkeits-Beschreibung jet
 
 Nutzerwunsch: zusätzlich zu Held/Talente drei weitere Tabs im selben Icon-Rail – Bilder (Charakterbild + Token-Bild nebeneinander), Items und Effekte (letztere "wie im Original-Sheet"). Rail hat jetzt 5 Tab-Icons + Lock-Switch unten. `tab`/`tabs`-Mechanismus (Grid-Stack, gleiche Höhe für alle Tabs, kein Fenster-Resize beim Wechseln) ist bereits generisch für beliebig viele Tabs ausgelegt – keine Änderung an der Kernlogik nötig, nur mehr `<section class="tab">`-Blöcke + mehr Rail-Buttons mit `data-tab="..."`.
 
-- **Bilder-Tab:** Zwei große Bild-Slots nebeneinander (`actor.img` / `actor.prototypeToken.texture.src`), beide über den bereits bewährten generischen `data-action="editImage" data-edit="<pfad>"`-Mechanismus änderbar (funktioniert für jeden Dokumentpfad, nicht nur `img` – hier zusätzlich für den verschachtelten Token-Textur-Pfad genutzt).
+- **Bilder-Tab:** Zwei große Bild-Slots nebeneinander (`actor.img` / `system.skillImage` – siehe Korrektur weiter unten, ursprünglich fälschlich `actor.prototypeToken.texture.src`), beide über den bereits bewährten generischen `data-action="editImage" data-edit="<pfad>"`-Mechanismus änderbar (funktioniert für jeden Dokumentpfad, nicht nur `img`).
 - **Items- und Effekte-Tab:** "Wie im Original-Sheet" wörtlich umgesetzt – Logik 1:1 aus `UTSActorSheet` (`uts.mjs`) übernommen, da das die vom Nutzer gemeinte Referenz ist: `viewDoc`/`createDoc`/`deleteDoc`/`toggleEffect`-Actions, `_getEmbeddedDocument()`-Helper (Dokument über `[data-document-class]`+`data-item-id`/`data-effect-id`+`data-parent-id` am `<li>` auflösen), `_getItems()` (Items nach Subtyp gruppiert, leere "base"-Gruppe ausgeblendet), `prepareActiveEffectCategories()` (Temporär/Passiv/Inaktiv-Gruppierung). Templates dafür (`items.hbs`/`effects.hbs` von UTS) als Referenz genutzt, aber komplett neu in der eigenen Optik (`.doc-list`/`.doc-group`/`.doc-row`) statt UTS' generischem Grau-Look gebaut.
 - Wiederverwendete System-Locale-Keys von `universal-tabletop-system` (da als `relationships.systems`-Abhängigkeit sowieso geladen, genau wie zuvor schon `AVENTURIA.*`-Keys aus `aventuria` wiederverwendet wurden): `UTS.Sheets.Tabs.items`/`.effects` (Rail-Tooltips), `UTS.Effect.Temporary`/`.Passive`/`.Inactive`/`.Toggle`/`.Label`. Plus Foundry-Core-Keys `DOCUMENT.Create`/`.New`/`.Update`/`.Delete`/`.ActiveEffect` (immer verfügbar, systemunabhängig).
 - `.doc-rows` hat `max-height:220px; overflow-y:auto` – bewusste Ausnahme vom "kein Scrollen"-Prinzip der Haupt-Tabs, da Items-/Effekte-Listen theoretisch unbegrenzt lang werden können und sonst das ganze Fenster (über den Grid-Stack-Höhenausgleich) unkontrolliert mitwachsen würde.
@@ -208,4 +208,20 @@ Zweite Recherche-Runde im entpackten Foundry-v14-Core (`client/applications/elem
 
 Nebenbei: "Charakterbild" im Bilder-Tab auf Nutzerwunsch zu "Heldenkarte" umbenannt (`AVENTURIA_HELPERS.HeroSheet.CharacterArt`).
 
-**Zum gemeldeten "Token-Bild ist falsch":** `actor.prototypeToken.texture.src` wurde gegen Foundry-Core verifiziert (`client/documents/actor.mjs`, exakt der Pfad, den auch der eingebaute `editImage`-Handler nutzt) – Pfad/Code ist korrekt, keine Änderung nötig. Wahrscheinlichste Erklärung: `AventuriaHero._preCreate()` (in `aventuria/dist/index.js`) setzt beim Anlegen eines Helden zwar `actorLink`/`disposition`/`sight`/`width`/`height` auf dem Prototyp-Token, **aber nicht `texture.src`** – das bleibt also auf Foundrys Standard-Platzhalter (`icons/svg/mystery-man.svg`), bis jemand manuell ein Token-Bild setzt. Das im Bilder-Tab angezeigte Bild dürfte also exakt das sein, was aktuell unter "Prototyp-Token konfigurieren" für diesen Actor hinterlegt ist – zum Prüfen: Rechtsklick auf den Actor im Verzeichnis → "Prototyp-Token konfigurieren" vergleichen. Falls dort tatsächlich ein anderes Bild als im Bilder-Tab erscheint, bitte nochmal melden, dann tiefer nachforschen.
+**Korrektur "Token-Bild ist falsch" (Stand 2026-08-11):** War kein Bug im Sinne von falschem Pfad, sondern eine falsche Annahme meinerseits, WAS ins rechte Bild gehört. `actor.prototypeToken.texture.src` war technisch korrekt verifiziert, aber schlicht das falsche Feld – die "zweite Karte" bei Aventuria ist nicht das Foundry-Token-Bild, sondern die **Talentkarte** (`system.skillImage`). Nutzer-Hinweis: `aventuria` selbst bietet dafür bereits einen Menüpunkt **"View Skill Card"** im Sandwich-Menü (Fenster-Titelleiste) jedes Hero-Sheets. Fund in `aventuria/dist/index.js`:
+
+```js
+Hooks.on("getHeaderControlsActorSheetV2", (e, t) => {
+  t.push({
+    label: "AVENTURIA.Models.Hero.ViewSkillCard",
+    icon: "fa-solid fa-dice-d20",
+    visible: e.document.type === "aventuria.hero",
+    onClick: async (t) => {
+      new foundry.applications.apps.ImagePopout({ src: e.document.system.skillImage, uuid: e.document.uuid, window: { title: e.document.name } }).render({ force: true });
+    }
+  });
+});
+```
+Wichtige Erkenntnis nebenbei: dieser Hook feuert **für unser eigenes Sheet mit**, obwohl unsere Klasse `AventuriaHelpersHeroSheet` heißt, nicht `ActorSheetV2` – Foundry feuert `getHeaderControls<Name>` offenbar auch für die Basisklasse(n) in der Prototypkette, nicht nur für den eigenen Klassennamen (`foundry.applications.sheets.ActorSheet`, von der wir erben, trägt intern offenbar noch den Namen `ActorSheetV2`). Bedeutet: alle `getHeaderControlsActorSheetV2`-Hooks aus `aventuria` gelten automatisch auch für unser Sheet, ohne dass wir etwas dafür tun müssen.
+
+**Fix:** Bilder-Tab rechts zeigt jetzt `system.skillImage` (Talentkarte) statt `actor.prototypeToken.texture.src`, inkl. `data-edit="system.skillImage"`. Wiederverwendet die bereits vorhandenen (aber bis dahin ungenutzten) Locale-Keys `AVENTURIA_HELPERS.HeroSheet.SkillCard`/`.SkillImageTooltip`. `TokenArt`-Locale-Key entfernt (nicht mehr referenziert).

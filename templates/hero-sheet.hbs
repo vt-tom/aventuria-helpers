@@ -274,11 +274,11 @@
           </figure>
           <figure class="image-slot">
             <img
-              src="{{actor.prototypeToken.texture.src}}"
-              alt="{{localize 'AVENTURIA_HELPERS.HeroSheet.TokenArt'}}"
-              {{#if editable}}data-action="editImage" data-edit="prototypeToken.texture.src"{{/if}}
+              src="{{system.skillImage}}"
+              alt="{{localize 'AVENTURIA_HELPERS.HeroSheet.SkillCard'}}"
+              {{#if editable}}data-action="editImage" data-edit="system.skillImage" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.SkillImageTooltip'}}"{{/if}}
             >
-            <figcaption>{{localize "AVENTURIA_HELPERS.HeroSheet.TokenArt"}}</figcaption>
+            <figcaption>{{localize "AVENTURIA_HELPERS.HeroSheet.SkillCard"}}</figcaption>
           </figure>
         </div>
       </section>
