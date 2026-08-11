@@ -4,7 +4,8 @@
   "description": "Zusätzliche Macros und ein alternatives Heldenbogen-Sheet für das Aventuria-Modul.",
   "version": "0.1.0",
   "compatibility": {
-    "minimum": "14"
+    "minimum": "14",
+    "verified": "14"
   },
   "authors": [],
   "esmodules": [
