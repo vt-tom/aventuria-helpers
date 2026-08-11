@@ -18,4 +18,12 @@
   <div class="probe-outcome">
     {{#if success}}{{localize "AVENTURIA_HELPERS.Probe.Success"}}{{else}}{{localize "AVENTURIA_HELPERS.Probe.Failure"}}{{/if}}
   </div>
+
+  {{#if damage}}
+    <div class="probe-damage">
+      <span class="damage-label">{{localize "AVENTURIA.Models.Hero.FIELDS.basicEquipment.damage.label"}}</span>
+      <span class="damage-formula">{{damage.formula}}</span>
+      <span class="damage-total">{{damage.total}}</span>
+    </div>
+  {{/if}}
 </div>

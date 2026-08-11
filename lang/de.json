@@ -27,6 +27,8 @@
     },
     "Probe": {
       "Title": "{attribute}-Probe",
+      "EquipmentTitle": "{name} verwenden",
+      "UseEquipment": "Ausrüstung verwenden (Probe + Schaden, danach erschöpft)",
       "Target": "Zielwert",
       "Modifier": "Modifikator",
       "Hint": "Positive Werte erleichtern die Probe und werden vom Ergebnis abgezogen. Negative Werte erschweren die Probe und werden addiert.",

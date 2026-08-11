@@ -281,6 +281,9 @@
 }
 
 .aventuria-hero-sheet .icon-badge {
+  box-sizing: border-box !important;
+  padding: 0 !important;
+  border: none !important;
   flex: none;
   border-radius: 50%;
   background: #fff;
@@ -477,19 +480,19 @@
   object-fit: contain;
 }
 
-.aventuria-hero-sheet .attr .roll-badge {
+.aventuria-hero-sheet .roll-badge {
   cursor: pointer;
   transition: box-shadow 120ms ease, transform 120ms ease;
 }
 
-.aventuria-hero-sheet .attr .roll-badge:hover,
-.aventuria-hero-sheet .attr .roll-badge:focus-visible {
+.aventuria-hero-sheet .roll-badge:hover,
+.aventuria-hero-sheet .roll-badge:focus-visible {
   transform: scale(1.18);
   box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--gold), 0 3px 8px rgba(0, 0, 0, 0.35);
   outline: none;
 }
 
-.aventuria-hero-sheet .attr .roll-badge:active {
+.aventuria-hero-sheet .roll-badge:active {
   transform: scale(0.92);
 }
 
@@ -859,6 +862,17 @@
   font-size: 0.85rem;
 }
 
+.probe-dialog .probe-damage-preview {
+  margin: -0.35rem 0 0;
+  padding: 0 0.7rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.probe-dialog .probe-damage-preview strong {
+  color: var(--ink);
+}
+
 .probe-dialog .form-group {
   display: flex;
   align-items: center;
@@ -972,4 +986,26 @@
 .probe-card.failure .probe-outcome {
   background: var(--ruby);
   color: #fff4ee;
+}
+
+.probe-card .probe-damage {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding-top: 0.3rem;
+  border-top: 1px dashed var(--line);
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.probe-card .probe-damage .damage-formula {
+  font-variant-numeric: tabular-nums;
+}
+
+.probe-card .probe-damage .damage-total {
+  margin-left: auto;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
 }

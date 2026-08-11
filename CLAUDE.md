@@ -124,7 +124,22 @@ Ergänzt: pro Eigenschaft (Nahkampf/Fernkampf/Magie/Ausweichen) ist das Icon-Med
 
 Wie bei den Waffen-Erschöpfen-Toggles, aber für die Sonderfertigkeit: ein Button "Verwendet" unten in der Sonderfertigkeits-Kachel. **Kann nicht als echtes Schema-Feld** umgesetzt werden (aventuria's Datenmodell hat kein `specialAbility.used`-Feld, und `aventuria`/`dist/index.js` darf nicht verändert werden) – daher als Actor-Flag `flags.aventuria-helpers.specialAbilityUsed`, exakt wie schon der Spielmodus-Lock. Eigener Getter `AventuriaHelpersHeroSheet#abilityUsed`, Action `toggleAbilityUsed`.
 
-Anders als der Erschöpfen-Toggle bei der Ausrüstung (der ein echtes `system.*`-Feld ist und dadurch im Spielmodus korrekt gesperrt bleibt) soll "Verwendet" **auch im Spielmodus nutzbar bleiben** (explizite Nutzeranforderung – das ist eine Session-/Spielverlauf-Markierung, keine Charakterwert-Änderung). Deshalb trägt der Button die `always-active`-Klasse. Da er kein Checkbox-Sibling wie Erschöpfen hat (reiner `<button>` mit `{{#if abilityUsed}}on{{/if}}`), gibt es jetzt zusätzlich eine klassenbasierte `.toggle.on`-Regel neben der bestehenden `.toggle-wrap input:checked + .toggle`-Regel – beide führen zum selben Verdigris-"aktiv"-Look.
+"Verwendet" soll **auch im Spielmodus nutzbar bleiben** (explizite Nutzeranforderung – das ist eine Session-/Spielverlauf-Markierung, keine Charakterwert-Änderung), trägt daher die `always-active`-Klasse. (Der Erschöpfen-Toggle bei der Ausrüstung wurde kurz danach aus demselben Grund ebenfalls auf `always-active` umgestellt – siehe nächster Abschnitt.)
+
+## Ausrüstungs-Proben + Erschöpfen-Fix (Stand 2026-08-11)
+
+Nutzer-Feedback: Die Erschöpfen-Checkbox bei den Waffen funktionierte nicht zuverlässig. Statt das Checkbox+Label-Pattern zu debuggen, wurde es durch das bereits bei "Verwendet" bewährte Pattern ersetzt: **reiner `<button class="toggle always-active">`** mit Action `toggleExhaust` (setzt `system.<key>.exhaust` direkt per `actor.update()`), statt `<input type="checkbox" name="system....exhaust">` mit nativer Formular-Bindung. Erschöpfen ist jetzt bewusst ebenfalls `always-active` (wie "Verwendet") – ist inhaltlich ohnehin eher Spielzustand als Charakterwert, und soll laut Nutzer "trotzdem manuell nutzbar sein".
+
+**Neue Funktion:** Ausrüstung "verwenden" statt nur die Angriffsart-Auswahl anzuzeigen. Das kleine Icon im Angriffsart-Tag (vorher nur Deko) ist jetzt ein Button (`data-action="rollEquipment"`, Klassen `icon-badge roll-badge always-active`) und löst einen kombinierten Ablauf aus:
+
+1. Dialog (gleiche Optik wie die Attribut-/Talent-Proben) zeigt Zielwert der zugehörigen Eigenschaft (Angriffstyp = close/ranged/magic, direkt deckungsgleich mit den Attribut-Keys – keine Mapping-Tabelle nötig) + eine Vorschau des Schadensfelds + Modifikator-Eingabe.
+2. Nach Bestätigen: würfelt **beides** – den Angriffs-Probe-Wurf (`1d20 - Modifikator`, roll-under wie überall) UND den Schadenswurf (das frei eingetragene `damage`-Textfeld wird als Formel geparst; deutsche Würfelschreibweise `1W6` wird zu `1d6` normalisiert, `Roll.validate()` prüft die Formel vorher ab).
+3. Beide Würfe landen in einer gemeinsamen Chat-Karte (Angriffs-Rechenweg + Bestanden/Nicht-bestanden-Badge, darunter eine Schaden-Zeile mit Formel + Ergebnis).
+4. **Danach wird die Ausrüstung automatisch als erschöpft markiert** (`actor.update({"system.<key>.exhaust": true})`).
+
+Der manuelle Erschöpfen-Button bleibt unabhängig davon weiter bedienbar (z.B. um am Rundenende alle Waffen wieder freizuschalten).
+
+`scripts/probe-roll.mjs` wurde intern refactort: `promptModifier()` (Dialog) und `rollD20()` (Würfeln+Auswertung) sind jetzt eigene kleine Funktionen, die sowohl `rollProbe()` (Attribute/Talente) als auch das neue `rollEquipment()` nutzen. `templates/chat/probe-card.hbs` hat einen optionalen `{{#if damage}}`-Block bekommen, den nur `rollEquipment()` befüllt.
 
 ## Deutlichere Hover-Effekte (Stand 2026-08-11)
 

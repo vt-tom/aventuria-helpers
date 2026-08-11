@@ -1,4 +1,4 @@
-import { rollAttribute, rollSkill } from "../probe-roll.mjs";
+import { rollAttribute, rollSkill, rollEquipment } from "../probe-roll.mjs";
 
 const { api, sheets } = foundry.applications;
 
@@ -60,7 +60,9 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
       rollDamage: AventuriaHelpersHeroSheet.#rollDamage,
       rollAttribute: AventuriaHelpersHeroSheet.#rollAttribute,
       rollSkill: AventuriaHelpersHeroSheet.#rollSkill,
+      rollEquipment: AventuriaHelpersHeroSheet.#rollEquipment,
       toggleCategory: AventuriaHelpersHeroSheet.#toggleCategory,
+      toggleExhaust: AventuriaHelpersHeroSheet.#toggleExhaust,
       switchTab: AventuriaHelpersHeroSheet.#switchTab,
       toggleLock: AventuriaHelpersHeroSheet.#toggleLock,
       toggleAbilityUsed: AventuriaHelpersHeroSheet.#toggleAbilityUsed,
@@ -229,6 +231,16 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
   }
 
   /**
+   * Rolls a piece of equipment (attack Probe + damage), then auto-exhausts it.
+   * @this AventuriaHelpersHeroSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #rollEquipment(event, target) {
+    await rollEquipment(this.actor, target.dataset.equipment);
+  }
+
+  /**
    * Toggles one allowed action-card category on/off.
    * @this AventuriaHelpersHeroSheet
    * @param {PointerEvent} event
@@ -241,6 +253,20 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
     if (categories.has(key)) categories.delete(key);
     else categories.add(key);
     await this.actor.update({ "system.categories": Array.from(categories) });
+  }
+
+  /**
+   * Toggles whether a piece of equipment is "erschöpft". A plain action button
+   * instead of a bound checkbox so it can reliably stay usable during Spielmodus
+   * (see `always-active`), same as marking the special ability used.
+   * @this AventuriaHelpersHeroSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #toggleExhaust(event, target) {
+    const key = target.dataset.equipment;
+    const current = this.actor.system[key]?.exhaust;
+    await this.actor.update({ [`system.${key}.exhaust`]: !current });
   }
 
   /**

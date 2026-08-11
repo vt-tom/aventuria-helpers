@@ -100,7 +100,9 @@
               <div class="equip-head">
                 <input type="text" name="system.basicEquipment.name" value="{{name}}" placeholder="{{localize 'AVENTURIA.Models.Hero.FIELDS.basicEquipment.name.label'}}" class="equip-name" {{#unless ../editable}}disabled{{/unless}}>
                 <span class="tag">
-                  {{#if ../basicEquipmentIcon}}<span class="icon-badge"><img src="{{../basicEquipmentIcon}}" alt=""></span>{{/if}}
+                  {{#if ../basicEquipmentIcon}}
+                    <button type="button" class="icon-badge roll-badge always-active" data-action="rollEquipment" data-equipment="basicEquipment" data-tooltip="{{localize 'AVENTURIA_HELPERS.Probe.UseEquipment'}}"><img src="{{../basicEquipmentIcon}}" alt=""></button>
+                  {{/if}}
                   <select name="system.basicEquipment.attackType" {{#unless ../editable}}disabled{{/unless}}>
                     {{selectOptions ../config.attackTypes selected=attackType localize=true blank=""}}
                   </select>
@@ -112,12 +114,9 @@
                   <input type="number" name="system.basicEquipment.endurance" value="{{endurance}}" {{#unless ../editable}}disabled{{/unless}}>
                 </span>
                 <span>{{localize "AVENTURIA.Models.Hero.FIELDS.basicEquipment.damage.label"}} <input type="text" class="freetext" name="system.basicEquipment.damage" value="{{damage}}" {{#unless ../editable}}disabled{{/unless}}></span>
-                <span class="toggle-wrap">
-                  <input type="checkbox" id="{{../actor.id}}-basicEquipment-exhaust" name="system.basicEquipment.exhaust" {{checked exhaust}} {{#unless ../editable}}disabled{{/unless}}>
-                  <label for="{{../actor.id}}-basicEquipment-exhaust" class="toggle" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.basicEquipment.exhaust.label'}}">
-                    <span class="icon-badge"><img src="{{../icons.exhaust}}" alt=""></span>{{localize "AVENTURIA.Models.Hero.FIELDS.basicEquipment.exhaust.label"}}
-                  </label>
-                </span>
+                <button type="button" class="toggle always-active {{#if exhaust}}on{{/if}}" data-action="toggleExhaust" data-equipment="basicEquipment" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.basicEquipment.exhaust.label'}}">
+                  <span class="icon-badge"><img src="{{../icons.exhaust}}" alt=""></span>{{localize "AVENTURIA.Models.Hero.FIELDS.basicEquipment.exhaust.label"}}
+                </button>
               </div>
             </div>
           {{/with}}
@@ -127,7 +126,9 @@
               <div class="equip-head">
                 <input type="text" name="system.secondEquipment.name" value="{{name}}" placeholder="{{localize 'AVENTURIA.Models.Hero.FIELDS.secondEquipment.name.label'}}" class="equip-name" {{#unless ../editable}}disabled{{/unless}}>
                 <span class="tag">
-                  {{#if ../secondEquipmentIcon}}<span class="icon-badge"><img src="{{../secondEquipmentIcon}}" alt=""></span>{{/if}}
+                  {{#if ../secondEquipmentIcon}}
+                    <button type="button" class="icon-badge roll-badge always-active" data-action="rollEquipment" data-equipment="secondEquipment" data-tooltip="{{localize 'AVENTURIA_HELPERS.Probe.UseEquipment'}}"><img src="{{../secondEquipmentIcon}}" alt=""></button>
+                  {{/if}}
                   <select name="system.secondEquipment.attackType" {{#unless ../editable}}disabled{{/unless}}>
                     {{selectOptions ../config.attackTypes selected=attackType localize=true blank=""}}
                   </select>
@@ -139,12 +140,9 @@
                   <input type="number" name="system.secondEquipment.endurance" value="{{endurance}}" {{#unless ../editable}}disabled{{/unless}}>
                 </span>
                 <span>{{localize "AVENTURIA.Models.Hero.FIELDS.secondEquipment.damage.label"}} <input type="text" class="freetext" name="system.secondEquipment.damage" value="{{damage}}" {{#unless ../editable}}disabled{{/unless}}></span>
-                <span class="toggle-wrap">
-                  <input type="checkbox" id="{{../actor.id}}-secondEquipment-exhaust" name="system.secondEquipment.exhaust" {{checked exhaust}} {{#unless ../editable}}disabled{{/unless}}>
-                  <label for="{{../actor.id}}-secondEquipment-exhaust" class="toggle" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.secondEquipment.exhaust.label'}}">
-                    <span class="icon-badge"><img src="{{../icons.exhaust}}" alt=""></span>{{localize "AVENTURIA.Models.Hero.FIELDS.secondEquipment.exhaust.label"}}
-                  </label>
-                </span>
+                <button type="button" class="toggle always-active {{#if exhaust}}on{{/if}}" data-action="toggleExhaust" data-equipment="secondEquipment" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.secondEquipment.exhaust.label'}}">
+                  <span class="icon-badge"><img src="{{../icons.exhaust}}" alt=""></span>{{localize "AVENTURIA.Models.Hero.FIELDS.secondEquipment.exhaust.label"}}
+                </button>
               </div>
             </div>
           {{/with}}
