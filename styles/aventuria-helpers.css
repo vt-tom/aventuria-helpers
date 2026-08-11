@@ -651,11 +651,22 @@
 }
 
 .aventuria-hero-sheet .ability prose-mirror {
-  display: block;
+  /* Do NOT set display here - core CSS needs the host to stay "display:flex" (its
+     own default) so its internal .editor-container/.editor-content can size via
+     flex/absolute positioning. Overriding it makes the text area collapse to zero
+     height even though the content is there (invisible, not missing). */
   font-family: inherit;
   font-size: 0.86rem;
   line-height: 1.55;
   color: var(--ink);
+  --min-height: 90px;
+}
+
+/* Foundry's disabled handling only makes the text non-editable; the formatting
+   toolbar stays rendered. Hide it ourselves when locked/read-only. */
+.aventuria-hero-sheet .ability prose-mirror[disabled] menu,
+.aventuria-hero-sheet .ability prose-mirror[disabled] .menu-container {
+  display: none;
 }
 
 .aventuria-hero-sheet .ability-foot {
