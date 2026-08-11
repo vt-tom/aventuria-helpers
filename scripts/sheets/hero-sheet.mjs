@@ -1,3 +1,5 @@
+import { rollAttribute } from "../attribute-roll.mjs";
+
 const { api, sheets } = foundry.applications;
 
 const ICONS = "modules/aventuria/assets/icons/";
@@ -56,6 +58,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
     actions: {
       rollTest: AventuriaHelpersHeroSheet.#rollTest,
       rollDamage: AventuriaHelpersHeroSheet.#rollDamage,
+      rollAttribute: AventuriaHelpersHeroSheet.#rollAttribute,
       toggleCategory: AventuriaHelpersHeroSheet.#toggleCategory,
       switchTab: AventuriaHelpersHeroSheet.#switchTab,
       toggleLock: AventuriaHelpersHeroSheet.#toggleLock,
@@ -166,7 +169,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
    */
   async _onRender(context, options) {
     await super._onRender(context, options);
-    for (const el of this.element.querySelectorAll(".lock-switch, .railbtn, .s-btn")) {
+    for (const el of this.element.querySelectorAll(".lock-switch, .railbtn, .s-btn, .roll-badge")) {
       el.disabled = false;
     }
   }
@@ -189,6 +192,16 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
    */
   static async #rollDamage() {
     await this.actor.system.rollDamage();
+  }
+
+  /**
+   * Rolls a Probe for one of the four attribute chips.
+   * @this AventuriaHelpersHeroSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #rollAttribute(event, target) {
+    await rollAttribute(this.actor, target.dataset.attribute);
   }
 
   /**

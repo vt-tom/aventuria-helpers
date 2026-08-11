@@ -65,19 +65,23 @@
       <section class="tab {{#if tabs.held.active}}active{{/if}}" id="tab-held">
         <div class="attrs">
           <label class="attr close" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.close.label'}}">
-            <span class="badge"><img src="{{icons.close}}" alt=""></span>
+            <button type="button" class="badge roll-badge" data-action="rollAttribute" data-attribute="close" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}"><img src="{{icons.close}}" alt=""></button>
             <input type="number" name="system.close" value="{{system.close}}" {{#unless editable}}disabled{{/unless}}>
           </label>
           <label class="attr ranged" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.ranged.label'}}">
-            <span class="badge"><img src="{{icons.ranged}}" alt=""></span>
+            <button type="button" class="badge roll-badge" data-action="rollAttribute" data-attribute="ranged" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}"><img src="{{icons.ranged}}" alt=""></button>
             <input type="number" name="system.ranged" value="{{system.ranged}}" {{#unless editable}}disabled{{/unless}}>
           </label>
           <label class="attr magic" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.magic.label'}}">
-            <span class="badge"><img src="{{icons.magic}}" alt=""></span>
+            {{#if system.magic}}
+              <button type="button" class="badge roll-badge" data-action="rollAttribute" data-attribute="magic" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}"><img src="{{icons.magic}}" alt=""></button>
+            {{else}}
+              <span class="badge"><img src="{{icons.magic}}" alt=""></span>
+            {{/if}}
             <input type="number" name="system.magic" value="{{system.magic}}" {{#unless editable}}disabled{{/unless}}>
           </label>
           <label class="attr dodge" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.dodge.label'}}">
-            <span class="badge"><img src="{{icons.dodge}}" alt=""></span>
+            <button type="button" class="badge roll-badge" data-action="rollAttribute" data-attribute="dodge" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}"><img src="{{icons.dodge}}" alt=""></button>
             <input type="number" name="system.dodge" value="{{system.dodge}}" {{#unless editable}}disabled{{/unless}}>
           </label>
           <label class="attr life" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.lifePoints.label'}}">

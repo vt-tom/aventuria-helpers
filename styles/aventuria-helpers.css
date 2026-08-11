@@ -439,8 +439,11 @@
 }
 
 .aventuria-hero-sheet .attr .badge {
-  width: 26px;
-  height: 26px;
+  box-sizing: border-box !important;
+  width: 26px !important;
+  height: 26px !important;
+  padding: 0 !important;
+  border: none !important;
   border-radius: 50%;
   background: #fff;
   flex: none;
@@ -454,6 +457,21 @@
   width: 19px;
   height: 19px;
   object-fit: contain;
+}
+
+.aventuria-hero-sheet .attr .roll-badge {
+  cursor: pointer;
+  transition: box-shadow 120ms ease, transform 120ms ease;
+}
+
+.aventuria-hero-sheet .attr .roll-badge:hover,
+.aventuria-hero-sheet .attr .roll-badge:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--gold);
+  outline: none;
+}
+
+.aventuria-hero-sheet .attr .roll-badge:active {
+  transform: scale(0.92);
 }
 
 .aventuria-hero-sheet .attr input {
@@ -732,4 +750,169 @@
 .aventuria-hero-sheet .s-foot input[type="number"] {
   width: 3rem;
   text-align: center;
+}
+
+/* ============================================================ */
+/* Probe dialog (attribute-roll modifier prompt)                  */
+/* Own Application/DOM tree, separate from the sheet, so it needs */
+/* its own copy of the palette tokens.                            */
+/* ============================================================ */
+
+.probe-dialog {
+  --paper: #f6ecd4;
+  --panel: #fffcf5;
+  --ink: #2a2015;
+  --muted: #7a6d54;
+  --line: #e2d3ac;
+  --gold: #a9822e;
+}
+
+.probe-dialog .window-content {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.probe-dialog .probe-dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.probe-dialog .probe-target {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.5rem 0.7rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.probe-dialog .probe-target img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.probe-dialog .probe-target span {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.probe-dialog .form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.probe-dialog .form-group input {
+  width: 5rem;
+  text-align: center;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.3rem;
+  font: inherit;
+  color: var(--ink);
+}
+
+.probe-dialog .probe-hint {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* ============================================================ */
+/* Probe chat card                                                */
+/* Rendered into the chat log, also its own DOM tree.              */
+/* ============================================================ */
+
+.probe-card {
+  --paper: #f6ecd4;
+  --panel: #fffcf5;
+  --ink: #2a2015;
+  --muted: #7a6d54;
+  --line: #e2d3ac;
+  --ruby: #a8383d;
+  --verdigris: #356456;
+  box-sizing: border-box;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.5rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.probe-card .probe-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.probe-card .probe-head img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.probe-card .probe-label {
+  font-weight: 700;
+}
+
+.probe-card .probe-target {
+  margin-left: auto;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.probe-card .probe-math {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.probe-card .probe-math .die {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.probe-card .probe-math .op,
+.probe-card .probe-math .eq {
+  color: var(--muted);
+}
+
+.probe-card .probe-math .total {
+  margin-left: auto;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.probe-card .probe-outcome {
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.3rem;
+  border-radius: 4px;
+}
+
+.probe-card.success .probe-outcome {
+  background: var(--verdigris);
+  color: #eafaf3;
+}
+
+.probe-card.failure .probe-outcome {
+  background: var(--ruby);
+  color: #fff4ee;
 }

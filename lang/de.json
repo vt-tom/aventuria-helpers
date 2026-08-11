@@ -16,6 +16,21 @@
       "SerialNumberSkill": "Talente Set Nr.",
       "Lock": "Spielmodus (Sheet sperren)",
       "Unlock": "Spielmodus beenden (Sheet entsperren)"
+    },
+    "Attributes": {
+      "Close": "Nahkampf",
+      "Ranged": "Fernkampf",
+      "Magic": "Magie",
+      "Dodge": "Ausweichen"
+    },
+    "Probe": {
+      "Title": "{attribute}-Probe",
+      "Target": "Zielwert",
+      "Modifier": "Modifikator",
+      "Hint": "Positive Werte erleichtern die Probe und werden vom Ergebnis abgezogen. Negative Werte erschweren die Probe und werden addiert.",
+      "Roll": "Würfeln",
+      "Success": "Bestanden",
+      "Failure": "Nicht bestanden"
     }
   }
 }
