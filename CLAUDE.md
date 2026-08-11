@@ -88,8 +88,9 @@ Datenmodell-Referenz (`AventuriaHero.defineSchema()` in `modules/aventuria/dist/
 
 - Basis-Klasse: `foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheet)`.
 - Registrierung: `foundry.documents.collections.Actors.registerSheet(scope, SheetClass, { types, makeDefault, label })` (nicht mehr `DocumentSheetConfig.registerSheet`).
-- Rich-Text: `foundry.applications.ux.TextEditor.implementation.enrichHTML(...)`.
-- Bild-Editieren: `data-action="editImage" data-edit="<path>"` auf einem `<img>` – funktioniert generisch für jeden Dateipfad (nicht nur `img`), genutzt für `system.skillImage`.
+- Rich-Text **zum Anzeigen** (enrichen von `@UUID`-Links, Rolls etc. in HTML-Feldern): `foundry.applications.ux.TextEditor.implementation.enrichHTML(...)`.
+- Rich-Text **zum Bearbeiten**: **nicht** das `<div class="editor" data-edit="...">`-Pattern (das ist AppV1-Legacy, in ApplicationV2 tot – siehe eigener Abschnitt unten). Stattdessen das Custom Element `<prose-mirror name="..." value="..." data-document-uuid="{{actor.uuid}}">`.
+- Bild-Editieren: `data-action="editImage" data-edit="<path>"` auf einem `<img>` – funktioniert generisch für jeden Dateipfad (nicht nur `img`), genutzt für `system.skillImage`. (Das ist ein anderer, weiterhin funktionierender `data-edit`-Anwendungsfall als das tote Editor-Div-Pattern – nicht verwechseln.)
 
 ## Status
 
@@ -169,4 +170,19 @@ Nutzer-Feedback: Der Hover-Effekt der Eigenschaften-Proben-Medaillons war zu una
 - `.roll-badge` (Eigenschaften-Medaillons): kräftigerer Effekt beim Hover/Fokus – skaliert leicht hoch (`scale(1.18)`) plus doppelter Ring (weiß + Gold) plus Schlagschatten, statt nur einem dünnen Insetring.
 - `.skill-roll` (Talent-Namen): Da reiner Text ohne Fläche keinen überzeugenden "Button-Effekt" hergibt, wird jetzt beim Hover/Fokus/Active die **gesamte Talent-Kachel** hervorgehoben (Hintergrund-Tönung, Goldrand, Schatten) über `.skill:has(.skill-roll:hover)` – setzt CSS `:has()` voraus, das in dieser Foundry-Installation bereits über `color-mix()` (gleiche Chromium-Mindestversion) bestätigt funktioniert.
 
-Nächster Schritt: Nutzer testet die vier Attribut-Proben live (Dialog-Optik, Modifikator-Vorzeichen, Chat-Karte, Dice-So-Nice-Integration), danach Phase 3 (Macros).
+## Sonderfertigkeits-Beschreibung war nicht editierbar – `data-edit`-Div ist AppV1-Legacy (Stand 2026-08-11)
+
+Nutzer-Feedback: Die Beschreibung der Sonderfertigkeit (Rich-Text) ließ sich nicht bearbeiten. Root Cause per Recherche im entpackten Foundry-v14-Core-Quellcode (`D:\FoundryVTT\foundry-nodejs-v14\client`) gefunden:
+
+- Das bisher verwendete Pattern `<div class="editor" data-edit="...">{{{enrichedHTML}}}</div>` ist **totes AppV1-Erbe**. Die Klick-zum-Bearbeiten-Aktivierung dafür (`_activateEditor`, Scan nach `.editor-content[data-edit]`) existiert nur noch in `client/appv1/api/form-application-v1.mjs` – es gibt sogar einen eigenen Hook `activateEditorLegacy`, der das als deprecated markiert. `foundry.applications.api.document-sheet.mjs` (die echte ApplicationV2-Basis, von der unser Sheet erbt) scannt **nicht** nach `div[data-edit]` – nur nach `img[data-edit]` (Bild-Picker, anderer Mechanismus, weiterhin gültig) und `prose-mirror`-Elementen für Secret-Blöcke.
+- **Korrekter AppV2-Weg:** das Custom Element `<prose-mirror>` (`HTMLProseMirrorElement`, `client/applications/elements/prosemirror-editor.mjs`) – ein formularassoziiertes Custom Element, das sich selbst um Aktivierung, Speichern und `disabled`-Handling kümmert. Beleg aus Foundry-Core (`templates/journal/pages/text/edit.hbs`):
+  ```html
+  <prose-mirror name="text.content" value="{{ text.content }}" data-document-uuid="{{ uuid }}" collaborate relative></prose-mirror>
+  ```
+- Der `{{editor}}`-Handlebars-Helper existiert zwar noch, erzeugt aber standardmäßig (ohne registrierte `CONFIG.TextEditor.engines`) exakt das alte, in AppV2 nutzlose Div-Markup – also auch keine Abkürzung.
+
+**Fix:** `templates/hero-sheet.hbs` nutzt jetzt `<prose-mirror name="system.specialAbility.description" value="{{system.specialAbility.description}}" data-document-uuid="{{actor.uuid}}" {{#unless editable}}disabled{{/unless}}></prose-mirror>` – normal ins Formular eingebunden (kein `always-active`, Beschreibung bleibt bewusst im Spielmodus gesperrt, ist echter Charakterinhalt). Die manuelle `enrichHTML()`-Berechnung (`enrichedSpecialAbility`) in `hero-sheet.mjs` wurde entfernt, da `<prose-mirror>` den rohen HTML-Wert direkt selbst rendert/verwaltet. CSS von `.ability .editor` auf `.ability prose-mirror` umgezogen.
+
+**Merke für künftige Rich-Text-Felder in diesem Modul:** immer `<prose-mirror>`, nie `<div data-edit>`.
+
+Nächster Schritt: Nutzer testet, ob sich die Sonderfertigkeits-Beschreibung jetzt bearbeiten und speichern lässt (inkl. Verhalten im Spielmodus – sollte dort gesperrt bleiben), danach Phase 3 (Macros).

@@ -157,10 +157,6 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
         icon: CATEGORY_ICONS[key] ? ICONS + CATEGORY_ICONS[key] : null,
         active: system.categories.has(key),
       })),
-      enrichedSpecialAbility: await foundry.applications.ux.TextEditor.implementation.enrichHTML(
-        system.specialAbility.description,
-        { relativeTo: this.actor, secrets: this.actor.isOwner },
-      ),
     });
 
     return context;

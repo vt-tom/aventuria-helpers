@@ -435,7 +435,7 @@
   flex-direction: column;
 }
 
-.aventuria-hero-sheet .tab > .ability .editor {
+.aventuria-hero-sheet .tab > .ability prose-mirror {
   flex: 1;
 }
 
@@ -640,9 +640,12 @@
   font-weight: 700;
 }
 
-.aventuria-hero-sheet .ability .editor {
+.aventuria-hero-sheet .ability prose-mirror {
+  display: block;
+  font-family: inherit;
   font-size: 0.86rem;
   line-height: 1.55;
+  color: var(--ink);
 }
 
 .aventuria-hero-sheet .ability-foot {

@@ -161,7 +161,12 @@
             <input type="text" name="system.specialAbility.name" value="{{system.specialAbility.name}}" placeholder="{{localize 'AVENTURIA.Models.Hero.FIELDS.specialAbility.name.label'}}" class="ability-name" {{#unless editable}}disabled{{/unless}}>
             <span class="tag muted">{{localize "AVENTURIA.Models.Hero.FIELDS.specialAbility.label"}}</span>
           </div>
-          <div class="editor" data-edit="system.specialAbility.description">{{{enrichedSpecialAbility}}}</div>
+          <prose-mirror
+            name="system.specialAbility.description"
+            value="{{system.specialAbility.description}}"
+            data-document-uuid="{{actor.uuid}}"
+            {{#unless editable}}disabled{{/unless}}
+          ></prose-mirror>
           <div class="ability-foot">
             <button
               type="button"
