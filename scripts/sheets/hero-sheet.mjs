@@ -13,8 +13,9 @@ const CATEGORY_ROWS = [
 const OTHER_CATEGORIES = ["equipment", "advantage", "disadvantage", "talent", "companion"];
 
 /**
- * Alternative actor sheet for the Aventuria `hero` actor subtype, styled as a clean,
- * flat "Almanach"-style character dossier rather than a literal card replica.
+ * Alternative actor sheet for the Aventuria `hero` actor subtype: a "Held" card and
+ * a "Talente" card shown side by side (echoing the physical hero/skill card pair)
+ * in a clean, flat "Almanach" palette rather than a literal parchment replica.
  * Registered as a selectable (non-default) sheet so the generic Universal Tabletop
  * System sheet remains available.
  */
@@ -22,7 +23,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
   /** @inheritdoc */
   static DEFAULT_OPTIONS = {
     classes: ["aventuria-helpers", "hero-sheet"],
-    position: { width: 720, height: 800 },
+    position: { width: 760, height: 780 },
     window: { resizable: true },
     actions: {
       rollTest: AventuriaHelpersHeroSheet.#rollTest,

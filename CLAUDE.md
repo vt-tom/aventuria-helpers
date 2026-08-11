@@ -62,20 +62,21 @@ Es gibt keine automatisierten Tests für Foundry-Module dieser Art. Funktionalit
 - **Design:** Nutzer liefert Referenz/Beschreibung für das Sheet-Layout (steht noch aus).
 - **Versionierung:** lokales Git-Repo wurde initialisiert (`git init`, noch kein erster Commit).
 
-## Layout des Hero-Sheets (Stand 2026-08-10, v2 "Almanach")
+## Layout des Hero-Sheets (Stand 2026-08-11, v3 "Kartenpaar")
 
-Die erste Version (v1) lehnte sich eng an die physischen Karten an (Icon-Badges, Pergament-Textur, Original-Icons/-Fonts von `aventuria`). Der Nutzer fand das Ergebnis "nicht schick" (siehe Screenshot-Feedback: die Ausrüstungs-Zeile mit 4 nativen Formularelementen nebeneinander war unübersichtlich). Daraufhin wurden drei Gestaltungsrichtungen als Artifact-Mockup vorgelegt (A "Kartennah", B "Almanach", C "Feldbuch") – **Nutzer hat sich für B entschieden.**
+Die erste Version (v1) lehnte sich eng an die physischen Karten an (Icon-Badges, Pergament-Textur, Original-Icons/-Fonts von `aventuria`). Der Nutzer fand das Ergebnis "nicht schick" (Screenshot-Feedback: die Ausrüstungs-Zeile mit 4 nativen Formularelementen nebeneinander war unübersichtlich). Daraufhin wurden drei Gestaltungsrichtungen als Artifact-Mockup vorgelegt (A "Kartennah", B "Almanach", C "Feldbuch") – Nutzer wählte B. v2 setzte B als einspaltigen "Heldenbogen" um und wurde live in Foundry getestet.
 
-v2 "Almanach"-Look: flache, ruhige Fläche statt Pergament-Textur, weiße Kachel-Panels mit dünnen Rahmen, ein einziger Akzentton (Petrol/Verdigris `#2f5d57`), Georgia-Serif für den Namen, Segoe UI für UI-Labels. **Verzichtet bewusst auf Bild-Icons** (kein `assets/icons/*.webp` mehr im Sheet) – Eigenschaften/Kategorien werden über Text-Label + große Zahl bzw. Punkt-Pips/Text-Chips dargestellt statt über Icons. Struktur (`templates/hero-sheet.hbs`):
+Danach wollte der Nutzer die Optik von B, aber wieder als **zwei Karten nebeneinander** (wie die physischen Held-/Talent-Karten), nicht als eine Spalte. Dafür gab es eine zweite Mockup-Runde (3 Layouts: "Geteilter Kopf", "Kartenpaar", "Kompaktes Duo") plus eine Iteration ("Eigenschaften nach rechts verschoben", wurde verworfen) – **gewählt wurde Layout 1 "Geteilter Kopf", mit der Auflage, dass beide Karten gleich hoch sind.**
 
-1. Header: Portrait, Name, Profession, Stufe als Badge-Pille (Select im Badge-Look), Buttons "Probe würfeln"/"Schadenswurf" (rufen `actor.system.rollTest()`/`rollDamage()` auf).
-2. Eigenschaften-Reihe: 5 Kacheln (Nahkampf/Fernkampf/Magie/Ausweichen/Lebenspunkte), Label + große Zahl, kein Icon.
-3. Grundausrüstung + Sekundäre Ausrüstung als Kachel-Paar: Name + Angriffstyp als Tag-Select, darunter Kosten/Schaden/Erschöpfen-Toggle (Checkbox+Label-Pattern, IDs mit `actor.id` präfixiert wegen möglicher mehrfach offener Sheets).
-4. Sonderfertigkeit (Name + Rich-Text-Editor für die Beschreibung).
-5. Talente (8 Werte als Kachel-Grid) + Talentkarten-Bild + Kategorien als Punkt-Pips (Nahkampf/Fernkampf/Rüstung/Zauber/Liturgie, je nach Gewichtsklasse) und Text-Chips (Sonstiges: Ausrüstung/Vorteil/Nachteil/Talent/Begleiter) – beide klickbar zum Umschalten.
-6. Footer: Set, Set-Nummer, Talente-Set-Nummer als reiner Text.
+v3 "Kartenpaar"-Look (weiterhin B-Palette: flache Fläche, weiße Kachel-Panels, Akzent Petrol/Verdigris `#2f5d57`, Georgia für den Namen, Segoe UI für UI-Labels, keine Bild-Icons). Struktur (`templates/hero-sheet.hbs`):
 
-Gottheits-/Professions-Icon (Peraine-Symbol etc.) weiterhin bewusst weggelassen.
+1. Gemeinsamer Kopf über beiden Karten: Portrait (nur einmal eingebunden), Name, Profession, Stufe als Badge-Pille (Select im Badge-Look), Buttons "Probe würfeln"/"Schadenswurf" (rufen `actor.system.rollTest()`/`rollDamage()` auf).
+2. Zwei Karten nebeneinander (`.cardrow`, CSS Grid mit `align-items: stretch` – beide Karten dadurch **gleich hoch**, der jeweils flexibelste Block je Karte (`.ability`/`.cats`, beide `flex:1`) füllt die überschüssige Höhe):
+   - **Karte "Held":** Eigenschaften-Reihe (5 Kacheln: Nahkampf/Fernkampf/Magie/Ausweichen/Lebenspunkte), Grundausrüstung + Sekundäre Ausrüstung (Name + Angriffstyp als Tag-Select, Kosten/Schaden/Erschöpfen-Toggle mit `actor.id`-präfixierten IDs wegen ggf. mehrfach offener Sheets), Sonderfertigkeit (Name + Rich-Text-Editor).
+   - **Karte "Talente":** 8 Talente als Kachel-Grid, Kategorien als Punkt-Pips (Nahkampf/Fernkampf/Rüstung/Zauber/Liturgie) und Text-Chips (Sonstiges: Ausrüstung/Vorteil/Nachteil/Talent/Begleiter), beide klickbar zum Umschalten. **Kein Talentkarten-Bild** (`system.skillImage`) – bewusst ausgelassen, da Nutzer das Portrait nur einmal wollte.
+3. Footer (volle Breite unter beiden Karten): Set, Set-Nummer, Talente-Set-Nummer als reiner Text.
+
+Gottheits-/Professions-Icon (Peraine-Symbol etc.) weiterhin bewusst weggelassen. `system.skillImage` ist im Datenmodell vorhanden, aber aktuell in keinem Feld des Sheets gebunden – bei Bedarf später ergänzen (z.B. als kleines Vorschaubild in der Talente-Karte).
 
 Datenmodell-Referenz (`AventuriaHero.defineSchema()` in `modules/aventuria/dist/index.js`, Subtype-Key `aventuria.hero`): `skillImage`, `lifePoints.{value,max}`, `profession`, `close`/`ranged`/`magic`/`dodge` (Number, teils `initial:null`), `level` (Choices 1/2/3 → "I"/"II"/"III"), `basicEquipment`/`secondEquipment.{name,damage,attackType,endurance,exhaust}`, `specialAbility.{name,description}` (description = HTMLField), `skills.{body,craft,knowledge,perception,persuade,stealth,survival,willpower}`, `categories` (SetField, Werte aus `CONFIG.Aventuria.cardCategories`), `edition`, `serialNumber`, `serialNumberSkill`.
 
@@ -88,4 +89,4 @@ Datenmodell-Referenz (`AventuriaHero.defineSchema()` in `modules/aventuria/dist/
 
 ## Status
 
-v2 "Almanach"-Version des Hero-Sheets ist implementiert und im laufenden Foundry mit einem echten Hero-Actor (Karmal Eternius) getestet worden – v1 lief funktional korrekt, wurde aber optisch überarbeitet. **Das neue CSS/Template (v2) ist noch nicht im Browser gegenprüft**, nur v1 wurde bereits live gesehen. Nächster Schritt: Nutzer testet v2, dann Feinschliff, danach Phase 3 (Macros).
+v3 "Kartenpaar"-Version des Hero-Sheets ist implementiert, **aber noch nicht in Foundry getestet** (v1 und v2 wurden bereits live mit einem echten Hero-Actor, Karmal Eternius, geprüft; v2 lief nicht mehr sichtbar korrekt gegengeprüft, da direkt auf v3 umgestellt wurde). Nächster Schritt: Nutzer testet v3 live, dann Feinschliff, danach Phase 3 (Macros).
