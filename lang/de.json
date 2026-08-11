@@ -45,6 +45,22 @@
       "Roll": "Würfeln",
       "Success": "Bestanden",
       "Failure": "Nicht bestanden"
+    },
+    "Combat": {
+      "AddEnemyPhase": "Gegneraktionen hinzufügen",
+      "EnemyPhaseName": "Gegneraktionen"
+    },
+    "Macros": {
+      "ResetCardRotations": {
+        "Name": "Karten zurückdrehen",
+        "MissingCcm": "Complete Card Management ist nicht aktiv.",
+        "GmOnly": "Nur die Spielleitung kann Karten zurückdrehen.",
+        "NoScene": "Keine Spieloberfläche geöffnet.",
+        "NoneRotated": "Keine Karte war gedreht.",
+        "Done": "{count} Karte(n) zurückgedreht.",
+        "ConfirmTitle": "Runde beendet",
+        "ConfirmBody": "Sollen alle Karten auf der Spieloberfläche wieder in ihre Ausgangsposition zurückgedreht werden?"
+      }
     }
   }
 }

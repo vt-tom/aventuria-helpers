@@ -25,6 +25,10 @@
       {
         "id": "aventuria",
         "type": "module"
+      },
+      {
+        "id": "complete-card-management",
+        "type": "module"
       }
     ],
     "systems": [
