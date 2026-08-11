@@ -243,13 +243,31 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
+  font: inherit;
   font-size: 0.72rem;
   padding: 0.16rem 0.55rem;
   border-radius: 999px;
   border: 1px solid var(--line);
+  background: none;
   margin-left: auto;
   color: var(--muted);
   cursor: pointer;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+/* Class-driven "on" state, for toggles that are plain buttons (no checkbox
+   sibling) like the special ability's "Verwendet" - same look as the
+   checkbox-driven equipment toggles below. */
+.aventuria-hero-sheet .toggle.on {
+  background: var(--verdigris);
+  color: var(--verdigris-ink);
+  border-color: var(--verdigris);
+}
+
+.aventuria-hero-sheet .toggle:hover,
+.aventuria-hero-sheet .toggle:focus-visible {
+  border-color: var(--gold);
+  outline: none;
 }
 
 .aventuria-hero-sheet .toggle .icon-badge {
@@ -466,7 +484,8 @@
 
 .aventuria-hero-sheet .attr .roll-badge:hover,
 .aventuria-hero-sheet .attr .roll-badge:focus-visible {
-  box-shadow: inset 0 0 0 2px var(--gold);
+  transform: scale(1.18);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--gold), 0 3px 8px rgba(0, 0, 0, 0.35);
   outline: none;
 }
 
@@ -621,6 +640,12 @@
   line-height: 1.55;
 }
 
+.aventuria-hero-sheet .ability-foot {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.4rem;
+}
+
 /* ---------- Skills ---------- */
 
 .aventuria-hero-sheet .skills {
@@ -639,6 +664,20 @@
   border-radius: 6px;
   padding: 0.32rem 0.55rem;
   font-size: 0.84rem;
+  transition: background 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+
+/* Highlight the whole tile when its roll button is hovered/focused, not just the
+   text - a plain color change on the button alone read as too subtle. */
+.aventuria-hero-sheet .skill:has(.skill-roll:hover),
+.aventuria-hero-sheet .skill:has(.skill-roll:focus-visible) {
+  background: color-mix(in srgb, var(--gold) 14%, var(--panel));
+  border-color: var(--gold);
+  box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+.aventuria-hero-sheet .skill:has(.skill-roll:active) {
+  background: color-mix(in srgb, var(--gold) 24%, var(--panel));
 }
 
 .aventuria-hero-sheet .skill input {
@@ -654,21 +693,16 @@
   padding: 0;
   margin: 0;
   font: inherit;
+  font-weight: inherit;
   color: inherit;
   text-align: left;
   cursor: pointer;
-  transition: color 120ms ease;
 }
 
 .aventuria-hero-sheet .skill-roll:hover,
 .aventuria-hero-sheet .skill-roll:focus-visible {
-  color: var(--gold);
   outline: none;
-  text-decoration: underline;
-}
-
-.aventuria-hero-sheet .skill-roll:active {
-  transform: scale(0.97);
+  font-weight: 700;
 }
 
 /* ---------- Categories table with real icons ---------- */

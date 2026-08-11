@@ -63,6 +63,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
       toggleCategory: AventuriaHelpersHeroSheet.#toggleCategory,
       switchTab: AventuriaHelpersHeroSheet.#switchTab,
       toggleLock: AventuriaHelpersHeroSheet.#toggleLock,
+      toggleAbilityUsed: AventuriaHelpersHeroSheet.#toggleAbilityUsed,
     },
     form: { submitOnChange: true },
   };
@@ -79,6 +80,16 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
   /** Whether the "Spielmodus" lock is currently on for this actor. */
   get locked() {
     return !!this.actor.getFlag("aventuria-helpers", "locked");
+  }
+
+  /**
+   * Whether the special ability has been marked "verwendet" this session. Not part
+   * of the aventuria data model (can't add fields there), so it's a module flag
+   * instead - and, like the lock switch, meant to stay usable during play regardless
+   * of the Spielmodus lock.
+   */
+  get abilityUsed() {
+    return !!this.actor.getFlag("aventuria-helpers", "specialAbilityUsed");
   }
 
   /**
@@ -105,6 +116,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
       editable: this.isEditable,
       owner: this.actor.isOwner,
       locked: this.locked,
+      abilityUsed: this.abilityUsed,
       config: CONFIG.Aventuria,
       levelChoices: { 1: "I", 2: "II", 3: "III" },
       tabs: {
@@ -165,12 +177,13 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
    * When the sheet isn't editable (e.g. "Spielmodus" active), the framework disables
    * every form-associated element it finds, including plain action buttons. Re-enable
    * the ones that must stay usable regardless of the lock (switching the lock itself
-   * back off, changing tabs, rolling).
+   * back off, changing tabs, rolling, marking the special ability used) - anything
+   * carrying the shared `always-active` class.
    * @inheritdoc
    */
   async _onRender(context, options) {
     await super._onRender(context, options);
-    for (const el of this.element.querySelectorAll(".lock-switch, .railbtn, .s-btn, .roll-badge, .skill-roll")) {
+    for (const el of this.element.querySelectorAll(".always-active")) {
       el.disabled = false;
     }
   }
@@ -249,5 +262,14 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
   static async #toggleLock() {
     const locked = this.actor.getFlag("aventuria-helpers", "locked");
     await this.actor.setFlag("aventuria-helpers", "locked", !locked);
+  }
+
+  /**
+   * Toggles whether the special ability is marked "verwendet".
+   * @this AventuriaHelpersHeroSheet
+   */
+  static async #toggleAbilityUsed() {
+    const used = this.actor.getFlag("aventuria-helpers", "specialAbilityUsed");
+    await this.actor.setFlag("aventuria-helpers", "specialAbilityUsed", !used);
   }
 }

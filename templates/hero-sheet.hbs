@@ -3,7 +3,7 @@
   <nav class="tab-rail" role="tablist" aria-label="Bereich wählen">
     <button
       type="button"
-      class="railbtn {{#if tabs.held.active}}active{{/if}}"
+      class="railbtn always-active {{#if tabs.held.active}}active{{/if}}"
       data-action="switchTab"
       data-tab="held"
       role="tab"
@@ -12,7 +12,7 @@
     ><img src="{{icons.close}}" alt="{{localize 'TYPES.Actor.aventuria.hero'}}"></button>
     <button
       type="button"
-      class="railbtn {{#if tabs.talente.active}}active{{/if}}"
+      class="railbtn always-active {{#if tabs.talente.active}}active{{/if}}"
       data-action="switchTab"
       data-tab="talente"
       role="tab"
@@ -22,7 +22,7 @@
 
     <button
       type="button"
-      class="lock-switch {{#if locked}}on{{/if}}"
+      class="lock-switch always-active {{#if locked}}on{{/if}}"
       data-action="toggleLock"
       aria-pressed="{{locked}}"
       data-tooltip="{{#if locked}}{{localize 'AVENTURIA_HELPERS.HeroSheet.Unlock'}}{{else}}{{localize 'AVENTURIA_HELPERS.HeroSheet.Lock'}}{{/if}}"
@@ -54,8 +54,8 @@
       </div>
 
       <div class="s-actions">
-        <button type="button" class="s-btn" data-action="rollTest">{{localize "AVENTURIA.Macros.RollTest.Title"}}</button>
-        <button type="button" class="s-btn ghost" data-action="rollDamage">{{localize "AVENTURIA.Macros.RollDamage.Title"}}</button>
+        <button type="button" class="s-btn always-active" data-action="rollTest">{{localize "AVENTURIA.Macros.RollTest.Title"}}</button>
+        <button type="button" class="s-btn ghost always-active" data-action="rollDamage">{{localize "AVENTURIA.Macros.RollDamage.Title"}}</button>
       </div>
     </header>
 
@@ -65,23 +65,23 @@
       <section class="tab {{#if tabs.held.active}}active{{/if}}" id="tab-held">
         <div class="attrs">
           <label class="attr close" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.close.label'}}">
-            <button type="button" class="badge roll-badge" data-action="rollAttribute" data-attribute="close" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}"><img src="{{icons.close}}" alt=""></button>
+            <button type="button" class="badge roll-badge always-active" data-action="rollAttribute" data-attribute="close" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}"><img src="{{icons.close}}" alt=""></button>
             <input type="number" name="system.close" value="{{system.close}}" {{#unless editable}}disabled{{/unless}}>
           </label>
           <label class="attr ranged" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.ranged.label'}}">
-            <button type="button" class="badge roll-badge" data-action="rollAttribute" data-attribute="ranged" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}"><img src="{{icons.ranged}}" alt=""></button>
+            <button type="button" class="badge roll-badge always-active" data-action="rollAttribute" data-attribute="ranged" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}"><img src="{{icons.ranged}}" alt=""></button>
             <input type="number" name="system.ranged" value="{{system.ranged}}" {{#unless editable}}disabled{{/unless}}>
           </label>
           <label class="attr magic" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.magic.label'}}">
             {{#if system.magic}}
-              <button type="button" class="badge roll-badge" data-action="rollAttribute" data-attribute="magic" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}"><img src="{{icons.magic}}" alt=""></button>
+              <button type="button" class="badge roll-badge always-active" data-action="rollAttribute" data-attribute="magic" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}"><img src="{{icons.magic}}" alt=""></button>
             {{else}}
               <span class="badge"><img src="{{icons.magic}}" alt=""></span>
             {{/if}}
             <input type="number" name="system.magic" value="{{system.magic}}" {{#unless editable}}disabled{{/unless}}>
           </label>
           <label class="attr dodge" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.dodge.label'}}">
-            <button type="button" class="badge roll-badge" data-action="rollAttribute" data-attribute="dodge" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}"><img src="{{icons.dodge}}" alt=""></button>
+            <button type="button" class="badge roll-badge always-active" data-action="rollAttribute" data-attribute="dodge" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}"><img src="{{icons.dodge}}" alt=""></button>
             <input type="number" name="system.dodge" value="{{system.dodge}}" {{#unless editable}}disabled{{/unless}}>
           </label>
           <label class="attr life" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.lifePoints.label'}}">
@@ -156,6 +156,14 @@
             <span class="tag muted">{{localize "AVENTURIA.Models.Hero.FIELDS.specialAbility.label"}}</span>
           </div>
           <div class="editor" data-edit="system.specialAbility.description">{{{enrichedSpecialAbility}}}</div>
+          <div class="ability-foot">
+            <button
+              type="button"
+              class="toggle always-active {{#if abilityUsed}}on{{/if}}"
+              data-action="toggleAbilityUsed"
+              data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.AbilityUsedTooltip'}}"
+            ><span class="icon-badge"><img src="{{icons.exhaust}}" alt=""></span>{{localize "AVENTURIA_HELPERS.HeroSheet.AbilityUsed"}}</button>
+          </div>
         </div>
       </section>
 
@@ -164,7 +172,7 @@
         <div class="skills">
           {{#each system.skills as |value key|}}
             <label class="skill">
-              <button type="button" class="skill-roll" data-action="rollSkill" data-skill="{{key}}" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}">{{localize (concat "AVENTURIA.Models.Hero.FIELDS.skills." key ".label")}}</button>
+              <button type="button" class="skill-roll always-active" data-action="rollSkill" data-skill="{{key}}" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}">{{localize (concat "AVENTURIA.Models.Hero.FIELDS.skills." key ".label")}}</button>
               <input type="number" name="system.skills.{{key}}" value="{{value}}" {{#unless editable}}disabled{{/unless}}>
             </label>
           {{/each}}
