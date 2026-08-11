@@ -46,6 +46,12 @@
       "Success": "Bestanden",
       "Failure": "Nicht bestanden"
     },
+    "Welcome": {
+      "Title": "Willkommen bei Aventuria",
+      "Heading": "Willkommen, Held!",
+      "Intro": "Dieses Fenster wird zu einem kleinen Guide, der dich Schritt für Schritt durch die Aventuria-Werkzeuge in Foundry führt. Aktuell steht hier erst der Einstieg - weitere Schritte folgen.",
+      "GetStarted": "Los geht's"
+    },
     "Combat": {
       "AddEnemyPhase": "Gegneraktionen hinzufügen",
       "EnemyPhaseName": "Gegneraktionen"

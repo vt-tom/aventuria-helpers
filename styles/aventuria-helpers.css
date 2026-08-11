@@ -1,4 +1,6 @@
-.aventuria-helpers.hero-sheet {
+/* Shared palette for every aventuria-helpers window (hero sheet, welcome
+   screen, future guide steps, ...), not just the hero sheet. */
+.aventuria-helpers {
   --paper: #f6ecd4;
   --panel: #fffcf5;
   --ink: #2a2015;
@@ -1194,4 +1196,58 @@
   font-weight: 700;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Welcome screen ---------- */
+
+.aventuria-helpers.welcome-screen .window-content {
+  background: var(--paper);
+}
+
+.aventuria-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.aventuria-welcome .banner {
+  max-width: 220px;
+  max-height: 120px;
+  object-fit: contain;
+}
+
+.aventuria-welcome h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.4rem;
+  color: var(--ink);
+}
+
+.aventuria-welcome p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.aventuria-welcome .welcome-actions {
+  margin-top: 0.5rem;
+}
+
+.aventuria-welcome .w-btn {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--gold);
+  color: var(--panel);
+  border: 1px solid var(--gold);
+  border-radius: 5px;
+  padding: 0.55rem 1.4rem;
+  cursor: pointer;
+}
+
+.aventuria-welcome .w-btn:hover {
+  filter: brightness(1.08);
 }

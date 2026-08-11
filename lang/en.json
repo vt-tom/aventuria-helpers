@@ -1,0 +1,72 @@
+{
+  "AVENTURIA_HELPERS": {
+    "HeroSheet": {
+      "Label": "Aventuria Helper: Hero Sheet",
+      "Categories": {
+        "Close": "Melee",
+        "Ranged": "Ranged",
+        "Armor": "Armor",
+        "Spell": "Spell",
+        "Chant": "Chant",
+        "Other": "Other"
+      },
+      "SkillCard": "Skill Card",
+      "SkillImageTooltip": "Change skill card image",
+      "SerialNumber": "Set No.",
+      "SerialNumberSkill": "Skill Set No.",
+      "Lock": "Play mode (lock sheet)",
+      "Unlock": "End play mode (unlock sheet)",
+      "AbilityUsed": "Used",
+      "AbilityUsedTooltip": "Mark special ability as used (changeable even in play mode)",
+      "MarkUnused": "Mark as unused",
+      "Ready": "Ready",
+      "Exhausted": "Exhausted",
+      "MarkExhausted": "Mark as exhausted",
+      "MakeReady": "Make ready",
+      "ImagesTab": "Images",
+      "CharacterArt": "Hero Card",
+      "ViewLarge": "Open large view",
+      "NoItems": "No items",
+      "NoEffects": "No effects"
+    },
+    "Attributes": {
+      "Close": "Melee",
+      "Ranged": "Ranged",
+      "Magic": "Magic",
+      "Dodge": "Dodge"
+    },
+    "Probe": {
+      "Title": "{attribute} check",
+      "EquipmentTitle": "Use {name}",
+      "UseEquipment": "Use equipment (check + damage, then exhausted)",
+      "Target": "Target value",
+      "Modifier": "Modifier",
+      "Hint": "Positive values make the check easier and are subtracted from the result. Negative values make the check harder and are added.",
+      "Roll": "Roll",
+      "Success": "Success",
+      "Failure": "Failure"
+    },
+    "Welcome": {
+      "Title": "Welcome to Aventuria",
+      "Heading": "Welcome, hero!",
+      "Intro": "This window will grow into a small guide that walks you through the Aventuria tools in Foundry step by step. Right now it's just the starting point - more steps will follow.",
+      "GetStarted": "Get started"
+    },
+    "Combat": {
+      "AddEnemyPhase": "Add enemy actions",
+      "EnemyPhaseName": "Enemy Actions"
+    },
+    "Macros": {
+      "ResetCardRotations": {
+        "Name": "Reset card rotations",
+        "MissingCcm": "Complete Card Management is not active.",
+        "GmOnly": "Only the GM can reset card rotations.",
+        "NoScene": "No scene is open.",
+        "NoneRotated": "No card was rotated.",
+        "Done": "{count} card(s) reset.",
+        "ConfirmTitle": "Round ended",
+        "ConfirmBody": "Should all cards on the scene be rotated back to their original position?"
+      }
+    }
+  }
+}

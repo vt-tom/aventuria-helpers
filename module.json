@@ -19,6 +19,11 @@
       "lang": "de",
       "path": "lang/de.json",
       "name": "Deutsch (German)"
+    },
+    {
+      "lang": "en",
+      "path": "lang/en.json",
+      "name": "English"
     }
   ],
   "relationships": {
