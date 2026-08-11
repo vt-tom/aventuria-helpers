@@ -242,7 +242,9 @@
 .aventuria-hero-sheet .toggle {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.3rem;
+  min-width: 5.6rem;
   font: inherit;
   font-size: 0.72rem;
   padding: 0.16rem 0.55rem;

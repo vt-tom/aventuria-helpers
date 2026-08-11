@@ -141,6 +141,17 @@ Der manuelle Erschöpfen-Button bleibt unabhängig davon weiter bedienbar (z.B. 
 
 `scripts/probe-roll.mjs` wurde intern refactort: `promptModifier()` (Dialog) und `rollD20()` (Würfeln+Auswertung) sind jetzt eigene kleine Funktionen, die sowohl `rollProbe()` (Attribute/Talente) als auch das neue `rollEquipment()` nutzen. `templates/chat/probe-card.hbs` hat einen optionalen `{{#if damage}}`-Block bekommen, den nur `rollEquipment()` befüllt.
 
+## Zustand vs. Aktion bei den Toggle-Buttons (Stand 2026-08-11)
+
+Nutzer-Feedback: Bei "Erschöpfen" und "Verwendet" war nicht erkennbar, ob der aktuelle (farbige/gefüllte) Zustand "ist bereits erschöpft/verwendet" oder "klicke hier zum Erschöpfen/Verwenden" bedeutet – der Button-Text blieb bisher in beiden Zuständen identisch, nur die Füllfarbe änderte sich.
+
+**Lösung:** Der sichtbare Text wechselt jetzt mit dem Zustand und beschreibt immer den **aktuellen Status** (nicht die Aktion):
+
+- Erschöpfen-Button: `Bereit` (nicht erschöpft) ↔ `Erschöpft` (erschöpft). Neue Keys `AVENTURIA_HELPERS.HeroSheet.Ready`/`.Exhausted`.
+- Verwendet-Button: `Bereit` (nicht verwendet) ↔ `Verwendet`.
+
+Beide teilen sich bewusst denselben Status-Begriff "Bereit" für den Grundzustand – ein wiedererkennbares Vokabular über beide Toggles hinweg. Der **Tooltip** beschreibt stattdessen die Klick-**Aktion** ("Als erschöpft markieren" / "Bereit machen" / "Als nicht verwendet markieren") – neue Keys `MarkExhausted`, `MakeReady`, `MarkUnused`. `.toggle` hat jetzt `min-width:5.6rem`, damit der Button beim Textwechsel nicht sichtbar in der Breite springt.
+
 ## Deutlichere Hover-Effekte (Stand 2026-08-11)
 
 Nutzer-Feedback: Der Hover-Effekt der Eigenschaften-Proben-Medaillons war zu unauffällig, und der reine Textfarb-Wechsel bei den Talent-Proben wirkte nicht überzeugend. Fixes:

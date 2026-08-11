@@ -17,7 +17,12 @@
       "Lock": "Spielmodus (Sheet sperren)",
       "Unlock": "Spielmodus beenden (Sheet entsperren)",
       "AbilityUsed": "Verwendet",
-      "AbilityUsedTooltip": "Sonderfertigkeit als verwendet markieren (auch im Spielmodus änderbar)"
+      "AbilityUsedTooltip": "Sonderfertigkeit als verwendet markieren (auch im Spielmodus änderbar)",
+      "MarkUnused": "Als nicht verwendet markieren",
+      "Ready": "Bereit",
+      "Exhausted": "Erschöpft",
+      "MarkExhausted": "Als erschöpft markieren",
+      "MakeReady": "Bereit machen"
     },
     "Attributes": {
       "Close": "Nahkampf",

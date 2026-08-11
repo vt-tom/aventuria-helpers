@@ -114,9 +114,13 @@
                   <input type="number" name="system.basicEquipment.endurance" value="{{endurance}}" {{#unless ../editable}}disabled{{/unless}}>
                 </span>
                 <span>{{localize "AVENTURIA.Models.Hero.FIELDS.basicEquipment.damage.label"}} <input type="text" class="freetext" name="system.basicEquipment.damage" value="{{damage}}" {{#unless ../editable}}disabled{{/unless}}></span>
-                <button type="button" class="toggle always-active {{#if exhaust}}on{{/if}}" data-action="toggleExhaust" data-equipment="basicEquipment" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.basicEquipment.exhaust.label'}}">
-                  <span class="icon-badge"><img src="{{../icons.exhaust}}" alt=""></span>{{localize "AVENTURIA.Models.Hero.FIELDS.basicEquipment.exhaust.label"}}
-                </button>
+                <button
+                  type="button"
+                  class="toggle always-active {{#if exhaust}}on{{/if}}"
+                  data-action="toggleExhaust"
+                  data-equipment="basicEquipment"
+                  data-tooltip="{{#if exhaust}}{{localize 'AVENTURIA_HELPERS.HeroSheet.MakeReady'}}{{else}}{{localize 'AVENTURIA_HELPERS.HeroSheet.MarkExhausted'}}{{/if}}"
+                ><span class="icon-badge"><img src="{{../icons.exhaust}}" alt=""></span>{{#if exhaust}}{{localize "AVENTURIA_HELPERS.HeroSheet.Exhausted"}}{{else}}{{localize "AVENTURIA_HELPERS.HeroSheet.Ready"}}{{/if}}</button>
               </div>
             </div>
           {{/with}}
@@ -140,9 +144,13 @@
                   <input type="number" name="system.secondEquipment.endurance" value="{{endurance}}" {{#unless ../editable}}disabled{{/unless}}>
                 </span>
                 <span>{{localize "AVENTURIA.Models.Hero.FIELDS.secondEquipment.damage.label"}} <input type="text" class="freetext" name="system.secondEquipment.damage" value="{{damage}}" {{#unless ../editable}}disabled{{/unless}}></span>
-                <button type="button" class="toggle always-active {{#if exhaust}}on{{/if}}" data-action="toggleExhaust" data-equipment="secondEquipment" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.secondEquipment.exhaust.label'}}">
-                  <span class="icon-badge"><img src="{{../icons.exhaust}}" alt=""></span>{{localize "AVENTURIA.Models.Hero.FIELDS.secondEquipment.exhaust.label"}}
-                </button>
+                <button
+                  type="button"
+                  class="toggle always-active {{#if exhaust}}on{{/if}}"
+                  data-action="toggleExhaust"
+                  data-equipment="secondEquipment"
+                  data-tooltip="{{#if exhaust}}{{localize 'AVENTURIA_HELPERS.HeroSheet.MakeReady'}}{{else}}{{localize 'AVENTURIA_HELPERS.HeroSheet.MarkExhausted'}}{{/if}}"
+                ><span class="icon-badge"><img src="{{../icons.exhaust}}" alt=""></span>{{#if exhaust}}{{localize "AVENTURIA_HELPERS.HeroSheet.Exhausted"}}{{else}}{{localize "AVENTURIA_HELPERS.HeroSheet.Ready"}}{{/if}}</button>
               </div>
             </div>
           {{/with}}
@@ -159,8 +167,8 @@
               type="button"
               class="toggle always-active {{#if abilityUsed}}on{{/if}}"
               data-action="toggleAbilityUsed"
-              data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.AbilityUsedTooltip'}}"
-            ><span class="icon-badge"><img src="{{icons.exhaust}}" alt=""></span>{{localize "AVENTURIA_HELPERS.HeroSheet.AbilityUsed"}}</button>
+              data-tooltip="{{#if abilityUsed}}{{localize 'AVENTURIA_HELPERS.HeroSheet.MarkUnused'}}{{else}}{{localize 'AVENTURIA_HELPERS.HeroSheet.AbilityUsedTooltip'}}{{/if}}"
+            ><span class="icon-badge"><img src="{{icons.exhaust}}" alt=""></span>{{#if abilityUsed}}{{localize "AVENTURIA_HELPERS.HeroSheet.AbilityUsed"}}{{else}}{{localize "AVENTURIA_HELPERS.HeroSheet.Ready"}}{{/if}}</button>
           </div>
         </div>
       </section>
