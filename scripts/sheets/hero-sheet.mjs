@@ -92,6 +92,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
       createDoc: AventuriaHelpersHeroSheet.#createDoc,
       deleteDoc: AventuriaHelpersHeroSheet.#deleteDoc,
       toggleEffect: AventuriaHelpersHeroSheet.#toggleEffect,
+      viewImage: AventuriaHelpersHeroSheet.#viewImage,
     },
     form: { submitOnChange: true },
   };
@@ -423,5 +424,22 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
     if (!this.isEditable) return;
     const effect = this.#getEmbeddedDocument(target);
     await effect?.update({ disabled: !effect.disabled });
+  }
+
+  /**
+   * Opens an image in a large popout - used in place of the file-picker click
+   * (editImage) once the sheet isn't editable, e.g. during Spielmodus, same
+   * mechanism as aventuria's own "View Skill Card" header control.
+   * @this AventuriaHelpersHeroSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #viewImage(event, target) {
+    if (!target.dataset.src) return;
+    new foundry.applications.apps.ImagePopout({
+      src: target.dataset.src,
+      uuid: this.actor.uuid,
+      window: { title: target.dataset.title || this.actor.name },
+    }).render({ force: true });
   }
 }

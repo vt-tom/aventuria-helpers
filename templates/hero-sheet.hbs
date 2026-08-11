@@ -268,7 +268,11 @@
             <img
               src="{{actor.img}}"
               alt="{{localize 'AVENTURIA_HELPERS.HeroSheet.CharacterArt'}}"
-              {{#if editable}}data-action="editImage" data-edit="img"{{/if}}
+              {{#if editable}}
+                data-action="editImage" data-edit="img"
+              {{else}}
+                data-action="viewImage" data-src="{{actor.img}}" data-title="{{actor.name}}" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.ViewLarge'}}"
+              {{/if}}
             >
             <figcaption>{{localize "AVENTURIA_HELPERS.HeroSheet.CharacterArt"}}</figcaption>
           </figure>
@@ -276,7 +280,11 @@
             <img
               src="{{system.skillImage}}"
               alt="{{localize 'AVENTURIA_HELPERS.HeroSheet.SkillCard'}}"
-              {{#if editable}}data-action="editImage" data-edit="system.skillImage" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.SkillImageTooltip'}}"{{/if}}
+              {{#if editable}}
+                data-action="editImage" data-edit="system.skillImage" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.SkillImageTooltip'}}"
+              {{else}}
+                data-action="viewImage" data-src="{{system.skillImage}}" data-title="{{actor.name}}" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.ViewLarge'}}"
+              {{/if}}
             >
             <figcaption>{{localize "AVENTURIA_HELPERS.HeroSheet.SkillCard"}}</figcaption>
           </figure>

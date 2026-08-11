@@ -225,3 +225,11 @@ Hooks.on("getHeaderControlsActorSheetV2", (e, t) => {
 Wichtige Erkenntnis nebenbei: dieser Hook feuert **für unser eigenes Sheet mit**, obwohl unsere Klasse `AventuriaHelpersHeroSheet` heißt, nicht `ActorSheetV2` – Foundry feuert `getHeaderControls<Name>` offenbar auch für die Basisklasse(n) in der Prototypkette, nicht nur für den eigenen Klassennamen (`foundry.applications.sheets.ActorSheet`, von der wir erben, trägt intern offenbar noch den Namen `ActorSheetV2`). Bedeutet: alle `getHeaderControlsActorSheetV2`-Hooks aus `aventuria` gelten automatisch auch für unser Sheet, ohne dass wir etwas dafür tun müssen.
 
 **Fix:** Bilder-Tab rechts zeigt jetzt `system.skillImage` (Talentkarte) statt `actor.prototypeToken.texture.src`, inkl. `data-edit="system.skillImage"`. Wiederverwendet die bereits vorhandenen (aber bis dahin ungenutzten) Locale-Keys `AVENTURIA_HELPERS.HeroSheet.SkillCard`/`.SkillImageTooltip`. `TokenArt`-Locale-Key entfernt (nicht mehr referenziert).
+
+## Bilder im Spielmodus: Klick öffnet Großansicht statt nichts zu tun (Stand 2026-08-11)
+
+Nutzerwunsch: Die beiden Bilder im Bilder-Tab sollen im Spielmodus (nicht editierbar) bei Klick eine Großansicht öffnen, statt (wie bisher) einfach nichts zu tun, da `data-action="editImage"` dort komplett fehlte.
+
+**Fix:** Neue Action `viewImage` (`scripts/sheets/hero-sheet.mjs`), nutzt denselben Mechanismus wie `aventuria`s eigenes "View Skill Card" (`new foundry.applications.apps.ImagePopout({src, uuid, window:{title}}).render({force:true})`). Template zeigt jetzt pro Bild `{{#if editable}}editImage{{else}}viewImage{{/if}}` – editierbar → Datei-Picker (wie gehabt), gesperrt → Großansicht. Keine `always-active`-Klasse nötig: `<img>` ist kein formularassoziiertes Element und wird von der `_onRender()`-Deaktivierungs-Logik (die nur `form.elements` betrifft) gar nicht erst angefasst.
+
+Nächster Schritt: Nutzer testet Bild-Klick sowohl im Normal- (Picker öffnet) als auch im Spielmodus (Großansicht öffnet), danach Phase 3 (Macros).

@@ -867,7 +867,7 @@
   background: var(--paper);
 }
 
-.aventuria-hero-sheet .image-slot img[data-action="editImage"] {
+.aventuria-hero-sheet .image-slot img[data-action] {
   cursor: pointer;
 }
 
