@@ -1,3 +1,4 @@
+{{#if sections.welcome.active}}
 <div class="aventuria-welcome">
   <img class="banner" src="modules/aventuria/assets/art-de/DSA5_Logo.webp" alt="{{localize 'AVENTURIA_HELPERS.Welcome.Title'}}">
 
@@ -6,6 +7,20 @@
   <p>{{localize 'AVENTURIA_HELPERS.Welcome.Intro'}}</p>
 
   <div class="welcome-actions">
-    <button type="button" class="w-btn" data-action="close">{{localize 'AVENTURIA_HELPERS.Welcome.GetStarted'}}</button>
+    <button type="button" class="w-btn" data-action="showSection" data-section="gettingStarted">{{localize 'AVENTURIA_HELPERS.Welcome.FirstSteps'}}</button>
   </div>
 </div>
+{{/if}}
+
+{{#if sections.gettingStarted.active}}
+<div class="aventuria-welcome">
+  <h2>{{localize 'AVENTURIA_HELPERS.GettingStarted.Heading'}}</h2>
+
+  <p>{{localize 'AVENTURIA_HELPERS.GettingStarted.Intro'}}</p>
+
+  <div class="welcome-actions">
+    <button type="button" class="w-btn ghost" data-action="showSection" data-section="welcome">{{localize 'AVENTURIA_HELPERS.Welcome.Back'}}</button>
+    <button type="button" class="w-btn" data-action="close">{{localize 'AVENTURIA_HELPERS.Welcome.Done'}}</button>
+  </div>
+</div>
+{{/if}}

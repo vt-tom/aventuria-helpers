@@ -50,7 +50,13 @@
       "Title": "Willkommen bei Aventuria",
       "Heading": "Willkommen, Held!",
       "Intro": "Dieses Fenster wird zu einem kleinen Guide, der dich Schritt für Schritt durch die Aventuria-Werkzeuge in Foundry führt. Aktuell steht hier erst der Einstieg - weitere Schritte folgen.",
-      "GetStarted": "Los geht's"
+      "FirstSteps": "Erste Schritte",
+      "Back": "Zurück",
+      "Done": "Schließen"
+    },
+    "GettingStarted": {
+      "Heading": "Erste Schritte",
+      "Intro": "Auch dieser Abschnitt ist noch ein Platzhalter - der eigentliche Inhalt folgt in einem der nächsten Schritte."
     },
     "Combat": {
       "AddEnemyPhase": "Gegneraktionen hinzufügen",

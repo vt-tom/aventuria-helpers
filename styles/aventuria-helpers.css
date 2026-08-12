@@ -1233,6 +1233,9 @@
 }
 
 .aventuria-welcome .welcome-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
   margin-top: 0.5rem;
 }
 
@@ -1250,4 +1253,9 @@
 
 .aventuria-welcome .w-btn:hover {
   filter: brightness(1.08);
+}
+
+.aventuria-welcome .w-btn.ghost {
+  background: none;
+  color: var(--gold);
 }
