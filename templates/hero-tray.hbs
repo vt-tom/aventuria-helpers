@@ -1,0 +1,62 @@
+<div class="tray-root">
+  <div class="tray-bar">
+    <span class="tray-label">{{localize 'AVENTURIA_HELPERS.HeroTray.Title'}}</span>
+    <div class="tray-bar-actions">
+      <button type="button" class="tray-config" data-action="openConfig" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.Config'}}">
+        <i class="fa-solid fa-gear"></i>
+      </button>
+      <button type="button" class="tray-toggle" data-action="toggleTray" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ShowPlayers'}}">
+        <i class="fa-solid fa-users"></i>
+      </button>
+    </div>
+  </div>
+
+  {{#if empty}}
+  <button type="button" class="tray-pick" data-action="pickHero" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.PickHero'}}">
+    <i class="fa-solid fa-user-plus"></i>
+  </button>
+  {{else}}
+  <div class="tray-board">
+    <header class="tray-head">
+      <img class="tray-portrait" src="{{actor.img}}" alt="{{actor.name}}" data-action="openSheet" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.OpenSheet'}}">
+      <div class="tray-id">
+        <span class="tray-player">{{playerName}}</span>
+        <span class="tray-hero">{{actor.name}}</span>
+      </div>
+    </header>
+
+    <div class="tray-stack">
+      <div class="tray-stack-head">
+        <img src="{{icons.deck}}" alt="">
+        <span class="tray-count">{{deck.count}}</span>
+      </div>
+      <div class="tray-stack-actions">
+        <button type="button" data-action="drawCard" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.DrawCard'}}"><i class="fa-solid fa-hand"></i></button>
+        <button type="button" data-action="shuffleDeck" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ShuffleDeck'}}"><i class="fa-solid fa-shuffle"></i></button>
+        <button type="button" data-action="previewCards" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.PreviewCards'}}"><i class="fa-solid fa-eye"></i></button>
+        <button type="button" data-action="viewDeck" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ViewDeck'}}"><i class="fa-solid fa-layer-group"></i></button>
+      </div>
+    </div>
+
+    <div class="tray-stack">
+      <div class="tray-stack-head">
+        <img src="{{icons.discard}}" alt="">
+        <span class="tray-count">{{discard.count}}</span>
+      </div>
+      <div class="tray-stack-actions">
+        <button type="button" data-action="viewDiscard" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ViewDiscard'}}"><i class="fa-solid fa-eye"></i></button>
+      </div>
+    </div>
+
+    <div class="tray-stack">
+      <div class="tray-stack-head">
+        <i class="fa-solid fa-hand-holding"></i>
+        <span class="tray-count">{{hand.count}}</span>
+      </div>
+      <div class="tray-stack-actions">
+        <button type="button" data-action="viewHand" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ViewHand'}}"><i class="fa-solid fa-eye"></i></button>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+</div>

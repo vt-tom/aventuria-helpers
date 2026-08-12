@@ -1,0 +1,15 @@
+<section class="hand-sheet-inner">
+  <div class="hand-sheet-bar">
+    <span class="hand-sheet-label">{{name.value}}</span>
+  </div>
+  <ol class="cards">
+    {{#each cards}}
+    <li class="card" data-card-id="{{card.id}}">
+      <a data-action="playCard" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.PlayCard'}}">
+        <i class="fa-solid fa-circle-play"></i>
+      </a>
+      <img src="{{card.img}}" alt="{{card.name}}">
+    </li>
+    {{/each}}
+  </ol>
+</section>

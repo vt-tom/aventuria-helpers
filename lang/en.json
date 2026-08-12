@@ -62,6 +62,25 @@
       "AddEnemyPhase": "Add enemy actions",
       "EnemyPhaseName": "Enemy Actions"
     },
+    "HeroTray": {
+      "Title": "Hero Tray",
+      "Config": "Configure hero/hand",
+      "PickHero": "Choose hero (runs \"Prepare Player\")",
+      "OpenSheet": "Open hero sheet",
+      "ShowPlayers": "Show player list",
+      "ShowTray": "Show hero tray",
+      "DrawCard": "Draw card",
+      "ShuffleDeck": "Shuffle deck",
+      "PreviewCards": "Preview cards (look at the top cards)",
+      "ViewDeck": "View deck",
+      "ViewDiscard": "View discard pile",
+      "ViewHand": "View hand",
+      "PlayCard": "Play card",
+      "DragHandle": "Drag to move",
+      "PreviewTitle": "Card Preview",
+      "PreviewAmount": "Number of cards",
+      "Preview": "View"
+    },
     "Macros": {
       "ResetCardRotations": {
         "Name": "Reset card rotations",

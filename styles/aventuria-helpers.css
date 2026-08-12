@@ -1259,3 +1259,412 @@
   background: none;
   color: var(--gold);
 }
+
+/* ---------- Heldenablage (permanent HUD tray) ---------- */
+/* Frameless UI element living in #ui-left-column-1 next to the native player
+   list (see hero-tray.mjs _insertElement()) - only one of the two is visible
+   at a time, toggled via a class on <body> so neither app needs re-rendering
+   just to swap visibility. #ui-left-column-1 itself is narrow (sized for the
+   scene-controls toolbar); nothing in that ancestor chain clips overflow, so
+   a fixed wider width here is safe - same trick core's own #players uses. */
+
+body.ahb-tray-active #players {
+  display: none;
+}
+
+body:not(.ahb-tray-active) .hero-tray {
+  display: none;
+}
+
+/* Toggle-to-tray bubble, injected into #players-active (see injectToggleButton()
+   in hero-tray.mjs) - a positioning context on that specific native element,
+   not on #players itself: #players is a column flex item with no explicit
+   width, so by default it gets stretched to its narrow flex column's width
+   (~72px, sized for the scene-controls toolbar) while its children
+   (#players-active/#players-inactive) visually overflow out to their own
+   explicit 200px width (foundry2.css:8371) without growing #players's own box.
+   Anchoring to #players itself therefore placed left:100% only ~72px in, i.e.
+   in the middle of the overflowing content instead of past its right edge -
+   anchoring to #players-active (which really is 200px wide) fixes that. */
+#players-active {
+  position: relative;
+}
+
+.ahb-tray-toggle {
+  position: absolute;
+  bottom: 4px;
+  left: 100%;
+  margin-left: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #a9822e;
+  background: #f6ecd4;
+  padding: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.ahb-tray-toggle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.ahb-tray-toggle:hover,
+.ahb-tray-toggle:focus-visible {
+  border-color: #f6ecd4;
+  background: #a9822e;
+  outline: none;
+}
+
+.hero-tray {
+  pointer-events: auto;
+  width: 250px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: var(--paper);
+  border: 2px solid var(--gold);
+  border-radius: 10px;
+  padding: 0.75rem;
+  font-size: 0.88rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+.hero-tray .tray-root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.hero-tray .tray-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.hero-tray .tray-label {
+  font-family: Georgia, "Iowan Old Style", serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+
+.hero-tray .tray-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: none;
+}
+
+.hero-tray .tray-config,
+.hero-tray .tray-toggle {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--panel);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.hero-tray .tray-config:hover,
+.hero-tray .tray-config:focus-visible,
+.hero-tray .tray-toggle:hover,
+.hero-tray .tray-toggle:focus-visible {
+  border-color: var(--gold);
+  color: var(--gold);
+  outline: none;
+}
+
+.hero-tray .tray-pick {
+  align-self: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 3px dashed var(--line);
+  background: var(--panel);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin: 0.25rem 0;
+}
+
+.hero-tray .tray-pick:hover,
+.hero-tray .tray-pick:focus-visible {
+  border-color: var(--gold);
+  color: var(--gold);
+  outline: none;
+}
+
+.hero-tray .tray-board {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.hero-tray .tray-head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.hero-tray .tray-portrait {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex: none;
+  border: 2px solid var(--gold);
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.hero-tray .tray-portrait:hover,
+.hero-tray .tray-portrait:focus-visible {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 45%, transparent);
+  outline: none;
+}
+
+.hero-tray .tray-id {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-tray .tray-player {
+  font-size: 0.75rem;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hero-tray .tray-hero {
+  font-family: Georgia, "Iowan Old Style", serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hero-tray .tray-stack {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.4rem 0.55rem;
+}
+
+.hero-tray .tray-stack-head {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: none;
+  width: 3.4rem;
+}
+
+.hero-tray .tray-stack-head img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.hero-tray .tray-stack-head i {
+  width: 28px;
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+.hero-tray .tray-count {
+  font-weight: 700;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-tray .tray-stack-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.hero-tray .tray-stack-actions button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.hero-tray .tray-stack-actions button:hover,
+.hero-tray .tray-stack-actions button:focus-visible {
+  background: color-mix(in srgb, var(--gold) 16%, transparent);
+  color: var(--gold);
+  outline: none;
+}
+
+/* ---------- Hand-Sheet (eigene Optik für Complete Card Managements Docked-Hand-Sheet, siehe scripts/sheets/hand-sheet.mjs) ---------- */
+/* AventuriaHelpersHandSheet erbt Drag&Drop/Kontextmenü unverändert von
+   ccm.apps.CardsSheets.DockedHandSheet - die Positionierung dagegen bewusst
+   NICHT: window.positioned wird in hand-sheet.mjs auf true zurückgesetzt
+   (frei verschiebbares Fenster statt CCMs fester Docking-Position), und die
+   ererbte .docked-Regel aus ccm.css (left/bottom/width) wird hier gezielt
+   wieder auf "auto" zurückgesetzt, damit sie Foundrys eigene, durch Ziehen
+   gesetzte Inline-Position nicht überstimmt. */
+.ccm.cards.docked.hand-sheet {
+  left: auto;
+  bottom: auto;
+  width: auto;
+}
+
+.hand-sheet .window-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--paper);
+  border-bottom: 2px solid var(--gold);
+  padding: 0.3rem 0.6rem;
+}
+
+.hand-sheet .window-header .window-icon {
+  color: var(--gold);
+}
+
+.hand-sheet .window-header .window-title {
+  flex: 1;
+  margin: 0;
+  font-family: Georgia, "Iowan Old Style", serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+
+.hand-sheet .window-header .header-control {
+  color: var(--gold);
+  background: none;
+  border: none;
+}
+
+.hand-sheet .window-header .header-control:hover,
+.hand-sheet .window-header .header-control:focus-visible {
+  color: var(--ink);
+  outline: none;
+}
+
+/* Purely a visual "grab here" affordance - the whole header is already
+   draggable via Foundry's own built-in mechanism (see hand-sheet.mjs). */
+.hand-sheet .window-header .hand-sheet-grip {
+  color: var(--gold);
+  opacity: 0.6;
+  cursor: grab;
+}
+
+/* CCM's "faded-ui" fades the *whole* app to low opacity until the whole thing
+   is hovered. We want something more targeted instead: the panel background
+   stays translucent all the time (see .window-content below), and it's each
+   individual card - not the whole panel - that reacts to hover. Neutralize
+   the inherited whole-panel fade so it doesn't fight that. */
+.hand-sheet.faded-ui,
+.hand-sheet.faded-ui:hover {
+  opacity: 1;
+}
+
+.hand-sheet .window-content {
+  background: color-mix(in srgb, var(--paper) 55%, transparent);
+  padding: 0.5rem 0.75rem;
+}
+
+.hand-sheet-bar {
+  margin-bottom: 0.4rem;
+}
+
+.hand-sheet-label {
+  font-family: Georgia, "Iowan Old Style", serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+
+.hand-sheet .cards .card {
+  margin-right: 0.6rem;
+}
+
+.hand-sheet .cards .card:hover {
+  position: relative;
+  z-index: 5;
+}
+
+.hand-sheet .cards .card img {
+  opacity: 0.55;
+  border-radius: 8px;
+  border: 2px solid var(--gold);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+}
+
+/* Just a light highlight now - the actual "Miniaturvorschau" is the separate
+   floating .hand-card-preview element below, positioned via JS in
+   hand-sheet.mjs (showCardPreview()) rather than scaled up in place, since a
+   large in-place transform got clipped by the window's own bounds. */
+.hand-sheet .cards .card:hover img {
+  opacity: 1;
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+}
+
+.hand-sheet .cards [data-action="playCard"] {
+  color: var(--gold);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+/* Floating card preview - a single shared element (see getPreviewEl() in
+   hand-sheet.mjs), appended to <body> and positioned via inline style in JS
+   so it can float outside the Hand sheet window instead of being clipped by
+   it. Carries the .aventuria-helpers class itself (not a descendant of it) to
+   pick up the palette custom properties, same as the probe dialog/chat card. */
+.hand-card-preview {
+  position: fixed;
+  z-index: 100;
+  width: 320px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 120ms ease;
+}
+
+.hand-card-preview.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.hand-card-preview img {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  border: 3px solid var(--gold);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65);
+}

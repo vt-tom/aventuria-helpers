@@ -62,6 +62,25 @@
       "AddEnemyPhase": "Gegneraktionen hinzufügen",
       "EnemyPhaseName": "Gegneraktionen"
     },
+    "HeroTray": {
+      "Title": "Heldenablage",
+      "Config": "Held/Hand konfigurieren",
+      "PickHero": "Held auswählen (führt \"Bereite Spieler vor\" aus)",
+      "OpenSheet": "Heldenbogen öffnen",
+      "ShowPlayers": "Spielerübersicht anzeigen",
+      "ShowTray": "Heldenablage anzeigen",
+      "DrawCard": "Karte ziehen",
+      "ShuffleDeck": "Deck mischen",
+      "PreviewCards": "Kartenvorschau (oberste Karten ansehen)",
+      "ViewDeck": "Deck ansehen",
+      "ViewDiscard": "Ablage ansehen",
+      "ViewHand": "Hand ansehen",
+      "PlayCard": "Karte ausspielen",
+      "DragHandle": "Zum Verschieben ziehen",
+      "PreviewTitle": "Kartenvorschau",
+      "PreviewAmount": "Anzahl Karten",
+      "Preview": "Ansehen"
+    },
     "Macros": {
       "ResetCardRotations": {
         "Name": "Karten zurückdrehen",
