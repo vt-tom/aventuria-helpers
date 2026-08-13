@@ -26,6 +26,19 @@
       "name": "English"
     }
   ],
+  "packs": [
+    {
+      "name": "macros",
+      "label": "AVENTURIA_HELPERS.Compendium.Macros",
+      "type": "Macro",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "path": "packs/macros",
+      "system": "universal-tabletop-system"
+    }
+  ],
   "relationships": {
     "requires": [
       {

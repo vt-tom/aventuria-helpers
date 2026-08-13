@@ -99,7 +99,13 @@
         "Done": "{count} Karte(n) zurückgedreht.",
         "ConfirmTitle": "Runde beendet",
         "ConfirmBody": "Sollen alle Karten auf der Spieloberfläche wieder in ihre Ausgangsposition zurückgedreht werden?"
+      },
+      "OpenWelcomeScreen": {
+        "Name": "Aventuria-Guide öffnen"
       }
+    },
+    "Compendium": {
+      "Macros": "Aventuria Helfer Makros"
     }
   }
 }

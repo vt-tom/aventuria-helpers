@@ -1,0 +1,22 @@
+{
+  "name": "aventuria-helpers",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zusätzliche Macros und ein alternatives Heldenbogen-Sheet für das Aventuria-Modul.",
+  "scripts": {
+    "pack:macros": "fvtt package pack macros --type Module --id aventuria-helpers --compendiumType Macro --in packs/_source/macros --out packs",
+    "unpack:macros": "fvtt package unpack macros --type Module --id aventuria-helpers --compendiumType Macro --out packs/_source/macros --clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vt-tom/aventuria-helpers.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vt-tom/aventuria-helpers/issues"
+  },
+  "homepage": "https://github.com/vt-tom/aventuria-helpers#readme",
+  "devDependencies": {
+    "@foundryvtt/foundryvtt-cli": "^3.0.4"
+  }
+}

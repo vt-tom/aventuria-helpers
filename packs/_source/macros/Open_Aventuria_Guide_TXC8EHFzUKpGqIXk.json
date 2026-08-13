@@ -1,0 +1,27 @@
+{
+  "_id": "TXC8EHFzUKpGqIXk",
+  "flags": {},
+  "name": "Aventuria-Guide öffnen",
+  "sort": 100000,
+  "_stats": {
+    "compendiumSource": null,
+    "coreVersion": "14.364",
+    "createdTime": 1755071400000,
+    "duplicateSource": null,
+    "exportSource": null,
+    "lastModifiedBy": null,
+    "modifiedTime": null,
+    "systemId": "universal-tabletop-system",
+    "systemVersion": "1.2.1"
+  },
+  "author": null,
+  "command": "game.modules.get(\"aventuria-helpers\").api.openWelcomeScreen();",
+  "img": "icons/svg/direction.svg",
+  "ownership": {
+    "default": 0
+  },
+  "scope": "global",
+  "type": "script",
+  "folder": null,
+  "_key": "!macros!TXC8EHFzUKpGqIXk"
+}

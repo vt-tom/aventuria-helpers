@@ -99,7 +99,13 @@
         "Done": "{count} card(s) reset.",
         "ConfirmTitle": "Round ended",
         "ConfirmBody": "Should all cards on the scene be rotated back to their original position?"
+      },
+      "OpenWelcomeScreen": {
+        "Name": "Open Aventuria guide"
       }
+    },
+    "Compendium": {
+      "Macros": "Aventuria Helpers Macros"
     }
   }
 }

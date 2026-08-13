@@ -1,0 +1,27 @@
+{
+  "_id": "jxDhIpq4zvxiteJm",
+  "flags": {},
+  "name": "Karten zurückdrehen",
+  "sort": 0,
+  "_stats": {
+    "compendiumSource": null,
+    "coreVersion": "14.364",
+    "createdTime": 1755071400000,
+    "duplicateSource": null,
+    "exportSource": null,
+    "lastModifiedBy": null,
+    "modifiedTime": null,
+    "systemId": "universal-tabletop-system",
+    "systemVersion": "1.2.1"
+  },
+  "author": null,
+  "command": "game.modules.get(\"aventuria-helpers\").api.resetCardRotations();",
+  "img": "modules/aventuria/assets/icons/return-card.webp",
+  "ownership": {
+    "default": 0
+  },
+  "scope": "global",
+  "type": "script",
+  "folder": null,
+  "_key": "!macros!jxDhIpq4zvxiteJm"
+}
