@@ -18,7 +18,14 @@
  * Management's own `init` hook - so it's built lazily in `registerHandSheet()`,
  * called from this module's `init` hook after that dependency has already run
  * (guaranteed by `relationships.requires` in module.json).
+ *
+ * Also adds a second play action, "Als Ausdauer spielen" - `DEFAULT_OPTIONS.actions`
+ * merges (rather than replaces) across the inherited class chain, so this sits
+ * alongside `DockedHandSheet`'s own inherited `playCard` action untouched.
  */
+
+import { resolveHandStacks } from "../cards/stacks.mjs";
+import { playCardAsEndurance } from "../cards/endurance.mjs";
 
 /** The lazily-built class; null until `registerHandSheet()` runs. */
 export let AventuriaHelpersHandSheet = null;
@@ -53,7 +60,10 @@ function getPreviewEl() {
  * @param {HTMLElement} sheetEl    The Hand sheet's root element.
  */
 function showCardPreview(cardEl, sheetEl) {
-  const img = cardEl.querySelector("img");
+  // Scoped to .card-art specifically (not just "the first img") - the card
+  // also has an endurance-icon action button, and a stray second <img> there
+  // previously got picked up instead of the actual card art.
+  const img = cardEl.querySelector("img.card-art");
   if (!img?.src) return;
 
   const el = getPreviewEl();
@@ -84,7 +94,37 @@ export function registerHandSheet() {
     static DEFAULT_OPTIONS = {
       classes: ["aventuria-helpers", "hand-sheet"],
       window: { positioned: true },
+      actions: {
+        // `this` (not the outer `AventuriaHelpersHandSheet` binding) - this is
+        // an anonymous class expression, so its own name isn't available
+        // inside its body yet at this point (the outer assignment only
+        // happens once the whole expression finishes evaluating); `this` in a
+        // static field initializer is bound to the class itself regardless.
+        playAsEndurance: this.#onPlayAsEndurance,
+      },
     };
+
+    /**
+     * Plays a card as Ausdauer instead of opening the normal "play to which
+     * stack" dialog - see `cards/endurance.mjs` for what that actually means
+     * (face-down placement on the hero's own scene region, tagged so the
+     * Heldenablage can tell it apart from a normally played card sharing the
+     * same Im-Spiel-Stapel).
+     * @this AventuriaHelpersHandSheet
+     * @param {PointerEvent} event
+     * @param {HTMLElement} target
+     */
+    static async #onPlayAsEndurance(event, target) {
+      if (!this.isEditable) return;
+      const id = target.closest("[data-card-id]").dataset.cardId;
+      const card = this.document.cards.get(id);
+      const stacks = resolveHandStacks(this.document);
+      if (!stacks?.playPile) {
+        ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.HeroTray.NoPlayPile"));
+        return;
+      }
+      await playCardAsEndurance(stacks.playPile, card);
+    }
 
     /** @inheritdoc */
     static PARTS = {

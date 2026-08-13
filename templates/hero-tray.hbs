@@ -57,6 +57,28 @@
         <button type="button" data-action="viewHand" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ViewHand'}}"><i class="fa-solid fa-eye"></i></button>
       </div>
     </div>
+
+    {{#if endurance}}
+    <div class="tray-stack">
+      <div class="tray-stack-head" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.EnduranceReadyTooltip'}}">
+        <img src="{{icons.endurance}}" alt="">
+        <span class="tray-count">{{endurance.ready}}</span>
+      </div>
+      <div class="tray-stack-actions">
+        <button type="button" data-action="exhaustEndurance" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ExhaustEndurance'}}" {{#unless endurance.ready}}disabled{{/unless}}><i class="fa-solid fa-rotate-right"></i></button>
+      </div>
+    </div>
+
+    <div class="tray-stack">
+      <div class="tray-stack-head" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.EnduranceSpentTooltip'}}">
+        <img src="{{icons.endurance}}" alt="" class="spent">
+        <span class="tray-count">{{endurance.spent}}</span>
+      </div>
+      <div class="tray-stack-actions">
+        <button type="button" data-action="readyEndurance" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ReadyEndurance'}}" {{#unless endurance.spent}}disabled{{/unless}}><i class="fa-solid fa-rotate-left"></i></button>
+      </div>
+    </div>
+    {{/if}}
   </div>
   {{/if}}
 </div>

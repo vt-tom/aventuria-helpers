@@ -1522,6 +1522,22 @@ body:not(.ahb-tray-active) .hero-tray {
   outline: none;
 }
 
+.hero-tray .tray-stack-actions button:disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Ausdauer "bereit"/"erschöpft" reuse the same .tray-stack row as
+   Deck/Ablage/Hand above (see cards/endurance.mjs + hero-tray.hbs) - two rows
+   sharing the endurance.webp icon, one per rotate direction, each with its
+   own count and its own single action button (rotate one card 90°, or back
+   to 0°). The "spent" row's icon is dimmed to visually echo a rotated/tapped
+   card without actually rotating the icon image itself. */
+.hero-tray .tray-stack-head img.spent {
+  opacity: 0.45;
+}
+
 /* ---------- Hand-Sheet (eigene Optik für Complete Card Managements Docked-Hand-Sheet, siehe scripts/sheets/hand-sheet.mjs) ---------- */
 /* AventuriaHelpersHandSheet erbt Drag&Drop/Kontextmenü unverändert von
    ccm.apps.CardsSheets.DockedHandSheet - die Positionierung dagegen bewusst
@@ -1557,7 +1573,7 @@ body:not(.ahb-tray-active) .hero-tray {
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--gold);
+  color: var(--ink);
 }
 
 .hand-sheet .window-header .header-control {
@@ -1595,21 +1611,19 @@ body:not(.ahb-tray-active) .hero-tray {
   padding: 0.5rem 0.75rem;
 }
 
-.hand-sheet-bar {
-  margin-bottom: 0.4rem;
-}
-
-.hand-sheet-label {
-  font-family: Georgia, "Iowan Old Style", serif;
-  font-weight: 700;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--gold);
-}
-
+/* display:inline-flex/column so the new below-image "Ausdauer" button (a
+   normal-flow sibling, not an overlay) stacks under the card art instead of
+   overlapping it - see the .card-endurance comment further down for why that
+   matters. Doesn't affect [data-action="playCard"] below, which stays
+   absolutely positioned over the image exactly as CCM's own ccm.css already
+   places it (out of flow, so the flex column doesn't touch it). */
 .hand-sheet .cards .card {
   margin-right: 0.6rem;
+  display: inline-flex !important;
+  flex-direction: column;
+  align-items: stretch;
+  height: auto !important;
+  vertical-align: top;
 }
 
 .hand-sheet .cards .card:hover {
@@ -1638,6 +1652,42 @@ body:not(.ahb-tray-active) .hero-tray {
 .hand-sheet .cards [data-action="playCard"] {
   color: var(--gold);
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+/* "Als Ausdauer spielen" (cards/endurance.mjs) deliberately lives *below* the
+   card art as a normal, non-overlapping button rather than a second overlay
+   stacked on top of the image next to "playCard". Two absolutely-positioned
+   click targets sharing the same small area as the hover-preview listeners
+   and the native HTML5 drag source caused a live hover flicker (the
+   "lifted"/highlighted card and the visible action icon would desync from
+   the actual mouse position while moving across cards) - a separate control
+   outside that area sidesteps the whole class of bug instead of chasing the
+   exact CSS/DOM interaction that caused it. */
+.hand-sheet .cards .card-endurance {
+  appearance: none;
+  margin: 0.3rem 0 0;
+  padding: 0;
+  height: 20px;
+  border: 1px solid var(--gold);
+  border-radius: 5px;
+  background-color: color-mix(in srgb, var(--gold) 14%, transparent);
+  /* Root-relative (leading "/"), not "modules/..." - a CSS url() resolves
+     against this stylesheet's own path (styles/aventuria-helpers.css), not
+     the page, so the plain relative form silently 404'd (icon never showed,
+     just the button's border/background) even though the exact same path
+     works fine as an <img src> elsewhere, which resolves against the page. */
+  background-image: url("/modules/aventuria/assets/icons/endurance.webp");
+  background-size: 13px 13px;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.hand-sheet .cards .card-endurance:hover,
+.hand-sheet .cards .card-endurance:focus-visible {
+  background-color: color-mix(in srgb, var(--gold) 32%, transparent);
+  outline: none;
 }
 
 /* Floating card preview - a single shared element (see getPreviewEl() in

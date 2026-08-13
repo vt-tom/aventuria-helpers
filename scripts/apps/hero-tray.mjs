@@ -1,4 +1,6 @@
 import { AventuriaHelpersHandSheet } from "../sheets/hand-sheet.mjs";
+import { resolveHandStacks } from "../cards/stacks.mjs";
+import { getEnduranceStatus, exhaustEndurance, readyEndurance } from "../cards/endurance.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -41,6 +43,8 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
       viewHand: AventuriaHelpersHeroTray.#onViewHand,
       toggleTray: AventuriaHelpersHeroTray.#onToggleTray,
       openConfig: AventuriaHelpersHeroTray.#onOpenConfig,
+      exhaustEndurance: AventuriaHelpersHeroTray.#onExhaustEndurance,
+      readyEndurance: AventuriaHelpersHeroTray.#onReadyEndurance,
     },
   };
 
@@ -83,9 +87,11 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
     context.deck = stacks.deck && { count: stacks.deck.availableCards.length };
     context.discard = stacks.discard && { count: stacks.discard.cards.size };
     context.hand = { count: stacks.hand.cards.size };
+    context.endurance = stacks.playPile ? getEnduranceStatus(stacks.playPile) : null;
     context.icons = {
       deck: ICONS + "draw-pile.webp",
       discard: ICONS + "discard-pile.webp",
+      endurance: ICONS + "endurance.webp",
     };
     return context;
   }
@@ -134,6 +140,26 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
     const stacks = resolveStacks();
     if (!stacks?.deck) return;
     await stacks.deck.shuffle();
+  }
+
+  /**
+   * Exhausts (rotates 90°) one ready Ausdauer card - see `cards/endurance.mjs`.
+   * No confirmation/selection dialog: which specific card is arbitrary, only
+   * the ready/spent count shown here matters.
+   * @this AventuriaHelpersHeroTray
+   */
+  static async #onExhaustEndurance() {
+    const stacks = resolveStacks();
+    if (stacks?.playPile) await exhaustEndurance(stacks.playPile);
+  }
+
+  /**
+   * Makes one spent Ausdauer card ready again (rotates it back to 0°).
+   * @this AventuriaHelpersHeroTray
+   */
+  static async #onReadyEndurance() {
+    const stacks = resolveStacks();
+    if (stacks?.playPile) await readyEndurance(stacks.playPile);
   }
 
   /**
@@ -257,13 +283,8 @@ function resolveStacks() {
   const hand = handId ? game.cards.get(handId) : null;
   if (!actor || !hand) return null;
 
-  const siblings = hand.folder ? game.cards.filter((c) => c.folder === hand.folder) : [];
-  const deck = siblings.find((c) => c.type === "deck") ?? null;
-  // The discard pile is the one "pile"-type stack without the "play" pileType flag
-  // aventuria's preparePlayer() sets on the Im-Spiel-Stapel.
-  const discard = siblings.find((c) => c.type === "pile" && c.getFlag("aventuria", "pileType") !== "play") ?? null;
-
-  return { actor, hand, deck, discard };
+  const stacks = resolveHandStacks(hand);
+  return stacks && { actor, ...stacks };
 }
 
 /**
