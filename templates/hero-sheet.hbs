@@ -17,8 +17,8 @@
       data-tab="talente"
       role="tab"
       aria-selected="{{tabs.talente.active}}"
-      data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.skills.label'}}"
-    ><img src="{{icons.talent}}" alt="{{localize 'AVENTURIA.Models.Hero.FIELDS.skills.label'}}"></button>
+      data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.ActionCardsTab'}}"
+    ><i class="fa-solid fa-cards"></i></button>
     <button
       type="button"
       class="railbtn always-active {{#if tabs.images.active}}active{{/if}}"
@@ -121,66 +121,67 @@
           </label>
         </div>
 
-        <div class="equipment">
+        <div class="equip-group">
           {{#with system.basicEquipment}}
-            <div class="equip">
-              <div class="equip-head">
-                <input type="text" name="system.basicEquipment.name" value="{{name}}" placeholder="{{localize 'AVENTURIA.Models.Hero.FIELDS.basicEquipment.name.label'}}" class="equip-name" {{#unless ../editable}}disabled{{/unless}}>
-                <span class="tag">
-                  {{#if ../basicEquipmentIcon}}
-                    <button type="button" class="icon-badge roll-badge always-active" data-action="rollEquipment" data-equipment="basicEquipment" data-tooltip="{{localize 'AVENTURIA_HELPERS.Probe.UseEquipment'}}"><img src="{{../basicEquipmentIcon}}" alt=""></button>
-                  {{/if}}
-                  <select name="system.basicEquipment.attackType" {{#unless ../editable}}disabled{{/unless}}>
-                    {{selectOptions ../config.attackTypes selected=attackType localize=true blank=""}}
-                  </select>
-                </span>
-              </div>
-              <div class="equip-meta">
-                <span class="meta-icon" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.basicEquipment.endurance.label'}}">
-                  <img src="{{../icons.endurance}}" alt="">
-                  <input type="number" name="system.basicEquipment.endurance" value="{{endurance}}" {{#unless ../editable}}disabled{{/unless}}>
-                </span>
-                <span>{{localize "AVENTURIA.Models.Hero.FIELDS.basicEquipment.damage.label"}} <input type="text" class="freetext" name="system.basicEquipment.damage" value="{{damage}}" {{#unless ../editable}}disabled{{/unless}}></span>
-                <button
-                  type="button"
-                  class="toggle always-active {{#if exhaust}}on{{/if}}"
-                  data-action="toggleExhaust"
-                  data-equipment="basicEquipment"
-                  data-tooltip="{{#if exhaust}}{{localize 'AVENTURIA_HELPERS.HeroSheet.MakeReady'}}{{else}}{{localize 'AVENTURIA_HELPERS.HeroSheet.MarkExhausted'}}{{/if}}"
-                ><span class="icon-badge"><img src="{{../icons.exhaust}}" alt=""></span>{{#if exhaust}}{{localize "AVENTURIA_HELPERS.HeroSheet.Exhausted"}}{{else}}{{localize "AVENTURIA_HELPERS.HeroSheet.Ready"}}{{/if}}</button>
-              </div>
+            <div class="equip-row">
+              {{#if ../basicEquipmentIcon}}
+                <button type="button" class="icon-badge roll-badge equip-roll always-active type-{{attackType}}" data-action="rollEquipment" data-equipment="basicEquipment" data-tooltip="{{localize 'AVENTURIA_HELPERS.Probe.UseEquipment'}}"><img src="{{../basicEquipmentIcon}}" alt=""></button>
+              {{/if}}
+              <input type="text" name="system.basicEquipment.name" value="{{name}}" placeholder="{{localize 'AVENTURIA.Models.Hero.FIELDS.basicEquipment.name.label'}}" class="equip-name" {{#unless ../editable}}disabled{{/unless}}>
+              <select name="system.basicEquipment.attackType" class="equip-type" {{#unless ../editable}}disabled{{/unless}}>
+                {{selectOptions ../config.attackTypes selected=attackType localize=true blank=""}}
+              </select>
+              <span class="meta-icon" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.basicEquipment.endurance.label'}}">
+                <img src="{{../icons.endurance}}" alt="">
+                <input type="number" name="system.basicEquipment.endurance" value="{{endurance}}" {{#unless ../editable}}disabled{{/unless}}>
+              </span>
+              <input type="text" class="freetext" name="system.basicEquipment.damage" value="{{damage}}" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.basicEquipment.damage.label'}}" {{#unless ../editable}}disabled{{/unless}}>
             </div>
           {{/with}}
 
           {{#with system.secondEquipment}}
-            <div class="equip">
-              <div class="equip-head">
-                <input type="text" name="system.secondEquipment.name" value="{{name}}" placeholder="{{localize 'AVENTURIA.Models.Hero.FIELDS.secondEquipment.name.label'}}" class="equip-name" {{#unless ../editable}}disabled{{/unless}}>
-                <span class="tag">
-                  {{#if ../secondEquipmentIcon}}
-                    <button type="button" class="icon-badge roll-badge always-active" data-action="rollEquipment" data-equipment="secondEquipment" data-tooltip="{{localize 'AVENTURIA_HELPERS.Probe.UseEquipment'}}"><img src="{{../secondEquipmentIcon}}" alt=""></button>
-                  {{/if}}
-                  <select name="system.secondEquipment.attackType" {{#unless ../editable}}disabled{{/unless}}>
-                    {{selectOptions ../config.attackTypes selected=attackType localize=true blank=""}}
-                  </select>
-                </span>
-              </div>
-              <div class="equip-meta">
+            <div class="equip-row">
+              {{#if name}}
+                {{#if ../secondEquipmentIcon}}
+                  <button type="button" class="icon-badge roll-badge equip-roll always-active type-{{attackType}}" data-action="rollEquipment" data-equipment="secondEquipment" data-tooltip="{{localize 'AVENTURIA_HELPERS.Probe.UseEquipment'}}"><img src="{{../secondEquipmentIcon}}" alt=""></button>
+                {{/if}}
+              {{/if}}
+              <input type="text" name="system.secondEquipment.name" value="{{name}}" placeholder="{{localize 'AVENTURIA_HELPERS.HeroSheet.NoSecondEquipment'}}" class="equip-name" {{#unless ../editable}}disabled{{/unless}}>
+              {{#if name}}
+                <select name="system.secondEquipment.attackType" class="equip-type" {{#unless ../editable}}disabled{{/unless}}>
+                  {{selectOptions ../config.attackTypes selected=attackType localize=true blank=""}}
+                </select>
                 <span class="meta-icon" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.secondEquipment.endurance.label'}}">
                   <img src="{{../icons.endurance}}" alt="">
                   <input type="number" name="system.secondEquipment.endurance" value="{{endurance}}" {{#unless ../editable}}disabled{{/unless}}>
                 </span>
-                <span>{{localize "AVENTURIA.Models.Hero.FIELDS.secondEquipment.damage.label"}} <input type="text" class="freetext" name="system.secondEquipment.damage" value="{{damage}}" {{#unless ../editable}}disabled{{/unless}}></span>
-                <button
-                  type="button"
-                  class="toggle always-active {{#if exhaust}}on{{/if}}"
-                  data-action="toggleExhaust"
-                  data-equipment="secondEquipment"
-                  data-tooltip="{{#if exhaust}}{{localize 'AVENTURIA_HELPERS.HeroSheet.MakeReady'}}{{else}}{{localize 'AVENTURIA_HELPERS.HeroSheet.MarkExhausted'}}{{/if}}"
-                ><span class="icon-badge"><img src="{{../icons.exhaust}}" alt=""></span>{{#if exhaust}}{{localize "AVENTURIA_HELPERS.HeroSheet.Exhausted"}}{{else}}{{localize "AVENTURIA_HELPERS.HeroSheet.Ready"}}{{/if}}</button>
-              </div>
+                <input type="text" class="freetext" name="system.secondEquipment.damage" value="{{damage}}" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.secondEquipment.damage.label'}}" {{#unless ../editable}}disabled{{/unless}}>
+              {{/if}}
             </div>
           {{/with}}
+
+          <div class="equip-status">
+            <span class="equip-status-label">{{localize "AVENTURIA_HELPERS.HeroSheet.Equipment"}}</span>
+            <button
+              type="button"
+              class="toggle always-active {{#if system.basicEquipment.exhaust}}on{{/if}}"
+              data-action="toggleExhaust"
+              data-tooltip="{{#if system.basicEquipment.exhaust}}{{localize 'AVENTURIA_HELPERS.HeroSheet.MakeReady'}}{{else}}{{localize 'AVENTURIA_HELPERS.HeroSheet.MarkExhausted'}}{{/if}}"
+            ><span class="icon-badge"><img src="{{icons.exhaust}}" alt=""></span>{{#if system.basicEquipment.exhaust}}{{localize "AVENTURIA_HELPERS.HeroSheet.Exhausted"}}{{else}}{{localize "AVENTURIA_HELPERS.HeroSheet.Ready"}}{{/if}}</button>
+          </div>
+        </div>
+
+        <div class="skills">
+          {{#each system.skills as |value key|}}
+            <label class="skill">
+              <button type="button" class="skill-roll always-active" data-action="rollSkill" data-skill="{{key}}" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}">{{localize (concat "AVENTURIA.Models.Hero.FIELDS.skills." key ".label")}}</button>
+              {{#if editable}}
+                <input type="number" class="skill-value" name="system.skills.{{key}}" value="{{value}}">
+              {{else}}
+                <button type="button" class="skill-value always-active" data-action="rollSkill" data-skill="{{key}}" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}">{{value}}</button>
+              {{/if}}
+            </label>
+          {{/each}}
         </div>
 
         <div class="ability">
@@ -205,17 +206,8 @@
         </div>
       </section>
 
-      <!-- ============================ TALENTE ============================ -->
+      <!-- ============================ ERLAUBTE AKTIONSKARTEN ============================ -->
       <section class="tab {{#if tabs.talente.active}}active{{/if}}" id="tab-talente">
-        <div class="skills">
-          {{#each system.skills as |value key|}}
-            <label class="skill">
-              <button type="button" class="skill-roll always-active" data-action="rollSkill" data-skill="{{key}}" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}">{{localize (concat "AVENTURIA.Models.Hero.FIELDS.skills." key ".label")}}</button>
-              <input type="number" name="system.skills.{{key}}" value="{{value}}" {{#unless editable}}disabled{{/unless}}>
-            </label>
-          {{/each}}
-        </div>
-
         <table class="cats">
           <caption>{{localize "AVENTURIA.Models.Hero.FIELDS.categories.label"}}</caption>
           <tbody>

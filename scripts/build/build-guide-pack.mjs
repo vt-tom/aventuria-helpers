@@ -34,8 +34,8 @@ const SHOWDOWN_OPTIONS = {
 };
 
 const MANUALS = [
-  { lang: "de", file: "manual-de.md", entryName: "Aventuria Helpers Guide (deutsch)", pageName: "Aventuria Helpers Guide" },
-  { lang: "en", file: "manual-en.md", entryName: "Aventuria Helpers Guide (englisch)", pageName: "Aventuria Helpers Guide" },
+  { lang: "de", file: "manual-de.md", entryName: "Aventuria Helpers Guide (deutsch)" },
+  { lang: "en", file: "manual-en.md", entryName: "Aventuria Helpers Guide (englisch)" },
 ];
 
 /** 16-char alphanumeric ID in the same shape as `foundry.utils.randomID()`. */
@@ -52,11 +52,34 @@ function sourceFilename(name, id) {
   return `${name.replace(/[^A-Za-z0-9]+/g, "_").replace(/^_+|_+$/g, "")}_${id}.json`;
 }
 
-function buildEntry({ file, entryName, pageName }) {
-  const markdown = readFileSync(path.join(MODULE_ROOT, file), "utf8");
+/**
+ * Splits a manual into one chunk per page: the lead-in before the first `##` chapter
+ * heading becomes an overview page (named after the `#` title), and every `##` heading
+ * after that becomes its own chapter page (named after the heading text, heading line
+ * stripped from the body since the page's own title takes over that role). `###`
+ * sub-headings stay put as regular content within their chapter's page.
+ */
+function splitIntoPages(markdown) {
+  const h1 = markdown.match(/^#\s+(.+)$/m);
+  const overviewName = h1 ? h1[1].trim() : "Overview";
+  const rest = h1 ? markdown.slice(h1.index + h1[0].length) : markdown;
+
+  const chapterHeadings = [...rest.matchAll(/^##\s+(.+)$/gm)];
+  const pages = [{ name: overviewName, markdown: rest.slice(0, chapterHeadings[0]?.index ?? rest.length).trim() }];
+
+  for (let i = 0; i < chapterHeadings.length; i++) {
+    const start = chapterHeadings[i].index + chapterHeadings[i][0].length;
+    const end = chapterHeadings[i + 1]?.index ?? rest.length;
+    pages.push({ name: chapterHeadings[i][1].trim(), markdown: rest.slice(start, end).trim() });
+  }
+  return pages;
+}
+
+function buildEntry({ file, entryName }) {
+  const source = readFileSync(path.join(MODULE_ROOT, file), "utf8");
   const converter = new showdown.Converter(SHOWDOWN_OPTIONS);
-  const html = converter
-    .makeHtml(markdown)
+  const toHtml = (md) => converter
+    .makeHtml(md)
     // Screenshot links in the manuals are repo-relative (so GitHub renders them too);
     // Foundry needs them as module-absolute paths to resolve at runtime.
     .replaceAll('src="assets/screenshots/', `src="modules/${MODULE_ID}/assets/screenshots/`);
@@ -74,35 +97,36 @@ function buildEntry({ file, entryName, pageName }) {
     systemVersion: "1.2.1",
   };
 
-  const pageId = randomId();
   const entryId = randomId();
-
-  const page = {
-    _id: pageId,
-    name: pageName,
-    type: "text",
-    system: {},
-    title: { show: false, level: 1 },
-    image: {},
-    text: { content: html, markdown, format: 2 },
-    video: { controls: true, volume: 0.5 },
-    src: null,
-    category: null,
-    sort: 0,
-    ownership: { default: -1 },
-    flags: {},
-    _stats: stats,
-    // LevelDB packs store each embedded document under its own compound key
-    // (`!<parentCollection>.<embeddedCollection>!<parentId>.<embeddedId>`) rather than
-    // inlining it - the `fvtt package pack` compiler reads this off every document in the
-    // hierarchy, top-level or embedded, and strips it back out before storing the value.
-    _key: `!journal.pages!${entryId}.${pageId}`,
-  };
+  const pages = splitIntoPages(source).map(({ name, markdown }, index) => {
+    const pageId = randomId();
+    return {
+      _id: pageId,
+      name,
+      type: "text",
+      system: {},
+      title: { show: true, level: 1 },
+      image: {},
+      text: { content: toHtml(markdown), markdown, format: 2 },
+      video: { controls: true, volume: 0.5 },
+      src: null,
+      category: null,
+      sort: index * 100000,
+      ownership: { default: -1 },
+      flags: {},
+      _stats: stats,
+      // LevelDB packs store each embedded document under its own compound key
+      // (`!<parentCollection>.<embeddedCollection>!<parentId>.<embeddedId>`) rather than
+      // inlining it - the `fvtt package pack` compiler reads this off every document in the
+      // hierarchy, top-level or embedded, and strips it back out before storing the value.
+      _key: `!journal.pages!${entryId}.${pageId}`,
+    };
+  });
 
   return {
     _id: entryId,
     name: entryName,
-    pages: [page],
+    pages,
     folder: null,
     categories: [],
     sort: 0,

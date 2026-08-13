@@ -2,6 +2,9 @@
   "AVENTURIA_HELPERS": {
     "HeroSheet": {
       "Label": "Aventuria Helper: Hero Sheet",
+      "Equipment": "Equipment",
+      "NoSecondEquipment": "No additional equipment",
+      "ActionCardsTab": "Allowed Action Cards",
       "Categories": {
         "Close": "Melee",
         "Ranged": "Ranged",

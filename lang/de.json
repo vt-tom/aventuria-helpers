@@ -2,6 +2,9 @@
   "AVENTURIA_HELPERS": {
     "HeroSheet": {
       "Label": "Aventuria Helfer: Heldenbogen",
+      "Equipment": "Ausrüstung",
+      "NoSecondEquipment": "Keine weitere Ausrüstung",
+      "ActionCardsTab": "Erlaubte Aktionskarten",
       "Categories": {
         "Close": "Nahkampf",
         "Ranged": "Fernkampf",

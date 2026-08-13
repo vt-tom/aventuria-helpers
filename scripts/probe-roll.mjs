@@ -143,7 +143,10 @@ export async function rollSkill(actor, key) {
 
 /**
  * Rolls a piece of equipment: the attack Probe for its attackType, plus its damage
- * formula, in one dialog - then automatically marks the equipment "erschöpft".
+ * formula, in one dialog - then automatically marks the equipment "erschöpft". Per
+ * Aventuria's rules, using either weapon exhausts the whole hero card (a hero with two
+ * weapons may only use one per turn), so both `exhaust` fields are marked, not just the
+ * one that was used - see `AventuriaHelpersHeroSheet#toggleExhaust`.
  * @param {Actor} actor
  * @param {"basicEquipment"|"secondEquipment"} key
  */
@@ -200,5 +203,8 @@ export async function rollEquipment(actor, key) {
     content,
   });
 
-  await actor.update({ [`system.${key}.exhaust`]: true });
+  await actor.update({
+    "system.basicEquipment.exhaust": true,
+    "system.secondEquipment.exhaust": true,
+  });
 }

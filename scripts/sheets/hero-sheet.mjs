@@ -75,7 +75,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
   /** @inheritdoc */
   static DEFAULT_OPTIONS = {
     classes: ["aventuria-helpers", "hero-sheet"],
-    position: { width: 660, height: 680 },
+    position: { width: 660, height: 710 },
     window: { resizable: true },
     actions: {
       rollTest: AventuriaHelpersHeroSheet.#rollTest,
@@ -166,7 +166,6 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
         endurance: ICONS + "endurance.webp",
         exhaust: ICONS + "exhaust-card.webp",
         chalice: ICONS + "magic-chalice.webp",
-        talent: ICONS + "talent.webp",
         level: `${ICONS}level-${system.level ?? 1}.webp`,
       },
       basicEquipmentIcon: this.#attackTypeIcon(system.basicEquipment.attackType),
@@ -332,17 +331,24 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
   }
 
   /**
-   * Toggles whether a piece of equipment is "erschöpft". A plain action button
-   * instead of a bound checkbox so it can reliably stay usable during Spielmodus
-   * (see `always-active`), same as marking the special ability used.
+   * Toggles "erschöpft" for the hero's equipment. Per Aventuria's rules, using a weapon
+   * exhausts the whole hero card, not just that one weapon - a hero with two weapons may
+   * only use one per turn. `aventuria`'s data model still tracks `exhaust` as two separate
+   * booleans (`basicEquipment.exhaust`/`secondEquipment.exhaust`, its schema can't be
+   * changed here), so both are kept in sync as a single conceptual state instead of two
+   * independent ones. A plain action button instead of a bound checkbox so it can reliably
+   * stay usable during Spielmodus (see `always-active`), same as marking the special
+   * ability used.
    * @this AventuriaHelpersHeroSheet
    * @param {PointerEvent} event
    * @param {HTMLElement} target
    */
   static async #toggleExhaust(event, target) {
-    const key = target.dataset.equipment;
-    const current = this.actor.system[key]?.exhaust;
-    await this.actor.update({ [`system.${key}.exhaust`]: !current });
+    const current = this.actor.system.basicEquipment?.exhaust || this.actor.system.secondEquipment?.exhaust;
+    await this.actor.update({
+      "system.basicEquipment.exhaust": !current,
+      "system.secondEquipment.exhaust": !current,
+    });
   }
 
   /**

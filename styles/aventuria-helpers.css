@@ -219,31 +219,6 @@
   font-weight: 700;
 }
 
-.aventuria-hero-sheet .tag .icon-badge {
-  width: 30px;
-  height: 17px;
-}
-
-.aventuria-hero-sheet .tag .icon-badge img {
-  width: 16px;
-  height: 16px;
-}
-
-.aventuria-hero-sheet .tag select {
-  font: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  text-transform: inherit;
-  letter-spacing: inherit;
-  color: inherit;
-  appearance: none;
-  text-align:center;
-}
-
-.aventuria-hero-sheet .tag select option {
-  color: var(--ink);
-}
-
 .aventuria-hero-sheet .tag.muted {
   background: none;
   color: var(--muted);
@@ -567,51 +542,76 @@
 }
 
 /* ---------- Equipment ---------- */
+/* Grundausrüstung and Sekundäre Ausrüstung share one "erschöpft" state (see
+   AventuriaHelpersHeroSheet#toggleExhaust) - one card groups both weapon rows plus a
+   single shared status footer, instead of two full, independently-toggleable cards. */
 
-.aventuria-hero-sheet .equipment {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.aventuria-hero-sheet .equip {
+.aventuria-hero-sheet .equip-group {
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 0.5rem 0.6rem;
+  overflow: hidden;
 }
 
-.aventuria-hero-sheet .equip-head {
+.aventuria-hero-sheet .equip-row {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.3rem;
+  gap: 0.55rem;
+  padding: 0.4rem 0.6rem;
+}
+
+.aventuria-hero-sheet .equip-row + .equip-row {
+  border-top: 1px dashed var(--line);
+}
+
+/* Same footprint as the attribute medallions (.attr .badge) - the weapon-use icon is
+   the one click target here that actually rolls a Probe, so it gets the same
+   can't-miss-it size and roll-badge hover/press feedback, not a cramped mini-icon. */
+.aventuria-hero-sheet .equip-roll {
+  width: 30px;
+  height: 26px;
+}
+
+.aventuria-hero-sheet .equip-roll img {
+  width: 19px;
+  height: 19px;
+}
+
+.aventuria-hero-sheet .equip-roll.type-close {
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06), 0 0 0 2px var(--ruby);
+}
+
+.aventuria-hero-sheet .equip-roll.type-ranged {
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06), 0 0 0 2px var(--amber);
+}
+
+.aventuria-hero-sheet .equip-roll.type-magic {
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06), 0 0 0 2px var(--amethyst);
 }
 
 .aventuria-hero-sheet .equip-name {
   flex: 1;
-  min-width: 0;
+  min-width: 3.5rem;
   font-weight: 700;
 }
 
-.aventuria-hero-sheet .equip-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.7rem;
-  font-size: 0.8rem;
+/* Unstyled <select> elements default to generous OS-native padding/width - without
+   these, the select alone can balloon wide enough to push endurance/damage off the
+   edge of the (overflow:hidden) card, which is exactly what happened here: the values
+   weren't actually missing, they were being pushed out and clipped. */
+.aventuria-hero-sheet .equip-type {
+  flex: none;
+  appearance: none;
+  width: 5.4rem;
+  font-size: 0.76rem;
   color: var(--muted);
+  text-align: center;
+  text-overflow: ellipsis;
 }
 
-.aventuria-hero-sheet .equip-meta input,
-.aventuria-hero-sheet .freetext {
-  font-weight: 600;
-  padding: 0 0 0.05rem;
-  color: var(--ink);
-}
-
-.aventuria-hero-sheet .freetext {
-  width: 4.3rem;
+.aventuria-hero-sheet .meta-icon,
+.aventuria-hero-sheet .equip-row .freetext {
+  flex: none;
 }
 
 .aventuria-hero-sheet .meta-icon {
@@ -629,6 +629,33 @@
 .aventuria-hero-sheet .meta-icon input {
   width: 1.6rem;
   text-align: center;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.aventuria-hero-sheet .freetext {
+  font-weight: 600;
+  padding: 0 0 0.05rem;
+  color: var(--ink);
+  width: 3.8rem;
+}
+
+.aventuria-hero-sheet .equip-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.35rem 0.6rem;
+  border-top: 1px solid var(--line);
+  background: color-mix(in srgb, var(--ink) 4%, var(--panel));
+}
+
+.aventuria-hero-sheet .equip-status-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
 }
 
 /* ---------- Special ability ---------- */
@@ -637,19 +664,20 @@
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 0.5rem 0.6rem;
+  padding: 0.4rem 0.55rem;
 }
 
 .aventuria-hero-sheet .ability-head {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
 }
 
 .aventuria-hero-sheet .ability-name {
   flex: 1;
   font-weight: 700;
+  font-size: 0.92rem;
 }
 
 .aventuria-hero-sheet .ability prose-mirror {
@@ -658,10 +686,12 @@
      flex/absolute positioning. Overriding it makes the text area collapse to zero
      height even though the content is there (invisible, not missing). */
   font-family: inherit;
-  font-size: 0.86rem;
-  line-height: 1.55;
+  font-size: 0.82rem;
+  line-height: 1.4;
   color: var(--ink);
-  --min-height: 90px;
+  /* Shrunk from 90px now that the skills grid also lives on this tab (moved here from
+     Talente, see hero-sheet.hbs) - keeps the sheet from needing to grow taller overall. */
+  --min-height: 46px;
 }
 
 /* Foundry's disabled handling only makes the text non-editable; the formatting
@@ -674,7 +704,7 @@
 .aventuria-hero-sheet .ability-foot {
   display: flex;
   justify-content: flex-end;
-  margin-top: 0.4rem;
+  margin-top: 0.25rem;
 }
 
 /* ---------- Skills ---------- */
@@ -682,7 +712,7 @@
 .aventuria-hero-sheet .skills {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.4rem 0.7rem;
+  gap: 0.3rem 0.6rem;
 }
 
 .aventuria-hero-sheet .skill {
@@ -692,30 +722,68 @@
   gap: 0.4rem;
   background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 0.32rem 0.55rem;
-  font-size: 0.84rem;
+  border-radius: 999px;
+  padding: 0.2rem 0.25rem 0.2rem 0.65rem;
+  font-size: 0.8rem;
   transition: background 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
 }
 
 /* Highlight the whole tile when its roll button is hovered/focused, not just the
-   text - a plain color change on the button alone read as too subtle. */
+   text - a plain color change on the button alone read as too subtle. Covers both the
+   name (.skill-roll, always a roll trigger) and the value chip when it's ALSO a roll
+   trigger (button.skill-value, only true while locked - see .skill-value below). */
 .aventuria-hero-sheet .skill:has(.skill-roll:hover),
-.aventuria-hero-sheet .skill:has(.skill-roll:focus-visible) {
+.aventuria-hero-sheet .skill:has(.skill-roll:focus-visible),
+.aventuria-hero-sheet .skill:has(button.skill-value:hover),
+.aventuria-hero-sheet .skill:has(button.skill-value:focus-visible) {
   background: color-mix(in srgb, var(--gold) 14%, var(--panel));
   border-color: var(--gold);
   box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.3);
 }
 
-.aventuria-hero-sheet .skill:has(.skill-roll:active) {
+.aventuria-hero-sheet .skill:has(.skill-roll:active),
+.aventuria-hero-sheet .skill:has(button.skill-value:active) {
   background: color-mix(in srgb, var(--gold) 24%, var(--panel));
 }
 
-.aventuria-hero-sheet .skill input {
-  width: 2rem;
+/* Target value as a gold chip (matching the equipment/exhaust toggles' pill language)
+   rather than plain right-aligned text - marks it as "the number you roll against", not
+   just a label. Shared class for two different elements depending on Spielmodus: an
+   editable <input> while unlocked (adjusting the base value, e.g. on level-up), a
+   <button class="skill-value"> that rolls on click while locked (same
+   editable-field-vs-click-to-roll split already used for the hero/skill-card images -
+   see viewImage/editImage). Explicit border/font/cursor resets below cover the button
+   variant, which doesn't get the shared input/select reset elsewhere in this file. */
+.aventuria-hero-sheet .skill-value {
+  flex: none;
+  /* Unstyled number inputs (and buttons) fall back to a wide browser-default intrinsic
+     width - same class of bug as the equipment attack-type select earlier, just here via
+     width:auto instead of a missing appearance:none. A real fixed width is needed. */
+  width: 2.1rem;
+  text-align: center;
+  font: inherit;
   font-weight: 700;
-  text-align: right;
   font-variant-numeric: tabular-nums;
+  font-size: 0.76rem;
+  color: var(--panel);
+  background: var(--gold);
+  border: none;
+  border-radius: 999px;
+  padding: 0.14rem 0.4rem;
+}
+
+button.skill-value {
+  cursor: pointer;
+}
+
+button.skill-value:hover,
+button.skill-value:focus-visible {
+  filter: brightness(1.1);
+  outline: none;
+}
+
+button.skill-value:active {
+  filter: brightness(0.92);
 }
 
 .aventuria-hero-sheet .skill-roll {
