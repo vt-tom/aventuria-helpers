@@ -1,6 +1,7 @@
 import { AventuriaHelpersHandSheet } from "../sheets/hand-sheet.mjs";
 import { resolveHandStacks } from "../cards/stacks.mjs";
 import { getEnduranceStatus, exhaustEndurance, readyEndurance } from "../cards/endurance.mjs";
+import { openWelcomeScreen } from "../macros/open-welcome-screen.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -43,6 +44,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
       viewHand: AventuriaHelpersHeroTray.#onViewHand,
       toggleTray: AventuriaHelpersHeroTray.#onToggleTray,
       openConfig: AventuriaHelpersHeroTray.#onOpenConfig,
+      openHelp: AventuriaHelpersHeroTray.#onOpenHelp,
       exhaustEndurance: AventuriaHelpersHeroTray.#onExhaustEndurance,
       readyEndurance: AventuriaHelpersHeroTray.#onReadyEndurance,
     },
@@ -233,6 +235,15 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
   static async #onOpenConfig() {
     game.user.sheet.render(true);
   }
+
+  /**
+   * Opens the Aventuria Helpers Guide (welcome screen), same entry point as the
+   * "Aventuria-Guide öffnen" macro.
+   * @this AventuriaHelpersHeroTray
+   */
+  static async #onOpenHelp() {
+    openWelcomeScreen();
+  }
 }
 
 /* -------------------------------------------------- */
@@ -317,7 +328,7 @@ function injectToggleButton(element) {
   button.type = "button";
   button.className = "ahb-tray-toggle";
   button.dataset.tooltip = game.i18n.localize("AVENTURIA_HELPERS.HeroTray.ShowTray");
-  button.innerHTML = `<img src="${ICONS}starting-hero-token.webp" alt="">`;
+  button.innerHTML = `<img src="${ICONS}starting-hero-token-alt.webp" alt="">`;
   button.addEventListener("click", () => toggleTray());
   anchor.append(button);
 }

@@ -1534,7 +1534,7 @@ body:not(.ahb-tray-active) .hero-tray {
 
 .hero-tray {
   pointer-events: auto;
-  width: 250px;
+  width: 280px;
   flex: none;
   display: flex;
   flex-direction: column;
@@ -1566,7 +1566,11 @@ body:not(.ahb-tray-active) .hero-tray {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--gold);
+  color: var(--ink);
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .hero-tray .tray-bar-actions {
@@ -1577,6 +1581,7 @@ body:not(.ahb-tray-active) .hero-tray {
 }
 
 .hero-tray .tray-config,
+.hero-tray .tray-help,
 .hero-tray .tray-toggle {
   flex: none;
   width: 30px;
@@ -1591,6 +1596,8 @@ body:not(.ahb-tray-active) .hero-tray {
 
 .hero-tray .tray-config:hover,
 .hero-tray .tray-config:focus-visible,
+.hero-tray .tray-help:hover,
+.hero-tray .tray-help:focus-visible,
 .hero-tray .tray-toggle:hover,
 .hero-tray .tray-toggle:focus-visible {
   border-color: var(--gold);

@@ -19,13 +19,17 @@
  * called from this module's `init` hook after that dependency has already run
  * (guaranteed by `relationships.requires` in module.json).
  *
- * Also adds a second play action, "Als Ausdauer spielen" - `DEFAULT_OPTIONS.actions`
- * merges (rather than replaces) across the inherited class chain, so this sits
- * alongside `DockedHandSheet`'s own inherited `playCard` action untouched.
+ * Also overrides the inherited `playCard` action - `DockedHandSheet`'s own version
+ * opens core Foundry's `Cards#playDialog` ("which stack?") prompt, which is pure
+ * friction here since Aventuria only ever has one legal target; this instead plays
+ * straight into the hero's Im-Spiel-Stapel and pays its Ausdauer cost, see
+ * `playCard()` in `cards/endurance.mjs`. Adds a second play action alongside it,
+ * "Als Ausdauer spielen" - `DEFAULT_OPTIONS.actions` merges (rather than replaces)
+ * across the inherited class chain, so both keys coexist on the final actions map.
  */
 
 import { resolveHandStacks } from "../cards/stacks.mjs";
-import { playCardAsEndurance } from "../cards/endurance.mjs";
+import { playCard, playCardAsEndurance } from "../cards/endurance.mjs";
 
 /** The lazily-built class; null until `registerHandSheet()` runs. */
 export let AventuriaHelpersHandSheet = null;
@@ -100,16 +104,36 @@ export function registerHandSheet() {
         // inside its body yet at this point (the outer assignment only
         // happens once the whole expression finishes evaluating); `this` in a
         // static field initializer is bound to the class itself regardless.
+        playCard: this.#onPlayCard,
         playAsEndurance: this.#onPlayAsEndurance,
       },
     };
 
     /**
-     * Plays a card as Ausdauer instead of opening the normal "play to which
-     * stack" dialog - see `cards/endurance.mjs` for what that actually means
-     * (face-down placement on the hero's own scene region, tagged so the
-     * Heldenablage can tell it apart from a normally played card sharing the
-     * same Im-Spiel-Stapel).
+     * Plays a card straight into the hero's Im-Spiel-Stapel, paying its
+     * Ausdauer cost - see `playCard()` in `cards/endurance.mjs`. Overrides
+     * `DockedHandSheet`'s own `playCard` action (the "which stack?" dialog).
+     * @this AventuriaHelpersHandSheet
+     * @param {PointerEvent} event
+     * @param {HTMLElement} target
+     */
+    static async #onPlayCard(event, target) {
+      if (!this.isEditable) return;
+      const id = target.closest("[data-card-id]").dataset.cardId;
+      const card = this.document.cards.get(id);
+      const stacks = resolveHandStacks(this.document);
+      if (!stacks?.playPile) {
+        ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.HeroTray.NoPlayPile"));
+        return;
+      }
+      await playCard(stacks.playPile, card);
+    }
+
+    /**
+     * Plays a card as Ausdauer instead of playing it normally - see
+     * `cards/endurance.mjs` for what that actually means (face-down placement
+     * on the hero's own scene region, tagged so the Heldenablage can tell it
+     * apart from a normally played card sharing the same Im-Spiel-Stapel).
      * @this AventuriaHelpersHandSheet
      * @param {PointerEvent} event
      * @param {HTMLElement} target

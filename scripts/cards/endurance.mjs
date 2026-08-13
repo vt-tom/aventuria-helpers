@@ -43,6 +43,44 @@ export async function playCardAsEndurance(playPile, card) {
 }
 
 /**
+ * Plays a card from hand normally (not as Ausdauer): places it on the hero's
+ * own drop zone like `playCardAsEndurance` does, but keeps its current face
+ * (so the played card is revealed, not hidden) and pays its Ausdauer cost -
+ * an Aktionskarte's `system.cost` ("Ausdauer Kosten", see `aventuria`'s own
+ * `AventuriaAction` schema) - by exhausting that many ready Ausdauer cards.
+ * Replaces core Foundry's `Cards#playDialog` (the "which stack?" prompt CCM's
+ * own play button opens) - Aventuria only ever has one legal target, the
+ * hero's Im-Spiel-Stapel, so that prompt is just friction here. Cards without
+ * a `cost` field (i.e. not an Aktionskarte) play for free.
+ * @param {Cards} playPile   The hero's Im-Spiel-Stapel (`resolveHandStacks(hand).playPile`).
+ * @param {Card} card        The card being played, currently in the hero's hand.
+ * @returns {Promise<boolean>} Whether the card was played.
+ */
+export async function playCard(playPile, card) {
+  if (!canvas.scene) {
+    ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.HeroTray.NoScene"));
+    return false;
+  }
+
+  const cost = card.system?.cost ?? 0;
+  if (cost > getEnduranceStatus(playPile).ready) {
+    ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.HeroTray.NotEnoughEndurance"));
+    return false;
+  }
+
+  const region = findPlayRegion(playPile);
+  if (!region?.object) {
+    ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.HeroTray.NoPlayRegion"));
+    return false;
+  }
+
+  const { x, y } = region.object.center;
+  await ccm.api.placeCard(card, { x, y, sceneId: canvas.scene.id });
+  for (let i = 0; i < cost; i++) await exhaustEndurance(playPile);
+  return true;
+}
+
+/**
  * Finds the scene region wired - via CCM's `moveCard` behavior - to the given
  * pile, i.e. the hero's own drop zone on the currently viewed scene.
  * @param {Cards} pile

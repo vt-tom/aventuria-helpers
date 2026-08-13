@@ -9,7 +9,8 @@
     "build:guide": "node scripts/build/build-guide-pack.mjs",
     "pack:guide": "fvtt package pack guide --type Module --id aventuria-helpers --compendiumType JournalEntry --in packs/_source/guide --out packs",
     "unpack:guide": "fvtt package unpack guide --type Module --id aventuria-helpers --compendiumType JournalEntry --out packs/_source/guide --clean",
-    "guide": "npm run build:guide && npm run pack:guide"
+    "guide": "npm run build:guide && npm run pack:guide",
+    "zip": "node scripts/build/build-zip.mjs"
   },
   "repository": {
     "type": "git",
