@@ -5,7 +5,8 @@
  * user drops the zip into their `Data/modules/` folder.
  *
  * Excludes exactly what `.gitignore` excludes (local-only dev docs,
- * `node_modules`, LevelDB `LOCK` files) plus `.git` itself, which isn't part
+ * `node_modules`, LevelDB `LOCK` files, the `image/` scratch folder) plus
+ * `.git` itself, which isn't part
  * of `.gitignore` (git doesn't need to ignore itself) but obviously isn't
  * part of the module either. Not a general `.gitignore` parser - just the
  * handful of concrete entries that file currently has; if `.gitignore` grows
@@ -30,7 +31,7 @@ const MODULE_ID = "aventuria-helpers";
 const ROOT = resolve(import.meta.dirname, "..", "..");
 const OUT_ZIP = resolve(ROOT, "..", `${MODULE_ID}.zip`);
 
-const EXCLUDE_DIRS = new Set([".git", "node_modules"]);
+const EXCLUDE_DIRS = new Set([".git", "node_modules", "image"]);
 const EXCLUDE_ROOT_FILES = new Set(["CLAUDE.md", "CHANGELOG.md", "PROJECT.md", "TODO.md"]);
 
 /** @param {string} src Absolute path of the file/dir currently being copied. */
