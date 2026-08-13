@@ -689,9 +689,20 @@
   font-size: 0.82rem;
   line-height: 1.4;
   color: var(--ink);
-  /* Shrunk from 90px now that the skills grid also lives on this tab (moved here from
-     Talente, see hero-sheet.hbs) - keeps the sheet from needing to grow taller overall. */
-  --min-height: 46px;
+  /* --min-height covers the WHOLE element (menu + gap + text), not just the text area
+     (see prose-mirror.less: prose-mirror{min-height:var(--min-height)}, with
+     .menu-container{flex:0 0 var(--menu-height)} and .editor-container{flex:1} splitting
+     that budget). Core's --menu-height is 42px plus a 0.5rem gap - a 46px min-height
+     left the actual text area at ~0px whenever the toolbar was visible (editable state),
+     which is exactly why editing felt broken, not just cramped. Locked/read-only has no
+     toolbar (hidden below), so it can stay compact; editable needs enough room for
+     toolbar + gap + a usable amount of text.
+  */
+  --min-height: 50px;
+}
+
+.aventuria-hero-sheet .ability prose-mirror:not([disabled]) {
+  --min-height: 130px;
 }
 
 /* Foundry's disabled handling only makes the text non-editable; the formatting
