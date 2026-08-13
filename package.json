@@ -5,7 +5,11 @@
   "description": "Zusätzliche Macros und ein alternatives Heldenbogen-Sheet für das Aventuria-Modul.",
   "scripts": {
     "pack:macros": "fvtt package pack macros --type Module --id aventuria-helpers --compendiumType Macro --in packs/_source/macros --out packs",
-    "unpack:macros": "fvtt package unpack macros --type Module --id aventuria-helpers --compendiumType Macro --out packs/_source/macros --clean"
+    "unpack:macros": "fvtt package unpack macros --type Module --id aventuria-helpers --compendiumType Macro --out packs/_source/macros --clean",
+    "build:guide": "node scripts/build/build-guide-pack.mjs",
+    "pack:guide": "fvtt package pack guide --type Module --id aventuria-helpers --compendiumType JournalEntry --in packs/_source/guide --out packs",
+    "unpack:guide": "fvtt package unpack guide --type Module --id aventuria-helpers --compendiumType JournalEntry --out packs/_source/guide --clean",
+    "guide": "npm run build:guide && npm run pack:guide"
   },
   "repository": {
     "type": "git",
@@ -17,6 +21,7 @@
   },
   "homepage": "https://github.com/vt-tom/aventuria-helpers#readme",
   "devDependencies": {
-    "@foundryvtt/foundryvtt-cli": "^3.0.4"
+    "@foundryvtt/foundryvtt-cli": "^3.0.4",
+    "showdown": "^2.1.0"
   }
 }

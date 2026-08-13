@@ -48,15 +48,58 @@
     },
     "Welcome": {
       "Title": "Welcome to Aventuria",
-      "Heading": "Welcome, hero!",
-      "Intro": "This window will grow into a small guide that walks you through the Aventuria tools in Foundry step by step. Right now it's just the starting point - more steps will follow.",
+      "Intro": "Welcome, hero! This guide walks you through the Aventuria tools in Foundry step by step.",
+      "GuideTitle": "Aventuria Helpers Guide",
+      "GuideMissing": "Guide compendium not found.",
+      "CategoryAventuria": "Aventuria",
       "FirstSteps": "First Steps",
       "Back": "Back",
       "Done": "Close"
     },
     "GettingStarted": {
       "Heading": "Getting Started",
-      "Intro": "This section is also still a placeholder - the actual content will follow in one of the next steps."
+      "Next": "Next",
+      "PlannedAutomation": "This step is planned to be automated by the Aventuria Helpers module later on.",
+      "MissingPack": "Compendium not found. Is the Aventuria module active?",
+      "Steps": {
+        "Users": {
+          "Title": "Create users",
+          "Body": "Create a separate Foundry user for every player with the Gamemaster role - not the lower Player role. Aventuria needs this role for everyone at the table.",
+          "Action": "Open player management"
+        },
+        "Language": {
+          "Title": "Set the language",
+          "Body": "In the game settings, set the language to German or English so Aventuria is localized correctly.",
+          "Action": "Open settings"
+        },
+        "Scene": {
+          "Title": "Import the game board",
+          "Body": "Import the Gameboard scene from the Aventuria module's scene compendium into your world.",
+          "Action": "Open scene compendium"
+        },
+        "Macros": {
+          "Title": "Import the macros",
+          "Body": "Import the macros from the Aventuria module's macro compendium so they're available in the macro directory.",
+          "Action": "Open macro compendium"
+        },
+        "PrepareBoard": {
+          "Title": "Prepare the board",
+          "Body": "Run the Aventuria macro Prepare Board from the macro directory.",
+          "Action": "Open macro directory"
+        },
+        "PlaceStacks": {
+          "Title": "Place decks and stacks",
+          "Body": "Place the decks and stacks on the Gameboard scene."
+        },
+        "LockStacks": {
+          "Title": "Lock decks and stacks",
+          "Body": "Lock the decks and stacks on the scene so they can't be moved by accident."
+        },
+        "ShuffleFate": {
+          "Title": "Shuffle the fate stack",
+          "Body": "Shuffle the fate stack."
+        }
+      }
     },
     "Combat": {
       "AddEnemyPhase": "Add enemy actions",
@@ -105,7 +148,8 @@
       }
     },
     "Compendium": {
-      "Macros": "Aventuria Helpers Macros"
+      "Macros": "Aventuria Helpers Macros",
+      "Guide": "Aventuria Helpers Guide"
     }
   }
 }

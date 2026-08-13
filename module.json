@@ -37,6 +37,17 @@
       },
       "path": "packs/macros",
       "system": "universal-tabletop-system"
+    },
+    {
+      "name": "guide",
+      "label": "AVENTURIA_HELPERS.Compendium.Guide",
+      "type": "JournalEntry",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "path": "packs/guide",
+      "system": "universal-tabletop-system"
     }
   ],
   "relationships": {

@@ -48,15 +48,58 @@
     },
     "Welcome": {
       "Title": "Willkommen bei Aventuria",
-      "Heading": "Willkommen, Held!",
-      "Intro": "Dieses Fenster wird zu einem kleinen Guide, der dich Schritt für Schritt durch die Aventuria-Werkzeuge in Foundry führt. Aktuell steht hier erst der Einstieg - weitere Schritte folgen.",
+      "Intro": "Willkommen, Held! Dieser Guide führt dich Schritt für Schritt durch die Aventuria-Werkzeuge in Foundry.",
+      "GuideTitle": "Aventuria Helpers Guide",
+      "GuideMissing": "Guide-Kompendium wurde nicht gefunden.",
+      "CategoryAventuria": "Aventuria",
       "FirstSteps": "Erste Schritte",
       "Back": "Zurück",
       "Done": "Schließen"
     },
     "GettingStarted": {
       "Heading": "Erste Schritte",
-      "Intro": "Auch dieser Abschnitt ist noch ein Platzhalter - der eigentliche Inhalt folgt in einem der nächsten Schritte."
+      "Next": "Weiter",
+      "PlannedAutomation": "Dieser Schritt soll später im Aventuria Helfer-Modul automatisiert werden.",
+      "MissingPack": "Kompendium wurde nicht gefunden. Ist das Aventuria-Modul aktiv?",
+      "Steps": {
+        "Users": {
+          "Title": "Benutzer anlegen",
+          "Body": "Lege für jede Spielerin und jeden Spieler einen eigenen Foundry-Benutzer mit der Rolle Spielleiter (Gamemaster) an - nicht mit der niedrigeren Rolle Spieler. Aventuria braucht diese Rolle für alle am Tisch.",
+          "Action": "Spielerverwaltung öffnen"
+        },
+        "Language": {
+          "Title": "Sprache einstellen",
+          "Body": "Stelle in den Spieleinstellungen die Sprache auf Deutsch oder Englisch, damit Aventuria korrekt lokalisiert wird.",
+          "Action": "Einstellungen öffnen"
+        },
+        "Scene": {
+          "Title": "Spielbrett importieren",
+          "Body": "Importiere die Szene Spielbrett (englisch Gameboard) aus dem Szenen-Kompendium des Aventuria-Moduls in deine Welt.",
+          "Action": "Szenen-Kompendium öffnen"
+        },
+        "Macros": {
+          "Title": "Macros importieren",
+          "Body": "Importiere die Macros aus dem Macro-Kompendium des Aventuria-Moduls, damit sie im Macro-Verzeichnis zur Verfügung stehen.",
+          "Action": "Macro-Kompendium öffnen"
+        },
+        "PrepareBoard": {
+          "Title": "Spielbrett vorbereiten",
+          "Body": "Führe das Aventuria-Macro Prepare Board (Bereite Spielbrett vor) im Macro-Verzeichnis aus.",
+          "Action": "Macro-Verzeichnis öffnen"
+        },
+        "PlaceStacks": {
+          "Title": "Decks und Stapel platzieren",
+          "Body": "Platziere die Decks und Stapel auf der Szene Spielbrett."
+        },
+        "LockStacks": {
+          "Title": "Decks und Stapel verankern",
+          "Body": "Verankere die Decks und Stapel mit der Locked-Funktion auf der Szene, damit sie nicht versehentlich verschoben werden."
+        },
+        "ShuffleFate": {
+          "Title": "Schicksalsstapel mischen",
+          "Body": "Mische den Schicksalsstapel."
+        }
+      }
     },
     "Combat": {
       "AddEnemyPhase": "Gegneraktionen hinzufügen",
@@ -105,7 +148,8 @@
       }
     },
     "Compendium": {
-      "Macros": "Aventuria Helfer Makros"
+      "Macros": "Aventuria Helfer Makros",
+      "Guide": "Aventuria Helpers Guide"
     }
   }
 }

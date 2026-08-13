@@ -2,25 +2,46 @@
 <div class="aventuria-welcome">
   <img class="banner" src="modules/aventuria/assets/art-de/DSA5_Logo.webp" alt="{{localize 'AVENTURIA_HELPERS.Welcome.Title'}}">
 
-  <h2>{{localize 'AVENTURIA_HELPERS.Welcome.Heading'}}</h2>
-
   <p>{{localize 'AVENTURIA_HELPERS.Welcome.Intro'}}</p>
 
-  <div class="welcome-actions">
-    <button type="button" class="w-btn" data-action="showSection" data-section="gettingStarted">{{localize 'AVENTURIA_HELPERS.Welcome.FirstSteps'}}</button>
+  <button type="button" class="guide-title" data-action="openGuide">{{localize 'AVENTURIA_HELPERS.Welcome.GuideTitle'}}</button>
+
+  <div class="guide-category">
+    <h2>{{localize 'AVENTURIA_HELPERS.Welcome.CategoryAventuria'}}</h2>
+    <div class="welcome-actions">
+      <button type="button" class="w-btn" data-action="showSection" data-section="gettingStarted">{{localize 'AVENTURIA_HELPERS.Welcome.FirstSteps'}}</button>
+    </div>
   </div>
 </div>
 {{/if}}
 
 {{#if sections.gettingStarted.active}}
-<div class="aventuria-welcome">
+<div class="aventuria-welcome getting-started">
   <h2>{{localize 'AVENTURIA_HELPERS.GettingStarted.Heading'}}</h2>
 
-  <p>{{localize 'AVENTURIA_HELPERS.GettingStarted.Intro'}}</p>
+  <div class="setup-step">
+    <span class="setup-step-num">{{step.number}}</span>
+    <div class="setup-step-body">
+      <h3>{{localize step.titleKey}}</h3>
+      <p>{{localize step.bodyKey}}</p>
+      {{#if step.action}}
+      <button type="button" class="w-btn small" data-action="{{step.action}}">{{localize step.actionKey}}</button>
+      {{/if}}
+      {{#if step.note}}
+      <p class="setup-step-note">{{localize 'AVENTURIA_HELPERS.GettingStarted.PlannedAutomation'}}</p>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="setup-step-dots">
+    {{#each step.dots}}
+    <button type="button" class="setup-step-dot{{#if this.active}} active{{/if}}" data-action="goToStep" data-step="{{this.index}}" data-tooltip="{{this.number}}" aria-label="{{this.number}}">{{this.number}}</button>
+    {{/each}}
+  </div>
 
   <div class="welcome-actions">
-    <button type="button" class="w-btn ghost" data-action="showSection" data-section="welcome">{{localize 'AVENTURIA_HELPERS.Welcome.Back'}}</button>
-    <button type="button" class="w-btn" data-action="close">{{localize 'AVENTURIA_HELPERS.Welcome.Done'}}</button>
+    <button type="button" class="w-btn ghost" data-action="prevStep">{{localize 'AVENTURIA_HELPERS.Welcome.Back'}}</button>
+    <button type="button" class="w-btn" data-action="nextStep">{{#if step.isLast}}{{localize 'AVENTURIA_HELPERS.Welcome.Done'}}{{else}}{{localize 'AVENTURIA_HELPERS.GettingStarted.Next'}}{{/if}}</button>
   </div>
 </div>
 {{/if}}
