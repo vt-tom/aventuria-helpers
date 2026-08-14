@@ -1,4 +1,42 @@
+import { placeBoardStacks } from "../cards/place-board-stacks.mjs";
+
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
+
+const MODULE_ID = "aventuria-helpers";
+
+/**
+ * Client setting used to reopen the "Erste Schritte" guide on the getting-started step
+ * it was on before the "Spielerverwaltung öffnen" button navigated away to Foundry's
+ * separate `/players` page - that page isn't part of the SPA, so leaving it reloads the
+ * whole client from scratch and would otherwise silently lose the open guide window
+ * (Nutzerfeedback 2026-08-14). `-1` means "nothing to reopen".
+ */
+const REOPEN_STEP_SETTING = "reopenGettingStartedStep";
+
+/**
+ * Registers `REOPEN_STEP_SETTING` and the `ready` hook that consumes it. Called once
+ * from the module's `init` hook, same pattern as `registerHeroTray()` - the setting
+ * itself can be registered at `init`, but reopening the app needs `game.i18n`/rendering
+ * to be ready.
+ */
+export function registerWelcomeScreenReopen() {
+  game.settings.register(MODULE_ID, REOPEN_STEP_SETTING, {
+    scope: "client",
+    config: false,
+    type: Number,
+    default: -1,
+  });
+
+  Hooks.once("ready", async () => {
+    const stepIndex = game.settings.get(MODULE_ID, REOPEN_STEP_SETTING);
+    if (stepIndex < 0) return;
+    await game.settings.set(MODULE_ID, REOPEN_STEP_SETTING, -1);
+    const app = new AventuriaHelpersWelcomeScreen();
+    app.section = "gettingStarted";
+    app.stepIndex = stepIndex;
+    await app.render({ force: true });
+  });
+}
 
 /**
  * Growing guided-onboarding tool for Aventuria: a standalone window that steps users
@@ -9,18 +47,16 @@ const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(ApplicationV2) {
   /**
    * The "Erste Schritte" checklist, one entry per page. `action` names a registered
-   * action to offer as a button on that page; `note` marks the three steps that are
-   * still manual today and shows the "planned automation" hint instead of a button.
+   * action to offer as a button on that page; `note` marks the steps that are still
+   * manual today and shows the "planned automation" hint instead of a button.
    */
   static STEPS = [
     { key: "Users", action: "openPlayerManagement" },
     { key: "Language", action: "openSettings" },
-    { key: "Scene", action: "openScenesCompendium" },
-    { key: "Macros", action: "openMacrosCompendium" },
-    { key: "PrepareBoard", action: "openMacroDirectory" },
-    { key: "PlaceStacks", note: true },
-    { key: "LockStacks", note: true },
-    { key: "ShuffleFate", note: true },
+    { key: "Scene", action: "importScene" },
+    { key: "Macros", action: "importMacros" },
+    { key: "PrepareBoard", action: "runPrepareBoard" },
+    { key: "PlaceStacks", action: "placeStacks" },
   ];
 
   /**
@@ -59,9 +95,10 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
       openGuide: AventuriaHelpersWelcomeScreen.#onOpenGuide,
       openPlayerManagement: AventuriaHelpersWelcomeScreen.#onOpenPlayerManagement,
       openSettings: AventuriaHelpersWelcomeScreen.#onOpenSettings,
-      openScenesCompendium: AventuriaHelpersWelcomeScreen.#onOpenScenesCompendium,
-      openMacrosCompendium: AventuriaHelpersWelcomeScreen.#onOpenMacrosCompendium,
-      openMacroDirectory: AventuriaHelpersWelcomeScreen.#onOpenMacroDirectory,
+      importScene: AventuriaHelpersWelcomeScreen.#onImportScene,
+      importMacros: AventuriaHelpersWelcomeScreen.#onImportMacros,
+      runPrepareBoard: AventuriaHelpersWelcomeScreen.#onRunPrepareBoard,
+      placeStacks: AventuriaHelpersWelcomeScreen.#onPlaceStacks,
     },
   };
 
@@ -176,10 +213,15 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
 
   /**
    * User/player management lives on Foundry's separate "/players" page, not in an
-   * in-world app (see `MainMenu.ITEMS.players` in Foundry core) - opened in a new
-   * tab so the running game session isn't navigated away from.
+   * in-world app (see `MainMenu.ITEMS.players` in Foundry core) - opened in a new tab
+   * so the running game session isn't navigated away from where the browser honors
+   * `_blank`. Some setups (e.g. the Electron desktop app) navigate the single window
+   * instead, which reloads the whole client - `REOPEN_STEP_SETTING` records the current
+   * step first so `registerWelcomeScreenReopen()`'s `ready` hook can reopen the guide
+   * right back where it was after that reload (Nutzerfeedback 2026-08-14).
    */
-  static #onOpenPlayerManagement() {
+  static async #onOpenPlayerManagement() {
+    await game.settings.set(MODULE_ID, REOPEN_STEP_SETTING, this.stepIndex);
     window.open(foundry.utils.getRoute("players"), "_blank");
   }
 
@@ -187,26 +229,102 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
     game.settings.sheet.render({ force: true });
   }
 
-  static #onOpenScenesCompendium() {
-    AventuriaHelpersWelcomeScreen.#openPack("aventuria.scenes");
-  }
+  /**
+   * Imports the Aventuria Spielbrett/Gameboard scene matching the world's active
+   * language directly into the world, instead of opening the scene compendium for a
+   * manual drag-and-drop (Nutzerwunsch 2026-08-14). Resolved via the
+   * `flags.aventuria.gameBoard` scene flag rather than by name - "Prepare Board" itself
+   * keys off the same flag (see `place-board-stacks.mjs`), and the flag is stable across
+   * languages while the display name isn't. Activates the imported scene right away,
+   * since "Spielbrett vorbereiten"/"Decks und Stapel platzieren" both need it to be the
+   * currently viewed scene.
+   */
+  static async #onImportScene() {
+    const lang = game.i18n.lang === "de" ? "de" : "en";
 
-  static #onOpenMacrosCompendium() {
-    AventuriaHelpersWelcomeScreen.#openPack("aventuria.macros");
-  }
+    const existing = game.scenes.find((s) => s.getFlag("aventuria", "gameBoard") === lang);
+    if (existing) {
+      await existing.activate();
+      ui.notifications.info(game.i18n.localize("AVENTURIA_HELPERS.GettingStarted.Steps.Scene.AlreadyImported"));
+      return;
+    }
 
-  static #openPack(packId) {
-    const pack = game.packs.get(packId);
+    const pack = game.packs.get("aventuria.scenes");
     if (!pack) {
       ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.GettingStarted.MissingPack"));
       return;
     }
-    pack.render(true);
+    const documents = await pack.getDocuments();
+    const source = documents.find((s) => s.getFlag("aventuria", "gameBoard") === lang);
+    if (!source) {
+      ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.GettingStarted.Steps.Scene.NotFound"));
+      return;
+    }
+
+    const [scene] = await Scene.createDocuments([game.scenes.fromCompendium(source)]);
+    await scene.activate();
+    ui.notifications.info(game.i18n.localize("AVENTURIA_HELPERS.GettingStarted.Steps.Scene.Imported"));
   }
 
-  /** Points the GM at the macro directory, where imported compendium macros can be run. */
-  static #onOpenMacroDirectory() {
-    ui.sidebar.expand();
-    ui.sidebar.changeTab("macros", "primary");
+  /** Name of the world Macro folder that imported Aventuria macros are sorted into. */
+  static MACRO_FOLDER_NAME = "Aventuria Macros";
+
+  /**
+   * Imports every macro from the Aventuria macro compendium straight into the world's
+   * macro directory, instead of just opening the compendium for a manual drag-and-drop
+   * (Nutzerwunsch 2026-08-14). Dedupes by name so re-running this step after macros were
+   * already imported doesn't create duplicates - `CompendiumCollection#importAll` was
+   * ruled out for this because it has no dedup of its own (fresh random IDs every call).
+   * Sorts the imported macros into a dedicated `MACRO_FOLDER_NAME` folder (reused if it
+   * already exists, same get-or-create pattern aventuria's own `preparePlayer()` uses
+   * for its per-hero Cards folder).
+   */
+  static async #onImportMacros() {
+    const pack = game.packs.get("aventuria.macros");
+    if (!pack) {
+      ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.GettingStarted.MissingPack"));
+      return;
+    }
+    const documents = await pack.getDocuments();
+    const existingNames = new Set(game.macros.map((m) => m.name));
+    const toCreate = documents
+      .filter((doc) => !existingNames.has(doc.name))
+      .map((doc) => game.macros.fromCompendium(doc));
+    if (!toCreate.length) {
+      ui.notifications.info(game.i18n.localize("AVENTURIA_HELPERS.GettingStarted.Steps.Macros.AlreadyImported"));
+      return;
+    }
+    const folderName = AventuriaHelpersWelcomeScreen.MACRO_FOLDER_NAME;
+    const folder = game.folders.find((f) => f.type === "Macro" && f.name === folderName)
+      ?? await Folder.create({ name: folderName, type: "Macro" });
+    for (const data of toCreate) data.folder = folder.id;
+    await Macro.createDocuments(toCreate);
+    ui.notifications.info(
+      game.i18n.format("AVENTURIA_HELPERS.GettingStarted.Steps.Macros.Imported", { count: toCreate.length }),
+    );
+  }
+
+  /**
+   * Runs aventuria's own "Prepare Board" macro directly via its exposed module API,
+   * instead of pointing the GM at the macro directory to run it themselves (Nutzerwunsch
+   * 2026-08-14) - same wholesale-reuse approach `#onPickHero()`
+   * (`scripts/apps/hero-tray.mjs`) already uses for "Bereite Spieler vor". Confirmed via
+   * the compendium macro's own source (`packs/macros` in the `aventuria` module) that
+   * "Prepare Board" itself is just a thin wrapper calling this same API function, so this
+   * is equivalent to executing the macro, not a reimplementation of it. `prepareBoard()`
+   * already reports success/failure (e.g. missing `gameBoard` scene flag) via its own
+   * `ui.notifications` calls, so no separate confirmation is needed here.
+   */
+  static async #onRunPrepareBoard() {
+    const api = game.modules.get("aventuria")?.api;
+    if (!api?.prepareBoard) {
+      ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.GettingStarted.Steps.PrepareBoard.MissingApi"));
+      return;
+    }
+    await api.prepareBoard();
+  }
+
+  static async #onPlaceStacks() {
+    await placeBoardStacks();
   }
 }

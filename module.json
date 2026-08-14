@@ -2,7 +2,7 @@
   "id": "aventuria-helpers",
   "title": "Aventuria Helfer",
   "description": "Zusätzliche Macros und ein alternatives Heldenbogen-Sheet für das Aventuria-Modul.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "compatibility": {
     "minimum": "14",
     "verified": "14"

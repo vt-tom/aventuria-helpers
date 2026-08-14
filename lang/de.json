@@ -77,30 +77,35 @@
         },
         "Scene": {
           "Title": "Spielbrett importieren",
-          "Body": "Importiere die Szene Spielbrett (englisch Gameboard) aus dem Szenen-Kompendium des Aventuria-Moduls in deine Welt.",
-          "Action": "Szenen-Kompendium öffnen"
+          "Body": "Importiert die Szene Spielbrett (englisch Gameboard) aus dem Szenen-Kompendium des Aventuria-Moduls direkt in deine Welt und aktiviert sie.",
+          "Action": "Spielbrett importieren",
+          "Imported": "Spielbrett importiert und aktiviert.",
+          "AlreadyImported": "Spielbrett war bereits importiert - erneut aktiviert.",
+          "NotFound": "Keine passende Spielbrett-Szene im Kompendium gefunden."
         },
         "Macros": {
           "Title": "Macros importieren",
-          "Body": "Importiere die Macros aus dem Macro-Kompendium des Aventuria-Moduls, damit sie im Macro-Verzeichnis zur Verfügung stehen.",
-          "Action": "Macro-Kompendium öffnen"
+          "Body": "Importiert die Macros aus dem Macro-Kompendium des Aventuria-Moduls direkt in den Ordner \"Aventuria Macros\" in deinem Macro-Verzeichnis.",
+          "Action": "Macros importieren",
+          "Imported": "{count} Macro(s) importiert.",
+          "AlreadyImported": "Alle Macros sind bereits im Macro-Verzeichnis vorhanden."
         },
         "PrepareBoard": {
           "Title": "Spielbrett vorbereiten",
-          "Body": "Führe das Aventuria-Macro Prepare Board (Bereite Spielbrett vor) im Macro-Verzeichnis aus.",
-          "Action": "Macro-Verzeichnis öffnen"
+          "Body": "Führt das Aventuria-Macro Prepare Board (Bereite Spielbrett vor) direkt aus.",
+          "Action": "Spielbrett vorbereiten",
+          "MissingApi": "Aventuria-Modul nicht aktiv oder API nicht verfügbar."
         },
         "PlaceStacks": {
           "Title": "Decks und Stapel platzieren",
-          "Body": "Platziere die Decks und Stapel auf der Szene Spielbrett."
-        },
-        "LockStacks": {
-          "Title": "Decks und Stapel verankern",
-          "Body": "Verankere die Decks und Stapel mit der Locked-Funktion auf der Szene, damit sie nicht versehentlich verschoben werden."
-        },
-        "ShuffleFate": {
-          "Title": "Schicksalsstapel mischen",
-          "Body": "Mische den Schicksalsstapel."
+          "Body": "Platziert die von Prepare Board angelegten Ablagen und Decks automatisch an ihre Stelle auf der Szene Spielbrett, verankert sie dort und mischt den Schicksalsstapel.",
+          "Action": "Decks und Stapel platzieren",
+          "MissingCcm": "Complete Card Management ist nicht aktiv.",
+          "GmOnly": "Nur die Spielleitung kann Decks und Stapel platzieren.",
+          "NoScene": "Keine Spieloberfläche geöffnet.",
+          "WrongScene": "Das funktioniert nur auf der Spielbrett-Szene aus dem Aventuria-Modul.",
+          "NotPrepared": "Keiner der Stapel wurde gefunden. Führe zuerst Prepare Board aus.",
+          "Done": "{count} von {total} Stapeln platziert."
         }
       }
     },

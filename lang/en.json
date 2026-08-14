@@ -77,30 +77,35 @@
         },
         "Scene": {
           "Title": "Import the game board",
-          "Body": "Import the Gameboard scene from the Aventuria module's scene compendium into your world.",
-          "Action": "Open scene compendium"
+          "Body": "Imports the Gameboard scene from the Aventuria module's scene compendium directly into your world and activates it.",
+          "Action": "Import game board",
+          "Imported": "Gameboard imported and activated.",
+          "AlreadyImported": "Gameboard was already imported - activated it again.",
+          "NotFound": "No matching gameboard scene found in the compendium."
         },
         "Macros": {
           "Title": "Import the macros",
-          "Body": "Import the macros from the Aventuria module's macro compendium so they're available in the macro directory.",
-          "Action": "Open macro compendium"
+          "Body": "Imports the macros from the Aventuria module's macro compendium directly into the \"Aventuria Macros\" folder in your macro directory.",
+          "Action": "Import macros",
+          "Imported": "{count} macro(s) imported.",
+          "AlreadyImported": "All macros are already in your macro directory."
         },
         "PrepareBoard": {
           "Title": "Prepare the board",
-          "Body": "Run the Aventuria macro Prepare Board from the macro directory.",
-          "Action": "Open macro directory"
+          "Body": "Runs the Aventuria macro Prepare Board directly.",
+          "Action": "Prepare the board",
+          "MissingApi": "The Aventuria module is not active, or its API isn't available."
         },
         "PlaceStacks": {
           "Title": "Place decks and stacks",
-          "Body": "Place the decks and stacks on the Gameboard scene."
-        },
-        "LockStacks": {
-          "Title": "Lock decks and stacks",
-          "Body": "Lock the decks and stacks on the scene so they can't be moved by accident."
-        },
-        "ShuffleFate": {
-          "Title": "Shuffle the fate stack",
-          "Body": "Shuffle the fate stack."
+          "Body": "Automatically places the piles and decks created by Prepare Board at their spot on the Gameboard scene, locks them there, and shuffles the fate stack.",
+          "Action": "Place decks and stacks",
+          "MissingCcm": "Complete Card Management is not active.",
+          "GmOnly": "Only the gamemaster can place decks and stacks.",
+          "NoScene": "No scene is open.",
+          "WrongScene": "This only works on the Gameboard scene from the Aventuria module.",
+          "NotPrepared": "None of the stacks were found. Run Prepare Board first.",
+          "Done": "Placed {count} of {total} stacks."
         }
       }
     },

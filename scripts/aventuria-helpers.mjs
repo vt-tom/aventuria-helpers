@@ -1,4 +1,5 @@
 import { AventuriaHelpersHeroSheet } from "./sheets/hero-sheet.mjs";
+import { registerWelcomeScreenReopen } from "./apps/welcome-screen.mjs";
 import { resetCardRotations } from "./macros/reset-card-rotations.mjs";
 import { openWelcomeScreen } from "./macros/open-welcome-screen.mjs";
 import { registerCombat, registerEnemyPhaseCombatant, registerRoundEndCombatant } from "./documents/combat.mjs";
@@ -14,6 +15,7 @@ Hooks.once("init", () => {
     label: "AVENTURIA_HELPERS.HeroSheet.Label",
   });
 
+  registerWelcomeScreenReopen();
   registerCombat();
   registerEnemyPhaseCombatant();
   registerRoundEndCombatant();

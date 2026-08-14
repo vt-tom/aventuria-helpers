@@ -2,6 +2,12 @@
 
 Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Version zuerst.
 
+## 0.1.2
+
+### Features
+- **Guide öffnet sich nach "Spielerverwaltung öffnen" von selbst wieder:** Dieser Schritt verlässt Foundry kurz auf eine eigene Seite - kommst du zurück (inklusive eines dabei ausgelösten Neuladens), öffnet sich der Guide automatisch wieder an derselben Stelle, statt geschlossen zu bleiben.
+- **"Erste Schritte" jetzt fast durchgehend automatisiert:** Die Schritte "Spielbrett importieren" und "Spielbrett vorbereiten" führen ihre Aktion jetzt direkt aus, statt nur ein Kompendium bzw. das Macro-Verzeichnis zu öffnen. Der Schritt "Macros importieren" importiert die Aventuria-Macros direkt in einen eigenen Ordner "Aventuria Macros" im Macro-Verzeichnis. Der Schritt "Decks und Stapel platzieren" setzt die von "Prepare Board" angelegten Ablagen und Decks per Klick automatisch an ihre Stelle auf dem Spielbrett, verankert sie dort und mischt den Schicksalsstapel - die Anleitung ist damit schon nach diesem Schritt fertig.
+
 ## 0.1.1
 
 ### Features
