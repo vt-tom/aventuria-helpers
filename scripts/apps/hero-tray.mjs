@@ -178,21 +178,35 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
   }
 
   /**
-   * Opens the full Complete Card Management deck sheet.
+   * Opens the full Complete Card Management deck sheet, forced onto its "cards" tab (the
+   * actual card list) instead of its default "configuration" tab (name/image/description -
+   * effectively just a settings view, not the cards themselves). `DeckSheet` is the only one
+   * of CCM's Cards sheets that overrides `tabGroups.primary` to `"configuration"` (`ccm.mjs`) -
+   * `PileSheet`/`HandSheet` inherit the base `CardsSheet`'s own `tabGroups.primary: "cards"`
+   * unchanged, which is why only "Deck ansehen" needed this (Nutzerfeedback 2026-08-14: landed
+   * on Configuration instead of the card list). `_prepareTabs()` only initializes a tab group
+   * with `??=` (Foundry core, `client/applications/api/application.mjs`), so it never
+   * overwrites an already-set value - setting `tabGroups.primary` here, before the first
+   * render, is enough to steer which tab starts active.
    * @this AventuriaHelpersHeroTray
    */
   static async #onViewDeck() {
     const stacks = resolveStacks();
-    if (stacks?.deck) new ccm.apps.CardsSheets.DeckSheet(stacks.deck).render({ force: true });
+    if (!stacks?.deck) return;
+    const sheet = new ccm.apps.CardsSheets.DeckSheet(stacks.deck);
+    sheet.tabGroups.primary = "cards";
+    sheet.render({ force: true });
   }
 
   /**
-   * Opens the full Complete Card Management pile sheet for the discard pile.
+   * Opens the full Complete Card Management pile sheet for the discard pile. Already opens on
+   * its "cards" tab by default - see `#onViewDeck()`.
    * @this AventuriaHelpersHeroTray
    */
   static async #onViewDiscard() {
     const stacks = resolveStacks();
-    if (stacks?.discard) new ccm.apps.CardsSheets.PileSheet(stacks.discard).render({ force: true });
+    if (!stacks?.discard) return;
+    new ccm.apps.CardsSheets.PileSheet(stacks.discard).render({ force: true });
   }
 
   /**

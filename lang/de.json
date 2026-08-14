@@ -106,7 +106,9 @@
     },
     "Combat": {
       "AddEnemyPhase": "Gegneraktionen hinzufügen",
-      "EnemyPhaseName": "Gegneraktionen"
+      "EnemyPhaseName": "Gegneraktionen",
+      "AddRoundEnd": "Rundenende hinzufügen",
+      "RoundEndName": "Rundenende"
     },
     "HeroTray": {
       "Title": "Heldenablage",
@@ -128,6 +130,10 @@
       "NoPlayRegion": "Keine Ausdauer-/Spielzone auf dieser Spieloberfläche gefunden.",
       "NoScene": "Keine Spieloberfläche geöffnet.",
       "NotEnoughEndurance": "Nicht genug Ausdauer, um diese Karte auszuspielen.",
+      "PlayCostTitle": "{name} ausspielen",
+      "PlayCostBody": "Kostet {cost} Ausdauer, verfügbar: {ready}. Normal spielen und die Ausdauer bezahlen, oder ohne Ausdauer spielen?",
+      "PlayPayCost": "Ausdauer bezahlen",
+      "PlayWithoutEndurance": "Ohne Ausdauer spielen",
       "EnduranceReadyTooltip": "Verfügbare Ausdauer (nicht gedrehte Karten im Im-Spiel-Stapel)",
       "EnduranceSpentTooltip": "Erschöpfte Ausdauer (gedrehte Karten im Im-Spiel-Stapel)",
       "DeckTooltip": "Heldendeck – die Karten, die du noch ziehen kannst",

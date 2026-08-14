@@ -101,6 +101,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
   static PARTS = {
     sheet: {
       template: "modules/aventuria-helpers/templates/hero-sheet.hbs",
+      scrollable: [".tab-stack"],
     },
   };
 

@@ -398,8 +398,20 @@
 
 /* ---------- Tabs (stacked so both stay the same height) ---------- */
 
+/* Bounded to the remaining space between header and footer (flex:1 + min-height:0
+   inside the .sheet-main column), with its own scrollbar - the special ability's
+   prose-mirror editor alone can push this tab's content taller than the window
+   (see --min-height above), and without this the footer (edition/serial numbers)
+   simply got pushed below the window's bottom edge with no way to reach it. Header
+   and footer stay pinned in place; only this middle area scrolls. */
 .aventuria-hero-sheet .tab-stack {
   display: grid;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.3rem;
+  margin-right: -0.3rem;
 }
 
 .aventuria-hero-sheet .tab {
@@ -820,6 +832,15 @@ button.skill-value:active {
 .aventuria-hero-sheet table.cats {
   width: 100%;
   border-collapse: collapse;
+  background: var(--panel);
+}
+
+/* Foundry core styles tbody tr:nth-child(even/odd) with its own theme colors
+   (dark in Foundry dark mode) - override so rows stay on this sheet's fixed
+   parchment palette instead of losing contrast against the muted label text. */
+.aventuria-hero-sheet table.cats tbody tr:nth-child(even),
+.aventuria-hero-sheet table.cats tbody tr:nth-child(odd) {
+  background-color: var(--panel);
 }
 
 .aventuria-hero-sheet table.cats caption {
@@ -1851,11 +1872,10 @@ body:not(.ahb-tray-active) .hero-tray {
 }
 
 .hand-sheet .cards .card img {
-  opacity: 0.55;
   border-radius: 8px;
   border: 2px solid var(--gold);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
-  transition: transform 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+  transition: transform 150ms ease, box-shadow 150ms ease;
 }
 
 /* Just a light highlight now - the actual "Miniaturvorschau" is the separate
@@ -1863,7 +1883,6 @@ body:not(.ahb-tray-active) .hero-tray {
    hand-sheet.mjs (showCardPreview()) rather than scaled up in place, since a
    large in-place transform got clipped by the window's own bounds. */
 .hand-sheet .cards .card:hover img {
-  opacity: 1;
   transform: translateY(-6px);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
 }

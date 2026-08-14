@@ -54,15 +54,19 @@ export async function playCardAsEndurance(playPile, card) {
  * a `cost` field (i.e. not an Aktionskarte) play for free.
  * @param {Cards} playPile   The hero's Im-Spiel-Stapel (`resolveHandStacks(hand).playPile`).
  * @param {Card} card        The card being played, currently in the hero's hand.
+ * @param {{free?: boolean}} [options] `free: true` plays the card without paying (or even
+ *   checking) its Ausdauer cost - the "ohne Ausdauer spielen" escape hatch a player picks
+ *   per play via `promptPlayCost()` in `scripts/sheets/hand-sheet.mjs`, chosen deliberately
+ *   over a persistent toggle (Nutzerentscheidung 2026-08-14).
  * @returns {Promise<boolean>} Whether the card was played.
  */
-export async function playCard(playPile, card) {
+export async function playCard(playPile, card, { free = false } = {}) {
   if (!canvas.scene) {
     ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.HeroTray.NoScene"));
     return false;
   }
 
-  const cost = card.system?.cost ?? 0;
+  const cost = free ? 0 : (card.system?.cost ?? 0);
   if (cost > getEnduranceStatus(playPile).ready) {
     ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.HeroTray.NotEnoughEndurance"));
     return false;

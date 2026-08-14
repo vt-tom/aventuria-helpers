@@ -29,7 +29,7 @@
  */
 
 import { resolveHandStacks } from "../cards/stacks.mjs";
-import { playCard, playCardAsEndurance } from "../cards/endurance.mjs";
+import { playCard, playCardAsEndurance, getEnduranceStatus } from "../cards/endurance.mjs";
 
 /** The lazily-built class; null until `registerHandSheet()` runs. */
 export let AventuriaHelpersHandSheet = null;
@@ -92,6 +92,48 @@ function hideCardPreview() {
   previewEl?.classList.remove("visible");
 }
 
+/**
+ * Asks how to pay for a costed Aktionskarte before playing it: pay its Ausdauer cost
+ * normally, or play it "ohne Ausdauer" - skipping the cost entirely, regardless of how much
+ * Ausdauer is currently ready. Styled like the module's other small dialogs (reuses
+ * `.probe-dialog`'s CSS wholesale, same as `promptCardAmount()` in `apps/hero-tray.mjs`).
+ * @param {Card} card
+ * @param {number} cost
+ * @param {number} ready
+ * @returns {Promise<"pay"|"free"|null>} null if the dialog was cancelled/dismissed.
+ */
+async function promptPlayCost(card, cost, ready) {
+  const enough = ready >= cost;
+  return foundry.applications.api.DialogV2.wait({
+    window: {
+      title: game.i18n.format("AVENTURIA_HELPERS.HeroTray.PlayCostTitle", { name: card.name }),
+      icon: "fa-solid fa-hand-sparkles",
+    },
+    classes: ["aventuria-helpers", "probe-dialog"],
+    content: `
+      <div class="probe-dialog-body">
+        <p class="probe-target">${game.i18n.format("AVENTURIA_HELPERS.HeroTray.PlayCostBody", { cost, ready })}</p>
+      </div>
+    `,
+    buttons: [
+      {
+        action: "pay",
+        label: game.i18n.localize("AVENTURIA_HELPERS.HeroTray.PlayPayCost"),
+        icon: "fa-solid fa-hand-sparkles",
+        default: enough,
+        disabled: !enough,
+      },
+      {
+        action: "free",
+        label: game.i18n.localize("AVENTURIA_HELPERS.HeroTray.PlayWithoutEndurance"),
+        icon: "fa-solid fa-hand",
+        default: !enough,
+      },
+    ],
+    rejectClose: false,
+  });
+}
+
 export function registerHandSheet() {
   AventuriaHelpersHandSheet = class extends ccm.apps.CardsSheets.DockedHandSheet {
     /** @inheritdoc */
@@ -113,6 +155,12 @@ export function registerHandSheet() {
      * Plays a card straight into the hero's Im-Spiel-Stapel, paying its
      * Ausdauer cost - see `playCard()` in `cards/endurance.mjs`. Overrides
      * `DockedHandSheet`'s own `playCard` action (the "which stack?" dialog).
+     *
+     * Costed cards go through `promptPlayCost()` first (Nutzerentscheidung
+     * 2026-08-14: cards should stay playable even without enough ready
+     * Ausdauer, via a per-play "ohne Ausdauer spielen" choice rather than a
+     * persistent switch) - free cards (no `system.cost`) skip the dialog and
+     * play immediately, same as before.
      * @this AventuriaHelpersHandSheet
      * @param {PointerEvent} event
      * @param {HTMLElement} target
@@ -126,7 +174,15 @@ export function registerHandSheet() {
         ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.HeroTray.NoPlayPile"));
         return;
       }
-      await playCard(stacks.playPile, card);
+
+      const cost = card.system?.cost ?? 0;
+      let free = false;
+      if (cost > 0) {
+        const choice = await promptPlayCost(card, cost, getEnduranceStatus(stacks.playPile).ready);
+        if (!choice) return;
+        free = choice === "free";
+      }
+      await playCard(stacks.playPile, card, { free });
     }
 
     /**

@@ -3,6 +3,12 @@ import { resetCardRotations } from "../macros/reset-card-rotations.mjs";
 const MODULE_ID = "aventuria-helpers";
 const CCM_MODULE_ID = "complete-card-management";
 const ENEMY_PHASE_FLAG = "enemyPhase";
+const ROUND_END_FLAG = "roundEnd";
+
+/** Combatants that are fixed phase markers, not part of the party's rotating turn order. */
+function isPhaseMarker(combatant) {
+  return !!(combatant.getFlag(MODULE_ID, ENEMY_PHASE_FLAG) || combatant.getFlag(MODULE_ID, ROUND_END_FLAG));
+}
 
 /**
  * Replaces the active Combat document class with one that implements Aventuria's fixed
@@ -26,7 +32,7 @@ export function registerCombat() {
      */
     async startCombat() {
       const rotationOrder = this.turns
-        .filter(c => !c.getFlag(MODULE_ID, ENEMY_PHASE_FLAG))
+        .filter(c => !isPhaseMarker(c))
         .map(c => c.id);
       await this.setFlag(MODULE_ID, "rotationOrder", rotationOrder);
       return super.startCombat();
@@ -84,15 +90,16 @@ export function registerCombat() {
      * first-added combatant gets the highest number and therefore sorts first under
      * Foundry's default descending initiative sort. This only matters pre-combat: once
      * `startCombat()` captures the round-1 order, raw initiative is ignored by `_sortCombatants`.
-     * The "enemy phase" marker is excluded - it keeps the fixed `initiative: 0` it was created
-     * with, which already sorts it after every numbered (1..X) combatant.
+     * The fixed phase markers ("Gegneraktionen"/"Rundenende") are excluded - they keep the
+     * fixed `initiative` value they were created with, which already sorts them after every
+     * numbered (1..X) combatant.
      * @inheritdoc
      */
     _onCreateDescendantDocuments(parent, collection, documents, data, options, userId) {
       super._onCreateDescendantDocuments(parent, collection, documents, data, options, userId);
       if (collection !== "combatants" || !game.user.isActiveGM) return;
 
-      const rotating = this.combatants.contents.filter(c => !c.getFlag(MODULE_ID, ENEMY_PHASE_FLAG));
+      const rotating = this.combatants.contents.filter(c => !isPhaseMarker(c));
       const updates = rotating
         .map((c, i) => ({ _id: c.id, initiative: rotating.length - i }))
         .filter((update, i) => rotating[i].initiative !== update.initiative);
@@ -136,6 +143,29 @@ export function registerEnemyPhaseCombatant() {
         img: "modules/aventuria/assets/icons/action-opponent.webp",
         initiative: 0,
         flags: { [MODULE_ID]: { [ENEMY_PHASE_FLAG]: true } },
+      }]),
+    });
+  });
+}
+
+/**
+ * Adds a "Rundenende hinzufügen" entry to the same encounter context menu as
+ * `registerEnemyPhaseCombatant()`, creating a second fixed, token-less Combatant that
+ * represents end-of-round effects (e.g. duration-based conditions expiring). Given
+ * `initiative: -1` - one below the "Gegneraktionen" marker's `0` - so it always sorts last,
+ * after both the party's rotation and the enemy-action phase.
+ */
+export function registerRoundEndCombatant() {
+  Hooks.on("getCombatContextOptions", (app, options) => {
+    options.push({
+      name: "AVENTURIA_HELPERS.Combat.AddRoundEnd",
+      icon: '<i class="fa-solid fa-flag-checkered"></i>',
+      condition: () => game.user.isGM && !!app.viewed,
+      callback: () => app.viewed.createEmbeddedDocuments("Combatant", [{
+        name: game.i18n.localize("AVENTURIA_HELPERS.Combat.RoundEndName"),
+        img: "modules/aventuria/assets/icons/timer.webp",
+        initiative: -1,
+        flags: { [MODULE_ID]: { [ROUND_END_FLAG]: true } },
       }]),
     });
   });

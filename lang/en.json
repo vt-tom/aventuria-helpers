@@ -106,7 +106,9 @@
     },
     "Combat": {
       "AddEnemyPhase": "Add enemy actions",
-      "EnemyPhaseName": "Enemy Actions"
+      "EnemyPhaseName": "Enemy Actions",
+      "AddRoundEnd": "Add round end",
+      "RoundEndName": "Round End"
     },
     "HeroTray": {
       "Title": "Hero Tray",
@@ -128,6 +130,10 @@
       "NoPlayRegion": "No Ausdauer/play zone found on this scene.",
       "NoScene": "No scene is open.",
       "NotEnoughEndurance": "Not enough Ausdauer to play this card.",
+      "PlayCostTitle": "Play {name}",
+      "PlayCostBody": "Costs {cost} Ausdauer, available: {ready}. Play it normally and pay the cost, or play it without Ausdauer?",
+      "PlayPayCost": "Pay Ausdauer",
+      "PlayWithoutEndurance": "Play without Ausdauer",
       "EnduranceReadyTooltip": "Available Ausdauer (cards not rotated in the Im-Spiel-Stapel)",
       "EnduranceSpentTooltip": "Spent Ausdauer (cards rotated in the Im-Spiel-Stapel)",
       "DeckTooltip": "Hero deck – the cards you can still draw",
