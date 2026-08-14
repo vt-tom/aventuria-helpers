@@ -1,0 +1,50 @@
+name: Release
+
+# Push a tag matching the version in module.json (e.g. `v0.2.0` for
+# "version": "0.2.0") to build the distributable zip and publish a GitHub
+# Release. Foundry's "manifest" URL always points at releases/latest, so
+# just publishing a newer release is enough for installed instances to see
+# an update.
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - name: Check tag matches module.json version
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}" -replace '^v', ''
+          $version = (Get-Content module.json | ConvertFrom-Json).version
+          if ($tag -ne $version) {
+            Write-Error "Tag ${{ github.ref_name }} does not match module.json version '$version'"
+            exit 1
+          }
+
+      - run: npm run zip
+
+      - name: Create GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ github.ref_name }}" `
+            "../aventuria-helpers.zip" `
+            "module.json" `
+            --title "${{ github.ref_name }}" `
+            --generate-notes
