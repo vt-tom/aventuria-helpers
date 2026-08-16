@@ -167,14 +167,28 @@
     "Quickstart": {
       "Heading": "Schnellstarter vorbereiten",
       "Steps": {
-        "Prepare": {
-          "Title": "Schnellstarter vorbereiten",
-          "Body": "Zieht für jeden der sechs Schnellstarter-Helden die passenden Karten auf die Hand, spielt vier weitere als Ausdauer aus, bereitet die Schergen im Hintergrund vor und öffnet das Abenteuer-Journal. Setzt voraus, dass allen teilnehmenden Spielern bereits ein Held zugewiesen und auf dem Spielbrett platziert wurde.",
-          "Action": "Schnellstarter vorbereiten",
-          "HenchmenDeckName": "Schergen - Schnellstarter",
-          "GmOnly": "Nur die Spielleitung kann den Schnellstarter vorbereiten.",
+        "PrepareHeroes": {
+          "Title": "Helden vorbereiten",
+          "Body": "Zieht für jeden der sechs Schnellstarter-Helden die passenden Karten auf die Hand und spielt vier weitere als Ausdauer aus. Setzt voraus, dass allen teilnehmenden Spielern bereits ein Held zugewiesen und auf dem Spielbrett platziert wurde.",
+          "Action": "Helden vorbereiten",
+          "GmOnly": "Nur die Spielleitung kann die Helden vorbereiten.",
           "NoHeroes": "Keiner der zugewiesenen Helden gehört zum Schnellstarter.",
           "Done": "Schnellstarter für {count} Held(en) vorbereitet."
+        },
+        "PrepareAdventure": {
+          "Title": "Abenteuer importieren",
+          "Body": "Importiert Aventurias Schnellstarter-Ereigniskarten, platziert die drei benötigten Karten direkt auf dem Spielbrett und öffnet das Abenteuer-Journal.",
+          "Action": "Abenteuer importieren",
+          "GmOnly": "Nur die Spielleitung kann das Abenteuer importieren.",
+          "Done": "Abenteuerkarten platziert, Journal geöffnet."
+        },
+        "PrepareHenchmen": {
+          "Title": "Schergen vorbereiten",
+          "Body": "Bereitet das Schergen-Deck im Hintergrund vor, platziert es auf dem Spielbrett und mischt es.",
+          "Action": "Schergen vorbereiten",
+          "HenchmenDeckName": "Schergen - Schnellstarter",
+          "GmOnly": "Nur die Spielleitung kann die Schergen vorbereiten.",
+          "Done": "Schergen-Deck vorbereitet, platziert und gemischt."
         }
       }
     },

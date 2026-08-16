@@ -2,7 +2,7 @@ import { placeBoardStacks } from "../cards/place-board-stacks.mjs";
 import { placeHeroStacks } from "../cards/place-hero-stacks.mjs";
 import { AventuriaHelpersAssignHeroDialog } from "./assign-hero.mjs";
 import { openChangelogJournal } from "./changelog.mjs";
-import { prepareQuickstart } from "../cards/prepare-quickstart.mjs";
+import { prepareQuickstartHeroes, prepareQuickstartAdventure, prepareQuickstartHenchmen } from "../cards/prepare-quickstart.mjs";
 import { importBoardTokens } from "../actors/import-board-tokens.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
@@ -83,7 +83,11 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
       ],
     },
     quickstart: {
-      steps: [{ key: "Prepare", action: "prepareQuickstart" }],
+      steps: [
+        { key: "PrepareHeroes", action: "prepareQuickstartHeroes" },
+        { key: "PrepareAdventure", action: "prepareQuickstartAdventure" },
+        { key: "PrepareHenchmen", action: "prepareQuickstartHenchmen" },
+      ],
     },
   };
 
@@ -152,7 +156,9 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
       placeStacks: AventuriaHelpersWelcomeScreen.#onPlaceStacks,
       chooseHeroSlot: AventuriaHelpersWelcomeScreen.#onChooseHeroSlot,
       placeHeroStacks: AventuriaHelpersWelcomeScreen.#onPlaceHeroStacks,
-      prepareQuickstart: AventuriaHelpersWelcomeScreen.#onPrepareQuickstart,
+      prepareQuickstartHeroes: AventuriaHelpersWelcomeScreen.#onPrepareQuickstartHeroes,
+      prepareQuickstartAdventure: AventuriaHelpersWelcomeScreen.#onPrepareQuickstartAdventure,
+      prepareQuickstartHenchmen: AventuriaHelpersWelcomeScreen.#onPrepareQuickstartHenchmen,
     },
   };
 
@@ -464,9 +470,21 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
     }
   }
 
-  /** Runs once, after every participating player already has a hero assigned - see `prepareQuickstart()`. */
-  static async #onPrepareQuickstart() {
-    const success = await prepareQuickstart();
+  /** Step 1 of "Schnellstarter vorbereiten" - see `prepareQuickstartHeroes()`. */
+  static async #onPrepareQuickstartHeroes() {
+    const success = await prepareQuickstartHeroes();
+    if (success) await this.#advance();
+  }
+
+  /** Step 2 of "Schnellstarter vorbereiten" - see `prepareQuickstartAdventure()`. */
+  static async #onPrepareQuickstartAdventure() {
+    const success = await prepareQuickstartAdventure();
+    if (success) await this.#advance();
+  }
+
+  /** Step 3 of "Schnellstarter vorbereiten" - see `prepareQuickstartHenchmen()`. */
+  static async #onPrepareQuickstartHenchmen() {
+    const success = await prepareQuickstartHenchmen();
     if (success) await this.#advance();
   }
 }

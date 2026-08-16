@@ -52,7 +52,7 @@ const HENCHMEN_DECK_IMG = "modules/aventuria/assets/cards-en/henchmen/Aventuria-
  * capture method as `HERO_PLACEMENTS`/`TOKEN_PLACEMENTS`: user placed the deck by hand, then
  * read the position back via console). The adventure/event deck itself deliberately isn't
  * placed as a whole deck (Nutzerentscheidung 2026-08-16) - only 3 specific cards drawn from
- * it are (see `ADVENTURE_CARD_POSITION`/`ADVENTURE_IN_PLAY_NUMBERS`).
+ * it are (see `ADVENTURE_CARD_POSITIONS`).
  */
 const HENCHMAN_DECK_POSITION = { x: 5430.799999999999, y: 4552.6, rotation: 0 };
 
@@ -67,15 +67,15 @@ const ADVENTURE_DECK_UUID = {
 
 /**
  * Live-captured Gameboard positions for the 3 named Schnellstarter event cards, keyed by
- * `system.serialNumber` (Stand 2026-08-16, same capture method as `HENCHMAN_DECK_POSITION`).
- * All 3 are placed the same way, individually, via `ccm.api.placeCard()` (same single-card
- * canvas-placement API `playCardAsEndurance()` uses) - "Heldenaktion: Wo ist das Horn?" (326)
- * and "Ahrkh, der Oger" (327) happen to land inside the Gameboard's own "Adventure In Play"
- * region, whose `moveCard` behavior then auto-passes them into Aventuria's existing
- * `adventureInPlay0` pile ("Abenteuerkarten im Spiel") - confirmed live by the user
- * (`Cards.adventureInPlay0.Card.<id>` UUIDs), resolved back to their `x`/`y` via `fromUuid()`
- * for capture. Each of the 3 still needs its own distinct `x`/`y` regardless of which pile it
- * ends up in, same as "Zeitskala" (325) - otherwise they'd all land stacked on the same spot.
+ * `system.serialNumber` (Stand 2026-08-16, same capture method as `HENCHMAN_DECK_POSITION`
+ * - read directly out of each card's own `complete-card-management.<sceneId>` flag, which
+ * already holds its final top-left canvas position, not a center point). "Heldenaktion: Wo
+ * ist das Horn?" (326) and "Ahrkh, der Oger" (327) happen to land inside the Gameboard's own
+ * "Adventure In Play" region and get auto-passed into Aventuria's existing `adventureInPlay0`
+ * pile ("Abenteuerkarten im Spiel") by its `moveCard` behavior - confirmed live by the user
+ * (`Cards.adventureInPlay0.Card.<id>` UUIDs). Each of the 3 still needs its own distinct
+ * `x`/`y` regardless of which pile it ends up in, same as "Zeitskala" (325) - otherwise
+ * they'd all land stacked on the same spot.
  */
 const ADVENTURE_CARD_POSITIONS = {
   325: { x: 4961, y: 3876, rotation: 0 }, // Zeitskala / Time Scale
@@ -96,6 +96,36 @@ function resolveQuickstartStart(heroName) {
 }
 
 /**
+ * Locks a Cards document (deck or individual Card) onto the currently viewed Gameboard scene
+ * at a fixed position - same `complete-card-management` scene-flag mechanism
+ * `placeBoardStacks()`/`placeHeroStacks()` use for their own decks/piles. Deliberately sets
+ * the flag directly instead of going through `ccm.api.placeCard()`: that helper treats its
+ * `x`/`y` as a *center* point and internally subtracts half the card's width/height to derive
+ * the stored top-left position, but the coordinates captured here (read back from an already
+ * `complete-card-management.<sceneId>`-flagged card/deck) *are* that already-computed
+ * top-left position - feeding them through `placeCard()` a second time shifted every card up
+ * and to the left by half its size (Nutzerfeedback 2026-08-16: "Karten sind alle zu weit
+ * links oben"). Setting the flag directly avoids the double transform.
+ * @param {Cards|Card} target
+ * @param {{x: number, y: number, rotation: number}} position
+ * @returns {Promise<void>}
+ */
+async function lockOnScene(target, position) {
+  const scene = canvas.scene;
+  const cardCollection = new Set(scene.getFlag(CCM_MODULE_ID, "cardCollection") ?? []);
+  cardCollection.add(target.uuid);
+  await scene.setFlag(CCM_MODULE_ID, "cardCollection", Array.from(cardCollection));
+
+  await target.setFlag(CCM_MODULE_ID, scene.id, {
+    x: position.x,
+    y: position.y,
+    rotation: position.rotation,
+    sort: target.sort,
+    locked: position.locked ?? false,
+  });
+}
+
+/**
  * Draws the hero's first 5 cards (`start`..`start+4`) from their already-prepared deck into
  * their hand, then plays the next 4 (`start+5`..`start+8`) out as Ausdauer via the existing
  * `playCardAsEndurance()` (reused as-is, same canvas-region mechanism a manually-played
@@ -105,8 +135,8 @@ function resolveQuickstartStart(heroName) {
  * a second click because the first one's result wasn't obviously visible yet) just skips
  * whatever's already been drawn/played instead of trying to draw it again - `Cards#pass()`
  * throws ("You may not pass Card ... which has already been drawn") for an already-drawn
- * card, and since that throw previously happened inside the un-guarded `prepareQuickstart()`
- * loop, it silently aborted the rest of the loop, leaving every hero after the one that threw
+ * card, and since that throw previously happened inside the un-guarded loop this was called
+ * from, it silently aborted the rest of the loop, leaving every hero after the one that threw
  * untouched (Nutzerfeedback 2026-08-16, reproduced via the exact `UTSCards.pass` stack trace).
  *
  * Logs a console warning per hero if fewer Ausdauer cards were placed than expected
@@ -135,66 +165,48 @@ async function prepareHeroCards(user, start) {
   }
   if (enduranceOk < enduranceCards.length) {
     console.warn(
-      `${MODULE_ID} | prepareQuickstart: ${user.character.name} (${user.name}) - only ${enduranceOk}/${enduranceCards.length} Ausdauer cards placed.`,
+      `${MODULE_ID} | prepareQuickstartHeroes: ${user.character.name} (${user.name}) - only ${enduranceOk}/${enduranceCards.length} Ausdauer cards placed.`,
     );
   }
   return true;
 }
 
 /**
- * Headless equivalent of Aventuria's own `createHenchmanDeck()` macro, filtered to
- * `HENCHMAN_RANGE` instead of asking via its interactive Name/Keywords/Min/Max dialog -
- * Nutzerentscheidung 2026-08-16, same "don't call a dialog-only API wholesale from an
- * automated one-click step" precedent as `prepare-hero.mjs` already set for `preparePlayer()`
- * (see `CLAUDE.md`'s Grundregel). No-op if a quickstart henchmen deck already exists in the
- * world (idempotent re-runs, same convention as `#onImportMacros()`).
- * @returns {Promise<Cards|null>}
+ * Step 1 of the "Schnellstarter vorbereiten" guide section: draws each of the six
+ * Schnellstarter heroes' starting hand and Ausdauer cards, once every participating player
+ * already has a hero assigned and placed on the board (Guide sections "Erste
+ * Schritte"/"Helden auswählen"). GM-only, same as every other world-mutating guide step.
+ * @returns {Promise<boolean>}
  */
-async function prepareHenchmenDeck() {
-  if (game.cards.find((c) => c.getFlag(MODULE_ID, HENCHMEN_DECK_FLAG))) return null;
+export async function prepareQuickstartHeroes() {
+  if (!game.user.isGM) {
+    ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.Quickstart.Steps.PrepareHeroes.GmOnly"));
+    return false;
+  }
 
-  const lang = game.i18n.lang === "de" ? "de" : "en";
-  const master = await fromUuid(MASTER_CARDS_UUID[lang]);
-  const [min, max] = HENCHMAN_RANGE;
-  const cards = master.cards
-    .filter((c) => c.system.serialNumber >= min && c.system.serialNumber <= max)
-    .map((c) => game.cards.fromCompendium(c));
+  const users = game.users.filter((u) => u.character);
+  let prepared = 0;
+  for (const user of users) {
+    const start = resolveQuickstartStart(user.character.name);
+    if (start == null) continue;
+    // One hero's failure must not stop the rest of the table from being prepared - an
+    // uncaught error here previously aborted the whole loop (Nutzerfeedback 2026-08-16).
+    try {
+      if (await prepareHeroCards(user, start)) prepared++;
+    } catch (error) {
+      console.error(`${MODULE_ID} | prepareQuickstartHeroes: failed for ${user.character.name} (${user.name}).`, error);
+    }
+  }
 
-  return Cards.create({
-    name: game.i18n.localize("AVENTURIA_HELPERS.Quickstart.Steps.Prepare.HenchmenDeckName"),
-    img: HENCHMEN_DECK_IMG,
-    type: "deck",
-    cards,
-    "flags.core.sheetClass": "complete-card-management.DeckSheet",
-    [`flags.${MODULE_ID}.${HENCHMEN_DECK_FLAG}`]: true,
-  });
-}
+  if (!prepared) {
+    ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.Quickstart.Steps.PrepareHeroes.NoHeroes"));
+    return false;
+  }
 
-/**
- * Locks the Schergen/henchmen deck onto the currently viewed Gameboard scene at
- * `HENCHMAN_DECK_POSITION` - same `complete-card-management` scene-flag + `cardCollection`
- * mechanism `placeBoardStacks()`/`placeHeroStacks()` use for their own decks/piles. Silently
- * does nothing (no warning) if the wrong scene is active, since this is a best-effort part of
- * `prepareQuickstart()` rather than its own guide step. Idempotent - re-setting the same
- * position is harmless.
- * @param {Cards} deck
- * @returns {Promise<void>}
- */
-async function placeHenchmenDeck(deck) {
-  const scene = canvas.scene;
-  if (!scene || !scene.getFlag("aventuria", "gameBoard")) return;
-
-  const cardCollection = new Set(scene.getFlag(CCM_MODULE_ID, "cardCollection") ?? []);
-  cardCollection.add(deck.uuid);
-  await scene.setFlag(CCM_MODULE_ID, "cardCollection", Array.from(cardCollection));
-
-  await deck.setFlag(CCM_MODULE_ID, scene.id, {
-    x: HENCHMAN_DECK_POSITION.x,
-    y: HENCHMAN_DECK_POSITION.y,
-    rotation: HENCHMAN_DECK_POSITION.rotation,
-    sort: deck.sort,
-    locked: true,
-  });
+  ui.notifications.info(
+    game.i18n.format("AVENTURIA_HELPERS.Quickstart.Steps.PrepareHeroes.Done", { count: prepared }),
+  );
+  return true;
 }
 
 /**
@@ -220,26 +232,21 @@ async function prepareAdventureDeck() {
 }
 
 /**
- * Places the 3 named Schnellstarter event cards out of the (already-imported) adventure
- * deck at their own `ADVENTURE_CARD_POSITIONS` spot, via `ccm.api.placeCard()` (same
- * single-card canvas-placement API `playCardAsEndurance()` uses). Two of the three happen to
- * land inside the Gameboard's own "Adventure In Play" region and get auto-passed into
- * Aventuria's `adventureInPlay0` pile by its `moveCard` behavior - that's a side effect of
- * *where* they're dropped, not something this function does itself. Idempotent via the same
- * `!card.drawn` filter `prepareHeroCards()` uses - a card already placed/passed elsewhere is
- * skipped on a re-run rather than being placed a second time.
+ * Places the 3 named Schnellstarter event cards out of the (already-imported) adventure deck
+ * at their own `ADVENTURE_CARD_POSITIONS` spot (`lockOnScene()`, not locked). Two of the
+ * three happen to land inside the Gameboard's own "Adventure In Play" region and get
+ * auto-passed into Aventuria's `adventureInPlay0` pile by its `moveCard` behavior - that's a
+ * side effect of *where* they're dropped, not something this function does itself.
+ * Idempotent via the same `!card.drawn` filter `prepareHeroCards()` uses - a card already
+ * placed/passed elsewhere is skipped on a re-run rather than being placed a second time.
  * @param {Cards} deck
  * @returns {Promise<void>}
  */
 async function placeAdventureCards(deck) {
-  const scene = canvas.scene;
-  if (!scene || !scene.getFlag("aventuria", "gameBoard")) return;
-
   for (const [number, position] of Object.entries(ADVENTURE_CARD_POSITIONS)) {
-    if (position.x == null || position.y == null) continue;
     const card = deck.cards.find((c) => !c.drawn && c.system.serialNumber === Number(number));
     if (!card) continue;
-    await ccm.api.placeCard(card, { x: position.x, y: position.y, rotation: position.rotation, sceneId: scene.id });
+    await lockOnScene(card, position);
   }
 }
 
@@ -252,53 +259,79 @@ async function openAdventureJournal() {
 }
 
 /**
- * Prepares the Schnellstarter ("quick start") adventure in one click, once every
- * participating player already has a hero assigned and placed on the board (Guide sections
- * "Erste Schritte"/"Helden auswählen"): draws each of the six Schnellstarter heroes' starting
- * hand and Ausdauer cards, creates and places the henchmen deck (Nr. 736-742) on the
- * Gameboard, creates the adventure/event card deck (kept off the board itself,
- * Nutzerentscheidung 2026-08-16 - only the 3 named cards in `ADVENTURE_CARD_POSITIONS` get
- * placed individually), and opens the adventure's journal entry. GM-only, same as every
- * other world-mutating guide step.
+ * Step 2 of the "Schnellstarter vorbereiten" guide section: imports Aventuria's Schnellstarter
+ * adventure/event deck, places its 3 named cards on the Gameboard, and opens the adventure's
+ * journal entry. GM-only, same as every other world-mutating guide step.
  * @returns {Promise<boolean>}
  */
-export async function prepareQuickstart() {
+export async function prepareQuickstartAdventure() {
   if (!game.user.isGM) {
-    ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.Quickstart.Steps.Prepare.GmOnly"));
+    ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.Quickstart.Steps.PrepareAdventure.GmOnly"));
     return false;
   }
 
-  const users = game.users.filter((u) => u.character);
-  let prepared = 0;
-  for (const user of users) {
-    const start = resolveQuickstartStart(user.character.name);
-    if (start == null) continue;
-    // One hero's failure must not stop the rest of the table from being prepared - an
-    // uncaught error here previously aborted the whole loop (Nutzerfeedback 2026-08-16).
-    try {
-      if (await prepareHeroCards(user, start)) prepared++;
-    } catch (error) {
-      console.error(`${MODULE_ID} | prepareQuickstart: failed for ${user.character.name} (${user.name}).`, error);
-    }
+  await prepareAdventureDeck();
+  const adventureDeck = game.cards.find((c) => c.getFlag(MODULE_ID, ADVENTURE_DECK_FLAG));
+  const scene = canvas.scene;
+  if (adventureDeck && scene?.getFlag("aventuria", "gameBoard")) {
+    await placeAdventureCards(adventureDeck);
   }
 
-  if (!prepared) {
-    ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.Quickstart.Steps.Prepare.NoHeroes"));
+  await openAdventureJournal();
+
+  ui.notifications.info(game.i18n.localize("AVENTURIA_HELPERS.Quickstart.Steps.PrepareAdventure.Done"));
+  return true;
+}
+
+/**
+ * Headless equivalent of Aventuria's own `createHenchmanDeck()` macro, filtered to
+ * `HENCHMAN_RANGE` instead of asking via its interactive Name/Keywords/Min/Max dialog -
+ * Nutzerentscheidung 2026-08-16, same "don't call a dialog-only API wholesale from an
+ * automated one-click step" precedent as `prepare-hero.mjs` already set for `preparePlayer()`
+ * (see `CLAUDE.md`'s Grundregel). No-op if a quickstart henchmen deck already exists in the
+ * world (idempotent re-runs, same convention as `#onImportMacros()`).
+ * @returns {Promise<Cards|null>}
+ */
+async function prepareHenchmenDeck() {
+  if (game.cards.find((c) => c.getFlag(MODULE_ID, HENCHMEN_DECK_FLAG))) return null;
+
+  const lang = game.i18n.lang === "de" ? "de" : "en";
+  const master = await fromUuid(MASTER_CARDS_UUID[lang]);
+  const [min, max] = HENCHMAN_RANGE;
+  const cards = master.cards
+    .filter((c) => c.system.serialNumber >= min && c.system.serialNumber <= max)
+    .map((c) => game.cards.fromCompendium(c));
+
+  return Cards.create({
+    name: game.i18n.localize("AVENTURIA_HELPERS.Quickstart.Steps.PrepareHenchmen.HenchmenDeckName"),
+    img: HENCHMEN_DECK_IMG,
+    type: "deck",
+    cards,
+    "flags.core.sheetClass": "complete-card-management.DeckSheet",
+    [`flags.${MODULE_ID}.${HENCHMEN_DECK_FLAG}`]: true,
+  });
+}
+
+/**
+ * Step 3 of the "Schnellstarter vorbereiten" guide section: creates the henchmen deck (Nr.
+ * 736-742) if needed, locks it onto the Gameboard at `HENCHMAN_DECK_POSITION`, and shuffles
+ * it. GM-only, same as every other world-mutating guide step.
+ * @returns {Promise<boolean>}
+ */
+export async function prepareQuickstartHenchmen() {
+  if (!game.user.isGM) {
+    ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.Quickstart.Steps.PrepareHenchmen.GmOnly"));
     return false;
   }
 
   await prepareHenchmenDeck();
   const henchmenDeck = game.cards.find((c) => c.getFlag(MODULE_ID, HENCHMEN_DECK_FLAG));
-  if (henchmenDeck) await placeHenchmenDeck(henchmenDeck);
+  const scene = canvas.scene;
+  if (henchmenDeck && scene?.getFlag("aventuria", "gameBoard")) {
+    await lockOnScene(henchmenDeck, { ...HENCHMAN_DECK_POSITION, locked: true });
+  }
+  if (henchmenDeck) await henchmenDeck.shuffle();
 
-  await prepareAdventureDeck();
-  const adventureDeck = game.cards.find((c) => c.getFlag(MODULE_ID, ADVENTURE_DECK_FLAG));
-  if (adventureDeck) await placeAdventureCards(adventureDeck);
-
-  await openAdventureJournal();
-
-  ui.notifications.info(
-    game.i18n.format("AVENTURIA_HELPERS.Quickstart.Steps.Prepare.Done", { count: prepared }),
-  );
+  ui.notifications.info(game.i18n.localize("AVENTURIA_HELPERS.Quickstart.Steps.PrepareHenchmen.Done"));
   return true;
 }
