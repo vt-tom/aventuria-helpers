@@ -2,7 +2,12 @@ import { placeBoardStacks } from "../cards/place-board-stacks.mjs";
 import { placeHeroStacks } from "../cards/place-hero-stacks.mjs";
 import { AventuriaHelpersAssignHeroDialog } from "./assign-hero.mjs";
 import { openChangelogJournal } from "./changelog.mjs";
-import { prepareQuickstartHeroes, prepareQuickstartAdventure, prepareQuickstartHenchmen } from "../cards/prepare-quickstart.mjs";
+import {
+  prepareQuickstartHeroes,
+  prepareQuickstartAdventure,
+  prepareQuickstartHenchmen,
+  openQuickstartJournal,
+} from "../cards/prepare-quickstart.mjs";
 import { importBoardTokens } from "../actors/import-board-tokens.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
@@ -87,6 +92,7 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
         { key: "PrepareHeroes", action: "prepareQuickstartHeroes" },
         { key: "PrepareAdventure", action: "prepareQuickstartAdventure" },
         { key: "PrepareHenchmen", action: "prepareQuickstartHenchmen" },
+        { key: "OpenJournal", action: "openQuickstartJournal" },
       ],
     },
   };
@@ -159,6 +165,7 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
       prepareQuickstartHeroes: AventuriaHelpersWelcomeScreen.#onPrepareQuickstartHeroes,
       prepareQuickstartAdventure: AventuriaHelpersWelcomeScreen.#onPrepareQuickstartAdventure,
       prepareQuickstartHenchmen: AventuriaHelpersWelcomeScreen.#onPrepareQuickstartHenchmen,
+      openQuickstartJournal: AventuriaHelpersWelcomeScreen.#onOpenQuickstartJournal,
     },
   };
 
@@ -485,6 +492,12 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
   /** Step 3 of "Schnellstarter vorbereiten" - see `prepareQuickstartHenchmen()`. */
   static async #onPrepareQuickstartHenchmen() {
     const success = await prepareQuickstartHenchmen();
+    if (success) await this.#advance();
+  }
+
+  /** Step 4 of "Schnellstarter vorbereiten" - see `openQuickstartJournal()`. */
+  static async #onOpenQuickstartJournal() {
+    const success = await openQuickstartJournal();
     if (success) await this.#advance();
   }
 }

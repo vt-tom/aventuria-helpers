@@ -184,11 +184,16 @@
         },
         "PrepareHenchmen": {
           "Title": "Schergen vorbereiten",
-          "Body": "Bereitet das Schergen-Deck im Hintergrund vor, platziert es auf dem Spielbrett, mischt es und öffnet das Abenteuer-Journal.",
+          "Body": "Bereitet das Schergen-Deck im Hintergrund vor, platziert es auf dem Spielbrett und mischt es.",
           "Action": "Schergen vorbereiten",
           "HenchmenDeckName": "Schergen - Schnellstarter",
           "GmOnly": "Nur die Spielleitung kann die Schergen vorbereiten.",
-          "Done": "Schergen-Deck vorbereitet, platziert und gemischt. Journal geöffnet."
+          "Done": "Schergen-Deck vorbereitet, platziert und gemischt."
+        },
+        "OpenJournal": {
+          "Title": "Abenteuer-Journal öffnen",
+          "Body": "Öffnet das Aventuria-Schnellstarter-Journal direkt auf der Seite \"Das Abenteuer\" - hier beginnt das Abenteuer.",
+          "Action": "Journal öffnen"
         }
       }
     },

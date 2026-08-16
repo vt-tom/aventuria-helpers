@@ -184,11 +184,16 @@
         },
         "PrepareHenchmen": {
           "Title": "Prepare Henchmen",
-          "Body": "Prepares the henchmen deck in the background, places it on the Gameboard, shuffles it, and opens the adventure journal.",
+          "Body": "Prepares the henchmen deck in the background, places it on the Gameboard, and shuffles it.",
           "Action": "Prepare Henchmen",
           "HenchmenDeckName": "Henchman - Quickstarter",
           "GmOnly": "Only the gamemaster can prepare the henchmen.",
-          "Done": "Prepared, placed, and shuffled the henchmen deck. Opened the journal."
+          "Done": "Prepared, placed, and shuffled the henchmen deck."
+        },
+        "OpenJournal": {
+          "Title": "Open Adventure Journal",
+          "Body": "Opens the Aventuria Quick Start journal directly on the \"The Adventure\" page - this is where the adventure begins.",
+          "Action": "Open Journal"
         }
       }
     },
