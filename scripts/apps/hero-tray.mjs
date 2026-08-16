@@ -1,7 +1,8 @@
 import { AventuriaHelpersHandSheet } from "../sheets/hand-sheet.mjs";
-import { resolveHandStacks } from "../cards/stacks.mjs";
+import { resolveStacks } from "../cards/stacks.mjs";
 import { getEnduranceStatus, exhaustEndurance, readyEndurance } from "../cards/endurance.mjs";
 import { openWelcomeScreen } from "../macros/open-welcome-screen.mjs";
+import { AventuriaHelpersWelcomeScreen } from "./welcome-screen.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -103,15 +104,18 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
   /* -------------------------------------------------- */
 
   /**
-   * Runs aventuria's own "Bereite Spieler vor" macro (dialog: choose a level-1 hero
-   * + player number). Reuses it wholesale instead of building a separate hero-list
-   * dialog - it already does the compendium import, Folder/Cards creation and the
-   * `game.user.character`/`playerHand` flag wiring the tray then reads back out.
+   * Opens the Guide's "Helden auswählen" section directly (Nutzerwunsch 2026-08-14:
+   * route this button through the same guided flow the guide itself offers, instead
+   * of calling `preparePlayer()` bare) - that flow picks the target player/board slot
+   * on a visual picker first, then runs aventuria's "Bereite Spieler vor" itself and
+   * assigns its result to whoever was picked, instead of always self-assigning to
+   * whoever clicks. Calling `preparePlayer()` directly here would skip all of that.
    * @this AventuriaHelpersHeroTray
    */
   static async #onPickHero() {
-    await game.modules.get("aventuria").api.preparePlayer();
-    await this.render();
+    const app = new AventuriaHelpersWelcomeScreen();
+    app.section = "pickHero";
+    await app.render({ force: true });
   }
 
   /**
@@ -291,25 +295,6 @@ async function promptCardAmount(max) {
   });
   if (!result) return null;
   return Math.max(1, Math.min(max, Number(result.amount) || 1));
-}
-
-/**
- * Resolves the current user's hero and the four Cards stacks `preparePlayer()`
- * creates for them, without duplicating any of that macro's own bookkeeping:
- * only the Hand is tracked via a user flag, so Deck/Ablage/Im-Spiel-Stapel are
- * found as its siblings in the same Folder. Module-level (not a class method) so
- * the auto-refresh hooks below can use it too, to only react to changes on the
- * current user's own stacks.
- * @returns {{actor: Actor, hand: Cards, deck: Cards|null, discard: Cards|null}|null}
- */
-function resolveStacks() {
-  const actor = game.user.character;
-  const handId = game.user.getFlag(CCM_ID, "playerHand");
-  const hand = handId ? game.cards.get(handId) : null;
-  if (!actor || !hand) return null;
-
-  const stacks = resolveHandStacks(hand);
-  return stacks && { actor, ...stacks };
 }
 
 /**

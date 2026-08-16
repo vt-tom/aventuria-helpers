@@ -10,14 +10,15 @@
     <h2>{{localize 'AVENTURIA_HELPERS.Welcome.CategoryAventuria'}}</h2>
     <div class="welcome-actions">
       <button type="button" class="w-btn" data-action="showSection" data-section="gettingStarted">{{localize 'AVENTURIA_HELPERS.Welcome.FirstSteps'}}</button>
+      <button type="button" class="w-btn" data-action="showSection" data-section="pickHero">{{localize 'AVENTURIA_HELPERS.Welcome.PickHero'}}</button>
     </div>
   </div>
 </div>
 {{/if}}
 
-{{#if sections.gettingStarted.active}}
+{{#if step}}
 <div class="aventuria-welcome getting-started">
-  <h2>{{localize 'AVENTURIA_HELPERS.GettingStarted.Heading'}}</h2>
+  <h2>{{localize headingKey}}</h2>
 
   <div class="setup-step">
     <span class="setup-step-num">{{step.number}}</span>
@@ -41,7 +42,7 @@
 
   <div class="welcome-actions">
     <button type="button" class="w-btn ghost" data-action="prevStep">{{localize 'AVENTURIA_HELPERS.Welcome.Back'}}</button>
-    <button type="button" class="w-btn" data-action="nextStep">{{#if step.isLast}}{{localize 'AVENTURIA_HELPERS.Welcome.Done'}}{{else}}{{localize 'AVENTURIA_HELPERS.GettingStarted.Next'}}{{/if}}</button>
+    <button type="button" class="w-btn" data-action="nextStep">{{#if step.isLast}}{{localize 'AVENTURIA_HELPERS.Welcome.Done'}}{{else}}{{localize 'AVENTURIA_HELPERS.Welcome.Next'}}{{/if}}</button>
   </div>
 </div>
 {{/if}}

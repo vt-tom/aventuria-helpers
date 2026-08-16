@@ -1,0 +1,72 @@
+<div class="aventuria-welcome assign-hero-body">
+  <p>{{localize 'AVENTURIA_HELPERS.PickHero.AssignDialog.Intro'}}</p>
+
+  <div class="form-group">
+    <label for="assign-hero-user">{{localize 'AVENTURIA_HELPERS.PickHero.AssignDialog.ChoosePlayer'}}</label>
+    <select id="assign-hero-user" name="userId">
+      <option value=""></option>
+      {{#each users}}
+      <option value="{{this.id}}" {{#if this.selected}}selected{{/if}}>{{this.name}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+  {{#if selectedUserHero}}
+  <p class="assign-hero-warning">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    {{localize 'AVENTURIA_HELPERS.PickHero.AssignDialog.PlayerHasHero' player=selectedUserName hero=selectedUserHero}}
+  </p>
+  {{/if}}
+
+  <div class="board-image-wrap">
+    <img class="board-image" src="{{image}}" data-action="viewImage" data-src="{{image}}" alt="">
+    {{#each slots}}
+    <button type="button"
+      class="slot-hotspot{{#if this.selected}} selected{{/if}}{{#if this.occupant}} occupied{{/if}}{{#if this.blocked}} blocked{{/if}}"
+      data-action="selectSlot"
+      data-slot="{{this.number}}"
+      {{#if this.blocked}}disabled{{/if}}
+      style="left: {{this.left}}%; top: {{this.top}}%; width: {{this.width}}%; height: {{this.height}}%;"
+      data-tooltip="{{#if this.occupant}}{{this.occupant}}{{else}}{{localize 'AVENTURIA_HELPERS.PickHero.AssignDialog.SlotFree'}}{{/if}}">
+      <span class="slot-num">{{this.number}}</span>
+      {{#if this.blocked}}<i class="fa-solid fa-lock"></i>{{/if}}
+    </button>
+    {{/each}}
+  </div>
+
+  <div class="form-group">
+    <label>{{localize 'AVENTURIA_HELPERS.PickHero.AssignDialog.ChooseHero'}}</label>
+    <div class="hero-list">
+      {{#each heroes}}
+      <div class="hero-option{{#if this.selected}} selected{{/if}}{{#if this.occupant}} occupied{{/if}}"
+        role="button"
+        tabindex="0"
+        data-action="selectHero"
+        data-hero-id="{{this.id}}">
+        {{#if this.icon}}
+        <img class="hero-icon" src="{{this.icon}}" alt="">
+        {{else}}
+        <i class="fa-solid fa-user hero-icon-placeholder"></i>
+        {{/if}}
+        <span class="hero-option-text">
+          <span class="hero-option-name">{{this.name}}</span>
+          {{#if this.profession}}<span class="hero-option-profession">{{this.profession}}</span>{{/if}}
+        </span>
+        {{#if this.occupant}}<i class="fa-solid fa-triangle-exclamation" data-tooltip="{{this.occupant}}"></i>{{/if}}
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  {{#if selectedHeroOccupant}}
+  <p class="assign-hero-warning">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    {{localize 'AVENTURIA_HELPERS.PickHero.AssignDialog.HeroOccupied' player=selectedHeroOccupant}}
+  </p>
+  {{/if}}
+
+  <div class="welcome-actions">
+    <button type="button" class="w-btn ghost" data-action="close">{{localize 'AVENTURIA_HELPERS.Welcome.Back'}}</button>
+    <button type="button" class="w-btn" data-action="confirm" {{#unless canContinue}}disabled{{/unless}}>{{localize 'AVENTURIA_HELPERS.PickHero.AssignDialog.Continue'}}</button>
+  </div>
+</div>

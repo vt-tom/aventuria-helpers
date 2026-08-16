@@ -1493,6 +1493,235 @@ button.skill-value:active {
   color: var(--panel);
 }
 
+/* ---------- Assign-hero picker (Held wählen: Spieler + Spielernummer) ---------- */
+/* Own Application/DOM tree, opened from within the "Helden auswählen" guide step -
+   reuses .aventuria-welcome/.w-btn/.welcome-actions from the Welcome screen above
+   for the shared look, only adds what's specific to the board-image picker. */
+
+.aventuria-helpers.assign-hero .window-content {
+  background: var(--paper);
+}
+
+.assign-hero-body {
+  align-items: stretch;
+  text-align: left;
+}
+
+.assign-hero-body > p {
+  text-align: center;
+}
+
+.board-image-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  cursor: zoom-in;
+}
+
+.board-image-wrap .board-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.slot-hotspot {
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  padding: 0.3rem;
+  margin: 0;
+  background: rgba(169, 130, 46, 0.12);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.slot-hotspot:hover {
+  background: rgba(169, 130, 46, 0.28);
+  border-color: var(--gold);
+}
+
+.slot-hotspot.selected {
+  border-color: var(--gold);
+  background: rgba(169, 130, 46, 0.35);
+}
+
+.slot-hotspot .slot-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--panel);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+/* Belongs to a different player than the one currently selected - can't be picked
+   at all (Nutzerentscheidung 2026-08-16: replacing a hero only at its own player's
+   own slot, not a manual-cleanup warning for taking someone else's). `disabled` on
+   the underlying <button> already blocks clicks/keyboard activation; this is just
+   the visual side of that. */
+.slot-hotspot.blocked {
+  cursor: not-allowed;
+  background: rgba(0, 0, 0, 0.05);
+  border-color: transparent;
+}
+
+.slot-hotspot.blocked:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: transparent;
+}
+
+.slot-hotspot.blocked .slot-num {
+  background: var(--muted);
+  opacity: 0.7;
+}
+
+.slot-hotspot.blocked i.fa-lock {
+  color: var(--muted);
+  font-size: 0.8rem;
+  filter: drop-shadow(0 0 2px var(--panel));
+}
+
+.assign-hero-warning {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0.5rem 0.7rem;
+  background: rgba(168, 56, 61, 0.1);
+  border: 1px solid var(--ruby);
+  border-radius: 6px;
+  color: var(--ruby);
+  font-size: 0.85rem;
+}
+
+.assign-hero-body .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.assign-hero-body .form-group label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.assign-hero-body select {
+  font: inherit;
+  line-height: 1.4;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--panel);
+  color: var(--ink);
+}
+
+/* List-row design (not boxed buttons) - deliberately not `<button>` elements
+   (see assign-hero.mjs#_onRender()'s comment) and deliberately not a per-row
+   border box - a bottom divider + left accent bar tolerates variable (two-line)
+   row content much better than a border that has to exactly wrap it. */
+.hero-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 260px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--panel);
+}
+
+.hero-option {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.75rem;
+  border-left: 3px solid transparent;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.hero-list .hero-option:last-child {
+  border-bottom: none;
+}
+
+.hero-option:hover {
+  background: rgba(169, 130, 46, 0.1);
+}
+
+.hero-option.selected {
+  background: rgba(169, 130, 46, 0.18);
+  border-left-color: var(--gold);
+}
+
+.hero-option.occupied {
+  border-left-color: var(--ruby);
+}
+
+.hero-option:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+}
+
+.hero-icon,
+.hero-icon-placeholder {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  object-fit: cover;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.hero-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.hero-option-name {
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.hero-option-profession {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.hero-option i.fa-triangle-exclamation {
+  flex: none;
+  color: var(--ruby);
+}
+
+.assign-hero-body .w-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.assign-hero-reminder {
+  font-size: 1.1rem;
+  text-align: center;
+}
+
 /* ---------- Heldenablage (permanent HUD tray) ---------- */
 /* Frameless UI element living in #ui-left-column-1 next to the native player
    list (see hero-tray.mjs _insertElement()) - only one of the two is visible

@@ -56,12 +56,13 @@
       "GuideMissing": "Guide compendium not found.",
       "CategoryAventuria": "Aventuria",
       "FirstSteps": "First Steps",
+      "PickHero": "Choose a Hero",
       "Back": "Back",
+      "Next": "Next",
       "Done": "Close"
     },
     "GettingStarted": {
       "Heading": "Getting Started",
-      "Next": "Next",
       "PlannedAutomation": "This step is planned to be automated by the Aventuria Helpers module later on.",
       "MissingPack": "Compendium not found. Is the Aventuria module active?",
       "Steps": {
@@ -109,6 +110,45 @@
         }
       }
     },
+    "PickHero": {
+      "Heading": "Choose a Hero",
+      "Steps": {
+        "AssignHero": {
+          "Title": "Assign hero",
+          "Body": "Pick the player first, then their player slot on the image and the hero - all on one page. If the player already has a slot, it's selected automatically; other players' slots are locked. If the player already has a hero, or the chosen hero is already someone else's, you get a warning; continuing replaces (deletes) an existing hero of the chosen player.",
+          "Action": "Assign hero",
+          "GmOnly": "Only the gamemaster can assign a hero."
+        },
+        "PlaceStacks": {
+          "Title": "Place on the Gameboard scene",
+          "Body": "Places Deck, discard pile, Hand and Token at their spot on the Gameboard automatically and shuffles the deck - for the same player and player slot as in step 1.",
+          "Action": "Place",
+          "MissingCcm": "Complete Card Management is not active.",
+          "GmOnly": "Only the gamemaster can anchor a hero's deck, discard pile, hand and token.",
+          "NoScene": "No scene is open.",
+          "WrongScene": "This only works on the Gameboard scene from the Aventuria module.",
+          "NotPrepared": "No prepared hero found. Run Assign hero first.",
+          "NotConfigured": "Player slot {player} hasn't been measured yet.",
+          "NoAssignment": "Assign a hero first.",
+          "Done": "Anchored the stacks and token for player slot {player}, shuffled the deck."
+        }
+      },
+      "AssignDialog": {
+        "Title": "Assign hero",
+        "Intro": "Pick the player first, then their player slot on the Gameboard and the hero. If the player already has a slot, it's already selected; other players' slots are locked. Click the image itself for a large view.",
+        "SlotFree": "Free",
+        "ChoosePlayer": "Player",
+        "ChooseHero": "Hero",
+        "PlayerHasHero": "{player} already has a hero ({hero}) - it will be deleted and replaced when you continue.",
+        "PlayerHasHeroConfirmBody": "This player already has the hero {hero} - it will be deleted and replaced.",
+        "HeroOccupied": "This hero already belongs to {player}.",
+        "HeroOccupiedConfirmBody": "This hero already belongs to {player}.",
+        "ConfirmTitle": "Please confirm",
+        "WrongScene": "Open the Gameboard scene from the Aventuria module first.",
+        "PrepareFailed": "Could not create the hero - see the console for details.",
+        "Continue": "Continue"
+      }
+    },
     "Combat": {
       "AddEnemyPhase": "Add enemy actions",
       "EnemyPhaseName": "Enemy Actions",
@@ -118,7 +158,7 @@
     "HeroTray": {
       "Title": "Hero Tray",
       "Config": "Configure hero/hand",
-      "PickHero": "Choose hero (runs \"Prepare Player\")",
+      "PickHero": "Choose hero (opens the guide)",
       "OpenSheet": "Open hero sheet",
       "ShowPlayers": "Show player list",
       "ShowTray": "Show hero tray",

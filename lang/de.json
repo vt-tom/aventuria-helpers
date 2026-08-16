@@ -56,12 +56,13 @@
       "GuideMissing": "Guide-Kompendium wurde nicht gefunden.",
       "CategoryAventuria": "Aventuria",
       "FirstSteps": "Erste Schritte",
+      "PickHero": "Helden auswählen",
       "Back": "Zurück",
+      "Next": "Weiter",
       "Done": "Schließen"
     },
     "GettingStarted": {
       "Heading": "Erste Schritte",
-      "Next": "Weiter",
       "PlannedAutomation": "Dieser Schritt soll später im Aventuria Helfer-Modul automatisiert werden.",
       "MissingPack": "Kompendium wurde nicht gefunden. Ist das Aventuria-Modul aktiv?",
       "Steps": {
@@ -109,6 +110,45 @@
         }
       }
     },
+    "PickHero": {
+      "Heading": "Helden auswählen",
+      "Steps": {
+        "AssignHero": {
+          "Title": "Held zuweisen",
+          "Body": "Wähle zuerst den Spieler, dann seinen Spielerplatz im Bild und den Helden - alles auf einer Seite. Hat der Spieler schon einen Platz, wird dieser automatisch markiert; Plätze anderer Spieler sind gesperrt. Hat der Spieler schon einen Helden oder ist der gewählte Held schon vergeben, wird gewarnt; beim Fortfahren wird ein vorhandener Held des gewählten Spielers ersetzt (gelöscht).",
+          "Action": "Held zuweisen",
+          "GmOnly": "Nur die Spielleitung kann einen Helden zuweisen."
+        },
+        "PlaceStacks": {
+          "Title": "Auf der Spielbrett-Szene platzieren",
+          "Body": "Setzt Deck, Ablage, Hand und Token automatisch an ihren Platz auf dem Spielbrett und mischt das Deck - für denselben Spieler und Spielerplatz wie in Schritt 1.",
+          "Action": "Platzieren",
+          "MissingCcm": "Complete Card Management ist nicht aktiv.",
+          "GmOnly": "Nur die Spielleitung kann Deck, Ablage, Hand und Token verankern.",
+          "NoScene": "Keine Spieloberfläche geöffnet.",
+          "WrongScene": "Das funktioniert nur auf der Spielbrett-Szene aus dem Aventuria-Modul.",
+          "NotPrepared": "Kein vorbereiteter Held gefunden. Führe zuerst Held zuweisen aus.",
+          "NotConfigured": "Spielerplatz {player} ist noch nicht eingemessen.",
+          "NoAssignment": "Bitte zuerst einen Helden zuweisen.",
+          "Done": "Stapel und Token für Spielerplatz {player} verankert, Deck gemischt."
+        }
+      },
+      "AssignDialog": {
+        "Title": "Held zuweisen",
+        "Intro": "Wähle zuerst den Spieler, dann seinen Spielerplatz auf dem Spielbrett und den Helden. Hat der Spieler schon einen Platz, ist er bereits markiert; Plätze anderer Spieler sind gesperrt. Klicke aufs Bild selbst für eine Großansicht.",
+        "SlotFree": "Frei",
+        "ChoosePlayer": "Spieler",
+        "ChooseHero": "Held",
+        "PlayerHasHero": "{player} hat bereits einen Helden ({hero}) - wird beim Fortfahren gelöscht und ersetzt.",
+        "PlayerHasHeroConfirmBody": "Der Spieler hat bereits den Helden {hero} - dieser wird gelöscht und ersetzt.",
+        "HeroOccupied": "Dieser Held gehört bereits {player}.",
+        "HeroOccupiedConfirmBody": "Dieser Held gehört bereits {player}.",
+        "ConfirmTitle": "Bitte bestätigen",
+        "WrongScene": "Öffne zuerst die Spielbrett-Szene aus dem Aventuria-Modul.",
+        "PrepareFailed": "Held konnte nicht angelegt werden - siehe Konsole für Details.",
+        "Continue": "Weiter"
+      }
+    },
     "Combat": {
       "AddEnemyPhase": "Gegneraktionen hinzufügen",
       "EnemyPhaseName": "Gegneraktionen",
@@ -118,7 +158,7 @@
     "HeroTray": {
       "Title": "Heldenablage",
       "Config": "Held/Hand konfigurieren",
-      "PickHero": "Held auswählen (führt \"Bereite Spieler vor\" aus)",
+      "PickHero": "Held auswählen (öffnet den Guide)",
       "OpenSheet": "Heldenbogen öffnen",
       "ShowPlayers": "Spielerübersicht anzeigen",
       "ShowTray": "Heldenablage anzeigen",

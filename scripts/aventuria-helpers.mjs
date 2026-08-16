@@ -5,6 +5,7 @@ import { openWelcomeScreen } from "./macros/open-welcome-screen.mjs";
 import { registerCombat, registerEnemyPhaseCombatant, registerRoundEndCombatant } from "./documents/combat.mjs";
 import { registerHeroTray } from "./apps/hero-tray.mjs";
 import { registerHandSheet } from "./sheets/hand-sheet.mjs";
+import { registerPlayerSlotAssignments } from "./cards/player-slots.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 
@@ -16,6 +17,7 @@ Hooks.once("init", () => {
   });
 
   registerWelcomeScreenReopen();
+  registerPlayerSlotAssignments();
   registerCombat();
   registerEnemyPhaseCombatant();
   registerRoundEndCombatant();

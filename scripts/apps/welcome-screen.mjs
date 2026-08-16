@@ -1,8 +1,15 @@
 import { placeBoardStacks } from "../cards/place-board-stacks.mjs";
+import { placeHeroStacks } from "../cards/place-hero-stacks.mjs";
+import { AventuriaHelpersAssignHeroDialog } from "./assign-hero.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
 const MODULE_ID = "aventuria-helpers";
+
+/** `"pickHero"` -> `"PickHero"`, matching this module's i18n key casing. */
+function pascalCase(key) {
+  return key.charAt(0).toUpperCase() + key.slice(1);
+}
 
 /**
  * Client setting used to reopen the "Erste Schritte" guide on the getting-started step
@@ -46,18 +53,32 @@ export function registerWelcomeScreenReopen() {
  */
 export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(ApplicationV2) {
   /**
-   * The "Erste Schritte" checklist, one entry per page. `action` names a registered
-   * action to offer as a button on that page; `note` marks the steps that are still
-   * manual today and shows the "planned automation" hint instead of a button.
+   * The step-by-step sections hanging off this window, keyed by `section` value.
+   * Each `steps` entry is one page; `action` names a registered action to offer as
+   * a button on that page, `note` marks steps that are still manual today and
+   * shows the "planned automation" hint instead of a button. i18n strings for a
+   * section are read from `AVENTURIA_HELPERS.<PascalCase section key>.*` (see
+   * `#prepareStep()`), so a new section only needs an entry here plus matching
+   * language keys - no template changes.
    */
-  static STEPS = [
-    { key: "Users", action: "openPlayerManagement" },
-    { key: "Language", action: "openSettings" },
-    { key: "Scene", action: "importScene" },
-    { key: "Macros", action: "importMacros" },
-    { key: "PrepareBoard", action: "runPrepareBoard" },
-    { key: "PlaceStacks", action: "placeStacks" },
-  ];
+  static SECTIONS = {
+    gettingStarted: {
+      steps: [
+        { key: "Users", action: "openPlayerManagement" },
+        { key: "Language", action: "openSettings" },
+        { key: "Scene", action: "importScene" },
+        { key: "Macros", action: "importMacros" },
+        { key: "PrepareBoard", action: "runPrepareBoard" },
+        { key: "PlaceStacks", action: "placeStacks" },
+      ],
+    },
+    pickHero: {
+      steps: [
+        { key: "AssignHero", action: "chooseHeroSlot" },
+        { key: "PlaceStacks", action: "placeHeroStacks" },
+      ],
+    },
+  };
 
   /**
    * Maps the game's active language to the matching JournalEntry name in the `guide`
@@ -73,8 +94,29 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
   /** Currently shown section; persists across re-renders. */
   section = "welcome";
 
-  /** Currently shown page within the "gettingStarted" section; persists across re-renders. */
+  /** Currently shown page within the active step-based section; persists across re-renders. */
   stepIndex = 0;
+
+  /**
+   * `{user, slot}` chosen in the "Helden auswählen" section's first page - reused by
+   * its later steps so they don't have to ask again (Nutzerfeedback 2026-08-14: having
+   * to pick the player/slot twice felt clunky). Reset only by picking again; simply
+   * stays stale if the guide is closed and reopened, same as `stepIndex` resetting to 0.
+   */
+  heroAssignment = null;
+
+  /**
+   * Guards the "Helden auswählen" action handlers below against a second click
+   * re-running while the first is still mid-flight (Nutzerfeedback 2026-08-14: ended
+   * up with everything placed twice on the scene). Unlike e.g. `#onImportScene()`/
+   * `#onImportMacros()`, which dedupe by checking for an already-existing scene/macro
+   * before creating one, `preparePlayer()` has no such check at all (a second call
+   * imports a whole second Actor+Cards set), and `placeHeroToken()`'s own
+   * already-exists check is racy under a fast double-click (both calls can see "no
+   * token yet" before the first `create()` resolves). Simplest fix for all of that at
+   * once: only let one of these handlers run at a time.
+   */
+  #heroStepBusy = false;
 
   /** @inheritdoc */
   static DEFAULT_OPTIONS = {
@@ -99,6 +141,8 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
       importMacros: AventuriaHelpersWelcomeScreen.#onImportMacros,
       runPrepareBoard: AventuriaHelpersWelcomeScreen.#onRunPrepareBoard,
       placeStacks: AventuriaHelpersWelcomeScreen.#onPlaceStacks,
+      chooseHeroSlot: AventuriaHelpersWelcomeScreen.#onChooseHeroSlot,
+      placeHeroStacks: AventuriaHelpersWelcomeScreen.#onPlaceHeroStacks,
     },
   };
 
@@ -114,26 +158,27 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
   /** @inheritdoc */
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
-    context.sections = {
-      welcome: { active: this.section === "welcome" },
-      gettingStarted: { active: this.section === "gettingStarted" },
-    };
-    if (this.section === "gettingStarted") {
+    context.sections = Object.fromEntries(
+      Object.keys(AventuriaHelpersWelcomeScreen.SECTIONS).map((key) => [key, { active: this.section === key }]),
+    );
+    context.sections.welcome = { active: this.section === "welcome" };
+    if (this.section !== "welcome") {
+      context.headingKey = `AVENTURIA_HELPERS.${pascalCase(this.section)}.Heading`;
       context.step = this.#prepareStep();
     }
     return context;
   }
 
   /**
-   * Builds the view model for the currently shown "gettingStarted" page - one step
-   * per page (see `STEPS`) instead of one long scrolling list, since the previous
-   * all-steps-at-once layout made the window too tall on smaller screens.
+   * Builds the view model for the currently shown page of the active section - one
+   * step per page (see `SECTIONS`) instead of one long scrolling list, since the
+   * previous all-steps-at-once layout made the window too tall on smaller screens.
    */
   #prepareStep() {
-    const steps = AventuriaHelpersWelcomeScreen.STEPS;
+    const steps = AventuriaHelpersWelcomeScreen.SECTIONS[this.section].steps;
     const index = Math.clamp(this.stepIndex, 0, steps.length - 1);
     const step = steps[index];
-    const prefix = `AVENTURIA_HELPERS.GettingStarted.Steps.${step.key}`;
+    const prefix = `AVENTURIA_HELPERS.${pascalCase(this.section)}.Steps.${step.key}`;
     return {
       number: index + 1,
       titleKey: `${prefix}.Title`,
@@ -154,14 +199,13 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
 
   /**
    * Switches sections. `position.height` stays "auto" in DEFAULT_OPTIONS, so re-rendering
-   * naturally resizes the window to fit whichever section is now shown. Entering
-   * "gettingStarted" always starts back at the first page, so the "Erste Schritte"
-   * button on the welcome page has predictable behavior regardless of where the
-   * checklist was left last time.
+   * naturally resizes the window to fit whichever section is now shown. Entering any
+   * step-based section always starts back at the first page, so its button on the
+   * welcome page has predictable behavior regardless of where it was left last time.
    */
   static async #onShowSection(event, target) {
     this.section = target.dataset.section;
-    if (this.section === "gettingStarted") this.stepIndex = 0;
+    if (this.section !== "welcome") this.stepIndex = 0;
     await this.render();
   }
 
@@ -177,8 +221,20 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
 
   /** One page forward, or - from the last page - closes the guide. */
   static async #onNextStep() {
-    const isLast = this.stepIndex >= AventuriaHelpersWelcomeScreen.STEPS.length - 1;
-    if (isLast) {
+    await this.#advance();
+  }
+
+  /**
+   * Advances to the next page of the active section, or closes the guide if already
+   * on the last page. Shared by the explicit "Weiter" button above and, since
+   * Nutzerfeedback 2026-08-14 ("Weiter" vs. a step's own action button was easy to
+   * mix up), by the "Helden auswählen" steps' own action handlers below, which call
+   * this themselves right after their action succeeds instead of requiring a
+   * separate "Weiter" click.
+   */
+  async #advance() {
+    const steps = AventuriaHelpersWelcomeScreen.SECTIONS[this.section].steps;
+    if (this.stepIndex >= steps.length - 1) {
       this.close();
       return;
     }
@@ -326,5 +382,65 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
 
   static async #onPlaceStacks() {
     await placeBoardStacks();
+  }
+
+  /**
+   * Step 1 of "Helden auswählen": opens `AventuriaHelpersAssignHeroDialog`, which
+   * handles everything - picking the target Foundry player, the board slot, and the
+   * hero itself, warning about conflicts, and (on confirm) actually creating and
+   * assigning the hero via `prepareAndAssignHero()` (`cards/prepare-hero.mjs`).
+   * Stores the result on `this.heroAssignment` for step 2 to reuse, then
+   * auto-advances, since a successful pick here always means "on to the next step".
+   *
+   * Nutzerfeedback 2026-08-14: this step used to only pick player+slot here and then
+   * hand off to aventuria's own separate "Bereite Spieler vor" dialog for the hero
+   * itself - a second manual "Spielernummer" entry, a window-overlap bug between the
+   * two dialogs, and no way to warn about conflicts beforehand. Folding hero creation
+   * into this same dialog (see `prepare-hero.mjs`'s file header for why that's a
+   * deliberate, isolated exception to this module's usual wholesale-reuse rule)
+   * removes all of that at once.
+   */
+  static async #onChooseHeroSlot() {
+    if (this.#heroStepBusy) return;
+    if (!game.user.isGM) {
+      ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.PickHero.Steps.AssignHero.GmOnly"));
+      return;
+    }
+
+    this.#heroStepBusy = true;
+    try {
+      const assignment = await AventuriaHelpersAssignHeroDialog.request();
+      if (!assignment) return;
+
+      this.heroAssignment = assignment;
+      await this.#advance();
+    } finally {
+      this.#heroStepBusy = false;
+    }
+  }
+
+  /**
+   * Step 2: places the step-1 player's Deck/Ablage/Hand/Token at the step-1 slot's
+   * board position (and shuffles the deck) via `placeHeroStacks()`
+   * (`cards/place-hero-stacks.mjs`) - no dialog of its own anymore, reuses
+   * `this.heroAssignment` instead of asking a second time. `placeHeroStacks()` does
+   * its own GM/CCM/scene guarding and reports failures itself; only advances to
+   * "done" on an actual success (its own return value).
+   */
+  static async #onPlaceHeroStacks() {
+    if (this.#heroStepBusy) return;
+    if (!this.heroAssignment) {
+      ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.PickHero.Steps.PlaceStacks.NoAssignment"));
+      return;
+    }
+
+    this.#heroStepBusy = true;
+    try {
+      const { user, slot } = this.heroAssignment;
+      const success = await placeHeroStacks(user, slot);
+      if (success) await this.#advance();
+    } finally {
+      this.#heroStepBusy = false;
+    }
   }
 }

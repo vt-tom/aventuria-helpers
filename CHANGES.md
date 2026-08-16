@@ -2,9 +2,15 @@
 
 Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Version zuerst.
 
+## 0.1.3
+
+### Features
+- **"Helden auswählen" überarbeitet, jetzt in 2 klaren Schritten:** Erster Schritt ist jetzt eine einzige Maske - erst den Spieler auswählen (hat er schon einen Spielerplatz, wird dieser automatisch markiert), dann Spielerplatz und Held daneben. Spielerplätze anderer Spieler sind gesperrt und nicht anklickbar. Die Heldenliste zeigt zu jedem Helden ein Profession-Icon, den Namen und die Profession (z.B. "Karmal Eternius - Tulamidischer Magier"), dazu Warnungen, falls der Held oder der Spieler schon vergeben ist (eine bestehende Zuweisung des Spielers wird beim Fortfahren komplett ersetzt, inklusive Token). Zweiter Schritt platziert mit einem Klick Deck, Ablage, Hand und den frei verschiebbaren Held-Token automatisch an ihrer Stelle auf dem Spielbrett und mischt das Deck gleich mit. Der "Bereite Spieler vor"-Button in der Heldenablage öffnet jetzt ebenfalls diesen Guide-Abschnitt, statt direkt (und ohne Spielerplatz-Auswahl) loszulegen. So angelegte Helden öffnen sich außerdem direkt mit dem eigenen Aventuria-Helfer-Heldenbogen statt dem generischen Standard-Sheet.
+
 ## 0.1.2
 
 ### Features
+- **Neue Guide-Sektion "Helden auswählen"** direkt unter "Erste Schritte": die Spielleitung wählt einen Spieler aus und weist ihm über "Bereite Spieler vor" einen Helden zu, verankert danach Deck, Ablage und Hand dieses Helden auf dem Spielbrett, und jeder Spieler mischt zum Schluss selbst sein Deck - alles über Buttons statt Handarbeit. Das Verankern zeigt vorerst noch "Spielerplatz noch nicht eingemessen", bis die Positionen für alle Spielerplätze erfasst sind.
 - **Guide öffnet sich nach "Spielerverwaltung öffnen" von selbst wieder:** Dieser Schritt verlässt Foundry kurz auf eine eigene Seite - kommst du zurück (inklusive eines dabei ausgelösten Neuladens), öffnet sich der Guide automatisch wieder an derselben Stelle, statt geschlossen zu bleiben.
 - **"Erste Schritte" jetzt fast durchgehend automatisiert:** Die Schritte "Spielbrett importieren" und "Spielbrett vorbereiten" führen ihre Aktion jetzt direkt aus, statt nur ein Kompendium bzw. das Macro-Verzeichnis zu öffnen. Der Schritt "Macros importieren" importiert die Aventuria-Macros direkt in einen eigenen Ordner "Aventuria Macros" im Macro-Verzeichnis. Der Schritt "Decks und Stapel platzieren" setzt die von "Prepare Board" angelegten Ablagen und Decks per Klick automatisch an ihre Stelle auf dem Spielbrett, verankert sie dort und mischt den Schicksalsstapel - die Anleitung ist damit schon nach diesem Schritt fertig.
 

@@ -5,3 +5,4 @@ TODO.md
 node_modules/
 packs/**/LOCK
 image/
+reference/

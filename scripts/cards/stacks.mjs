@@ -23,3 +23,23 @@ export function resolveHandStacks(hand) {
 
   return { hand, deck, discard, playPile };
 }
+
+/**
+ * Resolves a user's hero and the four Cards stacks `preparePlayer()` creates for
+ * them, without duplicating any of that macro's own bookkeeping: only the Hand is
+ * tracked via a user flag, so `resolveHandStacks()` finds Deck/Ablage/Im-Spiel-Stapel
+ * as its siblings. Defaults to the current user so existing call sites (the
+ * Heldenablage) don't need to change; the Guide's "Helden auswählen" section passes
+ * an explicit `user` when a GM is placing another player's stacks on the board.
+ * @param {User} [user]
+ * @returns {{actor: Actor, hand: Cards, deck: Cards|null, discard: Cards|null}|null}
+ */
+export function resolveStacks(user = game.user) {
+  const actor = user.character;
+  const handId = user.getFlag("complete-card-management", "playerHand");
+  const hand = handId ? game.cards.get(handId) : null;
+  if (!actor || !hand) return null;
+
+  const stacks = resolveHandStacks(hand);
+  return stacks && { actor, ...stacks };
+}
