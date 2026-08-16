@@ -4,10 +4,23 @@ const MODULE_ID = "aventuria-helpers";
 const LAST_SEEN_SETTING = "lastSeenChangelogVersion";
 
 /**
- * Opens the `changelog` compendium's single JournalEntry (see `build-changelog-pack.mjs`,
- * one page per version, page name === version string e.g. `"0.1.4"`). If `pageVersion` names
- * an existing page, the sheet jumps straight to it (`JournalEntrySheet`'s documented `pageId`
- * render option); otherwise it opens on its default (first/overview) page.
+ * Maps the game's active language to the matching JournalEntry name in the `changelog`
+ * compendium (see `build-changelog-pack.mjs`, which bakes these exact names in from
+ * `CHANGES.md`/`CHANGES-en.md`) - same pattern as `GUIDE_JOURNAL_NAMES` in
+ * `welcome-screen.mjs`. Only "de" and "en" exist as module languages, so anything else
+ * falls back to the English changelog.
+ */
+const CHANGELOG_JOURNAL_NAMES = {
+  de: "Aventuria Helpers - Changelog (deutsch)",
+  en: "Aventuria Helpers - Changelog (englisch)",
+};
+
+/**
+ * Opens the language-appropriate `changelog` compendium JournalEntry (see
+ * `build-changelog-pack.mjs`, one page per version, page name === version string e.g.
+ * `"0.1.4"`). If `pageVersion` names an existing page, the sheet jumps straight to it
+ * (`JournalEntrySheet`'s documented `pageId` render option); otherwise it opens on its
+ * default (first/overview) page.
  */
 export async function openChangelogJournal(pageVersion = null) {
   const pack = game.packs.get(`${MODULE_ID}.changelog`);
@@ -15,11 +28,14 @@ export async function openChangelogJournal(pageVersion = null) {
     ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.Welcome.ChangelogMissing"));
     return;
   }
-  const [journal] = await pack.getDocuments();
-  if (!journal) {
+  const name = CHANGELOG_JOURNAL_NAMES[game.i18n.lang] ?? CHANGELOG_JOURNAL_NAMES.en;
+  const index = await pack.getIndex();
+  const entry = index.find((e) => e.name === name);
+  if (!entry) {
     ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.Welcome.ChangelogMissing"));
     return;
   }
+  const journal = await pack.getDocument(entry._id);
   const page = pageVersion ? journal.pages.find((p) => p.name === pageVersion) : null;
   await journal.sheet.render(true, page ? { pageId: page.id } : {});
 }
