@@ -2,6 +2,11 @@
 
 Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Version zuerst.
 
+## 0.1.5
+
+### Features
+- **Neuer Guide-Abschnitt "Schnellstarter vorbereiten":** Sobald alle teilnehmenden Spieler ihren Helden zugewiesen haben, bereitet dieser neue Schritt im Willkommensbildschirm mit einem Klick das komplette Schnellstarter-Abenteuer vor - jeder der sechs Schnellstarter-Helden bekommt seine Starthand gezogen und vier weitere Karten als Ausdauer ausgespielt, die Schergen werden im Hintergrund vorbereitet, und das Abenteuer-Journal öffnet sich direkt auf der richtigen Seite.
+
 ## 0.1.3
 
 ### Features

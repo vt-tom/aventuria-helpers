@@ -57,6 +57,7 @@
       "CategoryAventuria": "Aventuria",
       "FirstSteps": "Erste Schritte",
       "PickHero": "Helden auswählen",
+      "Quickstart": "Schnellstarter vorbereiten",
       "Back": "Zurück",
       "Next": "Weiter",
       "Done": "Schließen"
@@ -147,6 +148,20 @@
         "WrongScene": "Öffne zuerst die Spielbrett-Szene aus dem Aventuria-Modul.",
         "PrepareFailed": "Held konnte nicht angelegt werden - siehe Konsole für Details.",
         "Continue": "Weiter"
+      }
+    },
+    "Quickstart": {
+      "Heading": "Schnellstarter vorbereiten",
+      "Steps": {
+        "Prepare": {
+          "Title": "Schnellstarter vorbereiten",
+          "Body": "Zieht für jeden der sechs Schnellstarter-Helden die passenden Karten auf die Hand, spielt vier weitere als Ausdauer aus, bereitet die Schergen im Hintergrund vor und öffnet das Abenteuer-Journal. Setzt voraus, dass allen teilnehmenden Spielern bereits ein Held zugewiesen und auf dem Spielbrett platziert wurde.",
+          "Action": "Schnellstarter vorbereiten",
+          "HenchmenDeckName": "Schergen (Schnellstarter)",
+          "GmOnly": "Nur die Spielleitung kann den Schnellstarter vorbereiten.",
+          "NoHeroes": "Keiner der zugewiesenen Helden gehört zum Schnellstarter.",
+          "Done": "Schnellstarter für {count} Held(en) vorbereitet."
+        }
       }
     },
     "Combat": {
