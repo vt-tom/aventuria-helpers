@@ -177,18 +177,18 @@
         },
         "PrepareAdventure": {
           "Title": "Abenteuer importieren",
-          "Body": "Importiert Aventurias Schnellstarter-Ereigniskarten, platziert die drei benötigten Karten direkt auf dem Spielbrett und öffnet das Abenteuer-Journal.",
+          "Body": "Importiert Aventurias Schnellstarter-Ereigniskarten und platziert die drei benötigten Karten direkt auf dem Spielbrett.",
           "Action": "Abenteuer importieren",
           "GmOnly": "Nur die Spielleitung kann das Abenteuer importieren.",
-          "Done": "Abenteuerkarten platziert, Journal geöffnet."
+          "Done": "Abenteuerkarten platziert."
         },
         "PrepareHenchmen": {
           "Title": "Schergen vorbereiten",
-          "Body": "Bereitet das Schergen-Deck im Hintergrund vor, platziert es auf dem Spielbrett und mischt es.",
+          "Body": "Bereitet das Schergen-Deck im Hintergrund vor, platziert es auf dem Spielbrett, mischt es und öffnet das Abenteuer-Journal.",
           "Action": "Schergen vorbereiten",
           "HenchmenDeckName": "Schergen - Schnellstarter",
           "GmOnly": "Nur die Spielleitung kann die Schergen vorbereiten.",
-          "Done": "Schergen-Deck vorbereitet, platziert und gemischt."
+          "Done": "Schergen-Deck vorbereitet, platziert und gemischt. Journal geöffnet."
         }
       }
     },

@@ -260,8 +260,10 @@ async function openAdventureJournal() {
 
 /**
  * Step 2 of the "Schnellstarter vorbereiten" guide section: imports Aventuria's Schnellstarter
- * adventure/event deck, places its 3 named cards on the Gameboard, and opens the adventure's
- * journal entry. GM-only, same as every other world-mutating guide step.
+ * adventure/event deck and places its 3 named cards on the Gameboard. Opening the adventure's
+ * journal entry happens in step 3 instead (Nutzerentscheidung 2026-08-16 - the journal should
+ * open once everything, including the henchmen, is actually ready). GM-only, same as every
+ * other world-mutating guide step.
  * @returns {Promise<boolean>}
  */
 export async function prepareQuickstartAdventure() {
@@ -276,8 +278,6 @@ export async function prepareQuickstartAdventure() {
   if (adventureDeck && scene?.getFlag("aventuria", "gameBoard")) {
     await placeAdventureCards(adventureDeck);
   }
-
-  await openAdventureJournal();
 
   ui.notifications.info(game.i18n.localize("AVENTURIA_HELPERS.Quickstart.Steps.PrepareAdventure.Done"));
   return true;
@@ -314,8 +314,9 @@ async function prepareHenchmenDeck() {
 
 /**
  * Step 3 of the "Schnellstarter vorbereiten" guide section: creates the henchmen deck (Nr.
- * 736-742) if needed, locks it onto the Gameboard at `HENCHMAN_DECK_POSITION`, and shuffles
- * it. GM-only, same as every other world-mutating guide step.
+ * 736-742) if needed, locks it onto the Gameboard at `HENCHMAN_DECK_POSITION`, shuffles it,
+ * and - now that everything is ready - opens the adventure's journal entry (Nutzerentscheidung
+ * 2026-08-16, moved here from step 2). GM-only, same as every other world-mutating guide step.
  * @returns {Promise<boolean>}
  */
 export async function prepareQuickstartHenchmen() {
@@ -331,6 +332,8 @@ export async function prepareQuickstartHenchmen() {
     await lockOnScene(henchmenDeck, { ...HENCHMAN_DECK_POSITION, locked: true });
   }
   if (henchmenDeck) await henchmenDeck.shuffle();
+
+  await openAdventureJournal();
 
   ui.notifications.info(game.i18n.localize("AVENTURIA_HELPERS.Quickstart.Steps.PrepareHenchmen.Done"));
   return true;

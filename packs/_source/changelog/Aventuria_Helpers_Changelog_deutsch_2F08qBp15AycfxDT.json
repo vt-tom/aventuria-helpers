@@ -1,9 +1,9 @@
 {
-  "_id": "JPfeGkUCTPSxxso2",
+  "_id": "2F08qBp15AycfxDT",
   "name": "Aventuria Helpers - Changelog (deutsch)",
   "pages": [
     {
-      "_id": "nf5FHiH3ladPMHmh",
+      "_id": "1Vf7BtGZUJgJkk85",
       "name": "Änderungen – Aventuria Helfer",
       "type": "text",
       "system": {},
@@ -31,7 +31,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786896550386,
+        "createdTime": 1786900682132,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -39,10 +39,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!JPfeGkUCTPSxxso2.nf5FHiH3ladPMHmh"
+      "_key": "!journal.pages!2F08qBp15AycfxDT.1Vf7BtGZUJgJkk85"
     },
     {
-      "_id": "h9B0JbNRRSzA4v4I",
+      "_id": "qAVDSmzqwDCB4qWL",
       "name": "0.1.4.1",
       "type": "text",
       "system": {},
@@ -52,8 +52,8 @@
       },
       "image": {},
       "text": {
-        "content": "<h3>Features</h3>\n<ul>\n<li><strong>Neuer Schritt \"Marken importieren\"</strong> in \"Erste Schritte\": importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) direkt in einen eigenen Ordner in deinem Akteur-Verzeichnis und platziert sie automatisch an ihrer Stelle auf dem Spielbrett.</li>\n<li><strong>\"Schnellstarter vorbereiten\" bereitet jetzt auch die Karten auf dem Tisch vor:</strong> Das Schergen-Deck wird automatisch an seinen Platz auf dem Spielbrett gelegt, und drei Abenteuerkarten (\"Zeitskala\", \"Heldenaktion: Wo ist das Horn?\", \"Ahrkh, der Oger\") werden direkt an ihre Stelle gesetzt.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>Die drei Buttons im Aventuria-Bereich des Willkommensbildschirms wurden bei drei Einträgen zu schmal und der Text passte nicht mehr hinein - behoben.</li>\n<li>\"Schnellstarter vorbereiten\" konnte bei einem erneuten Klick mit einem Fehler abbrechen und dabei die restlichen Helden unbearbeitet lassen - der Schritt lässt sich jetzt gefahrlos mehrfach ausführen, bereits erledigte Helden werden übersprungen statt einen Fehler zu verursachen.</li>\n<li>Bei manchen Spielerplätzen konnten Ausdauerkarten nicht auf dem Spielbrett platziert werden, weil die Verknüpfung zum Im-Spiel-Stapel dieses Spielers fehlte - \"Auf der Spielbrett-Szene platzieren\" repariert diese Verknüpfung jetzt bei jedem Durchlauf automatisch mit.</li>\n</ul>",
-        "markdown": "### Features\r\n- **Neuer Schritt \"Marken importieren\"** in \"Erste Schritte\": importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) direkt in einen eigenen Ordner in deinem Akteur-Verzeichnis und platziert sie automatisch an ihrer Stelle auf dem Spielbrett.\r\n- **\"Schnellstarter vorbereiten\" bereitet jetzt auch die Karten auf dem Tisch vor:** Das Schergen-Deck wird automatisch an seinen Platz auf dem Spielbrett gelegt, und drei Abenteuerkarten (\"Zeitskala\", \"Heldenaktion: Wo ist das Horn?\", \"Ahrkh, der Oger\") werden direkt an ihre Stelle gesetzt.\r\n\r\n### Bugs\r\n- Die drei Buttons im Aventuria-Bereich des Willkommensbildschirms wurden bei drei Einträgen zu schmal und der Text passte nicht mehr hinein - behoben.\r\n- \"Schnellstarter vorbereiten\" konnte bei einem erneuten Klick mit einem Fehler abbrechen und dabei die restlichen Helden unbearbeitet lassen - der Schritt lässt sich jetzt gefahrlos mehrfach ausführen, bereits erledigte Helden werden übersprungen statt einen Fehler zu verursachen.\r\n- Bei manchen Spielerplätzen konnten Ausdauerkarten nicht auf dem Spielbrett platziert werden, weil die Verknüpfung zum Im-Spiel-Stapel dieses Spielers fehlte - \"Auf der Spielbrett-Szene platzieren\" repariert diese Verknüpfung jetzt bei jedem Durchlauf automatisch mit.",
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>Neuer Schritt \"Marken importieren\"</strong> in \"Erste Schritte\": importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) direkt in einen eigenen Ordner in deinem Akteur-Verzeichnis und platziert sie automatisch an ihrer Stelle auf dem Spielbrett.</li>\n<li><strong>\"Schnellstarter vorbereiten\" läuft jetzt in 3 klaren Schritten statt einem großen Klick:</strong> \"Helden vorbereiten\" (Hand- und Ausdauerkarten), \"Abenteuer importieren\" (importiert Aventurias Ereigniskarten, platziert die drei benötigten Karten und öffnet das Abenteuer-Journal) und \"Schergen vorbereiten\" (Schergen-Deck vorbereiten, auf dem Spielbrett platzieren und mischen).</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>Die drei Buttons im Aventuria-Bereich des Willkommensbildschirms wurden bei drei Einträgen zu schmal und der Text passte nicht mehr hinein - behoben.</li>\n<li>\"Schnellstarter vorbereiten\" konnte bei einem erneuten Klick mit einem Fehler abbrechen und dabei die restlichen Helden unbearbeitet lassen - der Schritt lässt sich jetzt gefahrlos mehrfach ausführen, bereits erledigte Helden werden übersprungen statt einen Fehler zu verursachen.</li>\n<li>Bei manchen Spielerplätzen konnten Ausdauerkarten nicht auf dem Spielbrett platziert werden, weil die Verknüpfung zum Im-Spiel-Stapel dieses Spielers fehlte - \"Auf der Spielbrett-Szene platzieren\" repariert diese Verknüpfung jetzt bei jedem Durchlauf automatisch mit.</li>\n</ul>",
+        "markdown": "### Features\r\n- **Neuer Schritt \"Marken importieren\"** in \"Erste Schritte\": importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) direkt in einen eigenen Ordner in deinem Akteur-Verzeichnis und platziert sie automatisch an ihrer Stelle auf dem Spielbrett.\r\n- **\"Schnellstarter vorbereiten\" läuft jetzt in 3 klaren Schritten statt einem großen Klick:** \"Helden vorbereiten\" (Hand- und Ausdauerkarten), \"Abenteuer importieren\" (importiert Aventurias Ereigniskarten, platziert die drei benötigten Karten und öffnet das Abenteuer-Journal) und \"Schergen vorbereiten\" (Schergen-Deck vorbereiten, auf dem Spielbrett platzieren und mischen).\r\n\r\n### Bugs\r\n- Die drei Buttons im Aventuria-Bereich des Willkommensbildschirms wurden bei drei Einträgen zu schmal und der Text passte nicht mehr hinein - behoben.\r\n- \"Schnellstarter vorbereiten\" konnte bei einem erneuten Klick mit einem Fehler abbrechen und dabei die restlichen Helden unbearbeitet lassen - der Schritt lässt sich jetzt gefahrlos mehrfach ausführen, bereits erledigte Helden werden übersprungen statt einen Fehler zu verursachen.\r\n- Bei manchen Spielerplätzen konnten Ausdauerkarten nicht auf dem Spielbrett platziert werden, weil die Verknüpfung zum Im-Spiel-Stapel dieses Spielers fehlte - \"Auf der Spielbrett-Szene platzieren\" repariert diese Verknüpfung jetzt bei jedem Durchlauf automatisch mit.",
         "format": 2
       },
       "video": {
@@ -70,7 +70,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786896550386,
+        "createdTime": 1786900682132,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -78,10 +78,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!JPfeGkUCTPSxxso2.h9B0JbNRRSzA4v4I"
+      "_key": "!journal.pages!2F08qBp15AycfxDT.qAVDSmzqwDCB4qWL"
     },
     {
-      "_id": "gzNSLG3XLtAZPUVv",
+      "_id": "oGGS0t0EuDX1rFVV",
       "name": "0.1.4",
       "type": "text",
       "system": {},
@@ -109,7 +109,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786896550386,
+        "createdTime": 1786900682132,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -117,10 +117,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!JPfeGkUCTPSxxso2.gzNSLG3XLtAZPUVv"
+      "_key": "!journal.pages!2F08qBp15AycfxDT.oGGS0t0EuDX1rFVV"
     },
     {
-      "_id": "wWNU0TvKvB7E9fu2",
+      "_id": "5uqrZ95Yx9fqOIUi",
       "name": "0.1.3",
       "type": "text",
       "system": {},
@@ -148,7 +148,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786896550386,
+        "createdTime": 1786900682132,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -156,10 +156,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!JPfeGkUCTPSxxso2.wWNU0TvKvB7E9fu2"
+      "_key": "!journal.pages!2F08qBp15AycfxDT.5uqrZ95Yx9fqOIUi"
     },
     {
-      "_id": "ozyi39W9SGxSR2JC",
+      "_id": "rNcHb2ko190Xl6pL",
       "name": "0.1.2",
       "type": "text",
       "system": {},
@@ -187,7 +187,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786896550386,
+        "createdTime": 1786900682132,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -195,10 +195,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!JPfeGkUCTPSxxso2.ozyi39W9SGxSR2JC"
+      "_key": "!journal.pages!2F08qBp15AycfxDT.rNcHb2ko190Xl6pL"
     },
     {
-      "_id": "gco0f5s15rAyockE",
+      "_id": "aiscLeoLhe2MyS0g",
       "name": "0.1.1",
       "type": "text",
       "system": {},
@@ -226,7 +226,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786896550386,
+        "createdTime": 1786900682132,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -234,10 +234,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!JPfeGkUCTPSxxso2.gco0f5s15rAyockE"
+      "_key": "!journal.pages!2F08qBp15AycfxDT.aiscLeoLhe2MyS0g"
     },
     {
-      "_id": "TM5J4MWaaCSDKHzo",
+      "_id": "PZBhJSBAE4K6tQBx",
       "name": "0.1.0",
       "type": "text",
       "system": {},
@@ -265,7 +265,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786896550386,
+        "createdTime": 1786900682132,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -273,7 +273,7 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!JPfeGkUCTPSxxso2.TM5J4MWaaCSDKHzo"
+      "_key": "!journal.pages!2F08qBp15AycfxDT.PZBhJSBAE4K6tQBx"
     }
   ],
   "folder": null,
@@ -286,7 +286,7 @@
   "_stats": {
     "compendiumSource": null,
     "coreVersion": "14.364",
-    "createdTime": 1786896550386,
+    "createdTime": 1786900682132,
     "duplicateSource": null,
     "exportSource": null,
     "lastModifiedBy": null,
@@ -294,5 +294,5 @@
     "systemId": "universal-tabletop-system",
     "systemVersion": "1.2.1"
   },
-  "_key": "!journal!JPfeGkUCTPSxxso2"
+  "_key": "!journal!2F08qBp15AycfxDT"
 }

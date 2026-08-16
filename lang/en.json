@@ -177,18 +177,18 @@
         },
         "PrepareAdventure": {
           "Title": "Import Adventure",
-          "Body": "Imports Aventuria's Quick Start event cards, places the three needed cards directly on the Gameboard, and opens the adventure journal.",
+          "Body": "Imports Aventuria's Quick Start event cards and places the three needed cards directly on the Gameboard.",
           "Action": "Import Adventure",
           "GmOnly": "Only the gamemaster can import the adventure.",
-          "Done": "Placed the adventure cards, opened the journal."
+          "Done": "Placed the adventure cards."
         },
         "PrepareHenchmen": {
           "Title": "Prepare Henchmen",
-          "Body": "Prepares the henchmen deck in the background, places it on the Gameboard, and shuffles it.",
+          "Body": "Prepares the henchmen deck in the background, places it on the Gameboard, shuffles it, and opens the adventure journal.",
           "Action": "Prepare Henchmen",
           "HenchmenDeckName": "Henchman - Quickstarter",
           "GmOnly": "Only the gamemaster can prepare the henchmen.",
-          "Done": "Prepared, placed, and shuffled the henchmen deck."
+          "Done": "Prepared, placed, and shuffled the henchmen deck. Opened the journal."
         }
       }
     },
