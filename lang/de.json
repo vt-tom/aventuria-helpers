@@ -171,7 +171,7 @@
           "Title": "Schnellstarter vorbereiten",
           "Body": "Zieht für jeden der sechs Schnellstarter-Helden die passenden Karten auf die Hand, spielt vier weitere als Ausdauer aus, bereitet die Schergen im Hintergrund vor und öffnet das Abenteuer-Journal. Setzt voraus, dass allen teilnehmenden Spielern bereits ein Held zugewiesen und auf dem Spielbrett platziert wurde.",
           "Action": "Schnellstarter vorbereiten",
-          "HenchmenDeckName": "Schergen (Schnellstarter)",
+          "HenchmenDeckName": "Schergen - Schnellstarter",
           "GmOnly": "Nur die Spielleitung kann den Schnellstarter vorbereiten.",
           "NoHeroes": "Keiner der zugewiesenen Helden gehört zum Schnellstarter.",
           "Done": "Schnellstarter für {count} Held(en) vorbereitet."

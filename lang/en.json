@@ -171,7 +171,7 @@
           "Title": "Prepare Quick Start",
           "Body": "Draws each of the six Quick Start heroes' matching cards into their hand, plays four more out as Ausdauer, prepares the henchmen in the background, and opens the adventure journal. Assumes every participating player already has a hero assigned and placed on the Gameboard.",
           "Action": "Prepare Quick Start",
-          "HenchmenDeckName": "Henchmen (Quick Start)",
+          "HenchmenDeckName": "Henchman - Quickstarter",
           "GmOnly": "Only the gamemaster can prepare the Quick Start.",
           "NoHeroes": "None of the assigned heroes belong to the Quick Start.",
           "Done": "Prepared the Quick Start for {count} hero(es)."
