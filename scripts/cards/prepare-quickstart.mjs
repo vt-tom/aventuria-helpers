@@ -78,9 +78,9 @@ const ADVENTURE_DECK_UUID = {
  * stacked on the same spot.
  */
 const ADVENTURE_CARD_POSITIONS = {
-  325: { x: 4821, y: 3666, rotation: 0 }, // Zeitskala / Time Scale
-  326: { x: 5283, y: 3675, rotation: 0 }, // Heldenaktion: Wo ist das Horn? / Hero Action: Where is the Horn?
-  327: { x: 5246, y: 3658, rotation: 0 }, // Ahrkh, der Oger / Ahrkh, the Ogre
+  325: { x: 4965, y: 3876, rotation: 0 }, // Zeitskala / Time Scale
+  326: { x: 5412, y: 3891, rotation: 0 }, // Heldenaktion: Wo ist das Horn? / Hero Action: Where is the Horn?
+  327: { x: 5365, y: 3863, rotation: 0 }, // Ahrkh, der Oger / Ahrkh, the Ogre
 };
 
 /** "Das Abenteuer"/"The Adventure" page in Aventuria's own Schnellstarter journal, per language. */
