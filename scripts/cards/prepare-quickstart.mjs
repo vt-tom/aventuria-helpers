@@ -51,8 +51,8 @@ const HENCHMEN_DECK_IMG = "modules/aventuria/assets/cards-en/henchmen/Aventuria-
  * Live-captured Gameboard position for the Schergen/henchmen deck (Stand 2026-08-16, same
  * capture method as `HERO_PLACEMENTS`/`TOKEN_PLACEMENTS`: user placed the deck by hand, then
  * read the position back via console). The adventure/event deck itself deliberately isn't
- * placed as a whole deck (Nutzerentscheidung 2026-08-16) - only individual cards drawn from
- * it are (see `ADVENTURE_CARD_PLACEMENTS`, still pending).
+ * placed as a whole deck (Nutzerentscheidung 2026-08-16) - only 3 specific cards drawn from
+ * it are (see `ADVENTURE_CARD_POSITION`/`ADVENTURE_IN_PLAY_NUMBERS`).
  */
 const HENCHMAN_DECK_POSITION = { x: 5430.799999999999, y: 4552.6, rotation: 0 };
 
@@ -63,6 +63,23 @@ const ADVENTURE_DECK_FLAG = "quickstartAdventureDeck";
 const ADVENTURE_DECK_UUID = {
   de: "Compendium.aventuria.cards-deutsch.Cards.OBPF1FtAy8XL2W8G",
   en: "Compendium.aventuria.cards-english.Cards.OBPF1FtAy8XL2W8G",
+};
+
+/**
+ * Live-captured Gameboard positions for the 3 named Schnellstarter event cards, keyed by
+ * `system.serialNumber` (Stand 2026-08-16, same capture method as `HENCHMAN_DECK_POSITION`).
+ * All 3 are placed the same way, individually, via `ccm.api.placeCard()` (same single-card
+ * canvas-placement API `playCardAsEndurance()` uses) - "Heldenaktion: Wo ist das Horn?" (326)
+ * and "Ahrkh, der Oger" (327) happen to land inside the Gameboard's own "Adventure In Play"
+ * region, whose `moveCard` behavior then auto-passes them into Aventuria's existing
+ * `adventureInPlay0` pile ("Abenteuerkarten im Spiel") - confirmed live by the user
+ * (`Cards.adventureInPlay0.Card.<id>` UUIDs) - but they still need their own `x`/`y` set
+ * first, same as "Zeitskala" (325), or they'd all land stacked on the same spot.
+ */
+const ADVENTURE_CARD_POSITIONS = {
+  325: { x: 4961, y: 3876, rotation: 0 }, // Zeitskala / Time Scale
+  326: { x: null, y: null, rotation: 0 }, // Heldenaktion: Wo ist das Horn? / Hero Action: Where is the Horn?
+  327: { x: null, y: null, rotation: 0 }, // Ahrkh, der Oger / Ahrkh, the Ogre
 };
 
 /** "Das Abenteuer"/"The Adventure" page in Aventuria's own Schnellstarter journal, per language. */
@@ -201,6 +218,30 @@ async function prepareAdventureDeck() {
   });
 }
 
+/**
+ * Places the 3 named Schnellstarter event cards out of the (already-imported) adventure
+ * deck at their own `ADVENTURE_CARD_POSITIONS` spot, via `ccm.api.placeCard()` (same
+ * single-card canvas-placement API `playCardAsEndurance()` uses). Two of the three happen to
+ * land inside the Gameboard's own "Adventure In Play" region and get auto-passed into
+ * Aventuria's `adventureInPlay0` pile by its `moveCard` behavior - that's a side effect of
+ * *where* they're dropped, not something this function does itself. Idempotent via the same
+ * `!card.drawn` filter `prepareHeroCards()` uses - a card already placed/passed elsewhere is
+ * skipped on a re-run rather than being placed a second time.
+ * @param {Cards} deck
+ * @returns {Promise<void>}
+ */
+async function placeAdventureCards(deck) {
+  const scene = canvas.scene;
+  if (!scene || !scene.getFlag("aventuria", "gameBoard")) return;
+
+  for (const [number, position] of Object.entries(ADVENTURE_CARD_POSITIONS)) {
+    if (position.x == null || position.y == null) continue;
+    const card = deck.cards.find((c) => !c.drawn && c.system.serialNumber === Number(number));
+    if (!card) continue;
+    await ccm.api.placeCard(card, { x: position.x, y: position.y, rotation: position.rotation, sceneId: scene.id });
+  }
+}
+
 /** Opens the language-appropriate Schnellstarter journal directly on its "Das Abenteuer" page. */
 async function openAdventureJournal() {
   const { uuid, pageId } = ADVENTURE_JOURNAL[game.i18n.lang === "de" ? "de" : "en"];
@@ -214,10 +255,10 @@ async function openAdventureJournal() {
  * participating player already has a hero assigned and placed on the board (Guide sections
  * "Erste Schritte"/"Helden auswählen"): draws each of the six Schnellstarter heroes' starting
  * hand and Ausdauer cards, creates and places the henchmen deck (Nr. 736-742) on the
- * Gameboard, creates the adventure/event card deck (kept off the board, Nutzerentscheidung
- * 2026-08-16 - only specific cards drawn from it end up on the scene, still pending), and
- * opens the adventure's journal entry. GM-only, same as every other world-mutating guide
- * step.
+ * Gameboard, creates the adventure/event card deck (kept off the board itself,
+ * Nutzerentscheidung 2026-08-16 - only the 3 named cards in `ADVENTURE_CARD_POSITIONS` get
+ * placed individually), and opens the adventure's journal entry. GM-only, same as every
+ * other world-mutating guide step.
  * @returns {Promise<boolean>}
  */
 export async function prepareQuickstart() {
@@ -250,6 +291,9 @@ export async function prepareQuickstart() {
   if (henchmenDeck) await placeHenchmenDeck(henchmenDeck);
 
   await prepareAdventureDeck();
+  const adventureDeck = game.cards.find((c) => c.getFlag(MODULE_ID, ADVENTURE_DECK_FLAG));
+  if (adventureDeck) await placeAdventureCards(adventureDeck);
+
   await openAdventureJournal();
 
   ui.notifications.info(
