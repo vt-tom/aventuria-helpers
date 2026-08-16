@@ -2,6 +2,11 @@
 
 Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Version zuerst.
 
+## 0.1.4
+
+### Features
+- **Changelog direkt in Foundry:** Nach einem Update öffnet sich beim nächsten Laden automatisch eine Übersicht der neuen Version. Über den neuen Button "Was ist neu?" im Willkommensbildschirm (direkt unter dem Guide-Button) lässt sich die komplette Versionshistorie jederzeit erneut ansehen.
+
 ## 0.1.3
 
 ### Features

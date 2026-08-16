@@ -54,6 +54,8 @@
       "Intro": "Welcome, hero! This guide walks you through the Aventuria tools in Foundry step by step.",
       "GuideTitle": "Aventuria Helpers Guide",
       "GuideMissing": "Guide compendium not found.",
+      "ChangelogTitle": "What's New",
+      "ChangelogMissing": "Changelog compendium not found.",
       "CategoryAventuria": "Aventuria",
       "FirstSteps": "First Steps",
       "PickHero": "Choose a Hero",
@@ -208,7 +210,8 @@
     },
     "Compendium": {
       "Macros": "Aventuria Helpers Macros",
-      "Guide": "Aventuria Helpers Guide"
+      "Guide": "Aventuria Helpers Guide",
+      "Changelog": "Aventuria Helpers Changelog"
     }
   }
 }

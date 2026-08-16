@@ -1,6 +1,7 @@
 import { placeBoardStacks } from "../cards/place-board-stacks.mjs";
 import { placeHeroStacks } from "../cards/place-hero-stacks.mjs";
 import { AventuriaHelpersAssignHeroDialog } from "./assign-hero.mjs";
+import { openChangelogJournal } from "./changelog.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -135,6 +136,7 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
       nextStep: AventuriaHelpersWelcomeScreen.#onNextStep,
       goToStep: AventuriaHelpersWelcomeScreen.#onGoToStep,
       openGuide: AventuriaHelpersWelcomeScreen.#onOpenGuide,
+      openChangelog: AventuriaHelpersWelcomeScreen.#onOpenChangelog,
       openPlayerManagement: AventuriaHelpersWelcomeScreen.#onOpenPlayerManagement,
       openSettings: AventuriaHelpersWelcomeScreen.#onOpenSettings,
       importScene: AventuriaHelpersWelcomeScreen.#onImportScene,
@@ -265,6 +267,11 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
     }
     const journal = await pack.getDocument(entry._id);
     journal.sheet.render(true);
+  }
+
+  /** Opens the changelog journal on its overview page (see `openChangelogJournal()`). */
+  static async #onOpenChangelog() {
+    await openChangelogJournal();
   }
 
   /**

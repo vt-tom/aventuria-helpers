@@ -1381,6 +1381,26 @@ button.skill-value:active {
   filter: brightness(1.08);
 }
 
+/* Secondary entry point below the guide masthead - opens the "changelog" compendium's
+   JournalEntry (see AventuriaHelpersWelcomeScreen#onOpenChangelog). Deliberately less
+   prominent than .guide-title (ghost style, no fill), since it's a reference lookup rather
+   than the primary onboarding path. */
+.aventuria-welcome .changelog-title {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: none;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 5px;
+  padding: 0.4rem 1.2rem;
+  cursor: pointer;
+}
+
+.aventuria-welcome .changelog-title:hover {
+  filter: brightness(1.08);
+}
+
 /* Wraps one guide category (a heading plus its entry points) - more categories are
    expected to become siblings of this as the guide grows beyond just Aventuria setup. */
 .guide-category {

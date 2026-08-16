@@ -1,8 +1,8 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, unlinkSync } from "node:fs";
-import { randomBytes } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import showdown from "showdown";
+import { SHOWDOWN_OPTIONS, randomId, sourceFilename, buildStats, splitIntoPages } from "./pack-utils.mjs";
 
 /**
  * Builds `packs/_source/guide/*.json` (one JournalEntry per language) from
@@ -20,60 +20,10 @@ const MODULE_ROOT = path.resolve(fileURLToPath(import.meta.url), "../../..");
 const SOURCE_DIR = path.join(MODULE_ROOT, "packs/_source/guide");
 const MODULE_ID = "aventuria-helpers";
 
-// Mirrors Foundry core's `SHOWDOWN_OPTIONS` (see `common/constants.mjs`) so the HTML we
-// pre-bake here matches byte-for-byte what Foundry's own Markdown journal page editor
-// would produce from the same source - same reason the `showdown` devDependency is
-// pinned to the exact version Foundry itself bundles.
-const SHOWDOWN_OPTIONS = {
-  disableForced4SpacesIndentedSublists: true,
-  noHeaderId: true,
-  parseImgDimensions: true,
-  strikethrough: true,
-  tables: true,
-  tablesHeaderId: true,
-};
-
 const MANUALS = [
   { lang: "de", file: "manual-de.md", entryName: "Aventuria Helpers Guide (deutsch)" },
   { lang: "en", file: "manual-en.md", entryName: "Aventuria Helpers Guide (englisch)" },
 ];
-
-/** 16-char alphanumeric ID in the same shape as `foundry.utils.randomID()`. */
-function randomId(length = 16) {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  const bytes = randomBytes(length);
-  let id = "";
-  for (let i = 0; i < length; i++) id += chars[bytes[i] % chars.length];
-  return id;
-}
-
-/** Turns a document name into the same `Name_With_Underscores_id.json` filenames `fvtt unpack` produces. */
-function sourceFilename(name, id) {
-  return `${name.replace(/[^A-Za-z0-9]+/g, "_").replace(/^_+|_+$/g, "")}_${id}.json`;
-}
-
-/**
- * Splits a manual into one chunk per page: the lead-in before the first `##` chapter
- * heading becomes an overview page (named after the `#` title), and every `##` heading
- * after that becomes its own chapter page (named after the heading text, heading line
- * stripped from the body since the page's own title takes over that role). `###`
- * sub-headings stay put as regular content within their chapter's page.
- */
-function splitIntoPages(markdown) {
-  const h1 = markdown.match(/^#\s+(.+)$/m);
-  const overviewName = h1 ? h1[1].trim() : "Overview";
-  const rest = h1 ? markdown.slice(h1.index + h1[0].length) : markdown;
-
-  const chapterHeadings = [...rest.matchAll(/^##\s+(.+)$/gm)];
-  const pages = [{ name: overviewName, markdown: rest.slice(0, chapterHeadings[0]?.index ?? rest.length).trim() }];
-
-  for (let i = 0; i < chapterHeadings.length; i++) {
-    const start = chapterHeadings[i].index + chapterHeadings[i][0].length;
-    const end = chapterHeadings[i + 1]?.index ?? rest.length;
-    pages.push({ name: chapterHeadings[i][1].trim(), markdown: rest.slice(start, end).trim() });
-  }
-  return pages;
-}
 
 function buildEntry({ file, entryName }) {
   const source = readFileSync(path.join(MODULE_ROOT, file), "utf8");
@@ -84,19 +34,7 @@ function buildEntry({ file, entryName }) {
     // Foundry needs them as module-absolute paths to resolve at runtime.
     .replaceAll('src="assets/screenshots/', `src="modules/${MODULE_ID}/assets/screenshots/`);
 
-  const now = Date.now();
-  const stats = {
-    compendiumSource: null,
-    coreVersion: "14.364",
-    createdTime: now,
-    duplicateSource: null,
-    exportSource: null,
-    lastModifiedBy: null,
-    modifiedTime: null,
-    systemId: "universal-tabletop-system",
-    systemVersion: "1.2.1",
-  };
-
+  const stats = buildStats();
   const entryId = randomId();
   const pages = splitIntoPages(source).map(({ name, markdown }, index) => {
     const pageId = randomId();

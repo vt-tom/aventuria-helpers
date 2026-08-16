@@ -10,6 +10,10 @@
     "pack:guide": "fvtt package pack guide --type Module --id aventuria-helpers --compendiumType JournalEntry --in packs/_source/guide --out packs",
     "unpack:guide": "fvtt package unpack guide --type Module --id aventuria-helpers --compendiumType JournalEntry --out packs/_source/guide --clean",
     "guide": "npm run build:guide && npm run pack:guide",
+    "build:changelog": "node scripts/build/build-changelog-pack.mjs",
+    "pack:changelog": "fvtt package pack changelog --type Module --id aventuria-helpers --compendiumType JournalEntry --in packs/_source/changelog --out packs",
+    "unpack:changelog": "fvtt package unpack changelog --type Module --id aventuria-helpers --compendiumType JournalEntry --out packs/_source/changelog --clean",
+    "changelog": "npm run build:changelog && npm run pack:changelog",
     "zip": "node scripts/build/build-zip.mjs"
   },
   "repository": {
