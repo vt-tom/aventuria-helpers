@@ -5,7 +5,7 @@ This file lists all gameplay-relevant changes to the module – newest version f
 ## 0.1.4.1
 
 ### Features
-- **New "Import tokens" step** in "First Steps": imports the game's marker tokens (life points, Fertigkeit, plus/minus, fate points, etc.) directly into their own folder in your Actor directory.
+- **New "Import tokens" step** in "First Steps": imports the game's marker tokens (life points, Fertigkeit, plus/minus, fate points, etc.) directly into their own folder in your Actor directory and places them automatically at their spot on the Gameboard.
 
 ### Bugs
 - The three buttons in the welcome screen's Aventuria section became too narrow once a third one was added, and the text no longer fit - fixed.

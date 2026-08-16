@@ -118,7 +118,7 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
    * up with everything placed twice on the scene). Unlike e.g. `#onImportScene()`/
    * `#onImportMacros()`, which dedupe by checking for an already-existing scene/macro
    * before creating one, `preparePlayer()` has no such check at all (a second call
-   * imports a whole second Actor+Cards set), and `placeHeroToken()`'s own
+   * imports a whole second Actor+Cards set), and `placeActorToken()`'s own
    * already-exists check is racy under a fast double-click (both calls can see "no
    * token yet" before the first `create()` resolves). Simplest fix for all of that at
    * once: only let one of these handlers run at a time.

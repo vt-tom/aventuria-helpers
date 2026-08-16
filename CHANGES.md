@@ -5,7 +5,7 @@ Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Ve
 ## 0.1.4.1
 
 ### Features
-- **Neuer Schritt "Marken importieren"** in "Erste Schritte": importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) direkt in einen eigenen Ordner in deinem Akteur-Verzeichnis.
+- **Neuer Schritt "Marken importieren"** in "Erste Schritte": importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) direkt in einen eigenen Ordner in deinem Akteur-Verzeichnis und platziert sie automatisch an ihrer Stelle auf dem Spielbrett.
 
 ### Bugs
 - Die drei Buttons im Aventuria-Bereich des Willkommensbildschirms wurden bei drei Einträgen zu schmal und der Text passte nicht mehr hinein - behoben.

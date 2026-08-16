@@ -113,11 +113,15 @@
         },
         "ImportTokens": {
           "Title": "Marken importieren",
-          "Body": "Importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) aus dem Akteur-Kompendium des Aventuria-Moduls direkt in den Ordner \"Aventuria Tokens\" in deinem Akteur-Verzeichnis.",
+          "Body": "Importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) aus dem Akteur-Kompendium des Aventuria-Moduls direkt in den Ordner \"Aventuria Tokens\" in deinem Akteur-Verzeichnis und platziert sie automatisch an ihrer Stelle auf der Szene Spielbrett.",
           "Action": "Marken importieren",
           "Imported": "{count} Marke(n) importiert.",
           "AlreadyImported": "Alle Marken sind bereits im Akteur-Verzeichnis vorhanden.",
-          "NotFound": "Kein \"Token\"-Ordner im Akteur-Kompendium gefunden."
+          "NotFound": "Kein \"Token\"-Ordner im Akteur-Kompendium gefunden.",
+          "Placed": "{count} von {total} Marken auf dem Spielbrett platziert.",
+          "GmOnly": "Nur die Spielleitung kann Marken auf dem Spielbrett platzieren.",
+          "NoScene": "Keine Spieloberfläche geöffnet - Marken wurden importiert, aber nicht platziert.",
+          "WrongScene": "Das Platzieren funktioniert nur auf der Spielbrett-Szene aus dem Aventuria-Modul - Marken wurden importiert, aber nicht platziert."
         }
       }
     },

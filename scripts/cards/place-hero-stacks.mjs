@@ -132,7 +132,7 @@ export async function placeHeroStacks(user, playerNumber) {
     ),
   );
 
-  if (spot.token) await placeHeroToken(stacks.actor, scene, spot.token);
+  if (spot.token) await placeActorToken(stacks.actor, scene, spot.token);
 
   await stacks.deck.shuffle();
   await recordPlayerSlotAssignment(playerNumber, user);
@@ -145,17 +145,18 @@ export async function placeHeroStacks(user, playerNumber) {
 
 /**
  * Creates a Token for `actor` on `scene` at `position`, or - if one already
- * exists there from a previous run - just moves it, so re-running "Verankern"
- * for the same hero doesn't pile up duplicate tokens. Left unlocked (unlike the
+ * exists there from a previous run - just moves it, so re-running the same
+ * placement step doesn't pile up duplicate tokens. Left unlocked (unlike the
  * Cards stacks above) - Nutzerwunsch 2026-08-14: the hero's own token needs to
  * stay draggable during play, only the administrative card stacks should be
- * locked in place.
+ * locked in place. Exported since `import-board-tokens.mjs`'s `placeBoardTokens()`
+ * reuses this exact same create-or-move logic for the board's marker tokens.
  * @param {Actor} actor
  * @param {Scene} scene
  * @param {{x: number, y: number, rotation: number}} position
  * @returns {Promise<void>}
  */
-async function placeHeroToken(actor, scene, position) {
+export async function placeActorToken(actor, scene, position) {
   const existing = scene.tokens.find((t) => t.actorId === actor.id);
   if (existing) {
     await existing.update({ x: position.x, y: position.y, rotation: position.rotation });
