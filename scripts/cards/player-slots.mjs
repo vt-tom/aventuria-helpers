@@ -72,23 +72,30 @@ export function resolvePlayerSlot(userId) {
 
 /**
  * Wires `playerSlot`'s "In Play" region (the one Aventuria's own Gameboard scene tags with
- * `flags.aventuria.player === playerSlot` and `flags.aventuria.pileType === "play"`) to
- * `playPile`, so cards dropped on that region - manually or via `playCardAsEndurance()`
- * (`cards/endurance.mjs`) - land in the right hero's Im-Spiel-Stapel. Idempotent: safe to
- * call every time a hero's stacks get (re-)placed on the board, not just once at
- * assignment time - Nutzerfeedback 2026-08-16: `prepareAndAssignHero()`'s original
- * one-shot wiring silently produced an unwired region for one player (root cause
- * unconfirmed - no exception, `behavior?.update()` just never ran because `regions` came
- * back empty), leaving their Ausdauer cards with nowhere to go and no error to explain
- * why. Calling this again from `placeHeroStacks()` self-heals that drift on the next
- * "Auf der Spielbrett-Szene platzieren" click, regardless of the original cause.
+ * `flags.aventuria.player` and `flags.aventuria.pileType === "play"`) to `playPile`, so cards
+ * dropped on that region - manually or via `playCardAsEndurance()` (`cards/endurance.mjs`) -
+ * land in the right hero's Im-Spiel-Stapel. Idempotent: safe to call every time a hero's
+ * stacks get (re-)placed on the board, not just once at assignment time.
+ *
+ * Root cause confirmed 2026-08-16 (live-verified with the user, `typeof
+ * region.getFlag("aventuria","player")` → `"string"`): Aventuria's own Gameboard scene data
+ * stores this flag as a **string** (`"1"`, not `1`), while every call site here passed
+ * `playerSlot` as a `Number` - the original `scene.regions.filter((r) => r.getFlag(...) ===
+ * playerSlot)` therefore matched **zero** regions for every player, always, via `prepareAndAssignHero()`
+ * (silent - `behavior?.update()` never even ran). Whatever wiring looked correct earlier in
+ * testing turned out to be leftover from before this module's own "Held zuweisen" flow
+ * existed, not evidence this comparison ever worked. Fixed by normalizing both sides to
+ * `Number(...)` before comparing. Kept as a second, redundant call from `placeHeroStacks()`
+ * (in addition to the fixed call in `prepareAndAssignHero()`) as a self-heal for any hero
+ * assigned before this fix, or any other future drift - re-running "Auf der Spielbrett-Szene
+ * platzieren" now repairs the wiring regardless of cause.
  * @param {Scene} scene
  * @param {number} playerSlot
  * @param {Cards} playPile
  * @returns {Promise<void>}
  */
 export async function wirePlayRegion(scene, playerSlot, playPile) {
-  const regions = scene.regions.filter((r) => r.getFlag(AVENTURIA_ID, "player") === playerSlot);
+  const regions = scene.regions.filter((r) => Number(r.getFlag(AVENTURIA_ID, "player")) === Number(playerSlot));
   for (const region of regions) {
     if (region.getFlag(AVENTURIA_ID, "pileType") !== "play") continue;
     const behavior = region.behaviors.find((b) => b.type === `${CCM_ID}.moveCard`);
