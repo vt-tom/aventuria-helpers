@@ -2,6 +2,7 @@ import { placeBoardStacks } from "../cards/place-board-stacks.mjs";
 import { placeHeroStacks } from "../cards/place-hero-stacks.mjs";
 import { AventuriaHelpersAssignHeroDialog } from "./assign-hero.mjs";
 import { openChangelogJournal } from "./changelog.mjs";
+import { prepareQuickstart } from "../cards/prepare-quickstart.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -79,6 +80,9 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
         { key: "PlaceStacks", action: "placeHeroStacks" },
       ],
     },
+    quickstart: {
+      steps: [{ key: "Prepare", action: "prepareQuickstart" }],
+    },
   };
 
   /**
@@ -145,6 +149,7 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
       placeStacks: AventuriaHelpersWelcomeScreen.#onPlaceStacks,
       chooseHeroSlot: AventuriaHelpersWelcomeScreen.#onChooseHeroSlot,
       placeHeroStacks: AventuriaHelpersWelcomeScreen.#onPlaceHeroStacks,
+      prepareQuickstart: AventuriaHelpersWelcomeScreen.#onPrepareQuickstart,
     },
   };
 
@@ -449,5 +454,11 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
     } finally {
       this.#heroStepBusy = false;
     }
+  }
+
+  /** Runs once, after every participating player already has a hero assigned - see `prepareQuickstart()`. */
+  static async #onPrepareQuickstart() {
+    const success = await prepareQuickstart();
+    if (success) await this.#advance();
   }
 }

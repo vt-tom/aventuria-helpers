@@ -6,6 +6,7 @@ This file lists all gameplay-relevant changes to the module – newest version f
 
 ### Features
 - **In-app changelog:** After an update, an overview of the new version now opens automatically the next time you load the game. The new "What's New?" button in the welcome screen (right under the Guide button) lets you revisit the complete version history any time.
+- **New guide section "Prepare Quick Start":** Once every participating player has a hero assigned, this new welcome-screen step prepares the entire Quick Start adventure with one click - each of the six Quick Start heroes gets their starting hand drawn and four more cards played out as Ausdauer, the henchmen are prepared in the background, and the adventure journal opens directly on the right page.
 
 ## 0.1.3
 
