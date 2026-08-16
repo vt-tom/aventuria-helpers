@@ -1,9 +1,9 @@
 {
-  "_id": "Y2JwJ6ppgOT2jDIr",
+  "_id": "c92a6RQzPaYcnbql",
   "name": "Aventuria Helpers - Changelog (englisch)",
   "pages": [
     {
-      "_id": "048e29ZkNfBRRiiE",
+      "_id": "pp6AIfIojvFrXkHo",
       "name": "Changes – Aventuria Helpers",
       "type": "text",
       "system": {},
@@ -31,7 +31,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786886161846,
+        "createdTime": 1786886829891,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -39,10 +39,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!Y2JwJ6ppgOT2jDIr.048e29ZkNfBRRiiE"
+      "_key": "!journal.pages!c92a6RQzPaYcnbql.pp6AIfIojvFrXkHo"
     },
     {
-      "_id": "R5SiaNGCE46QPixs",
+      "_id": "JFXaD4aVWgWV2jc5",
       "name": "0.1.4.1",
       "type": "text",
       "system": {},
@@ -52,8 +52,8 @@
       },
       "image": {},
       "text": {
-        "content": "<h3>Features</h3>\n<ul>\n<li><strong>New \"Import tokens\" step</strong> in \"First Steps\": imports the game's marker tokens (life points, Fertigkeit, plus/minus, fate points, etc.) directly into their own folder in your Actor directory.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>The three buttons in the welcome screen's Aventuria section became too narrow once a third one was added, and the text no longer fit - fixed.</li>\n</ul>",
-        "markdown": "### Features\r\n- **New \"Import tokens\" step** in \"First Steps\": imports the game's marker tokens (life points, Fertigkeit, plus/minus, fate points, etc.) directly into their own folder in your Actor directory.\r\n\r\n### Bugs\r\n- The three buttons in the welcome screen's Aventuria section became too narrow once a third one was added, and the text no longer fit - fixed.",
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>New \"Import tokens\" step</strong> in \"First Steps\": imports the game's marker tokens (life points, Fertigkeit, plus/minus, fate points, etc.) directly into their own folder in your Actor directory.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>The three buttons in the welcome screen's Aventuria section became too narrow once a third one was added, and the text no longer fit - fixed.</li>\n<li>\"Prepare Quick Start\" could error out on a second click and leave the remaining heroes untouched - the step can now be run safely more than once, skipping heroes that are already done instead of erroring.</li>\n</ul>",
+        "markdown": "### Features\r\n- **New \"Import tokens\" step** in \"First Steps\": imports the game's marker tokens (life points, Fertigkeit, plus/minus, fate points, etc.) directly into their own folder in your Actor directory.\r\n\r\n### Bugs\r\n- The three buttons in the welcome screen's Aventuria section became too narrow once a third one was added, and the text no longer fit - fixed.\r\n- \"Prepare Quick Start\" could error out on a second click and leave the remaining heroes untouched - the step can now be run safely more than once, skipping heroes that are already done instead of erroring.",
         "format": 2
       },
       "video": {
@@ -70,7 +70,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786886161846,
+        "createdTime": 1786886829891,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -78,10 +78,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!Y2JwJ6ppgOT2jDIr.R5SiaNGCE46QPixs"
+      "_key": "!journal.pages!c92a6RQzPaYcnbql.JFXaD4aVWgWV2jc5"
     },
     {
-      "_id": "MryLtka1TFtFYeDF",
+      "_id": "HIGxIsRARPZqcD6M",
       "name": "0.1.4",
       "type": "text",
       "system": {},
@@ -109,7 +109,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786886161846,
+        "createdTime": 1786886829891,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -117,10 +117,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!Y2JwJ6ppgOT2jDIr.MryLtka1TFtFYeDF"
+      "_key": "!journal.pages!c92a6RQzPaYcnbql.HIGxIsRARPZqcD6M"
     },
     {
-      "_id": "ltD3QIXPFPQnXEgE",
+      "_id": "V9EkjlgsA8fD6kDV",
       "name": "0.1.3",
       "type": "text",
       "system": {},
@@ -148,7 +148,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786886161846,
+        "createdTime": 1786886829891,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -156,10 +156,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!Y2JwJ6ppgOT2jDIr.ltD3QIXPFPQnXEgE"
+      "_key": "!journal.pages!c92a6RQzPaYcnbql.V9EkjlgsA8fD6kDV"
     },
     {
-      "_id": "rANwj0ByASeBYS5E",
+      "_id": "Dmu0WSOqOdkkhp9m",
       "name": "0.1.2",
       "type": "text",
       "system": {},
@@ -187,7 +187,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786886161846,
+        "createdTime": 1786886829891,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -195,10 +195,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!Y2JwJ6ppgOT2jDIr.rANwj0ByASeBYS5E"
+      "_key": "!journal.pages!c92a6RQzPaYcnbql.Dmu0WSOqOdkkhp9m"
     },
     {
-      "_id": "AdrU2Wetpr0bSaA2",
+      "_id": "9ZyjAXtWTDKSvDr1",
       "name": "0.1.1",
       "type": "text",
       "system": {},
@@ -226,7 +226,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786886161846,
+        "createdTime": 1786886829891,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -234,10 +234,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!Y2JwJ6ppgOT2jDIr.AdrU2Wetpr0bSaA2"
+      "_key": "!journal.pages!c92a6RQzPaYcnbql.9ZyjAXtWTDKSvDr1"
     },
     {
-      "_id": "QqGaREF0lNWL1GLD",
+      "_id": "LW0WeHPBOcgLcglO",
       "name": "0.1.0",
       "type": "text",
       "system": {},
@@ -265,7 +265,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786886161846,
+        "createdTime": 1786886829891,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -273,7 +273,7 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!Y2JwJ6ppgOT2jDIr.QqGaREF0lNWL1GLD"
+      "_key": "!journal.pages!c92a6RQzPaYcnbql.LW0WeHPBOcgLcglO"
     }
   ],
   "folder": null,
@@ -286,7 +286,7 @@
   "_stats": {
     "compendiumSource": null,
     "coreVersion": "14.364",
-    "createdTime": 1786886161846,
+    "createdTime": 1786886829891,
     "duplicateSource": null,
     "exportSource": null,
     "lastModifiedBy": null,
@@ -294,5 +294,5 @@
     "systemId": "universal-tabletop-system",
     "systemVersion": "1.2.1"
   },
-  "_key": "!journal!Y2JwJ6ppgOT2jDIr"
+  "_key": "!journal!c92a6RQzPaYcnbql"
 }
