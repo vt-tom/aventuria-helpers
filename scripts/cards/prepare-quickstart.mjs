@@ -46,6 +46,15 @@ const MASTER_CARDS_UUID = {
 /** Same henchman-deck cover art `createHenchmanDeck()` itself uses. */
 const HENCHMEN_DECK_IMG = "modules/aventuria/assets/cards-en/henchmen/Aventuria-ChampionofMischief-HenchmanCards-B-71.webp";
 
+/** Flag on the world Cards deck `prepareAdventureDeck()` creates, so re-running doesn't duplicate it. */
+const ADVENTURE_DECK_FLAG = "quickstartAdventureDeck";
+
+/** Aventuria's own pre-built Schnellstarter adventure/event card deck, per language - given directly by the user (Stand 2026-08-16), not researched. */
+const ADVENTURE_DECK_UUID = {
+  de: "Compendium.aventuria.cards-deutsch.Cards.OBPF1FtAy8XL2W8G",
+  en: "Compendium.aventuria.cards-english.Cards.OBPF1FtAy8XL2W8G",
+};
+
 /** "Das Abenteuer"/"The Adventure" page in Aventuria's own Schnellstarter journal, per language. */
 const ADVENTURE_JOURNAL = {
   de: { uuid: "Compendium.aventuria.journal-deutsch.JournalEntry.dep4000schnellst", pageId: "00dasabenteuer00" },
@@ -133,6 +142,28 @@ async function prepareHenchmenDeck() {
   });
 }
 
+/**
+ * Wholesale-copies Aventuria's own pre-built Schnellstarter adventure/event card deck
+ * (`ADVENTURE_DECK_UUID`) into the world - no filtering needed, unlike the henchmen deck,
+ * since this compendium Cards document already *is* exactly the Schnellstarter's card set.
+ * Reuses the source deck's own name/image via `game.cards.fromCompendium()` instead of
+ * hardcoding either, same pattern `prepare-hero.mjs` uses for a hero's own deck. No-op if a
+ * quickstart adventure deck already exists in the world (idempotent re-runs).
+ * @returns {Promise<Cards|null>}
+ */
+async function prepareAdventureDeck() {
+  if (game.cards.find((c) => c.getFlag(MODULE_ID, ADVENTURE_DECK_FLAG))) return null;
+
+  const lang = game.i18n.lang === "de" ? "de" : "en";
+  const source = await fromUuid(ADVENTURE_DECK_UUID[lang]);
+  if (!source) return null;
+
+  return Cards.create({
+    ...game.cards.fromCompendium(source),
+    [`flags.${MODULE_ID}.${ADVENTURE_DECK_FLAG}`]: true,
+  });
+}
+
 /** Opens the language-appropriate Schnellstarter journal directly on its "Das Abenteuer" page. */
 async function openAdventureJournal() {
   const { uuid, pageId } = ADVENTURE_JOURNAL[game.i18n.lang === "de" ? "de" : "en"];
@@ -145,8 +176,11 @@ async function openAdventureJournal() {
  * Prepares the Schnellstarter ("quick start") adventure in one click, once every
  * participating player already has a hero assigned and placed on the board (Guide sections
  * "Erste Schritte"/"Helden auswählen"): draws each of the six Schnellstarter heroes' starting
- * hand and Ausdauer cards, creates the background henchmen deck (Nr. 736-742), and opens the
- * adventure's journal entry. GM-only, same as every other world-mutating guide step.
+ * hand and Ausdauer cards, creates the henchmen deck (Nr. 736-742) and the adventure/event
+ * card deck, and opens the adventure's journal entry. GM-only, same as every other
+ * world-mutating guide step. Placing the henchmen and adventure decks on the Gameboard scene
+ * itself is a separate follow-up - still needs live-captured coordinates, same as
+ * `HERO_PLACEMENTS`/`TOKEN_PLACEMENTS`.
  * @returns {Promise<boolean>}
  */
 export async function prepareQuickstart() {
@@ -175,6 +209,7 @@ export async function prepareQuickstart() {
   }
 
   await prepareHenchmenDeck();
+  await prepareAdventureDeck();
   await openAdventureJournal();
 
   ui.notifications.info(
