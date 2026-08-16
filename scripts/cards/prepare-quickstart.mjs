@@ -2,6 +2,7 @@ import { resolveStacks } from "./stacks.mjs";
 import { playCardAsEndurance } from "./endurance.mjs";
 
 const MODULE_ID = "aventuria-helpers";
+const CCM_MODULE_ID = "complete-card-management";
 
 /**
  * Starting `system.serialNumber` of each Schnellstarter hero's deck - hand cards are the
@@ -45,6 +46,15 @@ const MASTER_CARDS_UUID = {
 
 /** Same henchman-deck cover art `createHenchmanDeck()` itself uses. */
 const HENCHMEN_DECK_IMG = "modules/aventuria/assets/cards-en/henchmen/Aventuria-ChampionofMischief-HenchmanCards-B-71.webp";
+
+/**
+ * Live-captured Gameboard position for the Schergen/henchmen deck (Stand 2026-08-16, same
+ * capture method as `HERO_PLACEMENTS`/`TOKEN_PLACEMENTS`: user placed the deck by hand, then
+ * read the position back via console). The adventure/event deck itself deliberately isn't
+ * placed as a whole deck (Nutzerentscheidung 2026-08-16) - only individual cards drawn from
+ * it are (see `ADVENTURE_CARD_PLACEMENTS`, still pending).
+ */
+const HENCHMAN_DECK_POSITION = { x: 5430.799999999999, y: 4552.6, rotation: 0 };
 
 /** Flag on the world Cards deck `prepareAdventureDeck()` creates, so re-running doesn't duplicate it. */
 const ADVENTURE_DECK_FLAG = "quickstartAdventureDeck";
@@ -143,6 +153,33 @@ async function prepareHenchmenDeck() {
 }
 
 /**
+ * Locks the Schergen/henchmen deck onto the currently viewed Gameboard scene at
+ * `HENCHMAN_DECK_POSITION` - same `complete-card-management` scene-flag + `cardCollection`
+ * mechanism `placeBoardStacks()`/`placeHeroStacks()` use for their own decks/piles. Silently
+ * does nothing (no warning) if the wrong scene is active, since this is a best-effort part of
+ * `prepareQuickstart()` rather than its own guide step. Idempotent - re-setting the same
+ * position is harmless.
+ * @param {Cards} deck
+ * @returns {Promise<void>}
+ */
+async function placeHenchmenDeck(deck) {
+  const scene = canvas.scene;
+  if (!scene || !scene.getFlag("aventuria", "gameBoard")) return;
+
+  const cardCollection = new Set(scene.getFlag(CCM_MODULE_ID, "cardCollection") ?? []);
+  cardCollection.add(deck.uuid);
+  await scene.setFlag(CCM_MODULE_ID, "cardCollection", Array.from(cardCollection));
+
+  await deck.setFlag(CCM_MODULE_ID, scene.id, {
+    x: HENCHMAN_DECK_POSITION.x,
+    y: HENCHMAN_DECK_POSITION.y,
+    rotation: HENCHMAN_DECK_POSITION.rotation,
+    sort: deck.sort,
+    locked: true,
+  });
+}
+
+/**
  * Wholesale-copies Aventuria's own pre-built Schnellstarter adventure/event card deck
  * (`ADVENTURE_DECK_UUID`) into the world - no filtering needed, unlike the henchmen deck,
  * since this compendium Cards document already *is* exactly the Schnellstarter's card set.
@@ -176,11 +213,11 @@ async function openAdventureJournal() {
  * Prepares the Schnellstarter ("quick start") adventure in one click, once every
  * participating player already has a hero assigned and placed on the board (Guide sections
  * "Erste Schritte"/"Helden auswählen"): draws each of the six Schnellstarter heroes' starting
- * hand and Ausdauer cards, creates the henchmen deck (Nr. 736-742) and the adventure/event
- * card deck, and opens the adventure's journal entry. GM-only, same as every other
- * world-mutating guide step. Placing the henchmen and adventure decks on the Gameboard scene
- * itself is a separate follow-up - still needs live-captured coordinates, same as
- * `HERO_PLACEMENTS`/`TOKEN_PLACEMENTS`.
+ * hand and Ausdauer cards, creates and places the henchmen deck (Nr. 736-742) on the
+ * Gameboard, creates the adventure/event card deck (kept off the board, Nutzerentscheidung
+ * 2026-08-16 - only specific cards drawn from it end up on the scene, still pending), and
+ * opens the adventure's journal entry. GM-only, same as every other world-mutating guide
+ * step.
  * @returns {Promise<boolean>}
  */
 export async function prepareQuickstart() {
@@ -209,6 +246,9 @@ export async function prepareQuickstart() {
   }
 
   await prepareHenchmenDeck();
+  const henchmenDeck = game.cards.find((c) => c.getFlag(MODULE_ID, HENCHMEN_DECK_FLAG));
+  if (henchmenDeck) await placeHenchmenDeck(henchmenDeck);
+
   await prepareAdventureDeck();
   await openAdventureJournal();
 
