@@ -1,5 +1,5 @@
 import { resolveStacks } from "./stacks.mjs";
-import { recordPlayerSlotAssignment } from "./player-slots.mjs";
+import { recordPlayerSlotAssignment, wirePlayRegion } from "./player-slots.mjs";
 
 const CCM_MODULE_ID = "complete-card-management";
 
@@ -133,6 +133,12 @@ export async function placeHeroStacks(user, playerNumber) {
   );
 
   if (spot.token) await placeActorToken(stacks.actor, scene, spot.token);
+
+  // Re-asserts the Im-Spiel-Stapel region wiring `prepareAndAssignHero()` already sets up
+  // once at assignment time - cheap and idempotent, so running it again here self-heals a
+  // region that somehow ended up unwired (Nutzerfeedback 2026-08-16) the next time this
+  // step is (re-)run, instead of only ever getting one silent chance to succeed.
+  if (stacks.playPile) await wirePlayRegion(scene, playerNumber, stacks.playPile);
 
   await stacks.deck.shuffle();
   await recordPlayerSlotAssignment(playerNumber, user);

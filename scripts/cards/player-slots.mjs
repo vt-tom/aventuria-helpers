@@ -1,4 +1,6 @@
 const MODULE_ID = "aventuria-helpers";
+const AVENTURIA_ID = "aventuria";
+const CCM_ID = "complete-card-management";
 const SETTING = "playerSlotAssignments";
 
 /**
@@ -66,4 +68,30 @@ export function resolvePlayerSlot(userId) {
   const assignments = game.settings.get(MODULE_ID, SETTING) ?? {};
   const entry = Object.entries(assignments).find(([, uid]) => uid === userId);
   return entry ? Number(entry[0]) : null;
+}
+
+/**
+ * Wires `playerSlot`'s "In Play" region (the one Aventuria's own Gameboard scene tags with
+ * `flags.aventuria.player === playerSlot` and `flags.aventuria.pileType === "play"`) to
+ * `playPile`, so cards dropped on that region - manually or via `playCardAsEndurance()`
+ * (`cards/endurance.mjs`) - land in the right hero's Im-Spiel-Stapel. Idempotent: safe to
+ * call every time a hero's stacks get (re-)placed on the board, not just once at
+ * assignment time - Nutzerfeedback 2026-08-16: `prepareAndAssignHero()`'s original
+ * one-shot wiring silently produced an unwired region for one player (root cause
+ * unconfirmed - no exception, `behavior?.update()` just never ran because `regions` came
+ * back empty), leaving their Ausdauer cards with nowhere to go and no error to explain
+ * why. Calling this again from `placeHeroStacks()` self-heals that drift on the next
+ * "Auf der Spielbrett-Szene platzieren" click, regardless of the original cause.
+ * @param {Scene} scene
+ * @param {number} playerSlot
+ * @param {Cards} playPile
+ * @returns {Promise<void>}
+ */
+export async function wirePlayRegion(scene, playerSlot, playPile) {
+  const regions = scene.regions.filter((r) => r.getFlag(AVENTURIA_ID, "player") === playerSlot);
+  for (const region of regions) {
+    if (region.getFlag(AVENTURIA_ID, "pileType") !== "play") continue;
+    const behavior = region.behaviors.find((b) => b.type === `${CCM_ID}.moveCard`);
+    await behavior?.update({ "system.targetStack": playPile.id });
+  }
 }

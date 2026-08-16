@@ -1,5 +1,6 @@
 import { resolveStacks } from "./stacks.mjs";
 import { AventuriaHelpersHeroSheet } from "../sheets/hero-sheet.mjs";
+import { wirePlayRegion } from "./player-slots.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 const AVENTURIA_ID = "aventuria";
@@ -133,12 +134,7 @@ export async function prepareAndAssignHero({ heroPack, heroId, targetUser, playe
 
   await targetUser.update({ character: actor.id, [`flags.${CCM_ID}.playerHand`]: hand.id });
 
-  const regions = scene.regions.filter((r) => r.getFlag(AVENTURIA_ID, "player") === playerSlot);
-  for (const region of regions) {
-    if (region.getFlag(AVENTURIA_ID, "pileType") !== "play") continue;
-    const behavior = region.behaviors.find((b) => b.type === `${CCM_ID}.moveCard`);
-    await behavior?.update({ "system.targetStack": playPile.id });
-  }
+  await wirePlayRegion(scene, playerSlot, playPile);
 
   return { actor, deck, hand, discard, playPile };
 }
