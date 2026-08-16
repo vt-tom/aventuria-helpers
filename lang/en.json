@@ -110,6 +110,14 @@
           "WrongScene": "This only works on the Gameboard scene from the Aventuria module.",
           "NotPrepared": "None of the stacks were found. Run Prepare Board first.",
           "Done": "Placed {count} of {total} stacks."
+        },
+        "ImportTokens": {
+          "Title": "Import tokens",
+          "Body": "Imports the game's marker tokens (life points, Fertigkeit, plus/minus, fate points, etc.) from the Aventuria module's Actor compendium directly into the \"Aventuria Tokens\" folder in your Actor directory.",
+          "Action": "Import tokens",
+          "Imported": "{count} token(s) imported.",
+          "AlreadyImported": "All tokens are already in your Actor directory.",
+          "NotFound": "No \"Tokens\" folder found in the Actor compendium."
         }
       }
     },

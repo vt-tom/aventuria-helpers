@@ -63,6 +63,12 @@ function resolveQuickstartStart(heroName) {
  * their hand, then plays the next 4 (`start+5`..`start+8`) out as Ausdauer via the existing
  * `playCardAsEndurance()` (reused as-is, same canvas-region mechanism a manually-played
  * Ausdauer card goes through - see `cards/endurance.mjs`).
+ *
+ * Logs a console warning per hero if fewer Ausdauer cards were placed than expected
+ * (`playCardAsEndurance()` itself already shows a `ui.notifications.warn()` for the concrete
+ * reason - no scene, or no play-region wired for that hero's Im-Spiel-Stapel - but a warning
+ * fired mid-loop for one of six heroes is easy to miss in the notification tray, so this adds
+ * a per-hero summary that stays in the console).
  * @param {User} user
  * @param {number} start
  * @returns {Promise<boolean>} Whether the hero had a prepared deck to draw from.
@@ -78,8 +84,14 @@ async function prepareHeroCards(user, start) {
   if (handCards.length) {
     await stacks.deck.pass(stacks.hand, handCards.map((c) => c.id), { action: "draw" });
   }
+  let enduranceOk = 0;
   for (const card of enduranceCards) {
-    await playCardAsEndurance(stacks.playPile, card);
+    if (await playCardAsEndurance(stacks.playPile, card)) enduranceOk++;
+  }
+  if (enduranceOk < enduranceCards.length) {
+    console.warn(
+      `${MODULE_ID} | prepareQuickstart: ${user.character.name} (${user.name}) - only ${enduranceOk}/${enduranceCards.length} Ausdauer cards placed.`,
+    );
   }
   return true;
 }

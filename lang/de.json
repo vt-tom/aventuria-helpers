@@ -110,6 +110,14 @@
           "WrongScene": "Das funktioniert nur auf der Spielbrett-Szene aus dem Aventuria-Modul.",
           "NotPrepared": "Keiner der Stapel wurde gefunden. Führe zuerst Prepare Board aus.",
           "Done": "{count} von {total} Stapeln platziert."
+        },
+        "ImportTokens": {
+          "Title": "Marken importieren",
+          "Body": "Importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) aus dem Akteur-Kompendium des Aventuria-Moduls direkt in den Ordner \"Aventuria Tokens\" in deinem Akteur-Verzeichnis.",
+          "Action": "Marken importieren",
+          "Imported": "{count} Marke(n) importiert.",
+          "AlreadyImported": "Alle Marken sind bereits im Akteur-Verzeichnis vorhanden.",
+          "NotFound": "Kein \"Token\"-Ordner im Akteur-Kompendium gefunden."
         }
       }
     },

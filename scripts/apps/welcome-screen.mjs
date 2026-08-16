@@ -3,6 +3,7 @@ import { placeHeroStacks } from "../cards/place-hero-stacks.mjs";
 import { AventuriaHelpersAssignHeroDialog } from "./assign-hero.mjs";
 import { openChangelogJournal } from "./changelog.mjs";
 import { prepareQuickstart } from "../cards/prepare-quickstart.mjs";
+import { importBoardTokens } from "../actors/import-board-tokens.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -72,6 +73,7 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
         { key: "Macros", action: "importMacros" },
         { key: "PrepareBoard", action: "runPrepareBoard" },
         { key: "PlaceStacks", action: "placeStacks" },
+        { key: "ImportTokens", action: "importTokens" },
       ],
     },
     pickHero: {
@@ -132,7 +134,7 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
       icon: "fa-solid fa-hand-sparkles",
       resizable: true,
     },
-    position: { width: 480, height: "auto" },
+    position: { width: 560, height: "auto" },
     actions: {
       close: AventuriaHelpersWelcomeScreen.#onClose,
       showSection: AventuriaHelpersWelcomeScreen.#onShowSection,
@@ -145,6 +147,7 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
       openSettings: AventuriaHelpersWelcomeScreen.#onOpenSettings,
       importScene: AventuriaHelpersWelcomeScreen.#onImportScene,
       importMacros: AventuriaHelpersWelcomeScreen.#onImportMacros,
+      importTokens: AventuriaHelpersWelcomeScreen.#onImportTokens,
       runPrepareBoard: AventuriaHelpersWelcomeScreen.#onRunPrepareBoard,
       placeStacks: AventuriaHelpersWelcomeScreen.#onPlaceStacks,
       chooseHeroSlot: AventuriaHelpersWelcomeScreen.#onChooseHeroSlot,
@@ -394,6 +397,11 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
 
   static async #onPlaceStacks() {
     await placeBoardStacks();
+  }
+
+  /** Imports the board-game's own token actors (life point/Fertigkeit/etc. markers) - see `importBoardTokens()`. */
+  static async #onImportTokens() {
+    await importBoardTokens();
   }
 
   /**

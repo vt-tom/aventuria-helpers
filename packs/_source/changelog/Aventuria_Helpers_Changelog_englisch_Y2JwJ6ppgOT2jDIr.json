@@ -1,9 +1,9 @@
 {
-  "_id": "YY4Pm3raEZ37cJM6",
+  "_id": "Y2JwJ6ppgOT2jDIr",
   "name": "Aventuria Helpers - Changelog (englisch)",
   "pages": [
     {
-      "_id": "BXIcciCVXs00vx4M",
+      "_id": "048e29ZkNfBRRiiE",
       "name": "Changes – Aventuria Helpers",
       "type": "text",
       "system": {},
@@ -31,7 +31,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786884017305,
+        "createdTime": 1786886161846,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -39,11 +39,11 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!YY4Pm3raEZ37cJM6.BXIcciCVXs00vx4M"
+      "_key": "!journal.pages!Y2JwJ6ppgOT2jDIr.048e29ZkNfBRRiiE"
     },
     {
-      "_id": "uA904thJhKDAIjRN",
-      "name": "0.1.4",
+      "_id": "R5SiaNGCE46QPixs",
+      "name": "0.1.4.1",
       "type": "text",
       "system": {},
       "title": {
@@ -52,8 +52,8 @@
       },
       "image": {},
       "text": {
-        "content": "<h3>Features</h3>\n<ul>\n<li><strong>In-app changelog:</strong> After an update, an overview of the new version now opens automatically the next time you load the game. The new \"What's New?\" button in the welcome screen (right under the Guide button) lets you revisit the complete version history any time.</li>\n</ul>",
-        "markdown": "### Features\n- **In-app changelog:** After an update, an overview of the new version now opens automatically the next time you load the game. The new \"What's New?\" button in the welcome screen (right under the Guide button) lets you revisit the complete version history any time.",
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>New \"Import tokens\" step</strong> in \"First Steps\": imports the game's marker tokens (life points, Fertigkeit, plus/minus, fate points, etc.) directly into their own folder in your Actor directory.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>The three buttons in the welcome screen's Aventuria section became too narrow once a third one was added, and the text no longer fit - fixed.</li>\n</ul>",
+        "markdown": "### Features\r\n- **New \"Import tokens\" step** in \"First Steps\": imports the game's marker tokens (life points, Fertigkeit, plus/minus, fate points, etc.) directly into their own folder in your Actor directory.\r\n\r\n### Bugs\r\n- The three buttons in the welcome screen's Aventuria section became too narrow once a third one was added, and the text no longer fit - fixed.",
         "format": 2
       },
       "video": {
@@ -70,7 +70,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786884017305,
+        "createdTime": 1786886161846,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -78,11 +78,11 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!YY4Pm3raEZ37cJM6.uA904thJhKDAIjRN"
+      "_key": "!journal.pages!Y2JwJ6ppgOT2jDIr.R5SiaNGCE46QPixs"
     },
     {
-      "_id": "BgRZCD8gmDmGvYvv",
-      "name": "0.1.3",
+      "_id": "MryLtka1TFtFYeDF",
+      "name": "0.1.4",
       "type": "text",
       "system": {},
       "title": {
@@ -91,8 +91,8 @@
       },
       "image": {},
       "text": {
-        "content": "<h3>Features</h3>\n<ul>\n<li><strong>\"Choose a Hero\" reworked, now in 2 clear steps:</strong> The first step is now a single screen - pick the player first (if they already have a player slot, it's selected automatically), then their player slot and hero right next to it. Other players' slots are locked and can't be clicked. The hero list shows a profession icon, name, and profession for each hero (e.g. \"Karmal Eternius - Tulamydian Mage\"), plus warnings if the hero or the player is already taken (an existing assignment for the chosen player is fully replaced, token included, when you continue). The second step anchors Deck, discard pile, Hand, and the freely movable hero token at their spot on the Gameboard with one click, and shuffles the deck along the way. The \"Choose hero\" button in the Hero Tray now opens this same guide section too, instead of starting directly (and without a player-slot choice). Heroes created this way also open with the Aventuria Helpers' own Hero Sheet right away instead of the generic default sheet.</li>\n</ul>",
-        "markdown": "### Features\n- **\"Choose a Hero\" reworked, now in 2 clear steps:** The first step is now a single screen - pick the player first (if they already have a player slot, it's selected automatically), then their player slot and hero right next to it. Other players' slots are locked and can't be clicked. The hero list shows a profession icon, name, and profession for each hero (e.g. \"Karmal Eternius - Tulamydian Mage\"), plus warnings if the hero or the player is already taken (an existing assignment for the chosen player is fully replaced, token included, when you continue). The second step anchors Deck, discard pile, Hand, and the freely movable hero token at their spot on the Gameboard with one click, and shuffles the deck along the way. The \"Choose hero\" button in the Hero Tray now opens this same guide section too, instead of starting directly (and without a player-slot choice). Heroes created this way also open with the Aventuria Helpers' own Hero Sheet right away instead of the generic default sheet.",
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>In-app changelog:</strong> After an update, an overview of the new version now opens automatically the next time you load the game. The new \"What's New?\" button in the welcome screen (right under the Guide button) lets you revisit the complete version history any time.</li>\n<li><strong>New guide section \"Prepare Quick Start\":</strong> Once every participating player has a hero assigned, this new welcome-screen step prepares the entire Quick Start adventure with one click - each of the six Quick Start heroes gets their starting hand drawn and four more cards played out as Ausdauer, the henchmen are prepared in the background, and the adventure journal opens directly on the right page.</li>\n</ul>",
+        "markdown": "### Features\r\n- **In-app changelog:** After an update, an overview of the new version now opens automatically the next time you load the game. The new \"What's New?\" button in the welcome screen (right under the Guide button) lets you revisit the complete version history any time.\r\n- **New guide section \"Prepare Quick Start\":** Once every participating player has a hero assigned, this new welcome-screen step prepares the entire Quick Start adventure with one click - each of the six Quick Start heroes gets their starting hand drawn and four more cards played out as Ausdauer, the henchmen are prepared in the background, and the adventure journal opens directly on the right page.",
         "format": 2
       },
       "video": {
@@ -109,7 +109,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786884017305,
+        "createdTime": 1786886161846,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -117,11 +117,11 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!YY4Pm3raEZ37cJM6.BgRZCD8gmDmGvYvv"
+      "_key": "!journal.pages!Y2JwJ6ppgOT2jDIr.MryLtka1TFtFYeDF"
     },
     {
-      "_id": "n8AIx9Z3vZ381EiT",
-      "name": "0.1.2",
+      "_id": "ltD3QIXPFPQnXEgE",
+      "name": "0.1.3",
       "type": "text",
       "system": {},
       "title": {
@@ -130,8 +130,8 @@
       },
       "image": {},
       "text": {
-        "content": "<h3>Features</h3>\n<ul>\n<li><strong>New guide section \"Choose a Hero\"</strong> right under \"First Steps\": the gamemaster picks a player and assigns them a hero via \"Prepare Player\", then anchors that hero's Deck, discard pile and Hand on the Gameboard, and each player finally shuffles their own deck - all via buttons instead of manual work. Anchoring still shows \"Player slot not measured yet\" until the positions for all player slots have been captured.</li>\n<li><strong>The guide reopens itself after \"Open player management\":</strong> This step briefly leaves Foundry for its own page - when you come back (including a reload that triggers), the guide automatically reopens at the same spot instead of staying closed.</li>\n<li><strong>\"First Steps\" is now almost fully automated:</strong> The steps \"Import the game board\" and \"Prepare the board\" now run their action directly, instead of just opening a compendium or the macro directory. The \"Import the macros\" step imports the Aventuria macros directly into their own \"Aventuria Macros\" folder in your macro directory. The \"Place decks and stacks\" step automatically places the piles and decks created by Prepare Board at their spot on the Gameboard scene, anchors them there, and shuffles the fate deck - the guide is already done after this step.</li>\n</ul>",
-        "markdown": "### Features\n- **New guide section \"Choose a Hero\"** right under \"First Steps\": the gamemaster picks a player and assigns them a hero via \"Prepare Player\", then anchors that hero's Deck, discard pile and Hand on the Gameboard, and each player finally shuffles their own deck - all via buttons instead of manual work. Anchoring still shows \"Player slot not measured yet\" until the positions for all player slots have been captured.\n- **The guide reopens itself after \"Open player management\":** This step briefly leaves Foundry for its own page - when you come back (including a reload that triggers), the guide automatically reopens at the same spot instead of staying closed.\n- **\"First Steps\" is now almost fully automated:** The steps \"Import the game board\" and \"Prepare the board\" now run their action directly, instead of just opening a compendium or the macro directory. The \"Import the macros\" step imports the Aventuria macros directly into their own \"Aventuria Macros\" folder in your macro directory. The \"Place decks and stacks\" step automatically places the piles and decks created by Prepare Board at their spot on the Gameboard scene, anchors them there, and shuffles the fate deck - the guide is already done after this step.",
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>\"Choose a Hero\" reworked, now in 2 clear steps:</strong> The first step is now a single screen - pick the player first (if they already have a player slot, it's selected automatically), then their player slot and hero right next to it. Other players' slots are locked and can't be clicked. The hero list shows a profession icon, name, and profession for each hero (e.g. \"Karmal Eternius - Tulamydian Mage\"), plus warnings if the hero or the player is already taken (an existing assignment for the chosen player is fully replaced, token included, when you continue). The second step anchors Deck, discard pile, Hand, and the freely movable hero token at their spot on the Gameboard with one click, and shuffles the deck along the way. The \"Choose hero\" button in the Hero Tray now opens this same guide section too, instead of starting directly (and without a player-slot choice). Heroes created this way also open with the Aventuria Helpers' own Hero Sheet right away instead of the generic default sheet.</li>\n</ul>",
+        "markdown": "### Features\r\n- **\"Choose a Hero\" reworked, now in 2 clear steps:** The first step is now a single screen - pick the player first (if they already have a player slot, it's selected automatically), then their player slot and hero right next to it. Other players' slots are locked and can't be clicked. The hero list shows a profession icon, name, and profession for each hero (e.g. \"Karmal Eternius - Tulamydian Mage\"), plus warnings if the hero or the player is already taken (an existing assignment for the chosen player is fully replaced, token included, when you continue). The second step anchors Deck, discard pile, Hand, and the freely movable hero token at their spot on the Gameboard with one click, and shuffles the deck along the way. The \"Choose hero\" button in the Hero Tray now opens this same guide section too, instead of starting directly (and without a player-slot choice). Heroes created this way also open with the Aventuria Helpers' own Hero Sheet right away instead of the generic default sheet.",
         "format": 2
       },
       "video": {
@@ -148,7 +148,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786884017305,
+        "createdTime": 1786886161846,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -156,11 +156,11 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!YY4Pm3raEZ37cJM6.n8AIx9Z3vZ381EiT"
+      "_key": "!journal.pages!Y2JwJ6ppgOT2jDIr.ltD3QIXPFPQnXEgE"
     },
     {
-      "_id": "Jd7i4w3aCQhREIHS",
-      "name": "0.1.1",
+      "_id": "rANwj0ByASeBYS5E",
+      "name": "0.1.2",
       "type": "text",
       "system": {},
       "title": {
@@ -169,8 +169,8 @@
       },
       "image": {},
       "text": {
-        "content": "<h3>Features</h3>\n<ul>\n<li><strong>Round-end marker in combat:</strong> The combat tracker now has a fixed slot for \"Round End\" alongside \"Enemy Actions\" (e.g. for effects that trigger at the end of a round) - addable via the combat tracker's right-click menu, automatically sorts itself to the very end of the turn order.</li>\n<li><strong>Cards playable even without Ausdauer:</strong> When playing an action card with an Ausdauer cost, the module now asks whether to pay normally or play the card without Ausdauer instead.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>The Hero Sheet no longer jumps out of the window while editing the special ability: if the text editor is taller than the window, a scrollbar now appears when needed, instead of the set/set number footer getting cut off.</li>\n<li>Hero Tray: the group icon used to close it was replaced with a clearer X.</li>\n<li>Hero Tray: \"View deck\" now opens directly to the card list, instead of landing on the deck's configuration view.</li>\n<li>Hand view: card images looked pale/sepia-toned at rest - this is now fixed, cards always display at full clarity.</li>\n</ul>",
-        "markdown": "### Features\n- **Round-end marker in combat:** The combat tracker now has a fixed slot for \"Round End\" alongside \"Enemy Actions\" (e.g. for effects that trigger at the end of a round) - addable via the combat tracker's right-click menu, automatically sorts itself to the very end of the turn order.\n- **Cards playable even without Ausdauer:** When playing an action card with an Ausdauer cost, the module now asks whether to pay normally or play the card without Ausdauer instead.\n\n### Bugs\n- The Hero Sheet no longer jumps out of the window while editing the special ability: if the text editor is taller than the window, a scrollbar now appears when needed, instead of the set/set number footer getting cut off.\n- Hero Tray: the group icon used to close it was replaced with a clearer X.\n- Hero Tray: \"View deck\" now opens directly to the card list, instead of landing on the deck's configuration view.\n- Hand view: card images looked pale/sepia-toned at rest - this is now fixed, cards always display at full clarity.",
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>New guide section \"Choose a Hero\"</strong> right under \"First Steps\": the gamemaster picks a player and assigns them a hero via \"Prepare Player\", then anchors that hero's Deck, discard pile and Hand on the Gameboard, and each player finally shuffles their own deck - all via buttons instead of manual work. Anchoring still shows \"Player slot not measured yet\" until the positions for all player slots have been captured.</li>\n<li><strong>The guide reopens itself after \"Open player management\":</strong> This step briefly leaves Foundry for its own page - when you come back (including a reload that triggers), the guide automatically reopens at the same spot instead of staying closed.</li>\n<li><strong>\"First Steps\" is now almost fully automated:</strong> The steps \"Import the game board\" and \"Prepare the board\" now run their action directly, instead of just opening a compendium or the macro directory. The \"Import the macros\" step imports the Aventuria macros directly into their own \"Aventuria Macros\" folder in your macro directory. The \"Place decks and stacks\" step automatically places the piles and decks created by Prepare Board at their spot on the Gameboard scene, anchors them there, and shuffles the fate deck - the guide is already done after this step.</li>\n</ul>",
+        "markdown": "### Features\r\n- **New guide section \"Choose a Hero\"** right under \"First Steps\": the gamemaster picks a player and assigns them a hero via \"Prepare Player\", then anchors that hero's Deck, discard pile and Hand on the Gameboard, and each player finally shuffles their own deck - all via buttons instead of manual work. Anchoring still shows \"Player slot not measured yet\" until the positions for all player slots have been captured.\r\n- **The guide reopens itself after \"Open player management\":** This step briefly leaves Foundry for its own page - when you come back (including a reload that triggers), the guide automatically reopens at the same spot instead of staying closed.\r\n- **\"First Steps\" is now almost fully automated:** The steps \"Import the game board\" and \"Prepare the board\" now run their action directly, instead of just opening a compendium or the macro directory. The \"Import the macros\" step imports the Aventuria macros directly into their own \"Aventuria Macros\" folder in your macro directory. The \"Place decks and stacks\" step automatically places the piles and decks created by Prepare Board at their spot on the Gameboard scene, anchors them there, and shuffles the fate deck - the guide is already done after this step.",
         "format": 2
       },
       "video": {
@@ -187,7 +187,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786884017305,
+        "createdTime": 1786886161846,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -195,11 +195,11 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!YY4Pm3raEZ37cJM6.Jd7i4w3aCQhREIHS"
+      "_key": "!journal.pages!Y2JwJ6ppgOT2jDIr.rANwj0ByASeBYS5E"
     },
     {
-      "_id": "ZwkN0OjGqnoAMqTg",
-      "name": "0.1.0",
+      "_id": "AdrU2Wetpr0bSaA2",
+      "name": "0.1.1",
       "type": "text",
       "system": {},
       "title": {
@@ -208,8 +208,8 @@
       },
       "image": {},
       "text": {
-        "content": "<p>First release. Includes:</p>\n<ul>\n<li><strong>New Hero Sheet</strong> (selectable as an alternative to the default sheet): its own card-styled look with original icons, attributes (Melee/Ranged/Magic/Dodge), equipment, all 8 skills, and the special ability all on one page. Attributes and skills can each be clicked individually to roll a check directly, complete with a clear result chat card. Equipment can be \"used\" with one click - rolls the attack and damage together and automatically marks the equipment as exhausted afterward.</li>\n<li><strong>Play-mode lock</strong> for the Hero Sheet: prevents accidental changes during play, without blocking rolling checks, exhausting/readying, or entering life points.</li>\n<li><strong>Hero Tray</strong> as a replacement for the player list: portrait, card Deck/discard pile/Hand, and available/exhausted Ausdauer at a glance, including drawing, shuffling, and viewing.</li>\n<li><strong>Own Hand view</strong>: a freely movable window with a card preview, playing cards, and \"Play as Ausdauer\".</li>\n<li><strong>Combat initiative</strong>: fixed, rotating turn order instead of rolling (shifts by one seat each round), automatic rank assignment, fixed slot for \"Enemy Actions\".</li>\n<li><strong>Aventuria Guide</strong>: a new welcome screen with a step-by-step walkthrough for the one-time world setup.</li>\n<li><strong>New macro</strong> \"Reset card rotations\": resets every rotated card on the play surface with one click.</li>\n</ul>",
-        "markdown": "First release. Includes:\n\n- **New Hero Sheet** (selectable as an alternative to the default sheet): its own card-styled look with original icons, attributes (Melee/Ranged/Magic/Dodge), equipment, all 8 skills, and the special ability all on one page. Attributes and skills can each be clicked individually to roll a check directly, complete with a clear result chat card. Equipment can be \"used\" with one click - rolls the attack and damage together and automatically marks the equipment as exhausted afterward.\n- **Play-mode lock** for the Hero Sheet: prevents accidental changes during play, without blocking rolling checks, exhausting/readying, or entering life points.\n- **Hero Tray** as a replacement for the player list: portrait, card Deck/discard pile/Hand, and available/exhausted Ausdauer at a glance, including drawing, shuffling, and viewing.\n- **Own Hand view**: a freely movable window with a card preview, playing cards, and \"Play as Ausdauer\".\n- **Combat initiative**: fixed, rotating turn order instead of rolling (shifts by one seat each round), automatic rank assignment, fixed slot for \"Enemy Actions\".\n- **Aventuria Guide**: a new welcome screen with a step-by-step walkthrough for the one-time world setup.\n- **New macro** \"Reset card rotations\": resets every rotated card on the play surface with one click.",
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>Round-end marker in combat:</strong> The combat tracker now has a fixed slot for \"Round End\" alongside \"Enemy Actions\" (e.g. for effects that trigger at the end of a round) - addable via the combat tracker's right-click menu, automatically sorts itself to the very end of the turn order.</li>\n<li><strong>Cards playable even without Ausdauer:</strong> When playing an action card with an Ausdauer cost, the module now asks whether to pay normally or play the card without Ausdauer instead.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>The Hero Sheet no longer jumps out of the window while editing the special ability: if the text editor is taller than the window, a scrollbar now appears when needed, instead of the set/set number footer getting cut off.</li>\n<li>Hero Tray: the group icon used to close it was replaced with a clearer X.</li>\n<li>Hero Tray: \"View deck\" now opens directly to the card list, instead of landing on the deck's configuration view.</li>\n<li>Hand view: card images looked pale/sepia-toned at rest - this is now fixed, cards always display at full clarity.</li>\n</ul>",
+        "markdown": "### Features\r\n- **Round-end marker in combat:** The combat tracker now has a fixed slot for \"Round End\" alongside \"Enemy Actions\" (e.g. for effects that trigger at the end of a round) - addable via the combat tracker's right-click menu, automatically sorts itself to the very end of the turn order.\r\n- **Cards playable even without Ausdauer:** When playing an action card with an Ausdauer cost, the module now asks whether to pay normally or play the card without Ausdauer instead.\r\n\r\n### Bugs\r\n- The Hero Sheet no longer jumps out of the window while editing the special ability: if the text editor is taller than the window, a scrollbar now appears when needed, instead of the set/set number footer getting cut off.\r\n- Hero Tray: the group icon used to close it was replaced with a clearer X.\r\n- Hero Tray: \"View deck\" now opens directly to the card list, instead of landing on the deck's configuration view.\r\n- Hand view: card images looked pale/sepia-toned at rest - this is now fixed, cards always display at full clarity.",
         "format": 2
       },
       "video": {
@@ -226,7 +226,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786884017305,
+        "createdTime": 1786886161846,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -234,7 +234,46 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!YY4Pm3raEZ37cJM6.ZwkN0OjGqnoAMqTg"
+      "_key": "!journal.pages!Y2JwJ6ppgOT2jDIr.AdrU2Wetpr0bSaA2"
+    },
+    {
+      "_id": "QqGaREF0lNWL1GLD",
+      "name": "0.1.0",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<p>First release. Includes:</p>\n<ul>\n<li><strong>New Hero Sheet</strong> (selectable as an alternative to the default sheet): its own card-styled look with original icons, attributes (Melee/Ranged/Magic/Dodge), equipment, all 8 skills, and the special ability all on one page. Attributes and skills can each be clicked individually to roll a check directly, complete with a clear result chat card. Equipment can be \"used\" with one click - rolls the attack and damage together and automatically marks the equipment as exhausted afterward.</li>\n<li><strong>Play-mode lock</strong> for the Hero Sheet: prevents accidental changes during play, without blocking rolling checks, exhausting/readying, or entering life points.</li>\n<li><strong>Hero Tray</strong> as a replacement for the player list: portrait, card Deck/discard pile/Hand, and available/exhausted Ausdauer at a glance, including drawing, shuffling, and viewing.</li>\n<li><strong>Own Hand view</strong>: a freely movable window with a card preview, playing cards, and \"Play as Ausdauer\".</li>\n<li><strong>Combat initiative</strong>: fixed, rotating turn order instead of rolling (shifts by one seat each round), automatic rank assignment, fixed slot for \"Enemy Actions\".</li>\n<li><strong>Aventuria Guide</strong>: a new welcome screen with a step-by-step walkthrough for the one-time world setup.</li>\n<li><strong>New macro</strong> \"Reset card rotations\": resets every rotated card on the play surface with one click.</li>\n</ul>",
+        "markdown": "First release. Includes:\r\n\r\n- **New Hero Sheet** (selectable as an alternative to the default sheet): its own card-styled look with original icons, attributes (Melee/Ranged/Magic/Dodge), equipment, all 8 skills, and the special ability all on one page. Attributes and skills can each be clicked individually to roll a check directly, complete with a clear result chat card. Equipment can be \"used\" with one click - rolls the attack and damage together and automatically marks the equipment as exhausted afterward.\r\n- **Play-mode lock** for the Hero Sheet: prevents accidental changes during play, without blocking rolling checks, exhausting/readying, or entering life points.\r\n- **Hero Tray** as a replacement for the player list: portrait, card Deck/discard pile/Hand, and available/exhausted Ausdauer at a glance, including drawing, shuffling, and viewing.\r\n- **Own Hand view**: a freely movable window with a card preview, playing cards, and \"Play as Ausdauer\".\r\n- **Combat initiative**: fixed, rotating turn order instead of rolling (shifts by one seat each round), automatic rank assignment, fixed slot for \"Enemy Actions\".\r\n- **Aventuria Guide**: a new welcome screen with a step-by-step walkthrough for the one-time world setup.\r\n- **New macro** \"Reset card rotations\": resets every rotated card on the play surface with one click.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 600000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1786886161846,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!Y2JwJ6ppgOT2jDIr.QqGaREF0lNWL1GLD"
     }
   ],
   "folder": null,
@@ -247,7 +286,7 @@
   "_stats": {
     "compendiumSource": null,
     "coreVersion": "14.364",
-    "createdTime": 1786884017305,
+    "createdTime": 1786886161846,
     "duplicateSource": null,
     "exportSource": null,
     "lastModifiedBy": null,
@@ -255,5 +294,5 @@
     "systemId": "universal-tabletop-system",
     "systemVersion": "1.2.1"
   },
-  "_key": "!journal!YY4Pm3raEZ37cJM6"
+  "_key": "!journal!Y2JwJ6ppgOT2jDIr"
 }

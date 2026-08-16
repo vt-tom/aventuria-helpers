@@ -1,9 +1,9 @@
 {
-  "_id": "hzo6Dg7rSTdrPz5f",
+  "_id": "lq0uAhDed8e8IfX4",
   "name": "Aventuria Helpers - Changelog (deutsch)",
   "pages": [
     {
-      "_id": "CYFBXH1xjTQHw7AE",
+      "_id": "maW9C0UYy5BtdJRn",
       "name": "Änderungen – Aventuria Helfer",
       "type": "text",
       "system": {},
@@ -31,7 +31,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786884017293,
+        "createdTime": 1786886161834,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -39,11 +39,11 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!hzo6Dg7rSTdrPz5f.CYFBXH1xjTQHw7AE"
+      "_key": "!journal.pages!lq0uAhDed8e8IfX4.maW9C0UYy5BtdJRn"
     },
     {
-      "_id": "EJuUr6O3j2W6qOqT",
-      "name": "0.1.4",
+      "_id": "gzPOSc5swv2Jp8ve",
+      "name": "0.1.4.1",
       "type": "text",
       "system": {},
       "title": {
@@ -52,8 +52,8 @@
       },
       "image": {},
       "text": {
-        "content": "<h3>Features</h3>\n<ul>\n<li><strong>Changelog direkt in Foundry:</strong> Nach einem Update öffnet sich beim nächsten Laden automatisch eine Übersicht der neuen Version. Über den neuen Button \"Was ist neu?\" im Willkommensbildschirm (direkt unter dem Guide-Button) lässt sich die komplette Versionshistorie jederzeit erneut ansehen.</li>\n</ul>",
-        "markdown": "### Features\r\n- **Changelog direkt in Foundry:** Nach einem Update öffnet sich beim nächsten Laden automatisch eine Übersicht der neuen Version. Über den neuen Button \"Was ist neu?\" im Willkommensbildschirm (direkt unter dem Guide-Button) lässt sich die komplette Versionshistorie jederzeit erneut ansehen.",
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>Neuer Schritt \"Marken importieren\"</strong> in \"Erste Schritte\": importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) direkt in einen eigenen Ordner in deinem Akteur-Verzeichnis.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>Die drei Buttons im Aventuria-Bereich des Willkommensbildschirms wurden bei drei Einträgen zu schmal und der Text passte nicht mehr hinein - behoben.</li>\n</ul>",
+        "markdown": "### Features\r\n- **Neuer Schritt \"Marken importieren\"** in \"Erste Schritte\": importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) direkt in einen eigenen Ordner in deinem Akteur-Verzeichnis.\r\n\r\n### Bugs\r\n- Die drei Buttons im Aventuria-Bereich des Willkommensbildschirms wurden bei drei Einträgen zu schmal und der Text passte nicht mehr hinein - behoben.",
         "format": 2
       },
       "video": {
@@ -70,7 +70,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786884017293,
+        "createdTime": 1786886161834,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -78,10 +78,49 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!hzo6Dg7rSTdrPz5f.EJuUr6O3j2W6qOqT"
+      "_key": "!journal.pages!lq0uAhDed8e8IfX4.gzPOSc5swv2Jp8ve"
     },
     {
-      "_id": "pXERUY1Mrg2Eu29G",
+      "_id": "TvbM6yML68ftfiLU",
+      "name": "0.1.4",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>Changelog direkt in Foundry:</strong> Nach einem Update öffnet sich beim nächsten Laden automatisch eine Übersicht der neuen Version. Über den neuen Button \"Was ist neu?\" im Willkommensbildschirm (direkt unter dem Guide-Button) lässt sich die komplette Versionshistorie jederzeit erneut ansehen.</li>\n<li><strong>Neuer Guide-Abschnitt \"Schnellstarter vorbereiten\":</strong> Sobald alle teilnehmenden Spieler ihren Helden zugewiesen haben, bereitet dieser neue Schritt im Willkommensbildschirm mit einem Klick das komplette Schnellstarter-Abenteuer vor - jeder der sechs Schnellstarter-Helden bekommt seine Starthand gezogen und vier weitere Karten als Ausdauer ausgespielt, die Schergen werden im Hintergrund vorbereitet, und das Abenteuer-Journal öffnet sich direkt auf der richtigen Seite.</li>\n</ul>",
+        "markdown": "### Features\r\n- **Changelog direkt in Foundry:** Nach einem Update öffnet sich beim nächsten Laden automatisch eine Übersicht der neuen Version. Über den neuen Button \"Was ist neu?\" im Willkommensbildschirm (direkt unter dem Guide-Button) lässt sich die komplette Versionshistorie jederzeit erneut ansehen.\r\n- **Neuer Guide-Abschnitt \"Schnellstarter vorbereiten\":** Sobald alle teilnehmenden Spieler ihren Helden zugewiesen haben, bereitet dieser neue Schritt im Willkommensbildschirm mit einem Klick das komplette Schnellstarter-Abenteuer vor - jeder der sechs Schnellstarter-Helden bekommt seine Starthand gezogen und vier weitere Karten als Ausdauer ausgespielt, die Schergen werden im Hintergrund vorbereitet, und das Abenteuer-Journal öffnet sich direkt auf der richtigen Seite.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 200000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1786886161834,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!lq0uAhDed8e8IfX4.TvbM6yML68ftfiLU"
+    },
+    {
+      "_id": "Mo8LTzsKGjBRcG9w",
       "name": "0.1.3",
       "type": "text",
       "system": {},
@@ -101,7 +140,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 200000,
+      "sort": 300000,
       "ownership": {
         "default": -1
       },
@@ -109,7 +148,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786884017293,
+        "createdTime": 1786886161834,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -117,10 +156,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!hzo6Dg7rSTdrPz5f.pXERUY1Mrg2Eu29G"
+      "_key": "!journal.pages!lq0uAhDed8e8IfX4.Mo8LTzsKGjBRcG9w"
     },
     {
-      "_id": "xC72lp2jKlvup2zw",
+      "_id": "2HOWMN4X5uAZMijy",
       "name": "0.1.2",
       "type": "text",
       "system": {},
@@ -140,7 +179,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 300000,
+      "sort": 400000,
       "ownership": {
         "default": -1
       },
@@ -148,7 +187,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786884017293,
+        "createdTime": 1786886161834,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -156,10 +195,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!hzo6Dg7rSTdrPz5f.xC72lp2jKlvup2zw"
+      "_key": "!journal.pages!lq0uAhDed8e8IfX4.2HOWMN4X5uAZMijy"
     },
     {
-      "_id": "LpmaEN7ab5MtRH5F",
+      "_id": "mO2vAGhzrqsEA5My",
       "name": "0.1.1",
       "type": "text",
       "system": {},
@@ -179,7 +218,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 400000,
+      "sort": 500000,
       "ownership": {
         "default": -1
       },
@@ -187,7 +226,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786884017293,
+        "createdTime": 1786886161834,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -195,10 +234,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!hzo6Dg7rSTdrPz5f.LpmaEN7ab5MtRH5F"
+      "_key": "!journal.pages!lq0uAhDed8e8IfX4.mO2vAGhzrqsEA5My"
     },
     {
-      "_id": "L6AalrgP0saKzyAR",
+      "_id": "1RythO12EkHx7jTP",
       "name": "0.1.0",
       "type": "text",
       "system": {},
@@ -218,7 +257,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 500000,
+      "sort": 600000,
       "ownership": {
         "default": -1
       },
@@ -226,7 +265,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786884017293,
+        "createdTime": 1786886161834,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -234,7 +273,7 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!hzo6Dg7rSTdrPz5f.L6AalrgP0saKzyAR"
+      "_key": "!journal.pages!lq0uAhDed8e8IfX4.1RythO12EkHx7jTP"
     }
   ],
   "folder": null,
@@ -247,7 +286,7 @@
   "_stats": {
     "compendiumSource": null,
     "coreVersion": "14.364",
-    "createdTime": 1786884017293,
+    "createdTime": 1786886161834,
     "duplicateSource": null,
     "exportSource": null,
     "lastModifiedBy": null,
@@ -255,5 +294,5 @@
     "systemId": "universal-tabletop-system",
     "systemVersion": "1.2.1"
   },
-  "_key": "!journal!hzo6Dg7rSTdrPz5f"
+  "_key": "!journal!lq0uAhDed8e8IfX4"
 }
