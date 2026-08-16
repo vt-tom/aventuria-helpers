@@ -73,13 +73,14 @@ const ADVENTURE_DECK_UUID = {
  * and "Ahrkh, der Oger" (327) happen to land inside the Gameboard's own "Adventure In Play"
  * region, whose `moveCard` behavior then auto-passes them into Aventuria's existing
  * `adventureInPlay0` pile ("Abenteuerkarten im Spiel") - confirmed live by the user
- * (`Cards.adventureInPlay0.Card.<id>` UUIDs) - but they still need their own `x`/`y` set
- * first, same as "Zeitskala" (325), or they'd all land stacked on the same spot.
+ * (`Cards.adventureInPlay0.Card.<id>` UUIDs), resolved back to their `x`/`y` via `fromUuid()`
+ * for capture. Each of the 3 still needs its own distinct `x`/`y` regardless of which pile it
+ * ends up in, same as "Zeitskala" (325) - otherwise they'd all land stacked on the same spot.
  */
 const ADVENTURE_CARD_POSITIONS = {
   325: { x: 4961, y: 3876, rotation: 0 }, // Zeitskala / Time Scale
-  326: { x: null, y: null, rotation: 0 }, // Heldenaktion: Wo ist das Horn? / Hero Action: Where is the Horn?
-  327: { x: null, y: null, rotation: 0 }, // Ahrkh, der Oger / Ahrkh, the Ogre
+  326: { x: 5423, y: 3885, rotation: 0 }, // Heldenaktion: Wo ist das Horn? / Hero Action: Where is the Horn?
+  327: { x: 5386, y: 3868, rotation: 0 }, // Ahrkh, der Oger / Ahrkh, the Ogre
 };
 
 /** "Das Abenteuer"/"The Adventure" page in Aventuria's own Schnellstarter journal, per language. */

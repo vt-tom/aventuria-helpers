@@ -6,6 +6,7 @@ Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Ve
 
 ### Features
 - **Neuer Schritt "Marken importieren"** in "Erste Schritte": importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) direkt in einen eigenen Ordner in deinem Akteur-Verzeichnis und platziert sie automatisch an ihrer Stelle auf dem Spielbrett.
+- **"Schnellstarter vorbereiten" bereitet jetzt auch die Karten auf dem Tisch vor:** Das Schergen-Deck wird automatisch an seinen Platz auf dem Spielbrett gelegt, und drei Abenteuerkarten ("Zeitskala", "Heldenaktion: Wo ist das Horn?", "Ahrkh, der Oger") werden direkt an ihre Stelle gesetzt.
 
 ### Bugs
 - Die drei Buttons im Aventuria-Bereich des Willkommensbildschirms wurden bei drei Einträgen zu schmal und der Text passte nicht mehr hinein - behoben.

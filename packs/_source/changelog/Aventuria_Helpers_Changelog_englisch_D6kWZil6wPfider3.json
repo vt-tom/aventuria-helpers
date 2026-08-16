@@ -1,9 +1,9 @@
 {
-  "_id": "rJhLbmKxbwbWUIj9",
+  "_id": "D6kWZil6wPfider3",
   "name": "Aventuria Helpers - Changelog (englisch)",
   "pages": [
     {
-      "_id": "kFk4bptXTiigg56X",
+      "_id": "kV3ruoy0Ga9y1XyP",
       "name": "Changes – Aventuria Helpers",
       "type": "text",
       "system": {},
@@ -31,7 +31,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786888545319,
+        "createdTime": 1786896550397,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -39,10 +39,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rJhLbmKxbwbWUIj9.kFk4bptXTiigg56X"
+      "_key": "!journal.pages!D6kWZil6wPfider3.kV3ruoy0Ga9y1XyP"
     },
     {
-      "_id": "Lb1PplSjnmVcrYrw",
+      "_id": "howvlT7Yu8mZUDGk",
       "name": "0.1.4.1",
       "type": "text",
       "system": {},
@@ -52,8 +52,8 @@
       },
       "image": {},
       "text": {
-        "content": "<h3>Features</h3>\n<ul>\n<li><strong>New \"Import tokens\" step</strong> in \"First Steps\": imports the game's marker tokens (life points, Fertigkeit, plus/minus, fate points, etc.) directly into their own folder in your Actor directory and places them automatically at their spot on the Gameboard.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>The three buttons in the welcome screen's Aventuria section became too narrow once a third one was added, and the text no longer fit - fixed.</li>\n<li>\"Prepare Quick Start\" could error out on a second click and leave the remaining heroes untouched - the step can now be run safely more than once, skipping heroes that are already done instead of erroring.</li>\n<li>Ausdauer cards couldn't be placed on the Gameboard for some player slots because the link to that player's Im-Spiel-Stapel was missing - \"Place on the Gameboard scene\" now repairs that link automatically every time it runs.</li>\n</ul>",
-        "markdown": "### Features\r\n- **New \"Import tokens\" step** in \"First Steps\": imports the game's marker tokens (life points, Fertigkeit, plus/minus, fate points, etc.) directly into their own folder in your Actor directory and places them automatically at their spot on the Gameboard.\r\n\r\n### Bugs\r\n- The three buttons in the welcome screen's Aventuria section became too narrow once a third one was added, and the text no longer fit - fixed.\r\n- \"Prepare Quick Start\" could error out on a second click and leave the remaining heroes untouched - the step can now be run safely more than once, skipping heroes that are already done instead of erroring.\r\n- Ausdauer cards couldn't be placed on the Gameboard for some player slots because the link to that player's Im-Spiel-Stapel was missing - \"Place on the Gameboard scene\" now repairs that link automatically every time it runs.",
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>New \"Import tokens\" step</strong> in \"First Steps\": imports the game's marker tokens (life points, Fertigkeit, plus/minus, fate points, etc.) directly into their own folder in your Actor directory and places them automatically at their spot on the Gameboard.</li>\n<li><strong>\"Prepare Quick Start\" now sets up the cards on the table too:</strong> the henchmen deck is automatically placed at its spot on the Gameboard, and three adventure cards (\"Time Scale\", \"Hero Action: Where is the Horn?\", \"Ahrkh, the Ogre\") are placed directly at their spots.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>The three buttons in the welcome screen's Aventuria section became too narrow once a third one was added, and the text no longer fit - fixed.</li>\n<li>\"Prepare Quick Start\" could error out on a second click and leave the remaining heroes untouched - the step can now be run safely more than once, skipping heroes that are already done instead of erroring.</li>\n<li>Ausdauer cards couldn't be placed on the Gameboard for some player slots because the link to that player's Im-Spiel-Stapel was missing - \"Place on the Gameboard scene\" now repairs that link automatically every time it runs.</li>\n</ul>",
+        "markdown": "### Features\r\n- **New \"Import tokens\" step** in \"First Steps\": imports the game's marker tokens (life points, Fertigkeit, plus/minus, fate points, etc.) directly into their own folder in your Actor directory and places them automatically at their spot on the Gameboard.\r\n- **\"Prepare Quick Start\" now sets up the cards on the table too:** the henchmen deck is automatically placed at its spot on the Gameboard, and three adventure cards (\"Time Scale\", \"Hero Action: Where is the Horn?\", \"Ahrkh, the Ogre\") are placed directly at their spots.\r\n\r\n### Bugs\r\n- The three buttons in the welcome screen's Aventuria section became too narrow once a third one was added, and the text no longer fit - fixed.\r\n- \"Prepare Quick Start\" could error out on a second click and leave the remaining heroes untouched - the step can now be run safely more than once, skipping heroes that are already done instead of erroring.\r\n- Ausdauer cards couldn't be placed on the Gameboard for some player slots because the link to that player's Im-Spiel-Stapel was missing - \"Place on the Gameboard scene\" now repairs that link automatically every time it runs.",
         "format": 2
       },
       "video": {
@@ -70,7 +70,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786888545319,
+        "createdTime": 1786896550397,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -78,10 +78,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rJhLbmKxbwbWUIj9.Lb1PplSjnmVcrYrw"
+      "_key": "!journal.pages!D6kWZil6wPfider3.howvlT7Yu8mZUDGk"
     },
     {
-      "_id": "kkGfSOVaau8GdRp1",
+      "_id": "nA5l7BQr7pC0tPpw",
       "name": "0.1.4",
       "type": "text",
       "system": {},
@@ -109,7 +109,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786888545319,
+        "createdTime": 1786896550397,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -117,10 +117,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rJhLbmKxbwbWUIj9.kkGfSOVaau8GdRp1"
+      "_key": "!journal.pages!D6kWZil6wPfider3.nA5l7BQr7pC0tPpw"
     },
     {
-      "_id": "Z1hZuhYJ5cmR9XPU",
+      "_id": "lVdtWPXwFs7bRwr9",
       "name": "0.1.3",
       "type": "text",
       "system": {},
@@ -148,7 +148,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786888545319,
+        "createdTime": 1786896550397,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -156,10 +156,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rJhLbmKxbwbWUIj9.Z1hZuhYJ5cmR9XPU"
+      "_key": "!journal.pages!D6kWZil6wPfider3.lVdtWPXwFs7bRwr9"
     },
     {
-      "_id": "dhMdGNoLMzAmRWCr",
+      "_id": "r409fQeMfUrfwFAG",
       "name": "0.1.2",
       "type": "text",
       "system": {},
@@ -187,7 +187,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786888545319,
+        "createdTime": 1786896550397,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -195,10 +195,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rJhLbmKxbwbWUIj9.dhMdGNoLMzAmRWCr"
+      "_key": "!journal.pages!D6kWZil6wPfider3.r409fQeMfUrfwFAG"
     },
     {
-      "_id": "1rz19RM3dkBRsTq4",
+      "_id": "xIK7hMsJqAdnkYs2",
       "name": "0.1.1",
       "type": "text",
       "system": {},
@@ -226,7 +226,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786888545319,
+        "createdTime": 1786896550397,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -234,10 +234,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rJhLbmKxbwbWUIj9.1rz19RM3dkBRsTq4"
+      "_key": "!journal.pages!D6kWZil6wPfider3.xIK7hMsJqAdnkYs2"
     },
     {
-      "_id": "wnaXnE5OJBvpaivj",
+      "_id": "rdw7SCYFFDirOKo7",
       "name": "0.1.0",
       "type": "text",
       "system": {},
@@ -265,7 +265,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786888545319,
+        "createdTime": 1786896550397,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -273,7 +273,7 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rJhLbmKxbwbWUIj9.wnaXnE5OJBvpaivj"
+      "_key": "!journal.pages!D6kWZil6wPfider3.rdw7SCYFFDirOKo7"
     }
   ],
   "folder": null,
@@ -286,7 +286,7 @@
   "_stats": {
     "compendiumSource": null,
     "coreVersion": "14.364",
-    "createdTime": 1786888545319,
+    "createdTime": 1786896550397,
     "duplicateSource": null,
     "exportSource": null,
     "lastModifiedBy": null,
@@ -294,5 +294,5 @@
     "systemId": "universal-tabletop-system",
     "systemVersion": "1.2.1"
   },
-  "_key": "!journal!rJhLbmKxbwbWUIj9"
+  "_key": "!journal!D6kWZil6wPfider3"
 }
