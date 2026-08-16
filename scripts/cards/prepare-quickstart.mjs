@@ -64,6 +64,14 @@ function resolveQuickstartStart(heroName) {
  * `playCardAsEndurance()` (reused as-is, same canvas-region mechanism a manually-played
  * Ausdauer card goes through - see `cards/endurance.mjs`).
  *
+ * Idempotent: only considers cards still `!card.drawn` in the deck, so re-running this (e.g.
+ * a second click because the first one's result wasn't obviously visible yet) just skips
+ * whatever's already been drawn/played instead of trying to draw it again - `Cards#pass()`
+ * throws ("You may not pass Card ... which has already been drawn") for an already-drawn
+ * card, and since that throw previously happened inside the un-guarded `prepareQuickstart()`
+ * loop, it silently aborted the rest of the loop, leaving every hero after the one that threw
+ * untouched (Nutzerfeedback 2026-08-16, reproduced via the exact `UTSCards.pass` stack trace).
+ *
  * Logs a console warning per hero if fewer Ausdauer cards were placed than expected
  * (`playCardAsEndurance()` itself already shows a `ui.notifications.warn()` for the concrete
  * reason - no scene, or no play-region wired for that hero's Im-Spiel-Stapel - but a warning
@@ -78,8 +86,8 @@ async function prepareHeroCards(user, start) {
   if (!stacks?.deck) return false;
 
   const inRange = (card, from, to) => card.system.serialNumber >= from && card.system.serialNumber <= to;
-  const handCards = stacks.deck.cards.filter((c) => inRange(c, start, start + 4));
-  const enduranceCards = stacks.deck.cards.filter((c) => inRange(c, start + 5, start + 8));
+  const handCards = stacks.deck.cards.filter((c) => !c.drawn && inRange(c, start, start + 4));
+  const enduranceCards = stacks.deck.cards.filter((c) => !c.drawn && inRange(c, start + 5, start + 8));
 
   if (handCards.length) {
     await stacks.deck.pass(stacks.hand, handCards.map((c) => c.id), { action: "draw" });
@@ -152,7 +160,13 @@ export async function prepareQuickstart() {
   for (const user of users) {
     const start = resolveQuickstartStart(user.character.name);
     if (start == null) continue;
-    if (await prepareHeroCards(user, start)) prepared++;
+    // One hero's failure must not stop the rest of the table from being prepared - an
+    // uncaught error here previously aborted the whole loop (Nutzerfeedback 2026-08-16).
+    try {
+      if (await prepareHeroCards(user, start)) prepared++;
+    } catch (error) {
+      console.error(`${MODULE_ID} | prepareQuickstart: failed for ${user.character.name} (${user.name}).`, error);
+    }
   }
 
   if (!prepared) {

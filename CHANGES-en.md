@@ -9,6 +9,7 @@ This file lists all gameplay-relevant changes to the module – newest version f
 
 ### Bugs
 - The three buttons in the welcome screen's Aventuria section became too narrow once a third one was added, and the text no longer fit - fixed.
+- "Prepare Quick Start" could error out on a second click and leave the remaining heroes untouched - the step can now be run safely more than once, skipping heroes that are already done instead of erroring.
 
 ## 0.1.4
 
