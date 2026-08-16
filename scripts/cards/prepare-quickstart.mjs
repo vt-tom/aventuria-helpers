@@ -67,20 +67,20 @@ const ADVENTURE_DECK_UUID = {
 
 /**
  * Live-captured Gameboard positions for the 3 named Schnellstarter event cards, keyed by
- * `system.serialNumber` (Stand 2026-08-16, same capture method as `HENCHMAN_DECK_POSITION`
- * - read directly out of each card's own `complete-card-management.<sceneId>` flag, which
- * already holds its final top-left canvas position, not a center point). "Heldenaktion: Wo
- * ist das Horn?" (326) and "Ahrkh, der Oger" (327) happen to land inside the Gameboard's own
- * "Adventure In Play" region and get auto-passed into Aventuria's existing `adventureInPlay0`
- * pile ("Abenteuerkarten im Spiel") by its `moveCard` behavior - confirmed live by the user
- * (`Cards.adventureInPlay0.Card.<id>` UUIDs). Each of the 3 still needs its own distinct
- * `x`/`y` regardless of which pile it ends up in, same as "Zeitskala" (325) - otherwise
- * they'd all land stacked on the same spot.
+ * `system.serialNumber` (Stand 2026-08-16, re-captured after the `lockOnScene()` fix - read
+ * directly out of each card's own `complete-card-management.<sceneId>` flag, which already
+ * holds its final top-left canvas position, not a center point). All three happen to land
+ * inside a Gameboard region wired (via a `moveCard` behavior) to move dropped cards into a
+ * specific existing pile - confirmed live by the user: "Zeitskala" (325) ends up in
+ * "Trankprüfers Trinkhorn", "Heldenaktion: Wo ist das Horn?" (326) and "Ahrkh, der Oger"
+ * (327) end up in "Abenteuerkarten im Spiel" (`adventureInPlay0`). Each still needs its own
+ * distinct `x`/`y` regardless of which pile it ends up in - otherwise they'd all land
+ * stacked on the same spot.
  */
 const ADVENTURE_CARD_POSITIONS = {
-  325: { x: 4961, y: 3876, rotation: 0 }, // Zeitskala / Time Scale
-  326: { x: 5423, y: 3885, rotation: 0 }, // Heldenaktion: Wo ist das Horn? / Hero Action: Where is the Horn?
-  327: { x: 5386, y: 3868, rotation: 0 }, // Ahrkh, der Oger / Ahrkh, the Ogre
+  325: { x: 4821, y: 3666, rotation: 0 }, // Zeitskala / Time Scale
+  326: { x: 5283, y: 3675, rotation: 0 }, // Heldenaktion: Wo ist das Horn? / Hero Action: Where is the Horn?
+  327: { x: 5246, y: 3658, rotation: 0 }, // Ahrkh, der Oger / Ahrkh, the Ogre
 };
 
 /** "Das Abenteuer"/"The Adventure" page in Aventuria's own Schnellstarter journal, per language. */
