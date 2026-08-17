@@ -52,7 +52,12 @@ function resolvePlacements() {
  * module's own `permanentStack` flag (see `cleanup-board.mjs`) - tagged directly at placement
  * time instead of re-derived later by ID/`compendiumSource` matching (which turned out
  * unreliable for the fate deck in practice, Nutzerfeedback 2026-08-17: it still got swept up
- * by "Board aufräumen" despite being one of `PLACEMENTS`).
+ * by "Board aufräumen" despite being one of `PLACEMENTS`). Deliberately two separate
+ * `setFlag()` calls per card, not one combined `update()` - a first attempt merged both flag
+ * paths into a single `update()` call, which broke the Ablage/Hand placement in
+ * `placeHeroStacks()` (Nutzerfeedback 2026-08-17, exact mechanism not confirmed) - reverted to
+ * the previously-working two-call shape here too, for the same reason and to keep both
+ * functions consistent.
  * @returns {Promise<void>}
  */
 export async function placeBoardStacks() {
@@ -89,12 +94,16 @@ export async function placeBoardStacks() {
   await scene.setFlag(CCM_MODULE_ID, "cardCollection", Array.from(cardCollection));
 
   await Promise.all(
-    resolved.map(({ card, placement }) =>
-      card.update({
-        [`flags.${CCM_MODULE_ID}.${scene.id}`]: { x: placement.x, y: placement.y, rotation: 0, sort: card.sort, locked: true },
-        [`flags.${MODULE_ID}.permanentStack`]: true,
-      }),
-    ),
+    resolved.map(async ({ card, placement }) => {
+      await card.setFlag(CCM_MODULE_ID, scene.id, {
+        x: placement.x,
+        y: placement.y,
+        rotation: 0,
+        sort: card.sort,
+        locked: true,
+      });
+      await card.setFlag(MODULE_ID, "permanentStack", true);
+    }),
   );
 
   await Promise.all(resolved.filter(({ placement }) => placement.shuffle).map(({ card }) => card.shuffle()));
