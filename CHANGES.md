@@ -8,6 +8,9 @@ Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Ve
 - **Neuer Willkommensbildschirm-Eintrag "Abenteuer spielen":** Ein eigenes Abenteuer-Tool führt durch die 10 Standard-Abenteuer - Abenteuer auswählen, den Vorbereitungs-Kasten mit den benötigten Karten prominent angezeigt bekommen, Seite für Seite lesen (Verweise auf andere Seiten desselben Abenteuers springen direkt im Tool weiter), jederzeit wieder aussteigen und später fortsetzen. Nur eine Person kann das Tool gleichzeitig benutzen; andere sehen währenddessen eine Sperre mit Namen.
 - **Neuer Button "Board aufräumen"** im Willkommensbildschirm (auch als eigenes Macro nutzbar): entfernt alle Abenteuer-spezifisch auf der Spielbrett-Szene liegenden Karten (zurück in ihre Decks/Stapel) und setzt die Spielmarken wieder an ihre Ausgangsposition zurück - fragt vorher einmal nach Bestätigung. Die Decks/Ablagen/Hände der Helden sowie die gemeinsamen Stapel aus "Erste Schritte" bleiben dabei unangetastet stehen.
 
+### Bugs
+- Die Heldenablage konnte bei kleinerem Browserfenster unten in die Makro-Leiste hineinragen - der Stapel-Bereich (Deck/Ablage/Hand/Ausdauer) passt sich jetzt automatisch an den verfügbaren Platz an und scrollt bei Bedarf, statt zu überlappen.
+
 ## 0.1.4.1
 
 ### Features

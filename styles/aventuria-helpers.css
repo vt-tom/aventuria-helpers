@@ -1909,12 +1909,28 @@ body:not(.ahb-tray-active) .hero-tray {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  min-height: 0;
 }
 
 .hero-tray .tray-head {
   display: flex;
   align-items: center;
   gap: 0.65rem;
+  flex: none;
+}
+
+/* Scrollable independently of .tray-head above so the portrait/name/delete
+   row always stays visible - only the stack rows give way when there isn't
+   enough vertical space between the tray and the hotbar. max-height is set
+   inline by AventuriaHelpersHeroTray#updateLayout() (hero-tray.mjs), computed
+   from #hotbar's live position; the 60vh here is just a sane pre-JS/fallback
+   cap, not the real limit. */
+.hero-tray .tray-stacks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  overflow-y: auto;
+  max-height: 60vh;
 }
 
 .hero-tray .tray-portrait {

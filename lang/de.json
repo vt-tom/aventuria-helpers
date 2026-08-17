@@ -91,7 +91,7 @@
         },
         "Macros": {
           "Title": "Macros importieren",
-          "Body": "Importiert die Macros aus dem Macro-Kompendium des Aventuria-Moduls direkt in den Ordner \"Aventuria Macros\" in deinem Macro-Verzeichnis.",
+          "Body": "Importiert die Macros aus dem Macro-Kompendium des Aventuria-Moduls direkt in den Ordner \"Aventuria Macros\" in deinem Macro-Verzeichnis. Diese können dann je nach Bedarf pro Spieler in der Macro-Leiste abgelegt werden.",
           "Action": "Macros importieren",
           "Imported": "{count} Macro(s) importiert.",
           "AlreadyImported": "Alle Macros sind bereits im Macro-Verzeichnis vorhanden."

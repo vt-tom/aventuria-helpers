@@ -8,6 +8,9 @@ This file lists all gameplay-relevant changes to the module – newest version f
 - **New welcome-screen entry "Play Adventure":** A dedicated Adventure Tool walks you through the 10 standard adventures - pick an adventure, see its preparation box with the needed cards front and center, read it page by page (links to other pages of the same adventure jump straight ahead within the tool), step out any time and resume later. Only one person can use the tool at a time; everyone else sees a lock with their name while they do.
 - **New "Clean up board" button** in the welcome screen (also available as its own macro): removes every adventure-specific card currently on the Gameboard scene (back into their decks/stacks) and resets the marker tokens to their starting position - asks for confirmation first. The heroes' own decks/discard piles/hands and the shared stacks from "First Steps" are left exactly where they are.
 
+### Bugs
+- On smaller browser windows, the Hero Tray could extend down into the macro hotbar - the stack section (Deck/Discard/Hand/Endurance) now sizes itself to the available space and scrolls when needed instead of overlapping.
+
 ## 0.1.4.1
 
 ### Features
