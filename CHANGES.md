@@ -2,6 +2,12 @@
 
 Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Version zuerst.
 
+## 0.1.5
+
+### Features
+- **Neuer Willkommensbildschirm-Eintrag "Abenteuer spielen":** Ein eigenes Abenteuer-Tool führt durch die 10 Standard-Abenteuer - Abenteuer auswählen, den Vorbereitungs-Kasten mit den benötigten Karten prominent angezeigt bekommen, Seite für Seite lesen (Verweise auf andere Seiten desselben Abenteuers springen direkt im Tool weiter), jederzeit wieder aussteigen und später fortsetzen. Nur eine Person kann das Tool gleichzeitig benutzen; andere sehen währenddessen eine Sperre mit Namen.
+- **Neues Macro "Board aufräumen"** (auch als Abschluss-Aktion im neuen Abenteuer-Tool): entfernt alle auf der Spielbrett-Szene liegenden Karten (zurück in ihre Decks/Stapel) und setzt die Spielmarken wieder an ihre Ausgangsposition zurück - fragt vorher einmal nach Bestätigung.
+
 ## 0.1.4.1
 
 ### Features

@@ -60,6 +60,7 @@
       "FirstSteps": "Erste Schritte",
       "PickHero": "Helden auswählen",
       "Quickstart": "Schnellstarter vorbereiten",
+      "AdventureTool": "Abenteuer spielen",
       "Back": "Zurück",
       "Next": "Weiter",
       "Done": "Beenden"
@@ -197,6 +198,19 @@
         }
       }
     },
+    "AdventureTool": {
+      "Title": "Abenteuer spielen",
+      "LockedBy": "Das Abenteuer-Tool wird gerade von {user} benutzt. Warte, bis es dort geschlossen oder freigegeben wird.",
+      "PickerIntro": "Wähle ein Abenteuer, um es zu starten.",
+      "BrokenAdventure": "Das zuletzt aktive Abenteuer konnte nicht mehr gefunden werden (z.B. nach einem Sprachwechsel) - bitte ein neues wählen.",
+      "Prep": "Vorbereitung",
+      "History": "Verlauf",
+      "CleanUpBoard": "Board aufräumen",
+      "EndAdventure": "Anderes Abenteuer wählen",
+      "Release": "Freigeben",
+      "EndConfirmTitle": "Abenteuer beenden",
+      "EndConfirmBody": "Das aktuelle Abenteuer wird beendet und der Fortschritt zurückgesetzt. Fortfahren?"
+    },
     "Combat": {
       "AddEnemyPhase": "Gegneraktionen hinzufügen",
       "EnemyPhaseName": "Gegneraktionen",
@@ -256,6 +270,16 @@
       "OpenWelcomeScreen": {
         "Name": "Aventuria-Guide öffnen"
       }
+    },
+    "CleanUpBoard": {
+      "Name": "Board aufräumen",
+      "MissingCcm": "Complete Card Management ist nicht aktiv.",
+      "GmOnly": "Nur die Spielleitung kann das Board aufräumen.",
+      "NoScene": "Keine Spieloberfläche geöffnet.",
+      "WrongScene": "Das funktioniert nur auf der Spielbrett-Szene aus dem Aventuria-Modul.",
+      "ConfirmTitle": "Board aufräumen",
+      "ConfirmBody": "Alle Karten werden von der Spieloberfläche entfernt (zurück in ihre Decks/Stapel) und die Spielmarken an ihre Ausgangsposition zurückgesetzt. Fortfahren?",
+      "Done": "Board aufgeräumt: {count} Karte(n) entfernt, Spielmarken zurückgesetzt."
     },
     "Compendium": {
       "Macros": "Aventuria Helfer Makros",

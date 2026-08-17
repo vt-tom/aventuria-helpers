@@ -60,6 +60,7 @@
       "FirstSteps": "First Steps",
       "PickHero": "Choose a Hero",
       "Quickstart": "Prepare Quick Start",
+      "AdventureTool": "Play Adventure",
       "Back": "Back",
       "Next": "Next",
       "Done": "Finish"
@@ -197,6 +198,19 @@
         }
       }
     },
+    "AdventureTool": {
+      "Title": "Play Adventure",
+      "LockedBy": "The Adventure Tool is currently being used by {user}. Wait until it's closed or released there.",
+      "PickerIntro": "Choose an adventure to start it.",
+      "BrokenAdventure": "The last active adventure could no longer be found (e.g. after a language change) - please choose a new one.",
+      "Prep": "Preparation",
+      "History": "History",
+      "CleanUpBoard": "Clean up board",
+      "EndAdventure": "Choose another adventure",
+      "Release": "Release",
+      "EndConfirmTitle": "End adventure",
+      "EndConfirmBody": "The current adventure will end and its progress will be reset. Continue?"
+    },
     "Combat": {
       "AddEnemyPhase": "Add enemy actions",
       "EnemyPhaseName": "Enemy Actions",
@@ -256,6 +270,16 @@
       "OpenWelcomeScreen": {
         "Name": "Open Aventuria guide"
       }
+    },
+    "CleanUpBoard": {
+      "Name": "Clean up board",
+      "MissingCcm": "Complete Card Management is not active.",
+      "GmOnly": "Only the GM can clean up the board.",
+      "NoScene": "No scene is open.",
+      "WrongScene": "This only works on the Gameboard scene from the Aventuria module.",
+      "ConfirmTitle": "Clean up board",
+      "ConfirmBody": "All cards will be removed from the scene (back into their decks/stacks) and the marker tokens will be reset to their starting position. Continue?",
+      "Done": "Board cleaned up: {count} card(s) removed, marker tokens reset."
     },
     "Compendium": {
       "Macros": "Aventuria Helpers Macros",

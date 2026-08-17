@@ -2241,3 +2241,218 @@ body:not(.ahb-tray-active) .hero-tray {
   border: 3px solid var(--gold);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65);
 }
+
+/* ---------- Adventure Tool ---------- */
+/* Own button styling (`.at-btn`) instead of reusing `.w-btn` - that class's own styling is
+   scoped under `.aventuria-welcome`/`.setup-step-body` ancestors this app doesn't use.
+   Content itself (aside boxes, tables, @UUID links, aventuria-icon glyphs) is deliberately
+   *not* styled here at all - `.aventuria-wrapper.journal-sheet` on the app root (see
+   `adventure-tool.mjs`) makes aventuria's own bundled CSS apply instead, wholesale reuse
+   instead of re-implementing asides/tables/icons from scratch. */
+
+.aventuria-helpers.adventure-tool .window-content {
+  background: var(--paper);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.adventure-tool-root {
+  text-align: left;
+}
+
+.adventure-tool-locked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem 1rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.adventure-tool-locked i {
+  font-size: 2rem;
+  color: var(--gold);
+}
+
+.adventure-tool-warning {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.75rem;
+  padding: 0.5rem 0.7rem;
+  background: rgba(168, 56, 61, 0.1);
+  border: 1px solid var(--ruby);
+  border-radius: 6px;
+  color: var(--ruby);
+  font-size: 0.85rem;
+}
+
+.adventure-tool-picker > p {
+  color: var(--muted);
+  margin: 0 0 0.75rem;
+}
+
+.adventure-tool-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.adventure-tool-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.adventure-tool-option:hover,
+.adventure-tool-option:focus-visible {
+  border-color: var(--gold);
+  outline: none;
+}
+
+.adventure-tool-option-num {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--panel);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.adventure-tool-option-name {
+  font-weight: 600;
+}
+
+.adventure-tool-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 0.75rem;
+}
+
+.adventure-tool-titles {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.adventure-tool-entry {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.adventure-tool-page {
+  font-family: Georgia, "Iowan Old Style", serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.adventure-tool-head-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.at-btn {
+  flex: none;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  background: var(--gold);
+  color: var(--panel);
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.at-btn:hover,
+.at-btn:focus-visible {
+  filter: brightness(1.08);
+  outline: none;
+}
+
+.at-btn.ghost {
+  background: transparent;
+  color: var(--gold);
+}
+
+.at-btn.ghost:hover,
+.at-btn.ghost:focus-visible {
+  background: rgba(169, 130, 46, 0.12);
+}
+
+.adventure-tool-prep,
+.adventure-tool-history {
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  padding: 0.5rem 0.7rem;
+}
+
+.adventure-tool-prep summary,
+.adventure-tool-history summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.adventure-tool-prep-body {
+  margin-top: 0.5rem;
+}
+
+.adventure-tool-history ul {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.adventure-tool-history-entry {
+  width: 100%;
+  text-align: left;
+  padding: 0.25rem 0.4rem;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.adventure-tool-history-entry:hover,
+.adventure-tool-history-entry:focus-visible {
+  background: rgba(169, 130, 46, 0.12);
+  outline: none;
+}
+
+.adventure-tool-history-entry.active {
+  font-weight: 700;
+  color: var(--gold);
+  cursor: default;
+}
+
+.adventure-tool-content {
+  line-height: 1.5;
+}

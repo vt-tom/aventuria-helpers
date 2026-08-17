@@ -2,6 +2,12 @@
 
 This file lists all gameplay-relevant changes to the module – newest version first.
 
+## 0.1.5
+
+### Features
+- **New welcome-screen entry "Play Adventure":** A dedicated Adventure Tool walks you through the 10 standard adventures - pick an adventure, see its preparation box with the needed cards front and center, read it page by page (links to other pages of the same adventure jump straight ahead within the tool), step out any time and resume later. Only one person can use the tool at a time; everyone else sees a lock with their name while they do.
+- **New "Clean up board" macro** (also available as a wrap-up action in the new Adventure Tool): removes every card currently on the Gameboard scene (back into their decks/stacks) and resets the marker tokens to their starting position - asks for confirmation first.
+
 ## 0.1.4.1
 
 ### Features

@@ -1,6 +1,7 @@
 import { placeBoardStacks } from "../cards/place-board-stacks.mjs";
 import { placeHeroStacks } from "../cards/place-hero-stacks.mjs";
 import { AventuriaHelpersAssignHeroDialog } from "./assign-hero.mjs";
+import { AventuriaHelpersAdventureTool } from "./adventure-tool.mjs";
 import { openChangelogJournal } from "./changelog.mjs";
 import {
   prepareQuickstartHeroes,
@@ -153,6 +154,7 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
       goToStep: AventuriaHelpersWelcomeScreen.#onGoToStep,
       openGuide: AventuriaHelpersWelcomeScreen.#onOpenGuide,
       openChangelog: AventuriaHelpersWelcomeScreen.#onOpenChangelog,
+      openAdventureTool: AventuriaHelpersWelcomeScreen.#onOpenAdventureTool,
       openPlayerManagement: AventuriaHelpersWelcomeScreen.#onOpenPlayerManagement,
       openSettings: AventuriaHelpersWelcomeScreen.#onOpenSettings,
       importScene: AventuriaHelpersWelcomeScreen.#onImportScene,
@@ -298,6 +300,17 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
   /** Opens the changelog journal on its overview page (see `openChangelogJournal()`). */
   static async #onOpenChangelog() {
     await openChangelogJournal();
+  }
+
+  /**
+   * Opens the Adventure Tool directly, bypassing the `SECTIONS` step-wizard entirely -
+   * unlike "Erste Schritte"/"Helden auswählen"/"Schnellstarter vorbereiten", it isn't a fixed
+   * N-step flow but an open-ended reader/browser (pick an adventure, read/navigate it,
+   * possibly across many sessions), so it gets its own dedicated app instead of a fourth
+   * `SECTIONS` entry (see `PROJECT.md` 5.2).
+   */
+  static async #onOpenAdventureTool() {
+    await new AventuriaHelpersAdventureTool().render({ force: true });
   }
 
   /**
