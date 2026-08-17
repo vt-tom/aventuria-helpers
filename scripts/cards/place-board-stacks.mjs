@@ -27,6 +27,33 @@ const PLACEMENTS = [
 ];
 
 /**
+ * Resolves the `PLACEMENTS` entries to their actual `Cards` documents, whichever currently
+ * exist in the world - shared by `placeBoardStacks()` and `resolveBoardStacks()` (exported for
+ * `cleanup-board.mjs`, which needs to know which stacks are this permanent "Erste Schritte"
+ * board furniture so `cleanUpBoard()` can leave them alone instead of sweeping them off the
+ * scene along with actual adventure debris).
+ * @returns {{placement: object, card: Cards}[]}
+ */
+function resolvePlacements() {
+  return PLACEMENTS.map((placement) => ({
+    placement,
+    card: placement.id
+      ? game.cards.get(placement.id)
+      : game.cards.find((c) => c._stats?.compendiumSource?.endsWith(placement.compendiumSourceSuffix)),
+  })).filter((r) => r.card);
+}
+
+/**
+ * The shared GM stacks (event/fate/henchman discard, fate deck, resource deck) that
+ * `placeBoardStacks()` anchors on the scene - the permanent "Erste Schritte" board furniture,
+ * as opposed to adventure-specific cards placed during play. See `resolvePlacements()`.
+ * @returns {Cards[]}
+ */
+export function resolveBoardStacks() {
+  return resolvePlacements().map((r) => r.card);
+}
+
+/**
  * Places the shared GM stacks (event/fate/henchman discard, fate deck, resource deck)
  * created by aventuria's "Prepare Board" macro onto the currently viewed scene, at the
  * spots matching the Spielbrett/Gameboard board art (see `PLACEMENTS`), locked so they
@@ -58,12 +85,7 @@ export async function placeBoardStacks() {
     return;
   }
 
-  const resolved = PLACEMENTS.map((placement) => ({
-    placement,
-    card: placement.id
-      ? game.cards.get(placement.id)
-      : game.cards.find((c) => c._stats?.compendiumSource?.endsWith(placement.compendiumSourceSuffix)),
-  })).filter((r) => r.card);
+  const resolved = resolvePlacements();
 
   if (!resolved.length) {
     ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.GettingStarted.Steps.PlaceStacks.NotPrepared"));
