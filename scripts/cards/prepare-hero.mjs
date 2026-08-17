@@ -47,11 +47,18 @@ export function resolveHeroOccupant(heroUuid) {
  * shared Folder, and any Token representing that Actor on any scene, if any - used
  * right before assigning them a new hero (Nutzerwunsch: overwriting a player's hero
  * actively cleans up the old one instead of leaving it orphaned in the world, token
- * included so there's nothing left over on the board to manually remove).
+ * included so there's nothing left over on the board to manually remove). Also
+ * exported for the Heldenablage's own "Held löschen" button (`hero-tray.mjs`) - same
+ * cleanup, triggered directly by the user instead of as a side effect of reassignment.
+ * `game.user.character`/the "Player Hand" flag both resolve their target live from
+ * `game.actors`/`game.cards` (`ForeignDocumentField#initialize()`, confirmed in the
+ * local v14 core source), so deleting the Actor and Cards here is enough -
+ * `resolveStacks()` naturally returns `null` afterwards without an explicit
+ * `user.update({character: null})`.
  * @param {User} user
  * @returns {Promise<void>}
  */
-async function deleteExistingHero(user) {
+export async function deleteExistingHero(user) {
   const stacks = resolveStacks(user);
   if (!stacks) return;
 

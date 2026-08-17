@@ -248,17 +248,22 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
   }
 
   /**
-   * Advances to the next page of the active section, or closes the guide if already
-   * on the last page. Shared by the explicit "Weiter" button above and, since
-   * Nutzerfeedback 2026-08-14 ("Weiter" vs. a step's own action button was easy to
-   * mix up), by the "Helden auswählen" steps' own action handlers below, which call
-   * this themselves right after their action succeeds instead of requiring a
-   * separate "Weiter" click.
+   * Advances to the next page of the active section, or - from the last page -
+   * returns to the welcome section instead of closing the whole window (Nutzerwunsch
+   * 2026-08-17: the last page's button used to close the guide entirely; it now reads
+   * "Beenden"/"Finish" - see `Welcome.Done` - and lands back on the welcome page so a
+   * finished section flows straight into picking the next one). Shared by the
+   * explicit "Weiter" button above and, since Nutzerfeedback 2026-08-14 ("Weiter" vs.
+   * a step's own action button was easy to mix up), by the "Helden auswählen" steps'
+   * own action handlers below, which call this themselves right after their action
+   * succeeds instead of requiring a separate "Weiter" click.
    */
   async #advance() {
     const steps = AventuriaHelpersWelcomeScreen.SECTIONS[this.section].steps;
     if (this.stepIndex >= steps.length - 1) {
-      this.close();
+      this.section = "welcome";
+      this.stepIndex = 0;
+      await this.render();
       return;
     }
     this.stepIndex += 1;

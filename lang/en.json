@@ -62,7 +62,7 @@
       "Quickstart": "Prepare Quick Start",
       "Back": "Back",
       "Next": "Next",
-      "Done": "Close"
+      "Done": "Finish"
     },
     "GettingStarted": {
       "Heading": "Getting Started",
@@ -130,13 +130,13 @@
       "Steps": {
         "AssignHero": {
           "Title": "Assign hero",
-          "Body": "Pick the player first, then their player slot on the image and the hero - all on one page. If the player already has a slot, it's selected automatically; other players' slots are locked. If the player already has a hero, or the chosen hero is already someone else's, you get a warning; continuing replaces (deletes) an existing hero of the chosen player.",
+          "Body": "Creates the hero for a player: pick player, table slot and hero - the hero sheet and deck are set up automatically. Replaces an existing hero for that player.",
           "Action": "Assign hero",
           "GmOnly": "Only the gamemaster can assign a hero."
         },
         "PlaceStacks": {
           "Title": "Place on the Gameboard scene",
-          "Body": "Places Deck, discard pile, Hand and Token at their spot on the Gameboard automatically and shuffles the deck - for the same player and player slot as in step 1.",
+          "Body": "Places the deck, discard pile, hand and token of the hero chosen in step 1 on the Gameboard and shuffles the deck.",
           "Action": "Place",
           "MissingCcm": "Complete Card Management is not active.",
           "GmOnly": "Only the gamemaster can anchor a hero's deck, discard pile, hand and token.",
@@ -208,6 +208,9 @@
       "Config": "Configure hero/hand",
       "PickHero": "Choose hero (opens the guide)",
       "OpenSheet": "Open hero sheet",
+      "DeleteHero": "Delete hero",
+      "DeleteHeroConfirmTitle": "Delete hero",
+      "DeleteHeroConfirmBody": "{hero} as well as their deck, discard pile, hand and Im-Spiel-Stapel will be permanently deleted. Continue?",
       "ShowPlayers": "Show player list",
       "ShowTray": "Show hero tray",
       "Help": "Open Aventuria Guide",

@@ -3,6 +3,7 @@ import { resolveStacks } from "../cards/stacks.mjs";
 import { getEnduranceStatus, exhaustEndurance, readyEndurance } from "../cards/endurance.mjs";
 import { openWelcomeScreen } from "../macros/open-welcome-screen.mjs";
 import { AventuriaHelpersWelcomeScreen } from "./welcome-screen.mjs";
+import { deleteExistingHero } from "../cards/prepare-hero.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -48,6 +49,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
       openHelp: AventuriaHelpersHeroTray.#onOpenHelp,
       exhaustEndurance: AventuriaHelpersHeroTray.#onExhaustEndurance,
       readyEndurance: AventuriaHelpersHeroTray.#onReadyEndurance,
+      deleteHero: AventuriaHelpersHeroTray.#onDeleteHero,
     },
   };
 
@@ -126,6 +128,28 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    */
   static async #onOpenSheet() {
     game.user.character?.sheet.render(true);
+  }
+
+  /**
+   * Deletes the current user's hero after confirmation - Actor, all four Cards
+   * stacks and their shared Folder, via the same `deleteExistingHero()` already used
+   * internally before reassigning a hero (`prepare-hero.mjs`), reused here instead of
+   * duplicating the cleanup logic. The tray itself re-renders afterwards via the
+   * `deleteActor`/`deleteCards` hooks registered in `registerHeroTray()`, not a direct
+   * call here.
+   * @this AventuriaHelpersHeroTray
+   */
+  static async #onDeleteHero() {
+    const stacks = resolveStacks();
+    if (!stacks) return;
+
+    const proceed = await foundry.applications.api.Dialog.confirm({
+      window: { title: game.i18n.localize("AVENTURIA_HELPERS.HeroTray.DeleteHeroConfirmTitle") },
+      content: `<p>${game.i18n.format("AVENTURIA_HELPERS.HeroTray.DeleteHeroConfirmBody", { hero: stacks.actor.name })}</p>`,
+    });
+    if (!proceed) return;
+
+    await deleteExistingHero(game.user);
   }
 
   /**
@@ -366,14 +390,41 @@ export function registerHeroTray() {
   // both kinds of change need their own hook, filtered to the current user's own
   // stacks so other players' card actions don't cause needless re-renders here.
   const ownFolder = () => resolveStacks()?.hand.folder;
-  for (const hook of ["createCards", "updateCards", "deleteCards"]) {
+  for (const hook of ["createCards", "updateCards"]) {
     Hooks.on(hook, (doc) => {
       if (doc.folder && doc.folder === ownFolder()) refresh();
     });
   }
-  for (const hook of ["createCard", "updateCard", "deleteCard"]) {
+  for (const hook of ["createCard", "updateCard"]) {
     Hooks.on(hook, (card) => {
       if (card.parent?.folder && card.parent.folder === ownFolder()) refresh();
     });
   }
+
+  // Deleting the Hand itself (e.g. an external "delete this stack" cleanup, or our
+  // own #onDeleteHero() above) makes resolveStacks() - and with it ownFolder() -
+  // unresolvable in the same tick, since resolveStacks() needs the Hand to exist to
+  // find its Folder at all (see stacks.mjs). Refresh whenever a deleted document's
+  // folder either still matches, or ownFolder() can no longer resolve at all - the
+  // occasional extra render for an unrelated user's deletion is harmless, refresh()
+  // is already debounced.
+  Hooks.on("deleteCards", (doc) => {
+    const folder = ownFolder();
+    if (doc.folder && (doc.folder === folder || !folder)) refresh();
+  });
+  Hooks.on("deleteCard", (card) => {
+    const folder = ownFolder();
+    if (card.parent?.folder && (card.parent.folder === folder || !folder)) refresh();
+  });
+
+  // Deleting the hero Actor itself (e.g. straight from the Actors sidebar, bypassing
+  // our own #onDeleteHero()) isn't covered by the Cards hooks above at all. `User#character`
+  // resolves the Actor live from `game.actors` (ForeignDocumentField#initialize(), confirmed
+  // in the local v14 core source) - deleting it doesn't clear the User's stored `character`
+  // field, so comparing against the raw source ID (`game.user._source.character`) stays
+  // reliable regardless of whether this hook fires before or after the Actor leaves the
+  // world collection.
+  Hooks.on("deleteActor", (actor) => {
+    if (actor.id === game.user._source.character) refresh();
+  });
 }

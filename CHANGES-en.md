@@ -7,11 +7,15 @@ This file lists all gameplay-relevant changes to the module – newest version f
 ### Features
 - **New "Import tokens" step** in "First Steps": imports the game's marker tokens (life points, Fertigkeit, plus/minus, fate points, etc.) directly into their own folder in your Actor directory and places them automatically at their spot on the Gameboard.
 - **"Prepare Quick Start" now runs as 3 clear steps instead of one big click:** "Prepare Heroes" (hand and Ausdauer cards), "Import Adventure" (imports Aventuria's event cards, places the three needed cards, and opens the adventure journal), and "Prepare Henchmen" (prepares the henchmen deck, places it on the Gameboard, and shuffles it).
+- **New "Delete hero" button** in the Hero Tray: deletes the currently assigned hero, after confirmation, along with their deck, discard pile, hand, and Im-Spiel-Stapel.
 
 ### Bugs
 - The three buttons in the welcome screen's Aventuria section became too narrow once a third one was added, and the text no longer fit - fixed.
 - "Prepare Quick Start" could error out on a second click and leave the remaining heroes untouched - the step can now be run safely more than once, skipping heroes that are already done instead of erroring.
 - Ausdauer cards couldn't be placed on the Gameboard for some player slots because the link to that player's Im-Spiel-Stapel was missing - "Place on the Gameboard scene" now repairs that link automatically every time it runs.
+- If a hero was deleted outside the Hero Tray (e.g. directly in the Actor directory), the Hero Tray incorrectly kept showing them - it now reliably detects deleted heroes and correctly shows "no hero assigned" afterwards.
+- The "Assign Hero" window could grow taller than the visible screen, making the buttons at the bottom unreachable - it now scrolls when needed instead of being cut off.
+- The button on the last page of a guide section ("First Steps", "Choose a Hero", "Prepare Quick Start") now reads "Finish" instead of "Close" and returns to the welcome page instead of closing the whole window - from there you can start the next section right away.
 
 ## 0.1.4
 

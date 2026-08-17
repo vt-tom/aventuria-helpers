@@ -1521,6 +1521,8 @@ button.skill-value:active {
 
 .aventuria-helpers.assign-hero .window-content {
   background: var(--paper);
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .assign-hero-body {
@@ -1805,7 +1807,7 @@ body:not(.ahb-tray-active) .hero-tray {
 
 .hero-tray {
   pointer-events: auto;
-  width: 280px;
+  width: 320px;
   flex: none;
   display: flex;
   flex-direction: column;
@@ -1868,11 +1870,24 @@ body:not(.ahb-tray-active) .hero-tray {
 .hero-tray .tray-config:hover,
 .hero-tray .tray-config:focus-visible,
 .hero-tray .tray-help:hover,
-.hero-tray .tray-help:focus-visible,
-.hero-tray .tray-toggle:hover,
-.hero-tray .tray-toggle:focus-visible {
+.hero-tray .tray-help:focus-visible {
   border-color: var(--gold);
   color: var(--gold);
+  outline: none;
+}
+
+/* Deliberately set apart from .tray-config/.tray-help (Nutzerwunsch 2026-08-17):
+   dashed border + transparent fill instead of the shared solid-panel look, so the
+   "close/switch to player list" action doesn't visually blend in with Config/Help. */
+.hero-tray .tray-toggle {
+  border-style: dashed;
+  background: transparent;
+}
+
+.hero-tray .tray-toggle:hover,
+.hero-tray .tray-toggle:focus-visible {
+  border-color: var(--ruby);
+  color: var(--ruby);
   outline: none;
 }
 
@@ -1930,6 +1945,26 @@ body:not(.ahb-tray-active) .hero-tray {
   min-width: 0;
   display: flex;
   flex-direction: column;
+}
+
+.hero-tray .tray-delete {
+  flex: none;
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--panel);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.6rem;
+}
+
+.hero-tray .tray-delete:hover,
+.hero-tray .tray-delete:focus-visible {
+  border-color: var(--ruby);
+  color: var(--ruby);
+  outline: none;
 }
 
 .hero-tray .tray-player {

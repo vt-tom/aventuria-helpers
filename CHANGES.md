@@ -7,11 +7,15 @@ Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Ve
 ### Features
 - **Neuer Schritt "Marken importieren"** in "Erste Schritte": importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) direkt in einen eigenen Ordner in deinem Akteur-Verzeichnis und platziert sie automatisch an ihrer Stelle auf dem Spielbrett.
 - **"Schnellstarter vorbereiten" läuft jetzt in 3 klaren Schritten statt einem großen Klick:** "Helden vorbereiten" (Hand- und Ausdauerkarten), "Abenteuer importieren" (importiert Aventurias Ereigniskarten, platziert die drei benötigten Karten und öffnet das Abenteuer-Journal) und "Schergen vorbereiten" (Schergen-Deck vorbereiten, auf dem Spielbrett platzieren und mischen).
+- **Neuer Button "Held löschen"** in der Heldenablage: löscht nach Bestätigung den aktuell zugewiesenen Helden samt Deck, Ablage, Hand und Im-Spiel-Stapel.
 
 ### Bugs
 - Die drei Buttons im Aventuria-Bereich des Willkommensbildschirms wurden bei drei Einträgen zu schmal und der Text passte nicht mehr hinein - behoben.
 - "Schnellstarter vorbereiten" konnte bei einem erneuten Klick mit einem Fehler abbrechen und dabei die restlichen Helden unbearbeitet lassen - der Schritt lässt sich jetzt gefahrlos mehrfach ausführen, bereits erledigte Helden werden übersprungen statt einen Fehler zu verursachen.
 - Bei manchen Spielerplätzen konnten Ausdauerkarten nicht auf dem Spielbrett platziert werden, weil die Verknüpfung zum Im-Spiel-Stapel dieses Spielers fehlte - "Auf der Spielbrett-Szene platzieren" repariert diese Verknüpfung jetzt bei jedem Durchlauf automatisch mit.
+- Wurde ein Held außerhalb der Heldenablage gelöscht (z.B. direkt im Akteur-Verzeichnis), zeigte die Heldenablage ihn fälschlich weiter an - sie erkennt gelöschte Helden jetzt zuverlässig und zeigt danach korrekt "kein Held zugewiesen".
+- Das "Held zuweisen"-Fenster konnte höher als der sichtbare Bildschirm werden, wodurch die unteren Buttons unerreichbar waren - scrollt jetzt bei Bedarf statt abgeschnitten zu werden.
+- Der Button auf der letzten Seite einer Guide-Sektion ("Erste Schritte", "Helden auswählen", "Schnellstarter vorbereiten") heißt jetzt "Beenden" statt "Schließen" und führt zurück zur Willkommensseite, statt das ganze Fenster zu schließen - von dort lässt sich direkt die nächste Sektion starten.
 
 ## 0.1.4
 

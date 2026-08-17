@@ -51,10 +51,10 @@
     },
     "Welcome": {
       "Title": "Willkommen bei Aventuria",
-      "Intro": "Willkommen, Held! Dieser Guide führt dich Schritt für Schritt durch die Aventuria-Werkzeuge in Foundry.",
+      "Intro": "Willkommen, Held! Dieser Guide soll als Unterstützung für Aventuria in Foundry dienen.",
       "GuideTitle": "Aventuria Helpers Guide",
       "GuideMissing": "Guide-Kompendium wurde nicht gefunden.",
-      "ChangelogTitle": "Was ist neu?",
+      "ChangelogTitle": "Changelog?",
       "ChangelogMissing": "Changelog-Kompendium wurde nicht gefunden.",
       "CategoryAventuria": "Aventuria",
       "FirstSteps": "Erste Schritte",
@@ -62,7 +62,7 @@
       "Quickstart": "Schnellstarter vorbereiten",
       "Back": "Zurück",
       "Next": "Weiter",
-      "Done": "Schließen"
+      "Done": "Beenden"
     },
     "GettingStarted": {
       "Heading": "Erste Schritte",
@@ -76,12 +76,12 @@
         },
         "Language": {
           "Title": "Sprache einstellen",
-          "Body": "Stelle in den Spieleinstellungen die Sprache auf Deutsch oder Englisch, damit Aventuria korrekt lokalisiert wird.",
+          "Body": "Stelle in den Spieleinstellungen die Sprache auf Deutsch oder Englisch, damit Aventuria in deiner Sprache dargestellt wird.",
           "Action": "Einstellungen öffnen"
         },
         "Scene": {
           "Title": "Spielbrett importieren",
-          "Body": "Importiert die Szene Spielbrett (englisch Gameboard) aus dem Szenen-Kompendium des Aventuria-Moduls direkt in deine Welt und aktiviert sie.",
+          "Body": "Importiert die Szene Spielbrett aus dem Szenen-Kompendium des Aventuria-Moduls direkt in deine Welt und aktiviert sie.",
           "Action": "Spielbrett importieren",
           "Imported": "Spielbrett importiert und aktiviert.",
           "AlreadyImported": "Spielbrett war bereits importiert - erneut aktiviert.",
@@ -96,7 +96,7 @@
         },
         "PrepareBoard": {
           "Title": "Spielbrett vorbereiten",
-          "Body": "Führt das Aventuria-Macro Prepare Board (Bereite Spielbrett vor) direkt aus.",
+          "Body": "Führt das Aventuria-Macro Prepare Board aus. Dies erstellt die Ablagen und Decks für das Spielbrett, die im nächsten Schritt auf der Szene platziert werden.",
           "Action": "Spielbrett vorbereiten",
           "MissingApi": "Aventuria-Modul nicht aktiv oder API nicht verfügbar."
         },
@@ -113,7 +113,7 @@
         },
         "ImportTokens": {
           "Title": "Marken importieren",
-          "Body": "Importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) aus dem Akteur-Kompendium des Aventuria-Moduls direkt in den Ordner \"Aventuria Tokens\" in deinem Akteur-Verzeichnis und platziert sie automatisch an ihrer Stelle auf der Szene Spielbrett.",
+          "Body": "Importiert die Spielmarken (Lebenspunkte, Fertigkeit, Plus/Minus, Schicksalspunkte usw.) und platziert sie automatisch an ihrer Stelle auf der Szene Spielbrett.",
           "Action": "Marken importieren",
           "Imported": "{count} Marke(n) importiert.",
           "AlreadyImported": "Alle Marken sind bereits im Akteur-Verzeichnis vorhanden.",
@@ -130,13 +130,13 @@
       "Steps": {
         "AssignHero": {
           "Title": "Held zuweisen",
-          "Body": "Wähle zuerst den Spieler, dann seinen Spielerplatz im Bild und den Helden - alles auf einer Seite. Hat der Spieler schon einen Platz, wird dieser automatisch markiert; Plätze anderer Spieler sind gesperrt. Hat der Spieler schon einen Helden oder ist der gewählte Held schon vergeben, wird gewarnt; beim Fortfahren wird ein vorhandener Held des gewählten Spielers ersetzt (gelöscht).",
+          "Body": "Legt den Helden für einen Spieler an: Spieler, Tischplatz und Held auswählen - Heldenbogen und Kartendeck entstehen automatisch. Ein vorhandener Held des Spielers wird dabei ersetzt.",
           "Action": "Held zuweisen",
           "GmOnly": "Nur die Spielleitung kann einen Helden zuweisen."
         },
         "PlaceStacks": {
           "Title": "Auf der Spielbrett-Szene platzieren",
-          "Body": "Setzt Deck, Ablage, Hand und Token automatisch an ihren Platz auf dem Spielbrett und mischt das Deck - für denselben Spieler und Spielerplatz wie in Schritt 1.",
+          "Body": "Bringt Deck, Ablage, Hand und Token des in Schritt 1 gewählten Helden automatisch auf dem Spielbrett in Position und mischt das Deck.",
           "Action": "Platzieren",
           "MissingCcm": "Complete Card Management ist nicht aktiv.",
           "GmOnly": "Nur die Spielleitung kann Deck, Ablage, Hand und Token verankern.",
@@ -208,6 +208,9 @@
       "Config": "Held/Hand konfigurieren",
       "PickHero": "Held auswählen (öffnet den Guide)",
       "OpenSheet": "Heldenbogen öffnen",
+      "DeleteHero": "Held löschen",
+      "DeleteHeroConfirmTitle": "Held löschen",
+      "DeleteHeroConfirmBody": "{hero} sowie Deck, Ablage, Hand und Im-Spiel-Stapel werden unwiderruflich gelöscht. Fortfahren?",
       "ShowPlayers": "Spielerübersicht anzeigen",
       "ShowTray": "Heldenablage anzeigen",
       "Help": "Aventuria-Guide öffnen",
