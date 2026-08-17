@@ -76,37 +76,6 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
     else document.body.append(element);
   }
 
-  /**
-   * Caps `.tray-stacks`'s height so its bottom edge never reaches `#hotbar`'s
-   * top edge, then lets it scroll internally - see the CSS comment on
-   * `.hero-tray .tray-stacks`. Computed from live `getBoundingClientRect()`s
-   * rather than a fixed CSS value because both the tray (anchored to the
-   * bottom of `#ui-left-column-1`, itself scaled by the "UI Scale" client
-   * setting) and the hotbar (centered under the variable-width `#ui-middle`,
-   * plus its own width-triggered "compact" mode) can end up almost anywhere
-   * on screen depending on window size - a hardcoded guess would drift out of
-   * sync with either one. `.tray-stacks`'s own top position doesn't depend on
-   * this computation's result (only its bottom/height does, via `max-height`),
-   * so this is safe to re-run repeatedly without feedback loops. Public (no
-   * `#`) since it also needs to run from the window `resize` listener
-   * registered in `registerHeroTray()`, not just from `_onRender()`.
-   */
-  updateLayout() {
-    const stacks = this.element?.querySelector(".tray-stacks");
-    const hotbar = document.getElementById("hotbar");
-    if (!stacks || !hotbar) return;
-
-    const gap = 12;
-    const available = hotbar.getBoundingClientRect().top - stacks.getBoundingClientRect().top - gap;
-    stacks.style.maxHeight = `${Math.max(60, available)}px`;
-  }
-
-  /** @inheritdoc */
-  async _onRender(context, options) {
-    await super._onRender(context, options);
-    this.updateLayout();
-  }
-
   /** @inheritdoc */
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
@@ -354,16 +323,12 @@ async function promptCardAmount(max) {
 
 /**
  * Flips which of the tray / native player list is visible in their shared slot
- * (both stay mounted, see the CSS) and remembers the choice per user. Re-runs
- * `updateLayout()` when the tray becomes visible: any render that happened
- * while it was hidden (`display: none`) measured a zero-size box, so its
- * `.tray-stacks` max-height needs recomputing now that it actually has one.
+ * (both stay mounted, see the CSS) and remembers the choice per user.
  */
 async function toggleTray() {
   const show = !document.body.classList.contains("ahb-tray-active");
   document.body.classList.toggle("ahb-tray-active", show);
   await game.user.setFlag(MODULE_ID, "showHeroTray", show);
-  if (show) tray?.updateLayout();
 }
 
 /**
@@ -406,23 +371,10 @@ export function registerHeroTray() {
   Hooks.once("ready", async () => {
     tray = new AventuriaHelpersHeroTray();
     await tray.render({ force: true });
-    const show = !!game.user.getFlag(MODULE_ID, "showHeroTray");
-    document.body.classList.toggle("ahb-tray-active", show);
-    // The render above happened while `body` didn't have "ahb-tray-active" yet
-    // (default hidden), so if this user's saved preference is "shown", the CSS
-    // `display: none` was still in effect during _onRender()'s updateLayout()
-    // call, i.e. it measured a zero-size box - redo it now that the tray is
-    // actually visible.
-    if (show) tray.updateLayout();
+    document.body.classList.toggle("ahb-tray-active", !!game.user.getFlag(MODULE_ID, "showHeroTray"));
   });
 
   Hooks.on("renderPlayers", (app, element) => injectToggleButton(element));
-
-  // Keeps the tray's stack list from growing into the hotbar (see
-  // AventuriaHelpersHeroTray#updateLayout()) as the browser window is resized -
-  // both the tray's and the hotbar's screen positions shift independently since
-  // they live in unrelated layout regions (#ui-left vs. #ui-middle > #ui-bottom).
-  window.addEventListener("resize", foundry.utils.debounce(() => tray?.updateLayout(), 100));
 
   Hooks.on("updateUser", (user, changes) => {
     if (user.id !== game.user.id) return;

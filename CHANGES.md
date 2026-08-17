@@ -9,7 +9,7 @@ Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Ve
 - **Neuer Button "Board aufräumen"** im Willkommensbildschirm (auch als eigenes Macro nutzbar): entfernt alle Abenteuer-spezifisch auf der Spielbrett-Szene liegenden Karten (zurück in ihre Decks/Stapel) und setzt die Spielmarken wieder an ihre Ausgangsposition zurück - fragt vorher einmal nach Bestätigung. Die Decks/Ablagen/Hände der Helden sowie die gemeinsamen Stapel aus "Erste Schritte" bleiben dabei unangetastet stehen.
 
 ### Bugs
-- Die Heldenablage konnte bei kleinerem Browserfenster unten in die Makro-Leiste hineinragen - der Stapel-Bereich (Deck/Ablage/Hand/Ausdauer) passt sich jetzt automatisch an den verfügbaren Platz an und scrollt bei Bedarf, statt zu überlappen.
+- Die Heldenablage konnte bei kleinerem Browserfenster unten in die Makro-Leiste hineinragen - sie sitzt jetzt oben im linken Bereich (statt am unteren Bildschirmrand) und kommt der Makro-Leiste dadurch nie mehr in die Quere.
 
 ## 0.1.4.1
 

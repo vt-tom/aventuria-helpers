@@ -1755,6 +1755,23 @@ body:not(.ahb-tray-active) .hero-tray {
   display: none;
 }
 
+/* #ui-left-column-1 (game.less) is a column flexbox with justify-content:
+   space-between - with #scene-controls as the only other visible child, that
+   pins whichever of #players/.hero-tray is showing to the column's bottom
+   edge, independent of its own height (shrinking a bottom-anchored item only
+   moves its top edge upward, never its bottom - a max-height/scroll cap on
+   its content, tried and reverted here 2026-08-17, therefore can never stop
+   it from reaching the hotbar). The hotbar (#hotbar) lives in a completely
+   separate region (#ui-middle > #ui-bottom, horizontally centered), so
+   top-anchoring the tray instead - directly under the scene-controls toolbar,
+   away from the bottom-center hotbar entirely - avoids the overlap
+   structurally, for any window size, with no measurement or resizing needed.
+   Native #players keeps the default bottom anchor - it doesn't have this
+   module's overlap problem, matches Foundry's own layout unmodified. */
+body.ahb-tray-active #ui-left-column-1 {
+  justify-content: flex-start;
+}
+
 /* Toggle-to-tray bubble, injected into #players-active (see injectToggleButton()
    in hero-tray.mjs) - a positioning context on that specific native element,
    not on #players itself: #players is a column flex item with no explicit
@@ -1909,28 +1926,12 @@ body:not(.ahb-tray-active) .hero-tray {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  min-height: 0;
 }
 
 .hero-tray .tray-head {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  flex: none;
-}
-
-/* Scrollable independently of .tray-head above so the portrait/name/delete
-   row always stays visible - only the stack rows give way when there isn't
-   enough vertical space between the tray and the hotbar. max-height is set
-   inline by AventuriaHelpersHeroTray#updateLayout() (hero-tray.mjs), computed
-   from #hotbar's live position; the 60vh here is just a sane pre-JS/fallback
-   cap, not the real limit. */
-.hero-tray .tray-stacks {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  overflow-y: auto;
-  max-height: 60vh;
 }
 
 .hero-tray .tray-portrait {
