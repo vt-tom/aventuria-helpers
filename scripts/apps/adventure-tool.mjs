@@ -7,7 +7,6 @@ import {
   acquireAdventureLock,
   releaseAdventureLock,
 } from "../cards/adventure-state.mjs";
-import { cleanUpBoard } from "../cards/cleanup-board.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -49,7 +48,6 @@ export class AventuriaHelpersAdventureTool extends HandlebarsApplicationMixin(Ap
       startAdventure: AventuriaHelpersAdventureTool.#onStartAdventure,
       release: AventuriaHelpersAdventureTool.#onRelease,
       endAdventure: AventuriaHelpersAdventureTool.#onEndAdventure,
-      cleanUpBoard: AventuriaHelpersAdventureTool.#onCleanUpBoard,
       goToPage: AventuriaHelpersAdventureTool.#onGoToPage,
     },
   };
@@ -266,9 +264,10 @@ export class AventuriaHelpersAdventureTool extends HandlebarsApplicationMixin(Ap
 
   /**
    * Ends the active adventure (back to the picker) after confirmation - does *not* run board
-   * cleanup itself, that's the separate "Board aufräumen" action below (Nutzerentscheidung:
-   * ending/marking an adventure finished and physically resetting the table are different
-   * concerns, see `PROJECT.md` 5.2/E).
+   * cleanup itself, that's the standalone "Board aufräumen" action on the welcome screen
+   * (Nutzerentscheidung 2026-08-17: ending/marking an adventure finished and physically
+   * resetting the table are different concerns, and cleanup is just as useful without ever
+   * having used this tool - not nested inside it, see `PROJECT.md` 5.2/E).
    * @this AventuriaHelpersAdventureTool
    */
   static async #onEndAdventure() {
@@ -279,15 +278,6 @@ export class AventuriaHelpersAdventureTool extends HandlebarsApplicationMixin(Ap
     if (!proceed) return;
     await endAdventure();
     await this.render();
-  }
-
-  /**
-   * Runs `cleanUpBoard()` (`cards/cleanup-board.mjs`) - reused wholesale, own confirmation
-   * dialog included, so no second one needed here.
-   * @this AventuriaHelpersAdventureTool
-   */
-  static async #onCleanUpBoard() {
-    await cleanUpBoard();
   }
 
   /**

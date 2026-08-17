@@ -10,6 +10,7 @@ import {
   openQuickstartJournal,
 } from "../cards/prepare-quickstart.mjs";
 import { importBoardTokens } from "../actors/import-board-tokens.mjs";
+import { cleanUpBoard } from "../cards/cleanup-board.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -155,6 +156,7 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
       openGuide: AventuriaHelpersWelcomeScreen.#onOpenGuide,
       openChangelog: AventuriaHelpersWelcomeScreen.#onOpenChangelog,
       openAdventureTool: AventuriaHelpersWelcomeScreen.#onOpenAdventureTool,
+      cleanUpBoard: AventuriaHelpersWelcomeScreen.#onCleanUpBoard,
       openPlayerManagement: AventuriaHelpersWelcomeScreen.#onOpenPlayerManagement,
       openSettings: AventuriaHelpersWelcomeScreen.#onOpenSettings,
       importScene: AventuriaHelpersWelcomeScreen.#onImportScene,
@@ -311,6 +313,17 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
    */
   static async #onOpenAdventureTool() {
     await new AventuriaHelpersAdventureTool().render({ force: true });
+  }
+
+  /**
+   * Runs `cleanUpBoard()` (`cards/cleanup-board.mjs`) directly from the welcome screen -
+   * Nutzerwunsch 2026-08-17: a standalone maintenance action, not tied to (or nested inside)
+   * the Adventure Tool, since it's just as useful without ever having used that tool (e.g.
+   * after a manually-run adventure). Own confirmation dialog already included, no second one
+   * needed here.
+   */
+  static async #onCleanUpBoard() {
+    await cleanUpBoard();
   }
 
   /**

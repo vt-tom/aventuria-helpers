@@ -1315,12 +1315,6 @@ button.skill-value:active {
   padding: 0.5rem 1rem 1rem;
 }
 
-.aventuria-welcome .banner {
-  max-width: 220px;
-  max-height: 120px;
-  object-fit: contain;
-}
-
 .aventuria-welcome h2 {
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
