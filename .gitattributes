@@ -1,0 +1,10 @@
+# LevelDB compendium-pack internals (packs/<name>/CURRENT, LOG, LOG.old, MANIFEST-*, *.log,
+# *.ldb) must never go through Git's line-ending normalization. `CURRENT` in particular is a
+# tiny file whose exact bytes (a manifest filename terminated by a single `\n`) LevelDB parses
+# literally - core.autocrlf converting that trailing `\n` to `\r\n` on checkout embeds a stray
+# `\r` into the "filename" LevelDB tries to open, which fails on Windows with a cryptic
+# "Datei... Syntax... falsch" (invalid filename syntax) IO error on the *next* `fvtt package
+# pack`/`unpack` run - easy to misdiagnose as Foundry still holding the DB open (see
+# CLAUDE.md's Testing section). Confirmed root cause 2026-08-17: switching branches
+# (`git checkout`) re-applied CRLF to already-correctly-built CURRENT files.
+packs/** -text
