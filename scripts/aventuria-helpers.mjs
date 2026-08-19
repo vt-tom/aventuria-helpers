@@ -7,6 +7,7 @@ import { cleanUpBoard } from "./cards/cleanup-board.mjs";
 import { registerCombat, registerEnemyPhaseCombatant, registerRoundEndCombatant } from "./documents/combat.mjs";
 import { registerHeroTray } from "./apps/hero-tray.mjs";
 import { registerHandSheet } from "./sheets/hand-sheet.mjs";
+import { registerPlayedCardsSheet } from "./sheets/played-cards-sheet.mjs";
 import { registerPlayerSlotAssignments } from "./cards/player-slots.mjs";
 import { registerAdventureState } from "./cards/adventure-state.mjs";
 
@@ -29,6 +30,7 @@ Hooks.once("init", () => {
   // Depends on globalThis.ccm, which complete-card-management's own init hook
   // sets up - safe here since relationships.requires guarantees it ran first.
   registerHandSheet();
+  registerPlayedCardsSheet();
   registerHeroTray();
 
   game.modules.get(MODULE_ID).api = { resetCardRotations, openWelcomeScreen, cleanUpBoard };

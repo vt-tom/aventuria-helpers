@@ -1,4 +1,5 @@
 import { AventuriaHelpersHandSheet } from "../sheets/hand-sheet.mjs";
+import { AventuriaHelpersPlayedCardsSheet } from "../sheets/played-cards-sheet.mjs";
 import { resolveStacks } from "../cards/stacks.mjs";
 import { getEnduranceStatus, exhaustEndurance, readyEndurance } from "../cards/endurance.mjs";
 import { openWelcomeScreen } from "../macros/open-welcome-screen.mjs";
@@ -23,6 +24,12 @@ let tray = null;
 let handSheet = null;
 
 /**
+ * The currently open "Ausgespielte Karten" sheet, if any - reused instead of
+ * stacking a new window per click, same pattern as `handSheet` above.
+ */
+let playedCardsSheet = null;
+
+/**
  * Permanent HUD element showing the current user's own Aventuria hero (portrait,
  * Deck/Ablage/Hand) so they don't have to dig through the Cards sidebar or the
  * canvas placeables for their own cards. Lives in the same UI slot as the native
@@ -44,6 +51,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
       viewDeck: AventuriaHelpersHeroTray.#onViewDeck,
       viewDiscard: AventuriaHelpersHeroTray.#onViewDiscard,
       viewHand: AventuriaHelpersHeroTray.#onViewHand,
+      viewPlayedCards: AventuriaHelpersHeroTray.#onViewPlayedCards,
       toggleTray: AventuriaHelpersHeroTray.#onToggleTray,
       openConfig: AventuriaHelpersHeroTray.#onOpenConfig,
       openHelp: AventuriaHelpersHeroTray.#onOpenHelp,
@@ -92,6 +100,11 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
     context.deck = stacks.deck && { count: stacks.deck.availableCards.length };
     context.discard = stacks.discard && { count: stacks.discard.cards.size };
     context.hand = { count: stacks.hand.cards.size };
+    // Non-Ausdauer cards in the Im-Spiel-Stapel - Ausdauer cards (same stack,
+    // told apart via the "usedAsEndurance" flag, see cards/endurance.mjs's
+    // header comment) stay exclusively in the ready/spent counters below.
+    context.played = stacks.playPile
+      && { count: stacks.playPile.cards.filter((c) => !c.getFlag(MODULE_ID, "usedAsEndurance")).length };
     context.endurance = stacks.playPile ? getEnduranceStatus(stacks.playPile) : null;
     context.icons = {
       deck: ICONS + "draw-pile.webp",
@@ -256,6 +269,24 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
   }
 
   /**
+   * Opens the hero's Im-Spiel-Stapel in the module's own "Ausgespielte
+   * Karten" sheet (non-Ausdauer played cards only - see
+   * `sheets/played-cards-sheet.mjs`). Reuses an already-open instance instead
+   * of stacking a new window each click - see `playedCardsSheet` above.
+   * @this AventuriaHelpersHeroTray
+   */
+  static async #onViewPlayedCards() {
+    const stacks = resolveStacks();
+    if (!stacks?.playPile) return;
+    if (playedCardsSheet?.rendered && playedCardsSheet.document === stacks.playPile) {
+      playedCardsSheet.bringToFront();
+      return;
+    }
+    playedCardsSheet = new AventuriaHelpersPlayedCardsSheet(stacks.playPile);
+    await playedCardsSheet.render({ force: true });
+  }
+
+  /**
    * Swaps the tray and the native player list in their shared UI slot.
    * @this AventuriaHelpersHeroTray
    */
@@ -323,12 +354,21 @@ async function promptCardAmount(max) {
 
 /**
  * Flips which of the tray / native player list is visible in their shared slot
- * (both stay mounted, see the CSS) and remembers the choice per user.
+ * (both stay mounted, see the CSS) and remembers the choice per user. The
+ * docked Hand sheet (if open) is hidden along with the tray via CSS
+ * (`body:not(.ahb-tray-active) .hand-sheet`) since it has nothing to dock to
+ * once the tray disappears - re-docks it here when the tray comes back, since
+ * `AventuriaHelpersHandSheet#updateDockPosition()` no-ops against a hidden
+ * (zero-size) tray and wouldn't otherwise get a correct position to reappear at.
  */
 async function toggleTray() {
   const show = !document.body.classList.contains("ahb-tray-active");
   document.body.classList.toggle("ahb-tray-active", show);
   await game.user.setFlag(MODULE_ID, "showHeroTray", show);
+  if (show) {
+    handSheet?.updateDockPosition();
+    playedCardsSheet?.updateDockPosition();
+  }
 }
 
 /**
@@ -375,6 +415,13 @@ export function registerHeroTray() {
   });
 
   Hooks.on("renderPlayers", (app, element) => injectToggleButton(element));
+
+  // Keeps the docked Hand/Played-Cards sheets (if open) snapped to the tray as
+  // the browser window is resized - see DockableSheetMixin#updateDockPosition().
+  window.addEventListener("resize", foundry.utils.debounce(() => {
+    handSheet?.updateDockPosition();
+    playedCardsSheet?.updateDockPosition();
+  }, 100));
 
   Hooks.on("updateUser", (user, changes) => {
     if (user.id !== game.user.id) return;

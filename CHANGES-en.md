@@ -7,9 +7,18 @@ This file lists all gameplay-relevant changes to the module – newest version f
 ### Features
 - **New welcome-screen entry "Play Adventure":** A dedicated Adventure Tool walks you through the 10 standard adventures - pick an adventure, see its preparation box with the needed cards front and center, read it page by page (links to other pages of the same adventure jump straight ahead within the tool), step out any time and resume later. Only one person can use the tool at a time; everyone else sees a lock with their name while they do.
 - **New "Clean up board" button** in the welcome screen (also available as its own macro): removes every adventure-specific card currently on the Gameboard scene (back into their decks/stacks) and resets the marker tokens to their starting position - asks for confirmation first. The heroes' own decks/discard piles/hands and the shared stacks from "First Steps" are left exactly where they are.
+- **The Hand card window now docks to the right of the Hero Tray by default** instead of appearing wherever it last was - stays in the same place every time it opens. Still fully draggable if you want it elsewhere; a new "Reset position" entry in the "..." menu snaps it back.
+- **New "Played cards" row in the Hero Tray:** shows how many cards you currently have in play, and opens its own window via the view button (docks below the Hand card window by default, also draggable with a reset option) - from there you can discard or shuffle any played card back into your deck individually, and hovering a card shows the same large preview as in the Hand window. Ausdauer cards deliberately aren't shown here, they stay a counter-only in the Hero Tray.
+- The Hand and "Played cards" windows are now 600 pixels wide by default, and can be dragged wider from their corner handle - they also dock reliably stacked directly on top of each other now, even if only one of the two gets reset via "Reset position".
+- The "Played cards" window now has a "Take back into hand" button instead of "Shuffle back into deck" (the more common case) - "Shuffle back into deck" is still available, via right-click on the card.
 
 ### Bugs
 - On smaller browser windows, the Hero Tray could extend down into the macro hotbar - it now sits near the top of the left-hand area (instead of hugging the bottom of the screen), so it never competes with the hotbar for space.
+- The "Played cards" window sat visually flush against the Hand card window - there's a bit more breathing room between them now.
+- The "Played cards" window had noticeably too much empty space below its buttons - it's more compact now.
+- The cards in the "Played cards" window had an odd gap above and to their left - fixed.
+- The Hand and "Played cards" windows closed with a noticeable delay (cards vanished, then it took another moment) - they close instantly now.
+- The large card hover preview could run off the bottom of the screen for a card sitting low in its window - it now always stays fully on-screen.
 
 ## 0.1.4.1
 

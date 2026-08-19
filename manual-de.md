@@ -1,6 +1,6 @@
 # Handbuch: aventuria-helpers (Test-Version)
 
-Dieses Handbuch beschreibt die vier Kernfunktionen des Moduls `aventuria-helpers`: den neuen Charakterbogen, die Heldenablage mit dem neuen Hand-Bogen, die Erweiterungen am Kampf-Tracker und den Einrichtungs-Guide. Stand: erste Testversion, Rückmeldungen fließen in die nächste Überarbeitung ein.
+Dieses Handbuch beschreibt die Kernfunktionen des Moduls `aventuria-helpers`: den neuen Charakterbogen, die Heldenablage mit Hand- und Ausgespielte-Karten-Fenster, die Erweiterungen am Kampf-Tracker, den Einrichtungs-Guide und das Abenteuer-Tool. Stand: erste Testversion, Rückmeldungen fließen in die nächste Überarbeitung ein.
 
 ## 1. Neuer Charakterbogen
 
@@ -19,7 +19,7 @@ Links am Rand liegt eine schmale Icon-Leiste mit den Tabs:
 
 **Spielmodus-Schalter:** Unten in der Icon-Leiste lässt sich das Sheet per Schalter sperren, um versehentliche Änderungen während des Spiels zu vermeiden. Lebenspunkte, Proben würfeln und Erschöpfen-Status bleiben auch gesperrt weiter bedienbar, nur die eigentlichen Charakterwerte sind dann schreibgeschützt.
 
-## 2. Heldenablage mit Hand-Bogen
+## 2. Heldenablage mit Hand- und Ausgespielte-Karten-Fenster
 
 ### 2.1 Grundlagen
 
@@ -33,7 +33,7 @@ Die Heldenablage sitzt unten links im Bildschirm, genau dort, wo sonst die norma
 
 **Erster Start – Held auswählen:** Ist der Ablage noch kein Held zugewiesen, zeigt sie nur ein rundes, gestricheltes Feld mit einem "Person hinzufügen"-Symbol. Ein Klick darauf startet Aventurias eigenen Ablauf "Bereite Spieler vor" (Heldenauswahl aus dem Kompendium + Spielernummer, wie beim Einrichten eines neuen Charakters gewohnt). Sobald das abgeschlossen ist, füllt sich die Ablage automatisch mit dem neuen Helden.
 
-### 2.2 Deck, Ablage und Hand im Überblick
+### 2.2 Deck, Ablage, Hand und Ausgespielte Karten im Überblick
 
 Sobald ein Held zugewiesen ist, zeigt die Ablage oben das Heldenportrait (Spielername darüber, Heldenname darunter; Klick darauf öffnet den Heldenbogen aus Teil 1) mit einem Papierkorb-Symbol daneben - **Held löschen**: löscht nach einer Sicherheitsabfrage den Helden samt Deck, Ablage, Hand und Im-Spiel-Stapel unwiderruflich. Darunter folgen mehrere Kacheln:
 
@@ -54,28 +54,46 @@ Sobald ein Held zugewiesen ist, zeigt die Ablage oben das Heldenportrait (Spiele
 
 - Augen-Symbol – **Hand ansehen**: öffnet das eigene Hand-Fenster (siehe Abschnitt 2.3).
 
-**Ausdauer** (zwei Kacheln, verfügbar/erschöpft, Zahl = Karten im jeweiligen Zustand):
+**Ausgespielte Karten** (Kartenstapel-Symbol, Zahl = Anzahl aktuell ausgespielter Karten, ohne Ausdauerkarten):
 
-- Dreh-Symbol auf der Kachel "Verfügbar" – **Ausdauer erschöpfen**: dreht eine bereite Ausdauerkarte manuell um 90°.
-- Dreh-Symbol auf der Kachel "Erschöpft" – **Ausdauer bereit machen**: dreht eine erschöpfte Ausdauerkarte zurück.
+- Augen-Symbol – **Ausgespielte Karten ansehen**: öffnet das Ausgespielte-Karten-Fenster (siehe Abschnitt 2.4).
+
+**Ausdauer** (eine gemeinsame Zeile, verfügbar links und erschöpft rechts, Zahl = Karten im jeweiligen Zustand):
+
+- Dreh-Symbol links (bei "Verfügbar") – **Ausdauer erschöpfen**: dreht eine bereite Ausdauerkarte manuell um 90°.
+- Dreh-Symbol rechts (bei "Erschöpft") – **Ausdauer bereit machen**: dreht eine erschöpfte Ausdauerkarte zurück.
 
 Alle Zahlen aktualisieren sich automatisch, sobald sich etwas an den eigenen Karten ändert (Ziehen, Mischen, Spielen usw.).
 
 **Held/Hand konfigurieren:** Das Zahnrad-Symbol oben in der Ablage (neben dem Umschalt-Button) öffnet Foundrys Nutzer-Einstellungen mit zwei relevanten Feldern: welcher Held zugewiesen ist ("Character") und welche Hand als eigene Hand gilt ("Player Hand"). Nützlich, um ohne erneuten "Bereite Spieler vor"-Durchlauf auf einen bereits vorhandenen Helden oder eine bereits vorhandene Hand umzustellen.
 
-### 2.3 Der neue Hand-Bogen
+### 2.3 Der Hand-Bogen
 
-Über "Hand ansehen" öffnet sich ein eigenes kleines Fenster mit allen Karten der aktuellen Hand, nebeneinander als Reihe.
+Über "Hand ansehen" öffnet sich ein eigenes Fenster mit allen Karten der aktuellen Hand, nebeneinander als Reihe.
 
 ![Hand-Fenster mit großer Kartenvorschau beim Darüberfahren](assets/screenshots/hand-preview.webp)
 
-- **Verschieben:** Das Fenster hat keinen Titeltext, aber links in der Kopfleiste ein kleines Griff-Symbol (senkrechte Linien) – dort (oder irgendwo sonst in der Kopfleiste außerhalb der Buttons) klicken und ziehen, um das Fenster frei zu positionieren.
+- **Andocken, Verschieben, Zurücksetzen:** Das Fenster dockt beim Öffnen automatisch rechts neben der Heldenablage an und bleibt dort auch, wenn die Ablage ein- oder ausgeblendet wird. Es lässt sich trotzdem jederzeit frei verschieben - einfach an der Kopfleiste ziehen. Sobald das geschieht, hört das Fenster auf, der Ablage automatisch zu folgen. Über das "..."-Menü in der Kopfleiste (drei Punkte) lässt sich "Position zurücksetzen" wählen, um es wieder an seinen angedockten Platz zu holen.
+- **Größe:** Das Fenster ist standardmäßig 600 Pixel breit und wächst automatisch mit der Anzahl der Handkarten horizontal in einer einzelnen Reihe (kein Zeilenumbruch) - passen mehr Karten nicht mehr hinein, erscheint ein horizontaler Scrollbalken statt eines weiter wachsenden Fensters. Am rechten unteren Eckgriff lässt sich das Fenster bei Bedarf noch breiter oder höher ziehen.
 - **Vorschau:** Fährt man mit der Maus über eine Karte, öffnet sich daneben eine große, gut lesbare Vorschau der Karte (siehe Screenshot oben).
 - **Ausspielen:** Auf einer Karte erscheint beim Darüberfahren ein Play-Symbol in der Mitte – Klick darauf spielt die Karte aus. Kostet die Karte Ausdauer, fragt vorher ein kleiner Dialog, ob die Ausdauer normal bezahlt oder die Karte stattdessen kostenlos ("ohne Ausdauer") gespielt werden soll.
 - **Als Ausdauer spielen:** Ein zweites Symbol legt die Karte stattdessen verdeckt als Ausdauer aus, ohne sie regulär auszuspielen.
 - **Ziehen/Ablegen:** Karten lassen sich weiterhin wie gewohnt per Drag & Drop verschieben (z.B. auf die Spieloberfläche).
 - **Rechtsklick** auf eine Karte öffnet ein Menü zum Umdrehen bzw. zur nächsten/vorherigen Kartenseite (sofern die Karte mehrere Seiten hat).
-- Das Fenster hat keinen sichtbaren Schließen-Button mehr – schließen per **Esc**-Taste. Ein erneuter Klick auf "Hand ansehen" öffnet kein zweites Fenster, sondern holt ein bereits offenes nur wieder nach vorne.
+- Ein erneuter Klick auf "Hand ansehen" öffnet kein zweites Fenster, sondern holt ein bereits offenes nur wieder nach vorne. Über das "X" in der Kopfleiste lässt sich das Fenster ganz normal schließen.
+
+### 2.4 Ausgespielte Karten
+
+Über "Ausgespielte Karten ansehen" (Heldenablage, siehe 2.2) öffnet sich ein weiteres Fenster mit allen aktuell ausgespielten Karten - alles, was regulär aus der Hand heraus gespielt wurde, aber noch nicht abgelegt oder zurückgenommen ist. Als Ausdauer ausgespielte Karten erscheinen hier bewusst **nicht** - die zählen weiterhin nur in der Ausdauer-Zeile der Heldenablage (siehe 2.2).
+
+![Ausgespielte Karten mit Vorschau Fenster für Karten](assets/screenshots/played-cards.webp)
+
+- **Andocken, Verschieben, Größe, Zurücksetzen:** Funktioniert genauso wie beim Hand-Fenster (siehe 2.3) - dockt standardmäßig direkt unterhalb des Hand-Fensters an (an dessen Stelle, falls dieses gerade nicht geöffnet ist), lässt sich frei verschieben, wächst standardmäßig auf 600 Pixel Breite mit Eckgriff zum Vergrößern, und "Position zurücksetzen" im "..."-Menü holt es zurück an seinen Platz.
+- **Vorschau:** Wie beim Hand-Fenster zeigt das Darüberfahren mit der Maus eine große Vorschau der Karte.
+- **Ablegen:** Legt die Karte in die Ablage.
+- **Zurück auf die Hand nehmen:** Nimmt die Karte zurück auf die eigene Hand - der übliche Weg, einen Kartenzug rückgängig zu machen.
+- **Rechtsklick** auf eine Karte öffnet ein Menü mit dem selteneren Fall "Zurück ins Deck mischen" - mischt die Karte direkt wieder ins Deck.
+- Genau wie beim Hand-Fenster öffnet ein erneuter Klick auf "Ausgespielte Karten ansehen" kein zweites Fenster, sondern holt das bereits offene nach vorne. Über das "X" in der Kopfleiste lässt sich das Fenster ganz normal schließen.
 
 ## 3. Kampf-Tracker
 
@@ -106,7 +124,7 @@ Bestätigen dreht alle gedrehten Karten zurück, "Nein" lässt alles wie es ist.
 
 Ein eigenes Fenster führt Schritt für Schritt durch die Ersteinrichtung eines Aventuria-Tisches. Öffnen lässt es sich über das Fragezeichen-Symbol oben in der Heldenablage (Teil 2) oder über das Macro "Aventuria-Guide öffnen".
 
-Die Startseite bietet neben dem Titel-Button zu diesem Handbuch und einem "Was ist neu?"-Button (öffnet die Versionshistorie, siehe 4.5) drei Einstiege:
+Die Startseite bietet neben dem Titel-Button zu diesem Handbuch und einem "Was ist neu?"-Button (öffnet die Versionshistorie, siehe 4.5) fünf Einstiege: "Erste Schritte", "Helden auswählen", "Schnellstarter vorbereiten", "Abenteuer spielen" (öffnet direkt das Abenteuer-Tool, siehe Teil 5) und "Board aufräumen" (siehe 4.6).
 
 ### 4.1 Erste Schritte
 
@@ -127,3 +145,28 @@ Jede Sektion zeigt eine Seite pro Schritt mit "Zurück"/"Weiter" sowie einer Sei
 ### 4.5 Changelog direkt in Foundry
 
 Nach einem Update auf eine neue Version öffnet sich beim nächsten Laden automatisch eine kurze Übersicht der Neuerungen. Über den "Was ist neu?"-Button auf der Guide-Startseite lässt sich die komplette Versionshistorie jederzeit erneut ansehen.
+
+### 4.6 Board aufräumen
+
+Der Button "Board aufräumen" auf der Guide-Startseite (auch als eigenes Macro "Board aufräumen" nutzbar) räumt die Spielbrett-Szene zwischen zwei Abenteuern auf: Alle dort liegenden, abenteuer-spezifischen Karten wandern zurück in ihre Decks/Stapel, und die zwölf Spielmarken-Token werden wieder an ihre Startposition gesetzt. Vorher fragt eine kurze Sicherheitsabfrage mit Erklärung nach Bestätigung.
+
+![Bestätigungsdialog für die "Board aufräumen" Funktion](assets/screenshots/clean-board-confirmation.webp)
+
+Die Decks/Ablagen/Hände der Helden sowie die gemeinsamen Stapel aus "Erste Schritte" (Fatedeck usw.) bleiben dabei unangetastet stehen.
+
+## 5. Abenteuer spielen
+
+Ein eigenständiges Fenster führt durch die zehn Standard-Abenteuer und ersetzt das manuelle Blättern im Abenteuer-Journal. Öffnen lässt es sich über den Button "Abenteuer spielen" auf der Guide-Startseite (siehe Teil 4).
+
+![Abenteuer-Auswahl auf der Startseite des Abenteuer-Tools.](assets/screenshots/adventure-selection.webp)
+
+- **Abenteuer wählen:** Die Startseite des Tools zeigt alle zehn Abenteuer zur Auswahl.
+- **Vorbereitungs-Kasten:** Nach der Auswahl erscheint zuerst der Vorbereitungs-Kasten des Abenteuers (die Liste der benötigten Karten/Vorbereitungen) prominent in einem aufklappbaren Bereich, bevor es weiter in den eigentlichen Text geht.
+- **Seite für Seite lesen:** Danach lässt sich das Abenteuer Seite für Seite durchlesen. Verweise auf andere Seiten desselben Abenteuers (Links im Text) blättern direkt im Tool weiter, statt ein neues Fenster zu öffnen.
+
+![Geöffnete Abenteuerseite mit einem Seitenverweis-Link im Text.](assets/screenshots/adventure-tool.webp)
+
+- **Fortschritt merken:** Das Tool merkt sich für den ganzen Tisch, welches Abenteuer gerade aktiv ist, auf welcher Seite man steht und welche Seiten bereits besucht wurden - man kann jederzeit aussteigen (Fenster schließen) und später an derselben Stelle weitermachen.
+- **Nur eine Person gleichzeitig:** Damit nicht zwei Personen gleichzeitig blättern und sich gegenseitig die Seite wegziehen, ist das Tool ein manuell gesperrtes Ein-Personen-Werkzeug - wer es zuerst öffnet, sieht es normal, alle anderen sehen währenddessen eine Sperre mit dem Namen der Person, die gerade dran ist. Die Sperre hält, bis diese Person das Fenster schließt - es gibt kein automatisches Timeout.
+
+![Sperr-Anzeige für alle anderen Teilnehmer, während jemand das Abenteuer-Tool nutzt.](assets/screenshots/adventure-locked.webp)
