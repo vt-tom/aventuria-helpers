@@ -2,6 +2,11 @@
 
 Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Version zuerst.
 
+## 0.1.6 (Beta)
+
+### Features
+- **Kompendien in einem gemeinsamen Ordner:** "Macros", "Aventuria Helpers Guide" und "Changelog" erscheinen im Kompendium-Tab der Sidebar jetzt gebündelt in einem Ordner "Aventuria Helpers" statt einzeln aufgelistet.
+
 ## 0.1.5
 
 ### Features

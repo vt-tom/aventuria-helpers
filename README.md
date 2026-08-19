@@ -1,45 +1,47 @@
 # Aventuria Helpers
 
-Zusatzmodul für [Foundry VTT](https://foundryvtt.com/) (v14), das das offizielle [Aventuria](https://foundryvtt.com/packages/aventuria)-Modul um zusätzliche Macros und ein komplett neu gestaltetes Heldenbogen-Sheet ergänzt. Läuft auf dem System [Universal Tabletop System](https://foundryvtt.com/packages/universal-tabletop-system), auf dem Aventuria selbst aufbaut.
+*English | [Deutsch](README-de.md)*
+
+Add-on module for [Foundry VTT](https://foundryvtt.com/) (v14) that extends the official [Aventuria](https://foundryvtt.com/packages/aventuria) module with additional macros and a completely redesigned hero sheet. Runs on the [Universal Tabletop System](https://foundryvtt.com/packages/universal-tabletop-system), which Aventuria itself is built on.
 
 > [!IMPORTANT]
-> Der gesamte Code und die Dokumentation dieses Moduls sind mit KI-Unterstützung entstanden. Die verwendeten Grafiken/Bilder stammen dagegen **nicht** von KI, sondern aus dem Aventuria-Modul oder anderen Quellen und sind von der [MIT-Lizenz](#lizenz) dieses Repos nicht erfasst.
+> All code and documentation in this module were created with AI assistance. The images used, however, are **not** AI-generated - they come from the Aventuria module or other sources and are not covered by this repo's [MIT license](#license).
 
-## Funktionen
+## Features
 
-- **Neuer Heldenbogen**: Direkt würfelbare Proben, übersichtliches Design, Erschöpfen von Waffen und Sonderfertigkeit – erster Entwurf, das Design ist noch Work in Progress.
-- **Heldenablage**: Deck, Ablage, Hand und Ausgespielte Karten auf einen Blick, inkl. Ausdauer-Verwaltung, Kartenvorschau und einem angedockten Hand-/Ausgespielte-Karten-Fenster.
-- **Einrichtungs-Guide**: führt Schritt für Schritt durch Welt-Einrichtung, Heldenzuweisung, Schnellstarter-Vorbereitung und das Leiten der Abenteuer.
-- **Zusätzliche Macros**: Karten zurückdrehen, Spielbrett aufräumen, den Guide erneut öffnen – die meisten davon sind auch direkt über die anderen Funktionen erreichbar.
-- **Erweiterter Kampf-Tracker**: Die Initiative wird nach den Aventuria-Regeln gehandhabt, mit festem Gegneraktionen-Platz und Rundenende-Abfrage, um den Kampfablauf gut im Blick zu behalten.
+- **New hero sheet**: Directly rollable checks, a cleaner layout, weapon exhaustion, and special abilities - an early draft, the design is still work in progress.
+- **Hero tray**: Deck, discard pile, hand, and played cards at a glance, including endurance management, card preview, and a docked hand/played-cards window.
+- **Setup guide**: walks step by step through world setup, hero assignment, quickstart preparation, and running the adventures.
+- **Additional macros**: reset card rotations, clean up the board, reopen the guide - most of these are also directly accessible through the other features.
+- **Extended combat tracker**: initiative is handled according to the Aventuria rules, with a fixed enemy-actions slot and an end-of-round prompt to keep the flow of combat easy to follow.
 
-Eine vollständige Beschreibung aller Funktionen gibt es im Handbuch, das direkt im Modul enthalten ist (Kompendium "Aventuria Helpers Guide", über den Einrichtungs-Guide erreichbar) – Quelltext dazu: [manual-de.md](manual-de.md) / [manual-en.md](manual-en.md).
+A complete description of all features is available in the manual bundled with the module (compendium "Aventuria Helpers Guide", reachable via the setup guide) - source: [manual-de.md](manual-de.md) / [manual-en.md](manual-en.md).
 
-## Voraussetzungen
+## Requirements
 
-- Foundry VTT v14 (min. Kompatibilität wie Aventuria selbst)
-- Modul [Aventuria](https://foundryvtt.com/packages/aventuria)
-- Modul [Complete Card Management](https://foundryvtt.com/packages/complete-card-management)
+- Foundry VTT v14 (minimum compatibility, same as Aventuria itself)
+- Module [Aventuria](https://foundryvtt.com/packages/aventuria)
+- Module [Complete Card Management](https://foundryvtt.com/packages/complete-card-management)
 - System [Universal Tabletop System](https://foundryvtt.com/packages/universal-tabletop-system)
 
 ## Installation
 
-In Foundry unter **Module installieren** folgende Manifest-URL einfügen:
+In Foundry, under **Install Module**, paste the following manifest URL:
 
 ```
 https://github.com/vt-tom/aventuria-helpers/releases/latest/download/module.json
 ```
 
-Danach das Modul für die betreffende Welt aktivieren.
+Then enable the module for the relevant world.
 
-## Änderungen
+## Changes
 
-Siehe [CHANGES.md](CHANGES.md) für ein spielrelevantes Changelog pro Version (auch als Journal im Modul selbst, mit automatischem "Was ist neu?"-Hinweis nach einem Update).
+See [CHANGES-en.md](CHANGES-en.md) for a gameplay-relevant changelog per version (also available in-app as a journal, with an automatic "What's new?" notice after an update).
 
-## Fehler melden / Wünsche
+## Report a bug / request a feature
 
-Über die [GitHub Issues](https://github.com/vt-tom/aventuria-helpers/issues) dieses Repos.
+Via this repo's [GitHub Issues](https://github.com/vt-tom/aventuria-helpers/issues).
 
-## Lizenz
+## License
 
-Der Code dieses Moduls (vollständig mit KI-Unterstützung entstanden) steht unter der [MIT-Lizenz](LICENSE) zur freien Nutzung und Nachnutzung zur Verfügung. Grafiken/Bilder sind davon ausgenommen, siehe Hinweis oben.
+The code of this module (created entirely with AI assistance) is released under the [MIT license](LICENSE) for free use and reuse. Images/graphics are excluded, see the note above.
