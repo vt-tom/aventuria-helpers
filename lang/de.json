@@ -60,6 +60,8 @@
       "FirstSteps": "Erste Schritte",
       "PickHero": "Helden auswählen",
       "Quickstart": "Schnellstarter vorbereiten",
+      "AdventureTool": "Abenteuer spielen",
+      "CleanUpBoard": "Board aufräumen",
       "Back": "Zurück",
       "Next": "Weiter",
       "Done": "Beenden"
@@ -89,7 +91,7 @@
         },
         "Macros": {
           "Title": "Macros importieren",
-          "Body": "Importiert die Macros aus dem Macro-Kompendium des Aventuria-Moduls direkt in den Ordner \"Aventuria Macros\" in deinem Macro-Verzeichnis.",
+          "Body": "Importiert die Macros aus dem Macro-Kompendium des Aventuria-Moduls direkt in den Ordner \"Aventuria Macros\" in deinem Macro-Verzeichnis. Diese können dann je nach Bedarf pro Spieler in der Macro-Leiste abgelegt werden.",
           "Action": "Macros importieren",
           "Imported": "{count} Macro(s) importiert.",
           "AlreadyImported": "Alle Macros sind bereits im Macro-Verzeichnis vorhanden."
@@ -197,6 +199,18 @@
         }
       }
     },
+    "AdventureTool": {
+      "Title": "Abenteuer spielen",
+      "LockedBy": "Das Abenteuer-Tool wird gerade von {user} benutzt. Warte, bis es dort geschlossen oder freigegeben wird.",
+      "PickerIntro": "Wähle ein Abenteuer, um es zu starten.",
+      "BrokenAdventure": "Das zuletzt aktive Abenteuer konnte nicht mehr gefunden werden (z.B. nach einem Sprachwechsel) - bitte ein neues wählen.",
+      "Prep": "Vorbereitung",
+      "History": "Verlauf",
+      "EndAdventure": "Anderes Abenteuer wählen",
+      "Release": "Freigeben",
+      "EndConfirmTitle": "Abenteuer beenden",
+      "EndConfirmBody": "Das aktuelle Abenteuer wird beendet und der Fortschritt zurückgesetzt. Fortfahren?"
+    },
     "Combat": {
       "AddEnemyPhase": "Gegneraktionen hinzufügen",
       "EnemyPhaseName": "Gegneraktionen",
@@ -220,6 +234,12 @@
       "ViewDeck": "Deck ansehen",
       "ViewDiscard": "Ablage ansehen",
       "ViewHand": "Hand ansehen",
+      "ViewPlayedCards": "Ausgespielte Karten ansehen",
+      "PlayedTooltip": "Ausgespielte Karten – nicht als Ausdauer gespielte Karten im Im-Spiel-Stapel",
+      "DiscardCard": "Ablegen",
+      "ReturnToHand": "Zurück auf die Hand nehmen",
+      "ReturnToDeck": "Zurück ins Deck mischen",
+      "NoPlayedCards": "Keine ausgespielten Karten.",
       "PlayCard": "Karte ausspielen",
       "PlayAsEndurance": "Als Ausdauer spielen",
       "NoPlayPile": "Kein Im-Spiel-Stapel gefunden.",
@@ -237,7 +257,7 @@
       "HandTooltip": "Hand – die Karten, die du aktuell hältst",
       "ExhaustEndurance": "Ausdauer erschöpfen (Karte um 90° drehen)",
       "ReadyEndurance": "Ausdauer bereit machen (Karte zurückdrehen)",
-      "DragHandle": "Zum Verschieben ziehen",
+      "ResetDock": "Position zurücksetzen",
       "PreviewTitle": "Kartenvorschau",
       "PreviewAmount": "Anzahl Karten",
       "Preview": "Ansehen"
@@ -256,6 +276,16 @@
       "OpenWelcomeScreen": {
         "Name": "Aventuria-Guide öffnen"
       }
+    },
+    "CleanUpBoard": {
+      "Name": "Board aufräumen",
+      "MissingCcm": "Complete Card Management ist nicht aktiv.",
+      "GmOnly": "Nur die Spielleitung kann das Board aufräumen.",
+      "NoScene": "Keine Spieloberfläche geöffnet.",
+      "WrongScene": "Das funktioniert nur auf der Spielbrett-Szene aus dem Aventuria-Modul.",
+      "ConfirmTitle": "Board aufräumen",
+      "ConfirmBody": "Alle Karten werden von der Spieloberfläche entfernt (zurück in ihre Decks/Stapel) und die Spielmarken an ihre Ausgangsposition zurückgesetzt. Fortfahren?",
+      "Done": "Board aufgeräumt: {count} Karte(n) entfernt, Spielmarken zurückgesetzt."
     },
     "Compendium": {
       "Macros": "Aventuria Helfer Makros",

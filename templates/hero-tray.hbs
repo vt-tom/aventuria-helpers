@@ -64,24 +64,35 @@
       </div>
     </div>
 
-    {{#if endurance}}
     <div class="tray-stack">
-      <div class="tray-stack-head" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.EnduranceReadyTooltip'}}">
-        <img src="{{icons.endurance}}" alt="">
-        <span class="tray-count">{{endurance.ready}}</span>
+      <div class="tray-stack-head" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.PlayedTooltip'}}">
+        <i class="fa-solid fa-cards"></i>
+        <span class="tray-count">{{played.count}}</span>
       </div>
       <div class="tray-stack-actions">
-        <button type="button" data-action="exhaustEndurance" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ExhaustEndurance'}}" {{#unless endurance.ready}}disabled{{/unless}}><i class="fa-solid fa-rotate-right"></i></button>
+        <button type="button" data-action="viewPlayedCards" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ViewPlayedCards'}}"><i class="fa-solid fa-eye"></i></button>
       </div>
     </div>
 
-    <div class="tray-stack">
-      <div class="tray-stack-head" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.EnduranceSpentTooltip'}}">
-        <img src="{{icons.endurance}}" alt="" class="spent">
-        <span class="tray-count">{{endurance.spent}}</span>
+    {{#if endurance}}
+    <div class="tray-stack tray-stack-endurance">
+      <div class="tray-endurance-half" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.EnduranceReadyTooltip'}}">
+        <div class="tray-stack-head">
+          <img src="{{icons.endurance}}" alt="">
+          <span class="tray-count">{{endurance.ready}}</span>
+        </div>
+        <div class="tray-stack-actions">
+          <button type="button" data-action="exhaustEndurance" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ExhaustEndurance'}}" {{#unless endurance.ready}}disabled{{/unless}}><i class="fa-solid fa-rotate-right"></i></button>
+        </div>
       </div>
-      <div class="tray-stack-actions">
-        <button type="button" data-action="readyEndurance" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ReadyEndurance'}}" {{#unless endurance.spent}}disabled{{/unless}}><i class="fa-solid fa-rotate-left"></i></button>
+      <div class="tray-endurance-half" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.EnduranceSpentTooltip'}}">
+        <div class="tray-stack-head">
+          <img src="{{icons.endurance}}" alt="" class="spent">
+          <span class="tray-count">{{endurance.spent}}</span>
+        </div>
+        <div class="tray-stack-actions">
+          <button type="button" data-action="readyEndurance" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ReadyEndurance'}}" {{#unless endurance.spent}}disabled{{/unless}}><i class="fa-solid fa-rotate-left"></i></button>
+        </div>
       </div>
     </div>
     {{/if}}

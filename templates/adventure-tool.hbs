@@ -1,0 +1,67 @@
+<div class="adventure-tool-root">
+  {{#if locked}}
+  <div class="adventure-tool-locked">
+    <i class="fa-solid fa-lock"></i>
+    <p>{{localize 'AVENTURIA_HELPERS.AdventureTool.LockedBy' user=lockedBy}}</p>
+  </div>
+
+  {{else if picker}}
+  <div class="adventure-tool-picker">
+    {{#if brokenAdventure}}
+    <p class="adventure-tool-warning">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      {{localize 'AVENTURIA_HELPERS.AdventureTool.BrokenAdventure'}}
+    </p>
+    {{/if}}
+    <p>{{localize 'AVENTURIA_HELPERS.AdventureTool.PickerIntro'}}</p>
+    <div class="adventure-tool-list">
+      {{#each adventures}}
+      <button type="button" class="adventure-tool-option" data-action="startAdventure" data-uuid="{{this.uuid}}">
+        <span class="adventure-tool-option-num">{{this.number}}</span>
+        <span class="adventure-tool-option-name">{{this.name}}</span>
+      </button>
+      {{/each}}
+    </div>
+  </div>
+
+  {{else}}
+  <div class="adventure-tool-reading">
+    <header class="adventure-tool-head">
+      <div class="adventure-tool-titles">
+        <span class="adventure-tool-entry">{{entryName}}</span>
+        <span class="adventure-tool-page">{{pageName}}</span>
+      </div>
+      <div class="adventure-tool-head-actions">
+        <button type="button" class="at-btn ghost" data-action="endAdventure">
+          {{localize 'AVENTURIA_HELPERS.AdventureTool.EndAdventure'}}
+        </button>
+        <button type="button" class="at-btn ghost" data-action="release">
+          {{localize 'AVENTURIA_HELPERS.AdventureTool.Release'}}
+        </button>
+      </div>
+    </header>
+
+    {{#if prepHtml}}
+    <details class="adventure-tool-prep" {{#if prepOpen}}open{{/if}}>
+      <summary>{{localize 'AVENTURIA_HELPERS.AdventureTool.Prep'}}</summary>
+      <div class="adventure-tool-prep-body">{{{prepHtml}}}</div>
+    </details>
+    {{/if}}
+
+    {{#if history.length}}
+    <details class="adventure-tool-history">
+      <summary>{{localize 'AVENTURIA_HELPERS.AdventureTool.History'}}</summary>
+      <ul>
+        {{#each history}}
+        <li>
+          <button type="button" class="adventure-tool-history-entry{{#if this.active}} active{{/if}}" data-action="goToPage" data-page-id="{{this.id}}" {{#if this.active}}disabled{{/if}}>{{this.name}}</button>
+        </li>
+        {{/each}}
+      </ul>
+    </details>
+    {{/if}}
+
+    <div class="adventure-tool-content">{{{pageHtml}}}</div>
+  </div>
+  {{/if}}
+</div>

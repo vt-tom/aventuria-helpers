@@ -2,6 +2,24 @@
 
 Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Version zuerst.
 
+## 0.1.5
+
+### Features
+- **Neuer Willkommensbildschirm-Eintrag "Abenteuer spielen":** Ein eigenes Abenteuer-Tool führt durch die 10 Standard-Abenteuer - Abenteuer auswählen, den Vorbereitungs-Kasten mit den benötigten Karten prominent angezeigt bekommen, Seite für Seite lesen (Verweise auf andere Seiten desselben Abenteuers springen direkt im Tool weiter), jederzeit wieder aussteigen und später fortsetzen. Nur eine Person kann das Tool gleichzeitig benutzen; andere sehen währenddessen eine Sperre mit Namen.
+- **Neuer Button "Board aufräumen"** im Willkommensbildschirm (auch als eigenes Macro nutzbar): entfernt alle Abenteuer-spezifisch auf der Spielbrett-Szene liegenden Karten (zurück in ihre Decks/Stapel) und setzt die Spielmarken wieder an ihre Ausgangsposition zurück - fragt vorher einmal nach Bestätigung. Die Decks/Ablagen/Hände der Helden sowie die gemeinsamen Stapel aus "Erste Schritte" bleiben dabei unangetastet stehen.
+- **Hand-Karten-Fenster dockt jetzt standardmäßig rechts neben der Heldenablage an** statt irgendwo auf dem Bildschirm zu erscheinen - bleibt beim Öffnen immer an derselben Stelle. Lässt sich bei Bedarf trotzdem wie gewohnt per Ziehen verschieben; ein neuer Eintrag "Position zurücksetzen" im "..."-Menü holt es zurück an seinen Platz.
+- **Neue Zeile "Ausgespielte Karten" in der Heldenablage:** zeigt an, wie viele Karten du aktuell ausgespielt hast, und öffnet über den Ansehen-Button ein eigenes Fenster (dockt standardmäßig unterhalb des Hand-Karten-Fensters an, ebenfalls verschiebbar mit Reset-Option) - dort lässt sich jede ausgespielte Karte einzeln ablegen oder zurück ins Deck mischen, beim Überfahren mit der Maus erscheint dieselbe große Vorschau wie im Hand-Fenster. Ausdauerkarten werden hier bewusst nicht angezeigt, die bleiben weiterhin nur als Zähler in der Heldenablage.
+- Hand-Karten-Fenster und "Ausgespielte Karten"-Fenster sind jetzt standardmäßig 600 Pixel breit, lassen sich aber am Eck-Ziehgriff jederzeit breiter ziehen - und docken zuverlässig exakt übereinander an, auch wenn nur eines der beiden über "Position zurücksetzen" zurückgesetzt wird.
+- Im "Ausgespielte Karten"-Fenster gibt es jetzt statt "Zurück ins Deck mischen" den Button "Zurück auf die Hand nehmen" (der häufigere Fall) - "Zurück ins Deck mischen" ist weiterhin verfügbar, per Rechtsklick auf die Karte.
+
+### Bugs
+- Die Heldenablage konnte bei kleinerem Browserfenster unten in die Makro-Leiste hineinragen - sie sitzt jetzt oben im linken Bereich (statt am unteren Bildschirmrand) und kommt der Makro-Leiste dadurch nie mehr in die Quere.
+- Das "Ausgespielte Karten"-Fenster klebte optisch direkt am Hand-Karten-Fenster - jetzt mit etwas mehr Abstand dazwischen.
+- Das "Ausgespielte Karten"-Fenster hatte spürbar zu viel Leerraum unter den Buttons - ist jetzt kompakter.
+- Die Karten im "Ausgespielte Karten"-Fenster hatten einen unschönen Abstand nach oben und links - behoben.
+- Hand-Karten-Fenster und "Ausgespielte Karten"-Fenster schlossen sich mit spürbarer Verzögerung (Karten verschwanden, dann dauerte es noch einen Moment) - schließen sich jetzt sofort.
+- Die große Karten-Vorschau beim Überfahren mit der Maus konnte bei einer weiter unten im Fenster liegenden Karte über den unteren Bildschirmrand hinausragen - bleibt jetzt immer vollständig sichtbar.
+
 ## 0.1.4.1
 
 ### Features

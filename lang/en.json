@@ -60,6 +60,8 @@
       "FirstSteps": "First Steps",
       "PickHero": "Choose a Hero",
       "Quickstart": "Prepare Quick Start",
+      "AdventureTool": "Play Adventure",
+      "CleanUpBoard": "Clean up board",
       "Back": "Back",
       "Next": "Next",
       "Done": "Finish"
@@ -197,6 +199,18 @@
         }
       }
     },
+    "AdventureTool": {
+      "Title": "Play Adventure",
+      "LockedBy": "The Adventure Tool is currently being used by {user}. Wait until it's closed or released there.",
+      "PickerIntro": "Choose an adventure to start it.",
+      "BrokenAdventure": "The last active adventure could no longer be found (e.g. after a language change) - please choose a new one.",
+      "Prep": "Preparation",
+      "History": "History",
+      "EndAdventure": "Choose another adventure",
+      "Release": "Release",
+      "EndConfirmTitle": "End adventure",
+      "EndConfirmBody": "The current adventure will end and its progress will be reset. Continue?"
+    },
     "Combat": {
       "AddEnemyPhase": "Add enemy actions",
       "EnemyPhaseName": "Enemy Actions",
@@ -220,6 +234,12 @@
       "ViewDeck": "View deck",
       "ViewDiscard": "View discard pile",
       "ViewHand": "View hand",
+      "ViewPlayedCards": "View played cards",
+      "PlayedTooltip": "Played cards – cards in the Im-Spiel-Stapel that weren't played as Ausdauer",
+      "DiscardCard": "Discard",
+      "ReturnToHand": "Take back into hand",
+      "ReturnToDeck": "Shuffle back into deck",
+      "NoPlayedCards": "No played cards.",
       "PlayCard": "Play card",
       "PlayAsEndurance": "Play as Ausdauer",
       "NoPlayPile": "No Im-Spiel-Stapel found.",
@@ -237,7 +257,7 @@
       "HandTooltip": "Hand – the cards you currently hold",
       "ExhaustEndurance": "Exhaust Ausdauer (rotate a card 90°)",
       "ReadyEndurance": "Make Ausdauer ready (rotate a card back)",
-      "DragHandle": "Drag to move",
+      "ResetDock": "Reset position",
       "PreviewTitle": "Card Preview",
       "PreviewAmount": "Number of cards",
       "Preview": "View"
@@ -256,6 +276,16 @@
       "OpenWelcomeScreen": {
         "Name": "Open Aventuria guide"
       }
+    },
+    "CleanUpBoard": {
+      "Name": "Clean up board",
+      "MissingCcm": "Complete Card Management is not active.",
+      "GmOnly": "Only the GM can clean up the board.",
+      "NoScene": "No scene is open.",
+      "WrongScene": "This only works on the Gameboard scene from the Aventuria module.",
+      "ConfirmTitle": "Clean up board",
+      "ConfirmBody": "All cards will be removed from the scene (back into their decks/stacks) and the marker tokens will be reset to their starting position. Continue?",
+      "Done": "Board cleaned up: {count} card(s) removed, marker tokens reset."
     },
     "Compendium": {
       "Macros": "Aventuria Helpers Macros",

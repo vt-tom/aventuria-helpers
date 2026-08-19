@@ -1,0 +1,17 @@
+<section class="hand-sheet-inner">
+  {{#if empty}}
+  <p class="played-cards-empty">{{localize 'AVENTURIA_HELPERS.HeroTray.NoPlayedCards'}}</p>
+  {{else}}
+  <ol class="cards">
+    {{#each cards}}
+    <li class="card" data-card-id="{{id}}">
+      <img class="card-art" src="{{img}}" alt="{{name}}">
+      <div class="card-actions">
+        <button type="button" class="card-discard" data-action="discardCard" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.DiscardCard'}}"></button>
+        <button type="button" class="card-return" data-action="returnToHand" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ReturnToHand'}}"><i class="fa-solid fa-hand"></i></button>
+      </div>
+    </li>
+    {{/each}}
+  </ol>
+  {{/if}}
+</section>

@@ -1,6 +1,7 @@
 import { resolveStacks } from "./stacks.mjs";
 import { recordPlayerSlotAssignment, wirePlayRegion } from "./player-slots.mjs";
 
+const MODULE_ID = "aventuria-helpers";
 const CCM_MODULE_ID = "complete-card-management";
 
 /**
@@ -57,9 +58,12 @@ const HERO_PLACEMENTS = {
  * Places a hero's Deck, Ablage (discard pile), Hand and their Token onto the
  * currently viewed scene, at the spot matching the given player slot, locked so
  * they aren't moved by accident. The Cards part mirrors `placeBoardStacks()`'s
- * mechanism exactly (same `complete-card-management` per-scene flag, same
- * `cardCollection` registration), just parameterized by player slot instead of a
- * fixed board-wide layout. The Token is created via the standard core
+ * mechanism exactly (same `complete-card-management` per-scene flag via its own `setFlag()`
+ * call, same `cardCollection` registration, same own `permanentStack` flag via a second,
+ * independent `setFlag()` call so `cleanup-board.mjs`'s "Board aufräumen" leaves these three
+ * alone - deliberately *not* one combined `update()` for both flags, see the note on
+ * `placeBoardStacks()` for why), just parameterized by player slot instead of a fixed
+ * board-wide layout. The Token is created via the standard core
  * `Actor#getTokenDocument()` + `TokenDocument.create()` pair (same pair core's own
  * drag-from-sidebar flow uses, `client/pixi/layers/placeables/tokens.js` in the
  * local Foundry installation) if none exists yet for this actor on the scene, or
@@ -121,15 +125,16 @@ export async function placeHeroStacks(user, playerNumber) {
   await scene.setFlag(CCM_MODULE_ID, "cardCollection", Array.from(cardCollection));
 
   await Promise.all(
-    resolved.map(({ card, position }) =>
-      card.setFlag(CCM_MODULE_ID, scene.id, {
+    resolved.map(async ({ card, position }) => {
+      await card.setFlag(CCM_MODULE_ID, scene.id, {
         x: position.x,
         y: position.y,
         rotation: 0,
         sort: card.sort,
         locked: true,
-      }),
-    ),
+      });
+      await card.setFlag(MODULE_ID, "permanentStack", true);
+    }),
   );
 
   if (spot.token) await placeActorToken(stacks.actor, scene, spot.token);

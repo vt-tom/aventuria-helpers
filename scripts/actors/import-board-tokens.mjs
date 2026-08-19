@@ -1,6 +1,6 @@
 import { placeActorToken } from "../cards/place-hero-stacks.mjs";
 
-const TOKEN_FOLDER_NAME = "Aventuria Tokens";
+export const TOKEN_FOLDER_NAME = "Aventuria Tokens";
 
 /**
  * Live-captured Gameboard positions for 12 of the 13 token actors (Stand 2026-08-16, same
@@ -84,11 +84,13 @@ export async function importBoardTokens() {
  * create-or-move idempotency as `placeActorToken()` itself, so re-running "Marken
  * importieren" doesn't pile up duplicate tokens. Silently does nothing (beyond a warning) if
  * the wrong scene is active - matches `placeBoardStacks()`/`placeHeroStacks()`'s guard
- * pattern, since this only makes sense on the Aventuria Gameboard.
+ * pattern, since this only makes sense on the Aventuria Gameboard. Exported (not just used
+ * internally by `importBoardTokens()`) - `cleanup-board.mjs` reuses it wholesale to move the
+ * markers back to their starting spot instead of duplicating the placement logic.
  * @param {Folder} folder - The world Actor folder `importBoardTokens()` imports into.
  * @returns {Promise<void>}
  */
-async function placeBoardTokens(folder) {
+export async function placeBoardTokens(folder) {
   if (!game.user.isGM) {
     ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.GettingStarted.Steps.ImportTokens.GmOnly"));
     return;

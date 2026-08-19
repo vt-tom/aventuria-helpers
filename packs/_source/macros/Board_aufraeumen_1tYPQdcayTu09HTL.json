@@ -1,0 +1,27 @@
+{
+  "_id": "1tYPQdcayTu09HTL",
+  "flags": {},
+  "name": "Board aufräumen",
+  "sort": 200000,
+  "_stats": {
+    "compendiumSource": null,
+    "coreVersion": "14.364",
+    "createdTime": 1786947173496,
+    "duplicateSource": null,
+    "exportSource": null,
+    "lastModifiedBy": null,
+    "modifiedTime": null,
+    "systemId": "universal-tabletop-system",
+    "systemVersion": "1.2.1"
+  },
+  "author": null,
+  "command": "game.modules.get(\"aventuria-helpers\").api.cleanUpBoard();",
+  "img": "icons/tools/hand/broom-straw-brown.webp",
+  "ownership": {
+    "default": 0
+  },
+  "scope": "global",
+  "type": "script",
+  "folder": null,
+  "_key": "!macros!1tYPQdcayTu09HTL"
+}

@@ -1315,12 +1315,6 @@ button.skill-value:active {
   padding: 0.5rem 1rem 1rem;
 }
 
-.aventuria-welcome .banner {
-  max-width: 220px;
-  max-height: 120px;
-  object-fit: contain;
-}
-
 .aventuria-welcome h2 {
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
@@ -1761,6 +1755,23 @@ body:not(.ahb-tray-active) .hero-tray {
   display: none;
 }
 
+/* #ui-left-column-1 (game.less) is a column flexbox with justify-content:
+   space-between - with #scene-controls as the only other visible child, that
+   pins whichever of #players/.hero-tray is showing to the column's bottom
+   edge, independent of its own height (shrinking a bottom-anchored item only
+   moves its top edge upward, never its bottom - a max-height/scroll cap on
+   its content, tried and reverted here 2026-08-17, therefore can never stop
+   it from reaching the hotbar). The hotbar (#hotbar) lives in a completely
+   separate region (#ui-middle > #ui-bottom, horizontally centered), so
+   top-anchoring the tray instead - directly under the scene-controls toolbar,
+   away from the bottom-center hotbar entirely - avoids the overlap
+   structurally, for any window size, with no measurement or resizing needed.
+   Native #players keeps the default bottom anchor - it doesn't have this
+   module's overlap problem, matches Foundry's own layout unmodified. */
+body.ahb-tray-active #ui-left-column-1 {
+  justify-content: flex-start;
+}
+
 /* Toggle-to-tray bubble, injected into #players-active (see injectToggleButton()
    in hero-tray.mjs) - a positioning context on that specific native element,
    not on #players itself: #players is a column flex item with no explicit
@@ -1994,6 +2005,22 @@ body:not(.ahb-tray-active) .hero-tray {
   padding: 0.4rem 0.55rem;
 }
 
+/* Ready/spent Ausdauer share one row instead of two stacked .tray-stacks -
+   Nutzerwunsch 2026-08-17: die Ablage wurde zu hoch. .tray-stack-head/
+   .tray-stack-actions keep their existing styling unchanged, just nested one
+   level deeper inside a .tray-endurance-half each; justify-content:
+   space-between on the shared row pushes the two halves to its opposite
+   ends. */
+.hero-tray .tray-stack-endurance {
+  justify-content: space-between;
+}
+
+.hero-tray .tray-endurance-half {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
 .hero-tray .tray-stack-head {
   display: flex;
   align-items: center;
@@ -2066,18 +2093,38 @@ body:not(.ahb-tray-active) .hero-tray {
 /* ---------- Hand-Sheet (eigene Optik für Complete Card Managements Docked-Hand-Sheet, siehe scripts/sheets/hand-sheet.mjs) ---------- */
 /* AventuriaHelpersHandSheet erbt Drag&Drop/Kontextmenü unverändert von
    ccm.apps.CardsSheets.DockedHandSheet - die Positionierung dagegen bewusst
-   NICHT: window.positioned wird in hand-sheet.mjs auf true zurückgesetzt
-   (frei verschiebbares Fenster statt CCMs fester Docking-Position), und die
-   ererbte .docked-Regel aus ccm.css (left/bottom/width) wird hier gezielt
-   wieder auf "auto" zurückgesetzt, damit sie Foundrys eigene, durch Ziehen
-   gesetzte Inline-Position nicht überstimmt. */
+   nicht: die ererbte .docked-Regel aus ccm.css (left/bottom/width, für CCMs
+   eigene feste Position oberhalb der Hotbar gedacht) wird hier auf "auto"
+   zurückgesetzt, damit sie AventuriaHelpersHandSheet#updateDockPosition()s
+   eigene, per Foundrys setPosition() gesetzte Position (rechts neben der
+   Heldenablage per Default, frei verschiebbar per Drag - siehe hand-sheet.mjs)
+   nicht überstimmt, bevor diese beim ersten Render greift - insbesondere
+   `bottom: auto` ist Pflicht, sonst würde ein gleichzeitig gesetztes `top`
+   und `bottom` (ccm.css) die Fensterhöhe strecken statt sie dem Inhalt zu
+   überlassen. */
 .ccm.cards.docked.hand-sheet {
   left: auto;
   bottom: auto;
   width: auto;
 }
 
-.hand-sheet .window-header {
+/* Verschwindet zusammen mit der Heldenablage (siehe toggleTray() in
+   hero-tray.mjs) - hat nichts mehr zum Andocken, sobald die Ablage durch die
+   native Spielerliste ersetzt ist. Gilt für beide angedockten Sheets
+   (Hand + Ausgespielte Karten, scripts/sheets/played-cards-sheet.mjs). */
+body:not(.ahb-tray-active) .hand-sheet,
+body:not(.ahb-tray-active) .played-cards-sheet {
+  display: none;
+}
+
+/* Ab hier: alles, was Hand-Sheet und "Ausgespielte Karten"-Sheet gemeinsam
+   nutzen (Kopf, Wachstum/Scroll, Kartenoptik) - beide sind über
+   DockableSheetMixin (dockable-sheet-mixin.mjs) angedockte Kartenlisten mit
+   identischem Aufbau, nur an unterschiedlichen Stellen neben der Ablage.
+   Sheet-spezifisches (Play-Icon-Overlay, Ausdauer-/Ablegen-/Zurückmisch-
+   Buttons) bleibt weiter unten getrennt. */
+.hand-sheet .window-header,
+.played-cards-sheet .window-header {
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -2086,11 +2133,13 @@ body:not(.ahb-tray-active) .hero-tray {
   padding: 0.3rem 0.6rem;
 }
 
-.hand-sheet .window-header .window-icon {
+.hand-sheet .window-header .window-icon,
+.played-cards-sheet .window-header .window-icon {
   color: var(--gold);
 }
 
-.hand-sheet .window-header .window-title {
+.hand-sheet .window-header .window-title,
+.played-cards-sheet .window-header .window-title {
   flex: 1;
   margin: 0;
   font-family: Georgia, "Iowan Old Style", serif;
@@ -2101,62 +2150,118 @@ body:not(.ahb-tray-active) .hero-tray {
   color: var(--ink);
 }
 
-.hand-sheet .window-header .header-control {
+.hand-sheet .window-header .header-control,
+.played-cards-sheet .window-header .header-control {
   color: var(--gold);
   background: none;
   border: none;
 }
 
 .hand-sheet .window-header .header-control:hover,
-.hand-sheet .window-header .header-control:focus-visible {
+.hand-sheet .window-header .header-control:focus-visible,
+.played-cards-sheet .window-header .header-control:hover,
+.played-cards-sheet .window-header .header-control:focus-visible {
   color: var(--ink);
   outline: none;
 }
 
-/* Purely a visual "grab here" affordance - the whole header is already
-   draggable via Foundry's own built-in mechanism (see hand-sheet.mjs). */
-.hand-sheet .window-header .hand-sheet-grip {
-  color: var(--gold);
-  opacity: 0.6;
-  cursor: grab;
-}
-
 /* CCM's "faded-ui" fades the *whole* app to low opacity until the whole thing
-   is hovered. We want something more targeted instead: the panel background
-   stays translucent all the time (see .window-content below), and it's each
-   individual card - not the whole panel - that reacts to hover. Neutralize
-   the inherited whole-panel fade so it doesn't fight that. */
+   is hovered - only DockedHandSheet (Hand-Sheet's CCM base class) carries
+   that class, PileSheet (played-cards-sheet's base) never does, so this stays
+   .hand-sheet-only. We want something more targeted instead: the panel
+   background stays translucent all the time (see .window-content below), and
+   it's each individual card - not the whole panel - that reacts to hover.
+   Neutralize the inherited whole-panel fade so it doesn't fight that. */
 .hand-sheet.faded-ui,
 .hand-sheet.faded-ui:hover {
   opacity: 1;
 }
 
-.hand-sheet .window-content {
+/* Fixed 600×190px default (`position: { width: 600, height: 190 }`,
+   DockableSheetMixin), horizontal scrollbar for anything wider than 600px -
+   Nutzerwunsch 2026-08-17: vertical growth felt wrong for a hand of cards,
+   horizontal + a scrollbar reads more like an actual hand. `min-width`/
+   `min-height` match that 600×190px default so the corner resize handle
+   (`window.resizable: true`, DockableSheetMixin) can only ever drag the
+   sheet *bigger*, never smaller - a further Nutzerwunsch 2026-08-19 ("fest
+   600 Pixel breit, aber breiter gezogen werden können"). `max-width`/
+   `max-height` are just screen-edge safety nets (core already clamps
+   resizing to the viewport on its own, these only guard the fixed default on
+   an unusually small browser window). */
+.hand-sheet,
+.played-cards-sheet {
+  min-width: 600px;
+  max-width: 95vw;
+  min-height: 190px;
+  max-height: 90vh;
+}
+
+.hand-sheet .window-content,
+.played-cards-sheet .window-content {
   background: color-mix(in srgb, var(--paper) 55%, transparent);
   padding: 0.5rem 0.75rem;
 }
 
-/* display:inline-flex/column so the new below-image "Ausdauer" button (a
-   normal-flow sibling, not an overlay) stacks under the card art instead of
-   overlapping it - see the .card-endurance comment further down for why that
-   matters. Doesn't affect [data-action="playCard"] below, which stays
-   absolutely positioned over the image exactly as CCM's own ccm.css already
-   places it (out of flow, so the flex column doesn't touch it). */
-.hand-sheet .cards .card {
+/* The actual scroll container - single row (flex-wrap: nowrap), horizontal
+   overflow only. flex: none on .card below stops cards from being squashed
+   to fit (the default flex-shrink: 1 would otherwise shrink every card
+   instead of triggering the scrollbar). `margin`/`padding: 0` explicitly
+   zero out the browser's own default `<ol>` list styling (block margin top/
+   bottom, inline-start padding reserved for bullet numbers) - Hand-Sheet
+   only ever avoided that by accident, via CCM's own `.docked`-scoped reset
+   in ccm.css (`&.docked { [data-application-part="cardList"] .cards {
+   padding: 0; margin: 0; ... } }`); Played-Cards-Sheet's base (`PileSheet`)
+   never carries `.docked`, so without this it fell back to the browser
+   default (visible as unwanted space above/left of the cards, Nutzerfeedback
+   2026-08-19) - same root cause pattern as the card-image-size bugfix above,
+   just a different CSS property this time. */
+.hand-sheet .cards,
+.played-cards-sheet .cards {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 0;
+  padding: 0 0 6px;
+}
+
+/* display:flex/column so a below-image action button (a normal-flow sibling,
+   not an overlay - Hand-Sheet's "Ausdauer" button or Played-Cards' Ablegen/
+   Zurückmischen buttons) stacks under the card art instead of overlapping it
+   - see the button-specific comments further down. Doesn't affect
+   [data-action="playCard"] (Hand-Sheet only) below, which stays absolutely
+   positioned over the image exactly as CCM's own ccm.css already places it
+   (out of flow, so the flex column doesn't touch it). */
+.hand-sheet .cards .card,
+.played-cards-sheet .cards .card {
+  flex: none;
   margin-right: 0.6rem;
-  display: inline-flex !important;
+  display: flex !important;
   flex-direction: column;
   align-items: stretch;
   height: auto !important;
-  vertical-align: top;
 }
 
-.hand-sheet .cards .card:hover {
+.hand-sheet .cards .card:hover,
+.played-cards-sheet .cards .card:hover {
   position: relative;
   z-index: 5;
 }
 
-.hand-sheet .cards .card img {
+/* height/width explicit here rather than relied-on from ccm.css's own
+   `.docked ... .card img { height: 100px; width: fit-content; }` - that rule
+   only ever applied to Hand-Sheet (the only one of the two with the `.docked`
+   class, inherited from CCM's DockedHandSheet); Played-Cards-Sheet
+   (CCM's PileSheet, no `.docked`) never had any size rule at all and
+   rendered cards at their full natural image resolution - Nutzerfeedback
+   2026-08-17 ("viel zu groß"). Setting it here for both makes it
+   self-contained instead of depending on which CCM base class happens to add
+   that class. */
+.hand-sheet .cards .card img,
+.played-cards-sheet .cards .card img {
+  height: 100px;
+  width: fit-content;
   border-radius: 8px;
   border: 2px solid var(--gold);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
@@ -2165,9 +2270,11 @@ body:not(.ahb-tray-active) .hero-tray {
 
 /* Just a light highlight now - the actual "Miniaturvorschau" is the separate
    floating .hand-card-preview element below, positioned via JS in
-   hand-sheet.mjs (showCardPreview()) rather than scaled up in place, since a
-   large in-place transform got clipped by the window's own bounds. */
-.hand-sheet .cards .card:hover img {
+   card-hover-preview.mjs (showCardPreview()) rather than scaled up in place,
+   since a large in-place transform got clipped by the window's own bounds.
+   Shared by both Hand-Sheet and Played-Cards-Sheet since 2026-08-19. */
+.hand-sheet .cards .card:hover img,
+.played-cards-sheet .cards .card:hover img {
   transform: translateY(-6px);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
 }
@@ -2213,6 +2320,55 @@ body:not(.ahb-tray-active) .hero-tray {
   outline: none;
 }
 
+/* ---------- Played-Cards-Sheet-eigene Elemente ---------- */
+/* "Ablegen"/"Zurück ins Deck mischen" - selbes Grundmuster wie .card-endurance
+   oben (Button unterhalb der Kartenkunst statt Overlay), aber zwei Buttons
+   nebeneinander statt einem einzelnen. */
+.played-cards-sheet .cards .card-actions {
+  display: flex;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.played-cards-sheet .cards .card-actions button {
+  appearance: none;
+  flex: 1;
+  height: 20px;
+  border: 1px solid var(--gold);
+  border-radius: 5px;
+  background-color: color-mix(in srgb, var(--gold) 14%, transparent);
+  color: var(--gold);
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.played-cards-sheet .cards .card-actions button:hover,
+.played-cards-sheet .cards .card-actions button:focus-visible {
+  background-color: color-mix(in srgb, var(--gold) 32%, transparent);
+  outline: none;
+}
+
+/* Root-relative (leading "/") - see the identical comment on .card-endurance
+   above for why. */
+.played-cards-sheet .cards .card-discard {
+  background-image: url("/modules/aventuria/assets/icons/discard-symbol.webp");
+  background-size: 13px 13px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.played-cards-sheet .played-cards-empty {
+  margin: 0;
+  padding: 0.5rem 0.25rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
 /* Floating card preview - a single shared element (see getPreviewEl() in
    hand-sheet.mjs), appended to <body> and positioned via inline style in JS
    so it can float outside the Hand sheet window instead of being clipped by
@@ -2240,4 +2396,219 @@ body:not(.ahb-tray-active) .hero-tray {
   border-radius: 12px;
   border: 3px solid var(--gold);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65);
+}
+
+/* ---------- Adventure Tool ---------- */
+/* Own button styling (`.at-btn`) instead of reusing `.w-btn` - that class's own styling is
+   scoped under `.aventuria-welcome`/`.setup-step-body` ancestors this app doesn't use.
+   Content itself (aside boxes, tables, @UUID links, aventuria-icon glyphs) is deliberately
+   *not* styled here at all - `.aventuria-wrapper.journal-sheet` on the app root (see
+   `adventure-tool.mjs`) makes aventuria's own bundled CSS apply instead, wholesale reuse
+   instead of re-implementing asides/tables/icons from scratch. */
+
+.aventuria-helpers.adventure-tool .window-content {
+  background: var(--paper);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.adventure-tool-root {
+  text-align: left;
+}
+
+.adventure-tool-locked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem 1rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.adventure-tool-locked i {
+  font-size: 2rem;
+  color: var(--gold);
+}
+
+.adventure-tool-warning {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.75rem;
+  padding: 0.5rem 0.7rem;
+  background: rgba(168, 56, 61, 0.1);
+  border: 1px solid var(--ruby);
+  border-radius: 6px;
+  color: var(--ruby);
+  font-size: 0.85rem;
+}
+
+.adventure-tool-picker > p {
+  color: var(--muted);
+  margin: 0 0 0.75rem;
+}
+
+.adventure-tool-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.adventure-tool-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.adventure-tool-option:hover,
+.adventure-tool-option:focus-visible {
+  border-color: var(--gold);
+  outline: none;
+}
+
+.adventure-tool-option-num {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--panel);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.adventure-tool-option-name {
+  font-weight: 600;
+}
+
+.adventure-tool-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 0.75rem;
+}
+
+.adventure-tool-titles {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.adventure-tool-entry {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.adventure-tool-page {
+  font-family: Georgia, "Iowan Old Style", serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.adventure-tool-head-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.at-btn {
+  flex: none;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  background: var(--gold);
+  color: var(--panel);
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.at-btn:hover,
+.at-btn:focus-visible {
+  filter: brightness(1.08);
+  outline: none;
+}
+
+.at-btn.ghost {
+  background: transparent;
+  color: var(--gold);
+}
+
+.at-btn.ghost:hover,
+.at-btn.ghost:focus-visible {
+  background: rgba(169, 130, 46, 0.12);
+}
+
+.adventure-tool-prep,
+.adventure-tool-history {
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  padding: 0.5rem 0.7rem;
+}
+
+.adventure-tool-prep summary,
+.adventure-tool-history summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.adventure-tool-prep-body {
+  margin-top: 0.5rem;
+}
+
+.adventure-tool-history ul {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.adventure-tool-history-entry {
+  width: 100%;
+  text-align: left;
+  padding: 0.25rem 0.4rem;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.adventure-tool-history-entry:hover,
+.adventure-tool-history-entry:focus-visible {
+  background: rgba(169, 130, 46, 0.12);
+  outline: none;
+}
+
+.adventure-tool-history-entry.active {
+  font-weight: 700;
+  color: var(--gold);
+  cursor: default;
+}
+
+.adventure-tool-content {
+  line-height: 1.5;
 }

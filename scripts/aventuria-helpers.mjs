@@ -3,10 +3,13 @@ import { registerWelcomeScreenReopen } from "./apps/welcome-screen.mjs";
 import { registerChangelogAutoOpen } from "./apps/changelog.mjs";
 import { resetCardRotations } from "./macros/reset-card-rotations.mjs";
 import { openWelcomeScreen } from "./macros/open-welcome-screen.mjs";
+import { cleanUpBoard } from "./cards/cleanup-board.mjs";
 import { registerCombat, registerEnemyPhaseCombatant, registerRoundEndCombatant } from "./documents/combat.mjs";
 import { registerHeroTray } from "./apps/hero-tray.mjs";
 import { registerHandSheet } from "./sheets/hand-sheet.mjs";
+import { registerPlayedCardsSheet } from "./sheets/played-cards-sheet.mjs";
 import { registerPlayerSlotAssignments } from "./cards/player-slots.mjs";
+import { registerAdventureState } from "./cards/adventure-state.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 
@@ -20,13 +23,15 @@ Hooks.once("init", () => {
   registerWelcomeScreenReopen();
   registerChangelogAutoOpen();
   registerPlayerSlotAssignments();
+  registerAdventureState();
   registerCombat();
   registerEnemyPhaseCombatant();
   registerRoundEndCombatant();
   // Depends on globalThis.ccm, which complete-card-management's own init hook
   // sets up - safe here since relationships.requires guarantees it ran first.
   registerHandSheet();
+  registerPlayedCardsSheet();
   registerHeroTray();
 
-  game.modules.get(MODULE_ID).api = { resetCardRotations, openWelcomeScreen };
+  game.modules.get(MODULE_ID).api = { resetCardRotations, openWelcomeScreen, cleanUpBoard };
 });
