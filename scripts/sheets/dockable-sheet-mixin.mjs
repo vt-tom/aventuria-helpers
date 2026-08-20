@@ -4,9 +4,9 @@
  * `AventuriaHelpersHandSheet` and `AventuriaHelpersPlayedCardsSheet`, each
  * docked at a different offset from the tray (see the `getOffset` param).
  * Originally built once for the Hand sheet only, extracted here once the
- * Played-Cards sheet needed the exact same logic (PROJECT.md 2.2).
+ * Played-Cards sheet needed the exact same logic (project/PROJECT.md 2.2).
  *
- * See CHANGELOG.md 0.1.5 ("Hand-Sheet: Andocken bleibt optional statt
+ * See project/CHANGELOG.md 0.1.5 ("Hand-Sheet: Andocken bleibt optional statt
  * zwingend") for the full reasoning behind the `docked`/`#repositioning`/
  * `_onPosition()` design - short version: `window.positioned: true` keeps
  * Foundry's native header-drag working; `_onPosition()` is core's own

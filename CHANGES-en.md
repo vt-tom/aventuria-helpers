@@ -2,6 +2,20 @@
 
 This file lists all gameplay-relevant changes to the module – newest version first.
 
+## 0.1.6 (Beta)
+
+### Features
+- **New default Hero Sheet "Aventuria Helpers Charactersheet":** a compact sheet inspired by Aventuria's physical hero cards is now the default sheet and gets assigned automatically to newly created heroes. Its header remains visible while switching pages; icon-only flags open Hero, Skills, allowed cards, Images, Items, and Effects. Each user can move the complete flag rail to the left or right. The previous Hero Sheet remains selectable through “Configure Sheet” under the name "Aventuria Helpers (old)".
+- **Purpose-built hover effects for the card-style Hero Sheet:** Attribute and equipment checks brighten subtly and receive a focused medallion treatment. Skills use a quiet embossed effect instead, with a gently pulsing d20 appearing beneath the value. Page flags are highlighted by an anthracite edge.
+- **Endurance cost as a circle:** the equipment's endurance cost on the card-style Hero Sheet is now shown as a circled number, just like on Aventuria's own cards, instead of a separate icon.
+- **Special ability with its own symbol:** the Ready/Used toggle for the special ability on the card-style Hero Sheet now also shows Aventuria's special-ability symbol, greyed out while "Used".
+- **Compendiums grouped in a shared folder:** "Macros", "Aventuria Helpers Guide", and "Changelog" now appear bundled in a folder "Aventuria Helpers" in the sidebar's Compendium tab instead of being listed individually.
+
+### Bugs
+- Foundry's global button layout displaced the four check medallions in the new card-style Hero Sheet; value and label are stacked correctly again. The special ability also no longer exposes an editable rich-text editor while the sheet is locked and now renders formatted read-only content instead.
+- The card-style Hero Sheet's maximum life points couldn't be changed; now editable while in edit mode (current life points remain changeable at all times, as before, even while locked).
+- The card-style Hero Sheet offered no way to remove a second equipment slot once added; there's now a trash button on that row while in edit mode.
+
 ## 0.1.5
 
 ### Features

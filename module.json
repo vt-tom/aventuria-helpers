@@ -2,7 +2,7 @@
   "id": "aventuria-helpers",
   "title": "Aventuria Helpers",
   "description": "Zusätzliche Macros und ein alternatives Heldenbogen-Sheet für das Aventuria-Modul.",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "compatibility": {
     "minimum": "14",
     "verified": "14"
@@ -12,12 +12,18 @@
   "changelog": "https://github.com/vt-tom/aventuria-helpers/blob/master/CHANGES.md",
   "manifest": "https://github.com/vt-tom/aventuria-helpers/releases/latest/download/module.json",
   "download": "https://github.com/vt-tom/aventuria-helpers/releases/latest/download/aventuria-helpers.zip",
-  "authors": [],
+  "authors": [
+    {
+      "name": "VTTom",
+      "url": "https://github.com/vt-tom"
+    }
+  ],
   "esmodules": [
     "scripts/aventuria-helpers.mjs"
   ],
   "styles": [
-    "styles/aventuria-helpers.css"
+    "styles/aventuria-helpers.css",
+    "styles/card-hero-sheet.css"
   ],
   "languages": [
     {
@@ -64,6 +70,13 @@
       },
       "path": "packs/changelog",
       "system": "universal-tabletop-system"
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "Aventuria Helpers",
+      "sorting": "a",
+      "packs": ["macros", "guide", "changelog"]
     }
   ],
   "relationships": {

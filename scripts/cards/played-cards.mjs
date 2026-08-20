@@ -4,7 +4,7 @@
  * hero's Im-Spiel-Stapel, back onto the hand, into the discard pile, or back
  * into the deck (shuffled in). Exhaust/Ready for a specific Ausdauer card
  * intentionally isn't here - Nutzerentscheidung 2026-08-17: the new sheet
- * only shows non-Ausdauer played cards for now (PROJECT.md 2.2), Ausdauer
+ * only shows non-Ausdauer played cards for now (project/PROJECT.md 2.2), Ausdauer
  * stays exclusively in the Heldenablage's own ready/spent counters
  * (cards/endurance.mjs), a separate view for those is a possible later idea.
  */

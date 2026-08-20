@@ -7,7 +7,7 @@
  * regardless of which sheet triggered it.
  *
  * Extracted from hand-sheet.mjs when Played-Cards-Sheet needed the exact
- * same behavior (PROJECT.md 2.2 follow-up, Nutzerwunsch 2026-08-19) - same
+ * same behavior (project/PROJECT.md 2.2 follow-up, Nutzerwunsch 2026-08-19) - same
  * "genuine, immediate duplication" reasoning as `DockableSheetMixin`.
  */
 

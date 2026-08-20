@@ -6,7 +6,7 @@
  *
  * Docked to the right of the Heldenablage (`#aventuria-helpers-hero-tray`) by
  * default, but still freely draggable if the user wants it elsewhere -
- * Nutzerentscheidung 2026-08-17 (PROJECT.md 2.1, refined after the first,
+ * Nutzerentscheidung 2026-08-17 (project/PROJECT.md 2.1, refined after the first,
  * permanently-pinned version). The docking/drag/reset behavior itself lives in
  * `DockableSheetMixin` (`dockable-sheet-mixin.mjs`) - shared with
  * `AventuriaHelpersPlayedCardsSheet`, which needs the exact same thing (see

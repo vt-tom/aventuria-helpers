@@ -1,4 +1,5 @@
 import { AventuriaHelpersHeroSheet } from "./sheets/hero-sheet.mjs";
+import { AventuriaHelpersCardHeroSheet } from "./sheets/card-hero-sheet.mjs";
 import { registerWelcomeScreenReopen } from "./apps/welcome-screen.mjs";
 import { registerChangelogAutoOpen } from "./apps/changelog.mjs";
 import { resetCardRotations } from "./macros/reset-card-rotations.mjs";
@@ -14,10 +15,22 @@ import { registerAdventureState } from "./cards/adventure-state.mjs";
 const MODULE_ID = "aventuria-helpers";
 
 Hooks.once("init", () => {
+  game.settings.register(MODULE_ID, "cardSheetNavigationSide", {
+    scope: "client",
+    config: false,
+    type: String,
+    default: "left",
+  });
+
   foundry.documents.collections.Actors.registerSheet(MODULE_ID, AventuriaHelpersHeroSheet, {
     types: ["aventuria.hero"],
     makeDefault: false,
     label: "AVENTURIA_HELPERS.HeroSheet.Label",
+  });
+  foundry.documents.collections.Actors.registerSheet(MODULE_ID, AventuriaHelpersCardHeroSheet, {
+    types: ["aventuria.hero"],
+    makeDefault: true,
+    label: "AVENTURIA_HELPERS.CardHeroSheet.Label",
   });
 
   registerWelcomeScreenReopen();

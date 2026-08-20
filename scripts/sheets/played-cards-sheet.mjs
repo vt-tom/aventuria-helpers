@@ -8,7 +8,7 @@
  * context menu on the card instead of its own button, same mechanism CCM's
  * own `DockedHandSheet` already uses for flip/next-face/previous-face -
  * `this._createContextMenu()`, a core `ApplicationV2` method, so no CCM
- * internals needed). PROJECT.md 2.2 - built on the same docking mixin as the Hand sheet
+ * internals needed). project/PROJECT.md 2.2 - built on the same docking mixin as the Hand sheet
  * (`DockableSheetMixin`, `dockable-sheet-mixin.mjs`), docked below the Hand
  * sheet (same right-of-tray column, Nutzerfeedback 2026-08-17: not below the
  * tray itself, which felt like the wrong place) when it's open, falling back

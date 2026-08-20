@@ -29,7 +29,7 @@ const SLOTS = [
  * hero data genders each profession per hero (e.g. "Zwergenschmied" vs.
  * "Zwergenschmiedin"), so both forms are listed - confirmed 2026-08-16 by dumping
  * `system.profession` for all 12 level-1 heroes directly from the German
- * compendium (see `CHANGELOG.md`), rather than guessed, after the first pass
+ * compendium (see `project/CHANGELOG.md`), rather than guessed, after the first pass
  * (guessed from a user-provided table with only one form per profession) missed
  * several of them and had one outright typo ("Perrainegeweihter" vs. the game's
  * own inconsistent "Perrainegeweihter"/"Perainegeweihte" spelling - kept as-is,
