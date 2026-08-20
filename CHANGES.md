@@ -5,7 +5,16 @@ Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Ve
 ## 0.1.6 (Beta)
 
 ### Features
+- **Neuer Standard-Heldenbogen "Aventuria Helpers Charactersheet":** ein kompakter, an den Aventuria-Heldenkarten orientierter Bogen ist jetzt der Standardbogen und wird neu angelegten Helden automatisch zugewiesen. Sein Kopf bleibt beim Seitenwechsel sichtbar; reine Symbol-Fähnchen führen zu Held, Talenten, erlaubten Karten, Bildern, Items und Effekten. Die komplette Fähnchenleiste lässt sich je Benutzer nach links oder rechts verschieben. Der bisherige Heldenbogen bleibt unter dem Namen "Aventuria Helpers (old)" über „Sheet konfigurieren“ weiterhin wählbar.
+- **Passende Hover-Effekte im Karten-Heldenbogen:** Fertigkeitsproben und Grundausstattung werden dezent aufgehellt und wie ein Medaillon fokussiert. Talente erhalten stattdessen eine ruhige Prägung; unter ihrem Wert erscheint ein leicht pulsierendes W20-Symbol. Die Seiten-Fähnchen werden mit einer anthrazitfarbenen Kante hervorgehoben.
+- **Ausdauer-Kosten als Kreis:** Die Ausdauer-Kosten der Ausrüstung im Karten-Heldenbogen werden jetzt wie auf den Aventuria-Karten selbst als eingekreiste Zahl dargestellt statt mit separatem Symbol.
+- **Sonderfertigkeit mit eigenem Symbol:** Der Bereit/Verwendet-Schalter der Sonderfertigkeit im Karten-Heldenbogen zeigt jetzt zusätzlich das Aventuria-Symbol für Sonderfertigkeiten, im Zustand "Verwendet" eingegraut.
 - **Kompendien in einem gemeinsamen Ordner:** "Macros", "Aventuria Helpers Guide" und "Changelog" erscheinen im Kompendium-Tab der Sidebar jetzt gebündelt in einem Ordner "Aventuria Helpers" statt einzeln aufgelistet.
+
+### Bugs
+- Im neuen Karten-Heldenbogen wurden die vier Probenmedaillons durch Foundrys globale Button-Darstellung verschoben; Zahl und Beschriftung stehen jetzt wieder sauber untereinander. Die Sonderfertigkeit zeigt im gesperrten Ansichtsmodus außerdem keinen weiterhin bedienbaren Rich-Text-Editor mehr, sondern nur noch den formatierten Inhalt.
+- Im Karten-Heldenbogen ließen sich die maximalen Lebenspunkte nicht ändern; jetzt im Bearbeiten-Modus editierbar (die aktuellen Lebenspunkte bleiben wie gehabt jederzeit änderbar, auch gesperrt).
+- Im Karten-Heldenbogen ließ sich eine hinzugefügte zweite Ausrüstung nicht mehr entfernen; dafür jetzt ein Papierkorb-Button an der Zeile im Bearbeiten-Modus.
 
 ## 0.1.5
 

@@ -22,7 +22,8 @@
     "scripts/aventuria-helpers.mjs"
   ],
   "styles": [
-    "styles/aventuria-helpers.css"
+    "styles/aventuria-helpers.css",
+    "styles/card-hero-sheet.css"
   ],
   "languages": [
     {

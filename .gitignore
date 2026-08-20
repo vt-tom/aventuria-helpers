@@ -1,8 +1,4 @@
 CLAUDE.md
-CHANGELOG.md
-PROJECT.md
-TODO.md
+project/
 node_modules/
 packs/**/LOCK
-image/
-reference/

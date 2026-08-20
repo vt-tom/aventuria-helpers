@@ -17,7 +17,7 @@ const LANG = {
 };
 
 /**
- * Guided reader for Aventuria's 10 standard adventures (`PROJECT.md` 5.2, "Teil a": picking,
+ * Guided reader for Aventuria's 10 standard adventures (`project/PROJECT.md` 5.2, "Teil a": picking,
  * reading/navigating, and resuming an adventure - AP-Vergabe deliberately out of scope until
  * 1.5 (Abenteuerpunkte-Tracking) exists). One adventure active at a time, world-wide (see
  * `cards/adventure-state.mjs`), guarded by a manual one-person lock so two people can't
@@ -129,7 +129,7 @@ export class AventuriaHelpersAdventureTool extends HandlebarsApplicationMixin(Ap
   /**
    * Fetches and caches the language-appropriate adventure list, once per instance - the 10
    * "Abenteuer N - ..."/"Adventure N - ..." entries (filtered by name prefix, since the
-   * German/English compendiums don't share matching folder IDs - see `PROJECT.md` 5.2),
+   * German/English compendiums don't share matching folder IDs - see `project/PROJECT.md` 5.2),
    * sorted by their adventure number.
    * @returns {Promise<{id: string, uuid: string, name: string, number: number}[]>}
    */
@@ -158,7 +158,7 @@ export class AventuriaHelpersAdventureTool extends HandlebarsApplicationMixin(Ap
    * Splits off the first `<aside>` element of a JournalEntryPage's raw HTML - the
    * "Vorbereitung"/setup-instructions box, reliably the first `<aside>` on an adventure's
    * first page regardless of its CSS class (confirmed against all 10 adventures, see
-   * `PROJECT.md` 5.2 for the research).
+   * `project/PROJECT.md` 5.2 for the research).
    * @param {string} html
    * @returns {{prepHtml: string|null, restHtml: string}}
    */
@@ -267,7 +267,7 @@ export class AventuriaHelpersAdventureTool extends HandlebarsApplicationMixin(Ap
    * cleanup itself, that's the standalone "Board aufräumen" action on the welcome screen
    * (Nutzerentscheidung 2026-08-17: ending/marking an adventure finished and physically
    * resetting the table are different concerns, and cleanup is just as useful without ever
-   * having used this tool - not nested inside it, see `PROJECT.md` 5.2/E).
+   * having used this tool - not nested inside it, see `project/PROJECT.md` 5.2/E).
    * @this AventuriaHelpersAdventureTool
    */
   static async #onEndAdventure() {

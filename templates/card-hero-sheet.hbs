@@ -1,0 +1,157 @@
+<div class="aventuria-card-hero-sheet {{#if navLeft}}nav-left{{else}}nav-right{{/if}} {{#if locked}}is-locked{{else}}is-editing{{/if}}">
+  <nav class="card-flag-rail" role="tablist" aria-label="{{localize 'AVENTURIA_HELPERS.HeroSheet.Label'}}">
+    <button type="button" class="card-flag always-active {{#if tabs.held.active}}active{{/if}}" data-action="switchTab" data-tab="held" role="tab" aria-selected="{{tabs.held.active}}" data-tooltip="{{localize 'TYPES.Actor.aventuria.hero'}}"><i class="fa-solid fa-user"></i></button>
+    <button type="button" class="card-flag always-active {{#if tabs.skills.active}}active{{/if}}" data-action="switchTab" data-tab="skills" role="tab" aria-selected="{{tabs.skills.active}}" data-tooltip="{{localize 'AVENTURIA_HELPERS.CardHeroSheet.SkillsTab'}}"><img src="{{navIcons.skills}}" alt=""></button>
+    <button type="button" class="card-flag always-active {{#if tabs.categories.active}}active{{/if}}" data-action="switchTab" data-tab="categories" role="tab" aria-selected="{{tabs.categories.active}}" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.ActionCardsTab'}}"><i class="fa-solid fa-cards"></i></button>
+    <button type="button" class="card-flag always-active {{#if tabs.images.active}}active{{/if}}" data-action="switchTab" data-tab="images" role="tab" aria-selected="{{tabs.images.active}}" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.ImagesTab'}}"><i class="fa-solid fa-images"></i></button>
+    <button type="button" class="card-flag always-active {{#if tabs.items.active}}active{{/if}}" data-action="switchTab" data-tab="items" role="tab" aria-selected="{{tabs.items.active}}" data-tooltip="{{localize 'AVENTURIA_HELPERS.CardHeroSheet.ItemsTab'}}"><i class="fa-solid fa-box-open"></i></button>
+    <button type="button" class="card-flag always-active {{#if tabs.effects.active}}active{{/if}}" data-action="switchTab" data-tab="effects" role="tab" aria-selected="{{tabs.effects.active}}" data-tooltip="{{localize 'AVENTURIA_HELPERS.CardHeroSheet.EffectsTab'}}"><i class="fa-solid fa-bolt"></i></button>
+    <button type="button" class="card-rail-control always-active" data-action="toggleNavigationSide" data-tooltip="{{#if navLeft}}{{localize 'AVENTURIA_HELPERS.CardHeroSheet.NavigationRight'}}{{else}}{{localize 'AVENTURIA_HELPERS.CardHeroSheet.NavigationLeft'}}{{/if}}"><i class="fa-solid {{#if navLeft}}fa-arrow-right{{else}}fa-arrow-left{{/if}}"></i></button>
+    <button type="button" class="card-rail-control card-lock always-active" data-action="toggleLock" aria-pressed="{{locked}}" data-tooltip="{{#if locked}}{{localize 'AVENTURIA_HELPERS.HeroSheet.Unlock'}}{{else}}{{localize 'AVENTURIA_HELPERS.HeroSheet.Lock'}}{{/if}}"><i class="fa-solid {{#if locked}}fa-lock{{else}}fa-lock-open{{/if}}"></i></button>
+  </nav>
+
+  <div class="card-sheet-shell">
+    <header class="card-sheet-head">
+      <div class="card-portrait-frame">
+        <img src="{{actor.img}}" alt="{{actor.name}}" {{#if editable}}data-action="editImage" data-edit="img"{{else}}data-action="viewImage" data-src="{{actor.img}}" data-title="{{actor.name}}"{{/if}}>
+      </div>
+
+      <div class="card-core-stats">
+        <div class="card-stat">
+          <img src="{{icons.close}}" alt="">
+          {{#if editable}}<label class="card-stat-edit"><input type="number" name="system.close" value="{{system.close}}"><span>{{localize "AVENTURIA_HELPERS.Attributes.Close"}}</span></label>{{else}}<button type="button" class="card-stat-roll always-active" data-action="rollAttribute" data-attribute="close"><strong>{{system.close}}</strong><span>{{localize "AVENTURIA_HELPERS.Attributes.Close"}}</span></button>{{/if}}
+        </div>
+        <div class="card-stat">
+          <img src="{{icons.ranged}}" alt="">
+          {{#if editable}}<label class="card-stat-edit"><input type="number" name="system.ranged" value="{{system.ranged}}"><span>{{localize "AVENTURIA_HELPERS.Attributes.Ranged"}}</span></label>{{else}}<button type="button" class="card-stat-roll always-active" data-action="rollAttribute" data-attribute="ranged"><strong>{{system.ranged}}</strong><span>{{localize "AVENTURIA_HELPERS.Attributes.Ranged"}}</span></button>{{/if}}
+        </div>
+        <div class="card-stat">
+          <img src="{{icons.magic}}" alt="">
+          {{#if editable}}<label class="card-stat-edit"><input type="number" name="system.magic" value="{{system.magic}}"><span>{{localize "AVENTURIA_HELPERS.Attributes.Magic"}}</span></label>{{else}}{{#if system.magic}}<button type="button" class="card-stat-roll always-active" data-action="rollAttribute" data-attribute="magic"><strong>{{system.magic}}</strong><span>{{localize "AVENTURIA_HELPERS.Attributes.Magic"}}</span></button>{{else}}<span class="card-stat-roll inactive"><strong>–</strong><span>{{localize "AVENTURIA_HELPERS.Attributes.Magic"}}</span></span>{{/if}}{{/if}}
+        </div>
+        <div class="card-stat">
+          <img src="{{icons.dodge}}" alt="">
+          {{#if editable}}<label class="card-stat-edit"><input type="number" name="system.dodge" value="{{system.dodge}}"><span>{{localize "AVENTURIA_HELPERS.Attributes.Dodge"}}</span></label>{{else}}<button type="button" class="card-stat-roll always-active" data-action="rollAttribute" data-attribute="dodge"><strong>{{system.dodge}}</strong><span>{{localize "AVENTURIA_HELPERS.Attributes.Dodge"}}</span></button>{{/if}}
+        </div>
+      </div>
+
+      <div class="card-vitals">
+        <div class="card-life-control">
+          <img class="card-life-icon" src="{{icons.life}}" alt="">
+          <label class="card-life-medallion">
+            <input type="number" value="{{system.lifePoints.value}}" class="always-active lp-input" data-field="value">
+            {{#if editable}}
+              <span class="card-life-max">/ <input type="number" name="system.lifePoints.max" value="{{system.lifePoints.max}}" class="lp-max-input"></span>
+            {{else}}
+              <span class="card-life-max">/ {{system.lifePoints.max}}</span>
+            {{/if}}
+          </label>
+          <div class="card-life-buttons">
+            <button type="button" class="always-active" data-action="adjustLife" data-delta="-1" data-tooltip="{{localize 'AVENTURIA_HELPERS.CardHeroSheet.DecreaseLife'}}"><i class="fa-solid fa-minus"></i></button>
+            <button type="button" class="always-active" data-action="adjustLife" data-delta="1" data-tooltip="{{localize 'AVENTURIA_HELPERS.CardHeroSheet.IncreaseLife'}}"><i class="fa-solid fa-plus"></i></button>
+          </div>
+        </div>
+        <label class="card-level-medallion">
+          <img src="{{icons.level}}" alt="">
+          {{#if editable}}<select name="system.level">{{selectOptions levelChoices selected=system.level}}</select>{{else}}<span>{{lookup levelChoices system.level}}</span>{{/if}}
+        </label>
+      </div>
+
+      <div class="card-name-ribbon">
+        {{#if editable}}
+          <input type="text" name="name" value="{{actor.name}}" class="card-name-input">
+          <input type="text" name="system.profession" value="{{system.profession}}" class="card-profession-input">
+        {{else}}
+          <strong>{{actor.name}}</strong><span>{{system.profession}}</span>
+        {{/if}}
+      </div>
+    </header>
+
+    <div class="card-page-stack">
+      <section class="card-page {{#if tabs.held.active}}active{{/if}}">
+        {{#unless locked}}<span class="card-editing-label"><i class="fa-solid fa-pen"></i> {{localize "DOCUMENT.Update" type=(localize "TYPES.Actor.aventuria.hero")}}</span>{{/unless}}
+        <h2>{{localize "AVENTURIA_HELPERS.HeroSheet.Equipment"}}</h2>
+        <div class="card-equipment">
+          {{#with system.basicEquipment}}
+            <div class="card-equipment-row">
+              {{#if ../basicEquipmentIcon}}<button type="button" class="card-equipment-roll always-active" data-action="rollEquipment" data-equipment="basicEquipment" data-tooltip="{{localize 'AVENTURIA_HELPERS.Probe.UseEquipment'}}"><img src="{{../basicEquipmentIcon}}" alt=""></button>{{/if}}
+              <input type="text" name="system.basicEquipment.name" value="{{name}}" placeholder="{{localize 'AVENTURIA.Models.Hero.FIELDS.basicEquipment.name.label'}}" {{#unless ../editable}}disabled{{/unless}}>
+              <select name="system.basicEquipment.attackType" {{#unless ../editable}}disabled{{/unless}}>{{selectOptions ../config.attackTypes selected=attackType localize=true blank=""}}</select>
+              <label class="card-endurance-cost" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.basicEquipment.endurance.label'}}"><input type="number" name="system.basicEquipment.endurance" value="{{endurance}}" {{#unless ../editable}}disabled{{/unless}}></label>
+              <input type="text" name="system.basicEquipment.damage" value="{{damage}}" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.basicEquipment.damage.label'}}" {{#unless ../editable}}disabled{{/unless}}>
+            </div>
+          {{/with}}
+          {{#with system.secondEquipment}}
+            {{#if name}}
+              <div class="card-equipment-row">
+                {{#if ../secondEquipmentIcon}}<button type="button" class="card-equipment-roll always-active" data-action="rollEquipment" data-equipment="secondEquipment" data-tooltip="{{localize 'AVENTURIA_HELPERS.Probe.UseEquipment'}}"><img src="{{../secondEquipmentIcon}}" alt=""></button>{{/if}}
+                <input type="text" name="system.secondEquipment.name" value="{{name}}" {{#unless ../editable}}disabled{{/unless}}>
+                <select name="system.secondEquipment.attackType" {{#unless ../editable}}disabled{{/unless}}>{{selectOptions ../config.attackTypes selected=attackType localize=true blank=""}}</select>
+                <label class="card-endurance-cost" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.secondEquipment.endurance.label'}}"><input type="number" name="system.secondEquipment.endurance" value="{{endurance}}" {{#unless ../editable}}disabled{{/unless}}></label>
+                <input type="text" name="system.secondEquipment.damage" value="{{damage}}" {{#unless ../editable}}disabled{{/unless}}>
+                {{#if ../editable}}<button type="button" class="card-equipment-remove" data-action="removeSecondEquipment" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.RemoveSecondEquipment'}}"><i class="fa-solid fa-trash"></i></button>{{/if}}
+              </div>
+            {{else}}
+              {{#if ../editable}}<div class="card-equipment-row empty"><span></span><input type="text" name="system.secondEquipment.name" value="" placeholder="{{localize 'AVENTURIA_HELPERS.HeroSheet.NoSecondEquipment'}}"><span></span><span></span><span></span><span></span></div>{{/if}}
+            {{/if}}
+          {{/with}}
+          <button type="button" class="card-exhaust-toggle always-active {{#if system.basicEquipment.exhaust}}on{{/if}}" data-action="toggleExhaust"><img src="{{icons.exhaust}}" alt=""><span>{{#if system.basicEquipment.exhaust}}{{localize "AVENTURIA_HELPERS.HeroSheet.Exhausted"}}{{else}}{{localize "AVENTURIA_HELPERS.HeroSheet.Ready"}}{{/if}}</span></button>
+        </div>
+
+        <h2>{{localize "AVENTURIA.Models.Hero.FIELDS.specialAbility.label"}}</h2>
+        <div class="card-ability">
+          <div class="card-ability-head">
+            {{#if editable}}<input type="text" name="system.specialAbility.name" value="{{system.specialAbility.name}}">{{else}}<strong class="card-ability-name">{{system.specialAbility.name}}</strong>{{/if}}
+            <button type="button" class="card-ability-state always-active {{#if abilityUsed}}on{{/if}}" data-action="toggleAbilityUsed"><img class="card-ability-token" src="{{icons.abilityToken}}" alt=""><span>{{#if abilityUsed}}{{localize "AVENTURIA_HELPERS.HeroSheet.AbilityUsed"}}{{else}}{{localize "AVENTURIA_HELPERS.HeroSheet.Ready"}}{{/if}}</span></button>
+          </div>
+          {{#if editable}}
+            <prose-mirror name="system.specialAbility.description" value="{{system.specialAbility.description}}" data-document-uuid="{{actor.uuid}}"></prose-mirror>
+          {{else}}
+            <div class="card-ability-description">{{{system.specialAbility.description}}}</div>
+          {{/if}}
+        </div>
+      </section>
+
+      <section class="card-page {{#if tabs.skills.active}}active{{/if}}">
+        {{#unless locked}}<span class="card-editing-label"><i class="fa-solid fa-pen"></i> {{localize "DOCUMENT.Update" type=(localize "AVENTURIA_HELPERS.CardHeroSheet.SkillsTab")}}</span>{{/unless}}
+        <h2>{{localize "AVENTURIA_HELPERS.CardHeroSheet.SkillsTab"}}</h2>
+        <div class="card-skills">
+          {{#each system.skills as |value key|}}
+            <div class="card-skill">
+              {{#if ../editable}}
+                <label><span>{{localize (concat "AVENTURIA.Models.Hero.FIELDS.skills." key ".label")}}</span><input type="number" name="system.skills.{{key}}" value="{{value}}"></label>
+              {{else}}
+                <button type="button" class="always-active" data-action="rollSkill" data-skill="{{key}}"><span>{{localize (concat "AVENTURIA.Models.Hero.FIELDS.skills." key ".label")}}</span><span class="card-skill-value"><strong>{{value}}</strong><i class="fa-solid fa-dice-d20" aria-hidden="true"></i></span></button>
+              {{/if}}
+            </div>
+          {{/each}}
+        </div>
+      </section>
+
+      <section class="card-page {{#if tabs.categories.active}}active{{/if}}">
+        <h2>{{localize "AVENTURIA.Models.Hero.FIELDS.categories.label"}}</h2>
+        <table class="card-categories"><tbody>
+          {{#each categoryRows}}<tr><th>{{localize this.label}}</th>{{#each this.cells}}<td>{{#unless this.blank}}<button type="button" class="{{#if this.active}}on{{/if}}" data-action="toggleCategory" data-category="{{this.key}}" data-tooltip="{{localize this.label}}" {{#unless ../../editable}}disabled{{/unless}}>{{#if this.icon}}<img src="{{this.icon}}" alt="">{{else}}<i class="fa-solid fa-thumbs-down"></i>{{/if}}</button>{{/unless}}</td>{{/each}}</tr>{{/each}}
+          <tr><th>{{localize "AVENTURIA_HELPERS.HeroSheet.Categories.Other"}}</th>{{#each otherCategories}}<td><button type="button" class="{{#if this.active}}on{{/if}}" data-action="toggleCategory" data-category="{{this.key}}" data-tooltip="{{localize this.label}}" {{#unless ../editable}}disabled{{/unless}}>{{#if this.icon}}<img src="{{this.icon}}" alt="">{{else}}<i class="fa-solid fa-thumbs-down"></i>{{/if}}</button></td>{{/each}}</tr>
+        </tbody></table>
+      </section>
+
+      <section class="card-page {{#if tabs.images.active}}active{{/if}}"><h2>{{localize "AVENTURIA_HELPERS.HeroSheet.ImagesTab"}}</h2><div class="card-images">
+        <figure><img src="{{actor.img}}" alt="{{actor.name}}" {{#if editable}}data-action="editImage" data-edit="img"{{else}}data-action="viewImage" data-src="{{actor.img}}" data-title="{{actor.name}}"{{/if}}><figcaption>{{localize "AVENTURIA_HELPERS.HeroSheet.CharacterArt"}}</figcaption></figure>
+        <figure><img src="{{system.skillImage}}" alt="" {{#if editable}}data-action="editImage" data-edit="system.skillImage"{{else}}data-action="viewImage" data-src="{{system.skillImage}}" data-title="{{actor.name}}"{{/if}}><figcaption>{{localize "AVENTURIA_HELPERS.HeroSheet.SkillCard"}}</figcaption></figure>
+      </div></section>
+
+      <section class="card-page {{#if tabs.items.active}}active{{/if}}"><h2>{{localize "AVENTURIA_HELPERS.CardHeroSheet.ItemsTab"}}</h2><div class="card-doc-list">{{#each itemTypes as |group type|}}<div class="card-doc-group"><h3><span>{{group.label}}</span>{{#if ../editable}}<button type="button" data-action="createDoc" data-document-class="Item" data-type="{{type}}"><i class="fa-solid fa-plus"></i></button>{{/if}}</h3>{{#each group.items}}<div class="card-doc-row" data-item-id="{{this._id}}" data-document-class="Item"><img src="{{this.img}}" alt=""><span>{{this.name}}</span><button type="button" data-action="viewDoc"><i class="fa-solid fa-pen"></i></button>{{#if ../../editable}}<button type="button" data-action="deleteDoc"><i class="fa-solid fa-trash"></i></button>{{/if}}</div>{{else}}<p>{{localize "AVENTURIA_HELPERS.HeroSheet.NoItems"}}</p>{{/each}}</div>{{/each}}</div></section>
+
+      <section class="card-page {{#if tabs.effects.active}}active{{/if}}"><h2>{{localize "AVENTURIA_HELPERS.CardHeroSheet.EffectsTab"}}</h2><div class="card-doc-list">{{#each effects as |section sid|}}<div class="card-doc-group"><h3><span>{{localize section.label}}</span>{{#if ../editable}}<button type="button" data-action="createDoc" data-document-class="ActiveEffect" {{#if (eq section.type "inactive")}}data-disabled="true"{{/if}} {{#if (eq section.type "temporary")}}data-duration.rounds="1"{{/if}} data-origin="{{../actor.uuid}}" data-img="icons/svg/aura.svg"><i class="fa-solid fa-plus"></i></button>{{/if}}</h3>{{#each section.effects}}<div class="card-doc-row" data-effect-id="{{this.id}}" data-parent-id="{{this.parent.id}}" data-document-class="ActiveEffect"><img src="{{this.img}}" alt=""><span>{{this.name}}</span><small>{{this.duration.label}}</small>{{#if ../../editable}}<button type="button" data-action="toggleEffect"><i class="fa-solid {{#if this.disabled}}fa-check{{else}}fa-xmark{{/if}}"></i></button>{{/if}}<button type="button" data-action="viewDoc"><i class="fa-solid fa-pen"></i></button>{{#if ../../editable}}<button type="button" data-action="deleteDoc"><i class="fa-solid fa-trash"></i></button>{{/if}}</div>{{else}}<p>{{localize "AVENTURIA_HELPERS.HeroSheet.NoEffects"}}</p>{{/each}}</div>{{/each}}</div></section>
+    </div>
+
+    <footer class="card-sheet-foot">
+      <label class="card-foot-edition"><span>{{localize "AVENTURIA.Models.Hero.FIELDS.edition.label"}}</span>{{#if editable}}<input type="text" name="system.edition" value="{{system.edition}}">{{else}}<strong>{{system.edition}}</strong>{{/if}}</label>
+      <div class="card-foot-serials">
+        <label><img src="{{icons.chalice}}" alt=""><span>{{localize "AVENTURIA_HELPERS.HeroSheet.SerialNumber"}}</span>{{#if editable}}<input type="number" name="system.serialNumber" value="{{system.serialNumber}}">{{else}}<strong>{{system.serialNumber}}</strong>{{/if}}</label>
+        <label><img src="{{icons.chalice}}" alt=""><span>{{localize "AVENTURIA_HELPERS.HeroSheet.SerialNumberSkill"}}</span>{{#if editable}}<input type="number" name="system.serialNumberSkill" value="{{system.serialNumberSkill}}">{{else}}<strong>{{system.serialNumberSkill}}</strong>{{/if}}</label>
+      </div>
+    </footer>
+  </div>
+</div>

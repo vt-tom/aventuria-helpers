@@ -1,9 +1,20 @@
 {
   "AVENTURIA_HELPERS": {
+    "CardHeroSheet": {
+      "Label": "Aventuria Helpers Charactersheet",
+      "NavigationLeft": "Navigation nach links verschieben",
+      "NavigationRight": "Navigation nach rechts verschieben",
+      "SkillsTab": "Talente",
+      "ItemsTab": "Items",
+      "EffectsTab": "Effekte",
+      "DecreaseLife": "Einen Lebenspunkt abziehen",
+      "IncreaseLife": "Einen Lebenspunkt hinzufügen"
+    },
     "HeroSheet": {
-      "Label": "Aventuria Helfer: Heldenbogen",
+      "Label": "Aventuria Helpers (old)",
       "Equipment": "Ausrüstung",
       "NoSecondEquipment": "Keine weitere Ausrüstung",
+      "RemoveSecondEquipment": "Zweite Ausrüstung entfernen",
       "ActionCardsTab": "Erlaubte Aktionskarten",
       "Categories": {
         "Close": "Nahkampf",

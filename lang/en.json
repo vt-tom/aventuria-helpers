@@ -1,9 +1,20 @@
 {
   "AVENTURIA_HELPERS": {
+    "CardHeroSheet": {
+      "Label": "Aventuria Helpers Charactersheet",
+      "NavigationLeft": "Move navigation to the left",
+      "NavigationRight": "Move navigation to the right",
+      "SkillsTab": "Skills",
+      "ItemsTab": "Items",
+      "EffectsTab": "Effects",
+      "DecreaseLife": "Remove one life point",
+      "IncreaseLife": "Add one life point"
+    },
     "HeroSheet": {
-      "Label": "Aventuria Helper: Hero Sheet",
+      "Label": "Aventuria Helpers (old)",
       "Equipment": "Equipment",
       "NoSecondEquipment": "No additional equipment",
+      "RemoveSecondEquipment": "Remove second equipment",
       "ActionCardsTab": "Allowed Action Cards",
       "Categories": {
         "Close": "Melee",

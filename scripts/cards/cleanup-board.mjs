@@ -26,7 +26,7 @@ const CCM_MODULE_ID = "complete-card-management";
  * A card "on the scene" is just an extra `flags.complete-card-management.<sceneId>` position
  * flag on the `Card`/`Cards` document, independent of which Cards stack (deck/discard/hand/play
  * pile) it actually belongs to (confirmed for the adventure-card placement in 0.1.4.1, see
- * `CHANGELOG.md`) - clearing that flag is already "back in its stack", no separate move
+ * `project/CHANGELOG.md`) - clearing that flag is already "back in its stack", no separate move
  * needed. Same iteration approach as the existing `resetCardRotations()` macro
  * (`macros/reset-card-rotations.mjs`, iterates `canvas.cards.placeables`) - deliberately
  * rebuilt instead of calling Complete Card Management's own equivalent scene-control action

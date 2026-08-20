@@ -309,7 +309,7 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
    * unlike "Erste Schritte"/"Helden auswählen"/"Schnellstarter vorbereiten", it isn't a fixed
    * N-step flow but an open-ended reader/browser (pick an adventure, read/navigate it,
    * possibly across many sessions), so it gets its own dedicated app instead of a fourth
-   * `SECTIONS` entry (see `PROJECT.md` 5.2).
+   * `SECTIONS` entry (see `project/PROJECT.md` 5.2).
    */
   static async #onOpenAdventureTool() {
     await new AventuriaHelpersAdventureTool().render({ force: true });

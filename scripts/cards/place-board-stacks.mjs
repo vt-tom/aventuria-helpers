@@ -5,7 +5,7 @@ const CCM_MODULE_ID = "complete-card-management";
  * Canvas placements for the shared GM stacks that aventuria's "Prepare Board" macro
  * creates as world Cards documents. Coordinates were captured by placing each stack by
  * hand on the Aventuria `Spielbrett`/`Gameboard` scene and reading back the resulting
- * `flags.complete-card-management.<sceneId>` data - see CHANGELOG.md for how they were
+ * `flags.complete-card-management.<sceneId>` data - see project/CHANGELOG.md for how they were
  * obtained. Two of Prepare Board's piles (`adventureInPlay0`, `henchmanInPlay00`) are
  * intentionally not placed on the scene at all (per Nutzerentscheidung 2026-08-14 - the
  * board layout has no drop zone for them), so they're not listed here.

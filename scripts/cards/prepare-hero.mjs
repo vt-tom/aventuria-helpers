@@ -1,5 +1,5 @@
 import { resolveStacks } from "./stacks.mjs";
-import { AventuriaHelpersHeroSheet } from "../sheets/hero-sheet.mjs";
+import { AventuriaHelpersCardHeroSheet } from "../sheets/card-hero-sheet.mjs";
 import { wirePlayRegion } from "./player-slots.mjs";
 
 const MODULE_ID = "aventuria-helpers";
@@ -7,14 +7,19 @@ const AVENTURIA_ID = "aventuria";
 const CCM_ID = "complete-card-management";
 
 /**
- * Sheet identifier `Actors.registerSheet()` derives for `AventuriaHelpersHeroSheet`
+ * Sheet identifier `Actors.registerSheet()` derives for `AventuriaHelpersCardHeroSheet`
  * (`scope.ClassName`, confirmed against the actual registration logic in the local
  * v14 source, `client/applications/apps/document-sheet-config.mjs`'s
  * `DocumentSheetConfig.registerSheet()`: `const id = \`${scope}.${sheetClass.name}\`;`).
  * Built from the class itself rather than hardcoded, so a future rename can't
- * silently desync it.
+ * silently desync it. Since 2026-08-20 this module's own card sheet is also the
+ * world-wide default (`makeDefault: true`, `aventuria-helpers.mjs`) for `aventuria.hero`,
+ * so this explicit per-actor flag is technically redundant for actors created through
+ * this exact flow - kept anyway so heroes prepared here are always guaranteed the
+ * intended sheet regardless of whether a GM later changes the world default, same
+ * defense-in-depth reasoning as `flags.core.sheetClass` on the Cards documents below.
  */
-const HERO_SHEET_ID = `${MODULE_ID}.${AventuriaHelpersHeroSheet.name}`;
+const HERO_SHEET_ID = `${MODULE_ID}.${AventuriaHelpersCardHeroSheet.name}`;
 
 /**
  * Deliberate, isolated exception to this module's usual "never rebuild aventuria's
@@ -26,7 +31,7 @@ const HERO_SHEET_ID = `${MODULE_ID}.${AventuriaHelpersHeroSheet.name}`;
  * to warn about conflicts beforehand) that wasn't fixable by tweaking the seam
  * between the two dialogs - only by not having a seam at all. This file reimplements
  * exactly what that function does, faithfully mirrored from its decompiled source
- * (see `CHANGELOG.md` for the exact reference), so `assign-hero.mjs` can do
+ * (see `project/CHANGELOG.md` for the exact reference), so `assign-hero.mjs` can do
  * everything - player, board slot, hero, validation - on one screen.
  */
 
@@ -96,12 +101,12 @@ export async function prepareAndAssignHero({ heroPack, heroId, targetUser, playe
   await deleteExistingHero(targetUser);
 
   const actor = await game.actors.importFromCompendium(heroPack, heroId);
-  // Nutzerwunsch 2026-08-16: heroes prepared through this tool should open with this
-  // module's own Hero-Sheet, not the generic UTS sheet - `Actors.registerSheet()`
-  // for it (aventuria-helpers.mjs) deliberately keeps `makeDefault: false` (doesn't
-  // change the world-wide default for every hero), so set it per-actor instead, same
-  // as `flags.core.sheetClass` aventuria's own `preparePlayer()` already sets on its
-  // Cards documents for their CCM sheets.
+  // Nutzerwunsch 2026-08-16, Sheet seit 2026-08-20 auf den Karten-Heldenbogen umgestellt:
+  // heroes prepared through this tool should open with this module's own primary sheet,
+  // not the generic UTS sheet - set explicitly per-actor (see `HERO_SHEET_ID` above for
+  // why this stays even though `makeDefault: true` already covers it), same as
+  // `flags.core.sheetClass` aventuria's own `preparePlayer()` already sets on its Cards
+  // documents for their CCM sheets.
   await actor.setFlag("core", "sheetClass", HERO_SHEET_ID);
   const deckSource = await fromUuid(actor.getFlag(AVENTURIA_ID, "deck"));
   const folder = await Folder.create({ name: actor.name, type: "Cards" });

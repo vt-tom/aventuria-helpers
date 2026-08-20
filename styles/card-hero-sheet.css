@@ -1,0 +1,389 @@
+/* Additional card-shaped Hero Sheet. Everything is scoped so the established sheet stays untouched. */
+.application.aventuria-helpers.card-hero-sheet { overflow: visible; min-width: 560px; min-height: 680px; border: 0; background: transparent; box-shadow: none; }
+.application.aventuria-helpers.card-hero-sheet .window-header {
+  position: relative;
+  z-index: 10;
+  min-height: 40px;
+  margin: 0;
+  padding: 0 14px;
+  border: 4px solid #716b63;
+  border-bottom: 0;
+  border-radius: 25px 25px 0 0;
+  color: #fff8eb;
+  background:
+    repeating-radial-gradient(ellipse at 50% 0, transparent 0 8px, #b5ced011 9px 10px),
+    linear-gradient(140deg, #0e2933, #173b47 55%, #0b2028);
+  box-shadow: inset 0 0 0 2px #aaa195, inset 0 0 20px #0009;
+  font-family: "Gentium Basic", Georgia, serif;
+}
+.application.aventuria-helpers.card-hero-sheet .window-header .window-title {
+  color: #fff8eb;
+  font-weight: 700;
+  text-shadow: 0 1px 2px #000;
+}
+.application.aventuria-helpers.card-hero-sheet .window-header button,
+.application.aventuria-helpers.card-hero-sheet .window-header .header-control {
+  border: 0;
+  color: #fff8eb;
+  background: transparent;
+  box-shadow: none;
+}
+.application.aventuria-helpers.card-hero-sheet .window-header button:hover,
+.application.aventuria-helpers.card-hero-sheet .window-header button:focus-visible,
+.application.aventuria-helpers.card-hero-sheet .window-header .header-control:hover,
+.application.aventuria-helpers.card-hero-sheet .window-header .header-control:focus-visible {
+  color: #ffe2a1;
+  text-shadow: 0 0 5px #d29a48;
+}
+.aventuria-helpers.card-hero-sheet .window-content { padding: 0; overflow: visible; background: transparent; }
+
+.aventuria-card-hero-sheet {
+  --card-ink: #211b17;
+  --card-paper: #eee8dc;
+  --card-line: #925e49;
+  --card-highlight: #c9713a;
+  --card-highlight-glow: #c9713a8c;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: var(--card-ink);
+  font-family: "Gentium Basic", Georgia, serif;
+}
+
+.aventuria-card-hero-sheet button { cursor: pointer; }
+.aventuria-card-hero-sheet img { border: 0; }
+
+/* Header attributes and equipment are compact, medallion-like roll targets. Their quiet
+   parchment brightening and focused double ring deliberately differ from list-like talents. */
+.card-stat-roll:hover strong, .card-stat-roll:focus-visible strong,
+.card-equipment-roll:hover, .card-equipment-roll:focus-visible {
+  border-color: #8f684b;
+  filter: brightness(1.08) saturate(1.08);
+  box-shadow: 0 0 0 2px #f8e6b6, 0 0 0 4px #8f684b, 0 2px 8px #0008;
+  transform: scale(1.08);
+}
+
+.card-sheet-shell {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 280px minmax(0, 1fr) 42px;
+  overflow: hidden;
+  border: 4px solid #716b63;
+  border-top: 0;
+  border-radius: 0 0 18px 18px;
+  background: var(--card-paper);
+  box-shadow: 0 16px 38px #000b, inset 0 0 0 2px #aaa195, inset 0 0 0 4px #1b2225;
+}
+
+.card-sheet-shell::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  z-index: 8;
+  border: 1px solid #28231f88;
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+.card-sheet-head {
+  position: relative;
+  display: grid;
+  grid-template-columns: 42% 38% 20%;
+  gap: 4px;
+  padding: 16px 17px 76px;
+  color: #f7f1e6;
+  background:
+    radial-gradient(ellipse at 45% 35%, #5e7b7f99 0 2%, transparent 3%),
+    repeating-radial-gradient(ellipse at 50% 0, transparent 0 8px, #b5ced011 9px 10px),
+    linear-gradient(140deg, #0e2933, #173b47 55%, #0b2028);
+  box-shadow: inset 0 0 30px #000b;
+}
+
+.card-portrait-frame {
+  min-width: 0;
+  padding: 1px;
+  overflow: hidden;
+  border: 3px solid #51483e;
+  border-radius: 22px 22px 8px 8px;
+  background: #ada396;
+  box-shadow: 0 3px 8px #000a;
+}
+.card-portrait-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 17px 17px 5px 5px; }
+.card-portrait-frame img[data-action] { cursor: pointer; }
+
+.card-core-stats {
+  align-self: center;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(70px, 1fr));
+  gap: 15px 4px;
+}
+.card-stat { position: relative; min-width: 0; height: 76px; padding-top: 3px; text-align: center; }
+.card-stat > img {
+  position: absolute;
+  z-index: 1;
+  width: 38px;
+  height: 38px;
+  top: 9px;
+  left: calc(50% - 62px);
+  padding: 4px;
+  border: 2px solid #8b8175;
+  border-radius: 50%;
+  object-fit: contain;
+  background: radial-gradient(circle at 38% 32%, #fffdf5, #d8ccba 72%, #948878);
+  box-shadow: 0 2px 6px #000b, inset 0 0 0 1px #fff9;
+  filter: drop-shadow(0 1px 1px #0005);
+}
+.card-stat-roll, .card-stat-edit { width: 100%; height: 76px; padding: 0; border: 0; color: #f8f3eb; background: transparent; text-shadow: 0 1px 2px #000; text-align: center; }
+.card-stat-roll { display: block; }
+.card-stat-edit { display: block; }
+.card-stat-roll strong, .card-stat-edit input {
+  position: relative;
+  z-index: 2;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  border: 5px double #777068;
+  border-radius: 50%;
+  color: #15120f;
+  background: radial-gradient(circle at 40% 35%, #fff, #e8decc 65%, #a99c88);
+  box-shadow: 0 2px 6px #000a;
+  text-align: center;
+  font: 700 25px "Gentium Basic", Georgia, serif;
+  text-shadow: none;
+}
+.card-stat-roll span, .card-stat-edit span { width: 100%; display: block; margin-top: 1px; color: #f8f3eb; font-weight: 700; font-size: 13px; line-height: 16px; text-align: center; white-space: nowrap; }
+.card-stat-roll strong { transition: box-shadow .15s ease, filter .15s ease, transform .15s ease; }
+.card-stat-roll.inactive { display: block; opacity: 1; }
+.card-stat-roll.inactive strong { color: #77716a; background: radial-gradient(circle at 40% 35%, #dddcd7, #aaa9a3 68%, #77756f); }
+.card-stat-roll.inactive span { opacity: .55; }
+.card-stat-edit input { border-color: #d7a04e; background: #fff8d9; box-shadow: 0 0 0 3px #fff3b955, inset 0 1px 3px #55321e26; }
+.card-stat-edit input::-webkit-inner-spin-button, .card-stat-edit input::-webkit-outer-spin-button { appearance: none; }
+
+.card-vitals { align-self: center; display: grid; justify-items: center; gap: 12px; }
+.card-life-control { position: relative; display: flex; align-items: center; gap: 4px; }
+.card-life-medallion, .card-level-medallion {
+  position: relative;
+  z-index: 2;
+  width: 74px;
+  height: 74px;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  border: 6px double #726b62;
+  border-radius: 50%;
+  color: #1e1713;
+  background: radial-gradient(circle at 40% 35%, #fff, #e9dfce 68%, #a99c88);
+  box-shadow: 0 3px 8px #000a;
+}
+.card-life-icon {
+  position: absolute;
+  z-index: 1;
+  width: 38px;
+  height: 38px;
+  top: 9px;
+  left: -31px;
+  padding: 4px;
+  border: 2px solid #8b8175;
+  border-radius: 50%;
+  object-fit: contain;
+  background: radial-gradient(circle at 38% 32%, #fffdf5, #d8ccba 72%, #948878);
+  box-shadow: 0 2px 6px #000b, inset 0 0 0 1px #fff9;
+  filter: drop-shadow(0 1px 1px #0005);
+}
+.card-life-medallion input { width: 34px; height: auto; padding: 0; border: 0; color: inherit; background: transparent; text-align: center; font: 700 22px "Gentium Basic", Georgia, serif; }
+.card-life-medallion input::-webkit-inner-spin-button, .card-life-medallion input::-webkit-outer-spin-button { appearance: none; }
+.card-life-medallion span { font-size: 15px; font-weight: 700; line-height: 1; }
+.card-life-max { display: inline-flex; align-items: center; gap: 1px; }
+.card-life-medallion input.lp-max-input { width: 22px; font: 700 15px "Gentium Basic", Georgia, serif; }
+.card-life-buttons { display: grid; gap: 4px; }
+.card-life-buttons button { width: 26px; height: 26px; padding: 0; border: 2px solid #777068; border-radius: 50%; color: #241c17; background: radial-gradient(circle at 40% 35%, #fff, #d9cebd); box-shadow: 0 2px 4px #0008; }
+.card-level-medallion img { width: 46px; height: 46px; object-fit: contain; }
+.card-level-medallion > span { position: absolute; bottom: -17px; color: #fff; font-weight: 700; }
+.card-level-medallion select { position: absolute; bottom: -24px; width: 55px; height: 22px; padding: 0; color: #211b17; background: #fff8e9; }
+
+.card-name-ribbon {
+  position: absolute;
+  z-index: 3;
+  left: 4%;
+  right: 4%;
+  bottom: 9px;
+  min-height: 57px;
+  padding: 5px 48px;
+  display: grid;
+  place-content: center;
+  border: 3px solid #1f1814;
+  clip-path: polygon(5% 0, 95% 0, 100% 50%, 95% 100%, 5% 100%, 0 50%);
+  background: linear-gradient(#6e4c38, #3a291f 55%, #5d402f);
+  box-shadow: inset 0 0 0 2px #a48265;
+  text-align: center;
+}
+.card-name-ribbon strong { min-height: 28px; color: #fff9ed; font-size: 25px; line-height: 28px; text-shadow: 0 2px 2px #000; }
+.card-name-ribbon span { min-height: 17px; color: #fff9ed; font-size: 14px; line-height: 17px; }
+.card-name-ribbon input { width: 100%; height: 24px; padding: 2px 6px; border: 1px solid #d9bb88; color: #241a14; background: #fff8e9; text-align: center; }
+.card-name-ribbon .card-name-input { height: 28px; font-weight: 700; font-size: 20px; line-height: 24px; }
+.card-name-ribbon .card-profession-input { height: 17px; font-size: 14px; line-height: 15px; }
+
+.card-page-stack { min-height: 0; overflow: hidden; background: linear-gradient(#fffcf8c7, #eee5d7de), url("../../aventuria/assets/layout/box-parchment.webp") center / cover; }
+.card-page { position: relative; height: 100%; padding: 15px 20px 20px; display: none; overflow-y: auto; scrollbar-gutter: stable; scrollbar-color: #82624e #d8ccbb; }
+.card-page.active { display: block; }
+.card-page h2 { margin: 0 0 9px; display: flex; align-items: center; gap: 10px; font-size: 20px; text-align: center; }
+.card-page h2::before, .card-page h2::after { content: ""; height: 1px; flex: 1; background: var(--card-line); }
+.card-editing-label { position: sticky; z-index: 4; top: -15px; float: right; margin: -15px -20px 2px 8px; padding: 4px 8px; border-radius: 0 0 0 7px; color: #fff8eb; background: #80502f; font: 700 11px system-ui, sans-serif; }
+
+.card-equipment, .card-ability { margin-bottom: 12px; overflow: hidden; border: 1px solid #a77b63; border-radius: 10px; background: #fffaf2aa; }
+.card-equipment-row { min-height: 52px; padding: 5px 8px; display: grid; grid-template-columns: 38px minmax(110px, 1fr) 105px 48px 65px 26px; align-items: center; gap: 6px; border-bottom: 1px solid #b79580; }
+.card-equipment-remove { width: 26px; height: 26px; padding: 0; border: 0; color: #8b5a4a; background: transparent; }
+.card-equipment-remove:hover, .card-equipment-remove:focus-visible { color: #a8383d; }
+.card-equipment-row input, .card-equipment-row select { min-width: 0; height: 30px; color: var(--card-ink); background: transparent; border: 0; border-bottom: 1px dotted #8b7563; }
+.card-equipment-row label { display: flex; align-items: center; justify-content: center; }
+
+/* Ausdauer-Kosten-Kreis, an Aventurias eigene `.endurance-cost`-Kartenoptik angelehnt (reiner
+   CSS-Kreis via ::after, kein Icon-Asset) statt eines separaten Ausdauer-Icons. */
+.card-endurance-cost { position: relative; width: 26px; height: 26px; }
+.card-endurance-cost::after { content: ""; position: absolute; inset: 0; border: 2px solid currentColor; border-radius: 50%; pointer-events: none; }
+.aventuria-card-hero-sheet .card-equipment-row .card-endurance-cost input {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  text-align: center;
+  font-weight: 700;
+}
+.card-endurance-cost input::-webkit-inner-spin-button, .card-endurance-cost input::-webkit-outer-spin-button { appearance: none; }
+
+.card-equipment-roll { width: 36px; height: 36px; padding: 5px; border: 2px solid #79695d; border-radius: 50%; background: #eee5d6; transition: border-color .15s ease, box-shadow .15s ease, filter .15s ease, transform .15s ease; }
+.card-equipment-roll img { width: 100%; height: 100%; object-fit: contain; }
+.card-equipment-row.empty { opacity: .7; }
+.is-editing .card-equipment-row input, .is-editing .card-equipment-row select, .is-editing .card-ability input { padding: 3px 5px; border: 1px solid #a56f4e; border-radius: 4px; background: #fffdf7; box-shadow: inset 0 1px 3px #55321e26; }
+.card-exhaust-toggle { width: 100%; padding: 6px; display: flex; justify-content: center; align-items: center; gap: 7px; border: 0; color: #2d5135; background: #dbe7d1; }
+.card-exhaust-toggle.on { color: #742f2a; background: #ead0c9; }
+.card-exhaust-toggle img { width: 23px; height: 23px; object-fit: contain; }
+
+.card-ability {
+  height: 194px;
+  min-height: 194px;
+  padding: 0;
+  background: linear-gradient(#fffdf8d9, #f5ecdfc7);
+  box-shadow: inset 0 0 0 1px #fff9;
+}
+.card-ability-head {
+  min-height: 44px;
+  padding: 6px 9px 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #c7a28b;
+  background: linear-gradient(90deg, #eadbc8b8, #fffaf2a8 70%);
+}
+.card-ability-head > input { min-width: 0; flex: 1; height: 30px; font-weight: 700; font-size: 16px; }
+.card-ability-name { min-width: 0; flex: 1; padding: 3px 0; overflow: hidden; font-size: 18px; line-height: 24px; text-overflow: ellipsis; white-space: nowrap; }
+.card-ability-state {
+  flex: 0 0 auto;
+  min-width: 112px;
+  height: 38px;
+  padding: 2px 9px 2px 3px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #809172;
+  border-radius: 18px;
+  color: #315336;
+  background: linear-gradient(#eef5e8, #d6e3ce);
+  box-shadow: inset 0 0 0 1px #fff9;
+  font-size: 13px;
+  font-weight: 700;
+}
+.card-ability-state.on { border-color: #a57668; color: #742f2a; background: linear-gradient(#f3e2dc, #e6cbc3); }
+.card-ability-token { width: 34px; height: 34px; flex: 0 0 34px; padding: 2px; border: 1px solid #82786d; border-radius: 50%; object-fit: contain; background: #f7f1e7; box-shadow: 0 1px 3px #0005; }
+.card-ability-state.on .card-ability-token { filter: grayscale(1); opacity: .62; }
+.card-ability prose-mirror { --min-height: 130px; margin: 8px 10px 10px; color: var(--card-ink); font-family: inherit; font-size: .86rem; line-height: 1.4; }
+.card-ability-description { height: 148px; min-height: 148px; margin: 0; padding: 10px 12px 12px; display: block; overflow-y: auto; line-height: 1.4; }
+.card-ability-description > :first-child { margin-top: 0; }
+.card-ability-description > :last-child { margin-bottom: 0; }
+
+.card-skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.card-skill { min-width: 0; min-height: 56px; border: 1px solid #b38a72; border-radius: 9px; background: #fffaf2bd; transition: border-color .15s ease, background .15s ease, box-shadow .15s ease; }
+.card-skill button, .card-skill label { width: 100%; height: 100%; padding: 8px 10px; display: grid; grid-template-columns: minmax(0, 1fr) 40px; align-items: center; gap: 7px; border: 0; color: var(--card-ink); background: transparent; text-align: left; }
+.card-skill button span, .card-skill label span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+.card-skill button strong, .card-skill label input { width: 37px; height: 37px; padding: 0; display: grid; place-items: center; border: 3px double #73685e; border-radius: 50%; color: var(--card-ink); background: #eee5d6; text-align: center; font: 700 19px "Gentium Basic", Georgia, serif; }
+.card-skill button { overflow: visible; border-radius: 9px; }
+.card-skill:has(button:hover), .card-skill:has(button:focus-visible) { border-color: #806b5c; background: #eee3d2; box-shadow: inset 0 2px 5px #4c332333, inset 0 0 0 1px #fff8, 0 1px 2px #0003; }
+.card-skill-value { position: relative; width: 40px; height: 37px; display: grid; justify-items: center; overflow: visible !important; }
+.card-skill-value > i { position: absolute; z-index: 2; top: 25px; color: #4b4d4f; opacity: 0; pointer-events: none; filter: drop-shadow(0 1px 1px #fff); font-size: 16px; transform: scale(.65) rotate(-18deg); transform-origin: center; }
+.card-skill button:is(:hover, :focus-visible) .card-skill-value > i { opacity: .82; animation: card-d20-roll 900ms ease-in-out infinite; }
+.is-editing .card-skill label input { border: 3px solid #d7a04e; background: #fff8d9; box-shadow: 0 0 0 3px #fff3b955; }
+
+@keyframes card-d20-roll {
+  0%, 100% { transform: scale(.78) rotate(-14deg); }
+  50% { transform: scale(1) rotate(14deg); }
+}
+
+.card-categories { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--card-line); border-radius: 9px; overflow: hidden; }
+.card-categories th, .card-categories td { height: 50px; padding: 4px; border-right: 1px solid #b98b73; border-bottom: 1px solid #b98b73; text-align: center; }
+.card-categories th { text-align: left; }
+.card-categories button { width: 36px; height: 36px; padding: 5px; border: 1px solid transparent; border-radius: 50%; background: #d7cdc0; opacity: .35; }
+.card-categories button.on { border-color: #6a825b; background: #e6eddb; opacity: 1; }
+.card-categories img { width: 100%; height: 100%; object-fit: contain; }
+
+.card-images { height: calc(100% - 32px); display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+.card-images figure { min-width: 0; margin: 0; padding: 9px; display: grid; grid-template-rows: minmax(0, 1fr) auto; border: 1px solid #98715b; border-radius: 10px; background: #f7f1e8; text-align: center; }
+.card-images img { width: 100%; height: 100%; min-height: 0; object-fit: contain; cursor: pointer; }
+
+.card-doc-list { display: grid; gap: 12px; }
+.card-doc-group { overflow: hidden; border: 1px solid #a77b63; border-radius: 9px; background: #fffaf2aa; }
+.card-doc-group h3 { margin: 0; padding: 7px 10px; display: flex; justify-content: space-between; color: #fff8ed; background: #6b4b39; }
+.card-doc-group h3 button { border: 0; color: inherit; background: transparent; }
+.card-doc-group p { padding: 0 10px; color: #75675c; }
+.card-doc-row { padding: 7px 9px; display: grid; grid-template-columns: 32px minmax(0, 1fr) auto auto auto; align-items: center; gap: 6px; border-top: 1px solid #b99a87; }
+.card-doc-row img { width: 30px; height: 30px; object-fit: cover; }
+.card-doc-row button { border: 0; background: transparent; }
+
+.card-sheet-foot { padding: 4px 16px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 14px; border-top: 1px solid #9e7c68; background: #d8ccbc; font-size: 11px; }
+.card-sheet-foot label { min-width: 0; display: flex; align-items: center; gap: 5px; }
+.card-sheet-foot label > span { color: #695b50; white-space: nowrap; }
+.card-sheet-foot strong { color: var(--card-ink); font-size: 12px; white-space: nowrap; }
+.card-sheet-foot input { width: 78px; height: 24px; padding: 1px 4px; border: 1px solid #a56f4e; border-radius: 4px; color: var(--card-ink); background: #fffdf7; }
+.card-foot-edition input { min-width: 90px; flex: 1; }
+.card-foot-serials { display: flex; align-items: center; gap: 12px; }
+.card-foot-serials label { display: grid; grid-template-columns: 18px auto auto; gap: 3px; }
+.card-foot-serials label > span { font-size: 9px; }
+.card-foot-serials input { width: 48px; }
+.card-sheet-foot img { width: 18px; height: 18px; object-fit: contain; }
+
+.card-flag-rail { position: absolute; z-index: 1; top: 280px; width: 68px; display: flex; flex-direction: column; }
+.nav-left .card-flag-rail { right: calc(100% - 9px); }
+.nav-right .card-flag-rail { left: calc(100% - 9px); }
+.card-flag { min-height: 56px; padding: 9px; display: grid; place-items: center; border: 3px ridge #777066; background: linear-gradient(90deg, #e8dfd1, #bdae9d); box-shadow: 0 3px 5px #0008; transition: border-color .15s ease, background .15s ease, box-shadow .15s ease; }
+.card-flag + .card-flag { margin-top: -2px; }
+.card-flag img { width: 33px; height: 33px; object-fit: contain; filter: drop-shadow(0 1px 1px #fff8); }
+.card-flag > i { color: #443329; font-size: 25px; filter: drop-shadow(0 1px 1px #fff9); }
+.card-flag.active > i { color: #6c4228; }
+.nav-left .card-flag { border-radius: 7px 0 0 7px; }
+.nav-right .card-flag { border-radius: 0 7px 7px 0; }
+.card-flag.active { z-index: 2; background: linear-gradient(90deg, #fffaf0, #e6d8c6); }
+.nav-left .card-flag.active { translate: -9px; }
+.nav-right .card-flag.active { translate: 9px; }
+.card-flag-rail:hover, .card-flag-rail:focus-within { z-index: 4; }
+.card-flag:hover, .card-flag:focus-visible { z-index: 3; outline: 0; border-color: #43474a; background: linear-gradient(90deg, #dad8d2, #f3eee5); }
+.nav-left .card-flag:hover, .nav-left .card-flag:focus-visible { box-shadow: inset 5px 0 #43474a, 0 2px 5px #0006; }
+.nav-right .card-flag:hover, .nav-right .card-flag:focus-visible { box-shadow: inset -5px 0 #43474a, 0 2px 5px #0006; }
+.card-rail-control { width: 46px; height: 46px; margin: 8px auto 0; border: 5px double #847c72; border-radius: 50%; color: #fff9ed; background: radial-gradient(circle, #604c3d, #211b17); box-shadow: 0 4px 7px #0009; }
+.card-rail-control.card-lock { margin-top: 5px; }
+
+@media (max-width: 720px) {
+  .application.aventuria-helpers.card-hero-sheet { min-width: 520px; }
+  .card-sheet-head { grid-template-columns: 40% 40% 20%; }
+  .card-equipment-row { grid-template-columns: 36px minmax(95px, 1fr) 90px 44px 55px 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-skill button:is(:hover, :focus-visible) .card-skill-value > i { animation: none; transform: scale(1); }
+}

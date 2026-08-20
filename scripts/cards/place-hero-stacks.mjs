@@ -13,7 +13,7 @@ const CCM_MODULE_ID = "complete-card-management";
  * stack/the token by hand on the Aventuria `Spielbrett`/`Gameboard` scene at the
  * slot's spot, then read back the resulting position - Cards via
  * `flags.complete-card-management.<sceneId>`, the Token directly via its own
- * `x`/`y`/`rotation`. See CHANGELOG.md for how these were obtained.
+ * `x`/`y`/`rotation`. See project/CHANGELOG.md for how these were obtained.
  */
 const HERO_PLACEMENTS = {
   1: {
