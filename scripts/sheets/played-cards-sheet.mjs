@@ -63,6 +63,15 @@ export function registerPlayedCardsSheet() {
       return { left: trayRect.right + 16, top: trayRect.top };
     },
   ) {
+    /**
+     * One deferred first-render docking pass. Foundry applies its initial
+     * ApplicationV2 position late in the render cycle; without this pass it
+     * can overwrite `_onRender()`'s already correct position and leave this
+     * sheet directly on top of the Hand sheet until the user resets it.
+     * @type {number|null}
+     */
+    #initialDockFrame = null;
+
     /** @inheritdoc */
     static DEFAULT_OPTIONS = {
       classes: ["aventuria-helpers", "played-cards-sheet"],
@@ -187,6 +196,14 @@ export function registerPlayedCardsSheet() {
     async _onFirstRender(context, options) {
       await super._onFirstRender(context, options);
       document.addEventListener("ahb:dockable-repositioned", this.#onDockEvent);
+      // Run once after Foundry has committed the window's own initial
+      // position and after the Hand sheet has a stable bounding rectangle.
+      // updateDockPosition() still respects `docked` if the window was moved
+      // manually in the meantime.
+      this.#initialDockFrame = requestAnimationFrame(() => {
+        this.#initialDockFrame = null;
+        if (this.rendered) this.updateDockPosition();
+      });
       this._createContextMenu(this._getCardContextOptions, "[data-application-part=cardList] .cards .card", {
         hookName: "getPlayedCardContextOptions",
         parentClassHooks: false,
@@ -197,6 +214,8 @@ export function registerPlayedCardsSheet() {
     /** @inheritdoc */
     async _onClose(options) {
       document.removeEventListener("ahb:dockable-repositioned", this.#onDockEvent);
+      if (this.#initialDockFrame !== null) cancelAnimationFrame(this.#initialDockFrame);
+      this.#initialDockFrame = null;
       hideCardPreview();
       return super._onClose(options);
     }

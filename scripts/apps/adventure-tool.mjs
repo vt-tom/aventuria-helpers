@@ -49,6 +49,7 @@ export class AventuriaHelpersAdventureTool extends HandlebarsApplicationMixin(Ap
       release: AventuriaHelpersAdventureTool.#onRelease,
       endAdventure: AventuriaHelpersAdventureTool.#onEndAdventure,
       goToPage: AventuriaHelpersAdventureTool.#onGoToPage,
+      togglePanel: AventuriaHelpersAdventureTool.#onTogglePanel,
     },
   };
 
@@ -68,6 +69,18 @@ export class AventuriaHelpersAdventureTool extends HandlebarsApplicationMixin(Ap
   /** Hook ids (`updateSetting`/`createSetting`) for the live-refresh listener, so `_onClose()` can remove them again. */
   #settingsHooks = [];
 
+  /**
+   * Which of the three info panels ("prep"/"history"/"nav") is currently expanded, or `null`
+   * if none is - instance-local UI state, not persisted (analogous to
+   * `AventuriaHelpersCardHeroSheet#_cardLocked`), since it has no meaning outside the current
+   * window. Replaced the three always-stacked `<details>` boxes (Live-Test-Fund 2026-08-21,
+   * "nehmen zu viel Platz ein" - see `TODO.md`) with a compact icon row that expands at most
+   * one panel at a time instead - Nutzerentscheidung nach Klickdummy-Vergleich
+   * (`project/design-unification/`), "Variante A".
+   * @type {"prep"|"history"|"nav"|null}
+   */
+  #activePanel = null;
+
   /* -------------------------------------------------- */
 
   /** @inheritdoc */
@@ -86,6 +99,7 @@ export class AventuriaHelpersAdventureTool extends HandlebarsApplicationMixin(Ap
     if (!active) {
       context.picker = true;
       context.adventures = await this.#loadAdventures();
+      this.#activePanel = null; // stale once back at the picker, see field doc
       return context;
     }
 
@@ -96,6 +110,7 @@ export class AventuriaHelpersAdventureTool extends HandlebarsApplicationMixin(Ap
       context.picker = true;
       context.adventures = await this.#loadAdventures();
       context.brokenAdventure = true;
+      this.#activePanel = null;
       return context;
     }
 
@@ -113,7 +128,11 @@ export class AventuriaHelpersAdventureTool extends HandlebarsApplicationMixin(Ap
     context.entryName = entry.name;
     context.entryUuid = entry.uuid;
     context.pageName = currentPage.name;
-    context.prepOpen = isFirstPage;
+    context.panels = {
+      prep: this.#activePanel === "prep",
+      history: this.#activePanel === "history",
+      nav: this.#activePanel === "nav",
+    };
     context.prepHtml = prepHtml
       ? await foundry.applications.ux.TextEditor.implementation.enrichHTML(prepHtml, { relativeTo: entry })
       : null;
@@ -122,6 +141,17 @@ export class AventuriaHelpersAdventureTool extends HandlebarsApplicationMixin(Ap
       id: pageId,
       name: entry.pages.get(pageId)?.name ?? pageId,
       active: pageId === currentPage.id,
+    }));
+    // Fallback for a page whose text has no @UUID link onward (or to "Beenden") at all -
+    // Live-Test-Fund 2026-08-21: without this, a reader hitting such a page had no way
+    // forward except closing the tool and hoping the History list (visited pages only)
+    // happened to cover it. Kept as its own collapsible, deliberately separate from
+    // "Verlauf" above rather than folded into it (Nutzerwunsch) - this lists *every* page
+    // of the adventure, visited or not, since the whole point is escaping a dead end.
+    context.allPages = pages.map((page) => ({
+      id: page.id,
+      name: page.name,
+      active: page.id === currentPage.id,
     }));
     return context;
   }
@@ -176,11 +206,21 @@ export class AventuriaHelpersAdventureTool extends HandlebarsApplicationMixin(Ap
   /** @inheritdoc */
   async _onFirstRender(context, options) {
     await super._onFirstRender(context, options);
-    const acquired = await acquireAdventureLock();
-    if (!acquired) {
-      await this.render();
-      return;
-    }
+    // Live-Test-Fund 2026-08-21 (reproducible "locked" window that opens top-left and can't
+    // be closed): `render()`/`close()` both funnel through the same one-slot semaphore
+    // (`ApplicationV2#render`/`#close`, local v14 core source). This method already runs
+    // *inside* the still-in-progress outer `render()` call that holds that slot - a former
+    // version called `await this.render()` right here when the lock couldn't be acquired,
+    // which queued a second render behind the very slot this call is blocking on: a
+    // deadlock. Nothing further ever completed for that instance, including the position
+    // update `#render()` performs right after this hook (hence "opens top-left", the CSS
+    // width/height/centering from `setPosition()` was never applied) and `close()` itself
+    // (queued behind the same jammed slot, hence "can't be closed"). `_prepareContext()`
+    // already re-evaluates the lock fresh on every render, so the current pass already shows
+    // the correct locked view without needing a synchronous re-render here at all - only the
+    // live-refresh hooks below are actually needed, registered unconditionally (locked-out
+    // viewers now also get live updates once the lock frees up, which they didn't before).
+    await acquireAdventureLock();
     // Live-refresh for every connected client (e.g. the GM advances a page, a second window
     // showing the tool should follow along; the lock also needs to show up/disappear live).
     // Both "update" and "create" are needed - a Setting document is only actually created in
@@ -281,11 +321,25 @@ export class AventuriaHelpersAdventureTool extends HandlebarsApplicationMixin(Ap
   }
 
   /**
-   * Jumps to a page from the visited-history list.
+   * Jumps to a page from the visited-history/all-pages list - closes whichever panel triggered
+   * the jump afterwards, same as a dropdown closing after picking an option (the panel's own
+   * list would otherwise keep covering the freshly changed page underneath it).
    * @this AventuriaHelpersAdventureTool
    */
   static async #onGoToPage(event, target) {
     await goToPage(target.dataset.pageId);
+    this.#activePanel = null;
+    await this.render();
+  }
+
+  /**
+   * Expands/collapses one of the three info panels (Vorbereitung/Verlauf/Seiten-Navigation) -
+   * at most one open at a time, clicking an already-open panel's icon closes it again.
+   * @this AventuriaHelpersAdventureTool
+   */
+  static async #onTogglePanel(event, target) {
+    const panel = target.dataset.panel;
+    this.#activePanel = this.#activePanel === panel ? null : panel;
     await this.render();
   }
 }

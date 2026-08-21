@@ -1,4 +1,6 @@
 import { placeBoardTokens, TOKEN_FOLDER_NAME } from "../actors/import-board-tokens.mjs";
+import { resolveStacks } from "./stacks.mjs";
+import { returnAllPlayedCardsToDeck } from "./played-cards.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 const CCM_MODULE_ID = "complete-card-management";
@@ -32,6 +34,22 @@ const CCM_MODULE_ID = "complete-card-management";
  * rebuilt instead of calling Complete Card Management's own equivalent scene-control action
  * (`deleteAll()` in `ccm.mjs`), which shows its own confirmation dialog not tailored to this
  * combined cards+tokens cleanup and has no concept of "permanent" stacks to skip either.
+ *
+ * Two Live-Test-Funde 2026-08-21, both fixed here:
+ * (1) The scene-clearing loop below used to iterate `canvas.cards.placeables` directly - that
+ * getter returns `PlaceablesLayer#objects.children` (local v14 core source), the CardsLayer's
+ * *live* PIXI children array. Clearing a card's scene-position flag mid-loop makes its
+ * placeable disappear from that same live array immediately, shifting every later index down
+ * by one - a classic mutate-while-iterating bug that silently skipped whichever placeable
+ * happened to shift into the just-vacated slot of the `for...of` loop. Reproducible as "1
+ * leftover played card after cleanup" whenever exactly two of a hero's played cards ended up
+ * adjacent in iteration order. Fixed by iterating a plain-array snapshot instead.
+ * (2) Clearing a played hero card's scene-position flag removed it from the canvas but left it
+ * a "ghost" member of the hero's Im-Spiel-Stapel - still logically played, just invisible.
+ * Nutzer-Vorschlag: reset every hero's play pile wholesale, same mechanism as the
+ * "Ausgespielte Karten" sheet's own "Zurück ins Deck mischen" (`returnAllPlayedCardsToDeck()`,
+ * `cards/played-cards.mjs`) - handled separately from the generic scene loop below (skipped
+ * there via `playPileIds`) so each played card is only ever passed back once.
  * @returns {Promise<boolean>} Whether the cleanup actually ran (false on any guard failure or cancel).
  */
 export async function cleanUpBoard() {
@@ -62,10 +80,14 @@ export async function cleanUpBoard() {
   });
   if (!proceed) return false;
 
+  const heroStacks = game.users.map((user) => resolveStacks(user)).filter(Boolean);
+  const playPileIds = new Set(heroStacks.map((s) => s.playPile?.id).filter(Boolean));
+
   const removedUuids = [];
-  for (const cardObject of canvas.cards.placeables) {
+  for (const cardObject of [...canvas.cards.placeables]) {
     const card = cardObject.document.card;
     if (!card || card.getFlag(MODULE_ID, "permanentStack")) continue;
+    if (playPileIds.has(card.parent?.id)) continue; // handled below via returnAllPlayedCardsToDeck
     await card.unsetFlag(CCM_MODULE_ID, scene.id);
     removedUuids.push(card.uuid);
   }
@@ -75,9 +97,18 @@ export async function cleanUpBoard() {
     await scene.setFlag(CCM_MODULE_ID, "cardCollection", Array.from(remaining));
   }
 
+  let returnedCount = 0;
+  for (const stacks of heroStacks) {
+    if (!stacks.playPile?.cards?.size || !stacks.deck) continue;
+    returnedCount += stacks.playPile.cards.size;
+    await returnAllPlayedCardsToDeck(stacks.playPile, stacks.deck);
+  }
+
   const tokenFolder = game.folders.find((f) => f.type === "Actor" && f.name === TOKEN_FOLDER_NAME);
   if (tokenFolder) await placeBoardTokens(tokenFolder);
 
-  ui.notifications.info(game.i18n.format("AVENTURIA_HELPERS.CleanUpBoard.Done", { count: removedUuids.length }));
+  ui.notifications.info(
+    game.i18n.format("AVENTURIA_HELPERS.CleanUpBoard.Done", { count: removedUuids.length + returnedCount }),
+  );
   return true;
 }

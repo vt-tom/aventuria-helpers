@@ -2,19 +2,31 @@
 
 Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Version zuerst.
 
-## 0.1.6 (Beta)
+## 0.2.0 (Beta)
 
 ### Features
+- **Ruhige Papierfläche statt pixeliger Pergamentgrafik:** Die Bögen und Modulfenster verwenden jetzt die einheitliche Hintergrundfarbe `#EEE3C8`; die niedrig aufgelöste Pergamenttextur wurde entfernt.
 - **Neuer Standard-Heldenbogen "Aventuria Helpers Charactersheet":** ein kompakter, an den Aventuria-Heldenkarten orientierter Bogen ist jetzt der Standardbogen und wird neu angelegten Helden automatisch zugewiesen. Sein Kopf bleibt beim Seitenwechsel sichtbar; reine Symbol-Fähnchen führen zu Held, Talenten, erlaubten Karten, Bildern, Items und Effekten. Die komplette Fähnchenleiste lässt sich je Benutzer nach links oder rechts verschieben. Der bisherige Heldenbogen bleibt unter dem Namen "Aventuria Helpers (old)" über „Sheet konfigurieren“ weiterhin wählbar.
 - **Passende Hover-Effekte im Karten-Heldenbogen:** Fertigkeitsproben und Grundausstattung werden dezent aufgehellt und wie ein Medaillon fokussiert. Talente erhalten stattdessen eine ruhige Prägung; unter ihrem Wert erscheint ein leicht pulsierendes W20-Symbol. Die Seiten-Fähnchen werden mit einer anthrazitfarbenen Kante hervorgehoben.
 - **Ausdauer-Kosten als Kreis:** Die Ausdauer-Kosten der Ausrüstung im Karten-Heldenbogen werden jetzt wie auf den Aventuria-Karten selbst als eingekreiste Zahl dargestellt statt mit separatem Symbol.
 - **Sonderfertigkeit mit eigenem Symbol:** Der Bereit/Verwendet-Schalter der Sonderfertigkeit im Karten-Heldenbogen zeigt jetzt zusätzlich das Aventuria-Symbol für Sonderfertigkeiten, im Zustand "Verwendet" eingegraut.
 - **Kompendien in einem gemeinsamen Ordner:** "Macros", "Aventuria Helpers Guide" und "Changelog" erscheinen im Kompendium-Tab der Sidebar jetzt gebündelt in einem Ordner "Aventuria Helpers" statt einzeln aufgelistet.
+- **Heldenablage im neuen Kartenbogen-Look:** Kopfleiste, Portrait und Deck-/Ablage-/Ausdauer-Zeilen tragen jetzt dieselbe warme Pergament-/Kupfer-Optik wie der neue Charakterbogen, statt der bisherigen schlichteren Optik. Der Umschalt-Button in der Spielerliste ist dabei ebenfalls größer geworden und zeigt beim Überfahren mit der Maus jetzt denselben Doppelring-Leuchteffekt wie die Proben-Medaillons im Charakterbogen.
+- **Abenteuer-Tool-Kopfbereich kompakter:** "Vorbereitung", "Verlauf" und "Seiten-Navigation" sind jetzt drei kleine Symbol-Buttons statt drei immer sichtbarer Kästen - ein Klick klappt bei Bedarf das passende Panel auf, alles andere bleibt zusammengeklappt und macht mehr Platz für den eigentlichen Abenteuertext.
+- **Hand- und Ausgespielte-Karten-Fenster, Willkommensguide und das restliche Abenteuer-Tool-Fenster im neuen Kartenbogen-Look:** dieselbe warme Pergament-/Kupfer-Optik wie Charakterbogen und Heldenablage, statt der bisherigen schlichteren Optik bzw. (beim Willkommensguide) Foundrys unverändertem Standard-Fenster. Der "Held auswählen"-Dialog übernimmt die neuen Knopf-/Schrift-Farben automatisch mit, da er dieselben Bausteine nutzt.
 
 ### Bugs
+- Hand- und Im-Spiel-Fenster konnten beim ersten Öffnen übereinander erscheinen; das Im-Spiel-Fenster dockt jetzt sofort korrekt unterhalb der Hand an.
+- Die Aktionsbuttons unter Handkarten und ausgespielten Karten konnten leer oder oval erscheinen. Ausdauer spielen, Ablegen und Zurück auf die Hand sind jetzt mit gut erkennbaren Symbolen versehen und bleiben einheitlich kreisrund.
 - Im neuen Karten-Heldenbogen wurden die vier Probenmedaillons durch Foundrys globale Button-Darstellung verschoben; Zahl und Beschriftung stehen jetzt wieder sauber untereinander. Die Sonderfertigkeit zeigt im gesperrten Ansichtsmodus außerdem keinen weiterhin bedienbaren Rich-Text-Editor mehr, sondern nur noch den formatierten Inhalt.
 - Im Karten-Heldenbogen ließen sich die maximalen Lebenspunkte nicht ändern; jetzt im Bearbeiten-Modus editierbar (die aktuellen Lebenspunkte bleiben wie gehabt jederzeit änderbar, auch gesperrt).
 - Im Karten-Heldenbogen ließ sich eine hinzugefügte zweite Ausrüstung nicht mehr entfernen; dafür jetzt ein Papierkorb-Button an der Zeile im Bearbeiten-Modus.
+- Kritische Würfe wurden bei Proben nicht berücksichtigt: eine gewürfelte 1 oder 20 zählte bislang wie jedes andere Ergebnis und konnte durch einen Modifikator sogar falsch als Misserfolg bzw. Erfolg gewertet werden. Bei Talentproben zeigt der Chat jetzt korrekt alle vier Ergebnisse (Kritischer Erfolg/Erfolg/Misserfolg/Kritischer Misserfolg); eine 1 ist immer ein kritischer Erfolg, eine 20 immer ein kritischer Misserfolg, unabhängig vom Modifikator. Angriffsproben (Ausrüstung sowie die Nahkampf-/Fernkampf-/Magie-/Ausweichen-Medaillons) zeigen weiterhin nur Erfolg/Misserfolg, werten einen kritischen Wurf aber ebenfalls korrekt aus.
+- Der "Abenteuer spielen gesperrt"-Hinweis konnte oben links hängen bleiben und ließ sich dann nicht mehr schließen - behoben.
+- Die Sperre des Abenteuer-Tools blieb bestehen, wenn ein Spieler Foundry verlässt statt das Tool bewusst zu schließen - wird jetzt automatisch freigegeben.
+- Neue "Seiten-Navigation" im Abenteuer-Tool (eines der drei neuen Symbol-Panels): listet alle Seiten des Abenteuers, damit man auch ohne passenden Weiterführungslink im Text jederzeit weiterspringen kann.
+- Nach "Board aufräumen" konnte eine ausgespielte Karte auf der Spieloberfläche zurückbleiben, und entfernte Karten blieben unsichtbar im Im-Spiel-Stapel eines Helden hängen - beides behoben, die Heldendecks werden beim Aufräumen jetzt vollständig zurückgesetzt.
+- Hand- und Ausgespielte-Karten-Fenster waren durch die neue Papierfarbe versehentlich blickdicht geworden statt wie vorgesehen leicht durchscheinend über dem Spielbrett zu schweben - wieder durchscheinend.
 
 ## 0.1.5
 

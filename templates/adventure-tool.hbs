@@ -31,7 +31,23 @@
         <span class="adventure-tool-entry">{{entryName}}</span>
         <span class="adventure-tool-page">{{pageName}}</span>
       </div>
-      <div class="adventure-tool-head-actions">
+      <div class="adventure-tool-icon-row">
+        {{#if prepHtml}}
+        <button type="button" class="adventure-tool-icon-btn{{#if panels.prep}} active{{/if}}" data-action="togglePanel" data-panel="prep" data-tooltip="{{localize 'AVENTURIA_HELPERS.AdventureTool.Prep'}}">
+          <i class="fa-solid fa-box"></i>
+        </button>
+        {{/if}}
+        {{#if history.length}}
+        <button type="button" class="adventure-tool-icon-btn{{#if panels.history}} active{{/if}}" data-action="togglePanel" data-panel="history" data-tooltip="{{localize 'AVENTURIA_HELPERS.AdventureTool.History'}}">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+        </button>
+        {{/if}}
+        {{#if allPages.length}}
+        <button type="button" class="adventure-tool-icon-btn{{#if panels.nav}} active{{/if}}" data-action="togglePanel" data-panel="nav" data-tooltip="{{localize 'AVENTURIA_HELPERS.AdventureTool.Navigation'}}">
+          <i class="fa-solid fa-compass"></i>
+        </button>
+        {{/if}}
+        <span class="adventure-tool-icon-sep"></span>
         <button type="button" class="at-btn ghost" data-action="endAdventure">
           {{localize 'AVENTURIA_HELPERS.AdventureTool.EndAdventure'}}
         </button>
@@ -41,24 +57,32 @@
       </div>
     </header>
 
-    {{#if prepHtml}}
-    <details class="adventure-tool-prep" {{#if prepOpen}}open{{/if}}>
-      <summary>{{localize 'AVENTURIA_HELPERS.AdventureTool.Prep'}}</summary>
-      <div class="adventure-tool-prep-body">{{{prepHtml}}}</div>
-    </details>
+    {{#if panels.prep}}
+    <div class="adventure-tool-panel">{{{prepHtml}}}</div>
     {{/if}}
 
-    {{#if history.length}}
-    <details class="adventure-tool-history">
-      <summary>{{localize 'AVENTURIA_HELPERS.AdventureTool.History'}}</summary>
-      <ul>
+    {{#if panels.history}}
+    <div class="adventure-tool-panel">
+      <ul class="adventure-tool-panel-list">
         {{#each history}}
         <li>
-          <button type="button" class="adventure-tool-history-entry{{#if this.active}} active{{/if}}" data-action="goToPage" data-page-id="{{this.id}}" {{#if this.active}}disabled{{/if}}>{{this.name}}</button>
+          <button type="button" class="adventure-tool-panel-entry{{#if this.active}} active{{/if}}" data-action="goToPage" data-page-id="{{this.id}}" {{#if this.active}}disabled{{/if}}>{{this.name}}</button>
         </li>
         {{/each}}
       </ul>
-    </details>
+    </div>
+    {{/if}}
+
+    {{#if panels.nav}}
+    <div class="adventure-tool-panel">
+      <ul class="adventure-tool-panel-list">
+        {{#each allPages}}
+        <li>
+          <button type="button" class="adventure-tool-panel-entry{{#if this.active}} active{{/if}}" data-action="goToPage" data-page-id="{{this.id}}" {{#if this.active}}disabled{{/if}}>{{this.name}}</button>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
     {{/if}}
 
     <div class="adventure-tool-content">{{{pageHtml}}}</div>

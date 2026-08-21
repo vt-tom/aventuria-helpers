@@ -15,9 +15,7 @@
     <span class="total">{{total}}</span>
   </div>
 
-  <div class="probe-outcome">
-    {{#if success}}{{localize "AVENTURIA_HELPERS.Probe.Success"}}{{else}}{{localize "AVENTURIA_HELPERS.Probe.Failure"}}{{/if}}
-  </div>
+  <div class="probe-outcome">{{outcomeLabel}}</div>
 
   {{#if damage}}
     <div class="probe-damage">

@@ -57,8 +57,10 @@
       "Modifier": "Modifikator",
       "Hint": "Positive Werte erleichtern die Probe und werden vom Ergebnis abgezogen. Negative Werte erschweren die Probe und werden addiert.",
       "Roll": "Würfeln",
-      "Success": "Bestanden",
-      "Failure": "Nicht bestanden"
+      "Success": "Erfolg",
+      "Failure": "Misserfolg",
+      "CriticalSuccess": "Kritischer Erfolg",
+      "CriticalFailure": "Kritischer Misserfolg"
     },
     "Welcome": {
       "Title": "Willkommen bei Aventuria",
@@ -217,6 +219,7 @@
       "BrokenAdventure": "Das zuletzt aktive Abenteuer konnte nicht mehr gefunden werden (z.B. nach einem Sprachwechsel) - bitte ein neues wählen.",
       "Prep": "Vorbereitung",
       "History": "Verlauf",
+      "Navigation": "Seiten-Navigation",
       "EndAdventure": "Anderes Abenteuer wählen",
       "Release": "Freigeben",
       "EndConfirmTitle": "Abenteuer beenden",

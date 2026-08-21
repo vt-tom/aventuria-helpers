@@ -52,16 +52,45 @@ async function promptModifier(title, label, icon, target, extra = "") {
 }
 
 /**
- * Rolls 1d20 against a target, roll-under (total = d20 - modifier <= target).
+ * Rolls 1d20 against a target, roll-under (total = d20 - modifier <= target). A natural 1
+ * is always a critical success and a natural 20 is always a critical failure, regardless
+ * of the modifier - both override what the modified total alone would say.
  * @param {number} modifier
  * @param {number} target
+ * @returns {Promise<{roll: Roll, dieResult: number, total: number, success: boolean, tier: "criticalSuccess"|"success"|"failure"|"criticalFailure"}>}
  */
 async function rollD20(modifier, target) {
   const roll = new Roll("1d20");
   await roll.evaluate();
   const dieResult = roll.total;
   const total = dieResult - modifier;
-  return { roll, dieResult, total, success: total <= target };
+  let tier;
+  if (dieResult === 1) tier = "criticalSuccess";
+  else if (dieResult === 20) tier = "criticalFailure";
+  else tier = total <= target ? "success" : "failure";
+  const success = tier === "criticalSuccess" || tier === "success";
+  return { roll, dieResult, total, success, tier };
+}
+
+/**
+ * Localization key suffix per outcome tier. Both Talent- and Angriffsproben use the same
+ * "Erfolg"/"Misserfolg" wording for the non-critical tiers - Nutzerentscheidung 2026-08-21
+ * (third pass, same day: an earlier version used "Bestanden"/"Nicht bestanden" for
+ * Angriffsproben specifically, since replaced). Angriffsproben (equipment/attribute
+ * attacks) only ever show two outcomes, collapsing both critical tiers into Success/Failure -
+ * see probe-roll.mjs Bugs entry in TODO.md. Talent-Proben show all four tiers, with their
+ * own critical wording ("Kritischer Erfolg"/"Kritischer Misserfolg").
+ */
+const TIER_KEYS = {
+  criticalSuccess: "CriticalSuccess",
+  success: "Success",
+  failure: "Failure",
+  criticalFailure: "CriticalFailure",
+};
+
+function outcomeLabel(tier, { showCritical }) {
+  if (!showCritical) tier = tier === "criticalSuccess" ? "success" : tier === "criticalFailure" ? "failure" : tier;
+  return game.i18n.localize(`AVENTURIA_HELPERS.Probe.${TIER_KEYS[tier]}`);
 }
 
 /**
@@ -83,8 +112,11 @@ function normalizeDamageFormula(damage) {
  * @param {string} label
  * @param {string} icon
  * @param {number} target
+ * @param {boolean} showCritical  Talent-Proben show all four outcome tiers (kritischer
+ *   Erfolg/Erfolg/Misserfolg/kritischer Misserfolg); Angriffsproben (attribute chips) only
+ *   ever show Erfolg/Misserfolg, per Nutzerentscheidung 2026-08-21 (TODO.md Bugs entry).
  */
-async function rollProbe(actor, label, icon, target) {
+async function rollProbe(actor, label, icon, target, showCritical) {
   if (target == null) return;
 
   const modifier = await promptModifier(
@@ -95,7 +127,7 @@ async function rollProbe(actor, label, icon, target) {
   );
   if (modifier === null) return;
 
-  const { roll, dieResult, total, success } = await rollD20(modifier, target);
+  const { roll, dieResult, total, success, tier } = await rollD20(modifier, target);
 
   const content = await renderTemplate(CARD_TEMPLATE, {
     label,
@@ -107,6 +139,7 @@ async function rollProbe(actor, label, icon, target) {
     modifierAbs: Math.abs(modifier),
     total,
     success,
+    outcomeLabel: outcomeLabel(tier, { showCritical }),
   });
 
   await ChatMessage.create({
@@ -119,17 +152,18 @@ async function rollProbe(actor, label, icon, target) {
 
 /**
  * Rolls a Probe for one of the four attribute chips (Nahkampf/Fernkampf/Magie/Ausweichen).
+ * Counts as an Angriffsprobe (only Erfolg/Misserfolg shown, no separate kritisch-Text).
  * @param {Actor} actor
  * @param {"close"|"ranged"|"magic"|"dodge"} key
  */
 export async function rollAttribute(actor, key) {
   const def = ATTRIBUTES[key];
   if (!def) return;
-  await rollProbe(actor, game.i18n.localize(def.label), ICONS + def.icon, actor.system[key]);
+  await rollProbe(actor, game.i18n.localize(def.label), ICONS + def.icon, actor.system[key], false);
 }
 
 /**
- * Rolls a Probe for one of the eight Talente.
+ * Rolls a Probe for one of the eight Talente. Shows all four outcome tiers.
  * @param {Actor} actor
  * @param {"body"|"craft"|"knowledge"|"perception"|"persuade"|"stealth"|"survival"|"willpower"} key
  */
@@ -138,7 +172,7 @@ export async function rollSkill(actor, key) {
   // DataModel field labels are already localized in place via LOCALIZATION_PREFIXES,
   // same as how aventuria's own rollTest() uses them.
   const label = actor.system.schema.getField(["skills", key]).label;
-  await rollProbe(actor, label, ICONS + SKILL_ICON, actor.system.skills[key]);
+  await rollProbe(actor, label, ICONS + SKILL_ICON, actor.system.skills[key], true);
 }
 
 /**
@@ -175,7 +209,7 @@ export async function rollEquipment(actor, key) {
   );
   if (modifier === null) return;
 
-  const { roll, dieResult, total, success } = await rollD20(modifier, target);
+  const { roll, dieResult, total, success, tier } = await rollD20(modifier, target);
 
   let damageRoll = null;
   if (damageFormula) {
@@ -193,6 +227,7 @@ export async function rollEquipment(actor, key) {
     modifierAbs: Math.abs(modifier),
     total,
     success,
+    outcomeLabel: outcomeLabel(tier, { showCritical: false }),
     damage: damageRoll ? { formula: equipment.damage, total: damageRoll.total } : null,
   });
 

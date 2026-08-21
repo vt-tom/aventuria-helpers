@@ -58,7 +58,9 @@
       "Hint": "Positive values make the check easier and are subtracted from the result. Negative values make the check harder and are added.",
       "Roll": "Roll",
       "Success": "Success",
-      "Failure": "Failure"
+      "Failure": "Failure",
+      "CriticalSuccess": "Critical success",
+      "CriticalFailure": "Critical failure"
     },
     "Welcome": {
       "Title": "Welcome to Aventuria",
@@ -217,6 +219,7 @@
       "BrokenAdventure": "The last active adventure could no longer be found (e.g. after a language change) - please choose a new one.",
       "Prep": "Preparation",
       "History": "History",
+      "Navigation": "Page navigation",
       "EndAdventure": "Choose another adventure",
       "Release": "Release",
       "EndConfirmTitle": "End adventure",

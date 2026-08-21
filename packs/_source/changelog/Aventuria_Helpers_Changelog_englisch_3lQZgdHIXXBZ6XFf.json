@@ -1,9 +1,9 @@
 {
-  "_id": "irpFYIH540OEotN5",
+  "_id": "3lQZgdHIXXBZ6XFf",
   "name": "Aventuria Helpers - Changelog (englisch)",
   "pages": [
     {
-      "_id": "6s8BBOXcRLHZOYCE",
+      "_id": "0QHEbKRYF1PXlSpm",
       "name": "Changes – Aventuria Helpers",
       "type": "text",
       "system": {},
@@ -31,7 +31,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786944405844,
+        "createdTime": 1787305209273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -39,10 +39,88 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!irpFYIH540OEotN5.6s8BBOXcRLHZOYCE"
+      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.0QHEbKRYF1PXlSpm"
     },
     {
-      "_id": "K7z0HjPESQi6PgM3",
+      "_id": "9aSGIEHYX1ZwnHAY",
+      "name": "0.2.0 (Beta)",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>Clean paper surface instead of a pixelated parchment image:</strong> Sheets and module windows now use the consistent <code>#EEE3C8</code> background colour; the low-resolution parchment texture has been removed.</li>\n<li><strong>New default Hero Sheet \"Aventuria Helpers Charactersheet\":</strong> a compact sheet inspired by Aventuria's physical hero cards is now the default sheet and gets assigned automatically to newly created heroes. Its header remains visible while switching pages; icon-only flags open Hero, Skills, allowed cards, Images, Items, and Effects. Each user can move the complete flag rail to the left or right. The previous Hero Sheet remains selectable through “Configure Sheet” under the name \"Aventuria Helpers (old)\".</li>\n<li><strong>Purpose-built hover effects for the card-style Hero Sheet:</strong> Attribute and equipment checks brighten subtly and receive a focused medallion treatment. Skills use a quiet embossed effect instead, with a gently pulsing d20 appearing beneath the value. Page flags are highlighted by an anthracite edge.</li>\n<li><strong>Endurance cost as a circle:</strong> the equipment's endurance cost on the card-style Hero Sheet is now shown as a circled number, just like on Aventuria's own cards, instead of a separate icon.</li>\n<li><strong>Special ability with its own symbol:</strong> the Ready/Used toggle for the special ability on the card-style Hero Sheet now also shows Aventuria's special-ability symbol, greyed out while \"Used\".</li>\n<li><strong>Compendiums grouped in a shared folder:</strong> \"Macros\", \"Aventuria Helpers Guide\", and \"Changelog\" now appear bundled in a folder \"Aventuria Helpers\" in the sidebar's Compendium tab instead of being listed individually.</li>\n<li><strong>Hero tray in the new card-sheet look:</strong> the header bar, portrait, and deck/discard/endurance rows now share the same warm parchment/copper look as the new Hero Sheet, instead of the previous plainer style. The toggle button in the player list is also bigger now and glows with the same double-ring highlight as the check medallions on the Hero Sheet when you hover over it.</li>\n<li><strong>More compact Adventure Tool header:</strong> \"Prep\", \"History\", and \"Page navigation\" are now three small icon buttons instead of three always-visible boxes - click one to expand that panel when needed, everything else stays collapsed, leaving more room for the actual adventure text.</li>\n<li><strong>Hand and Played-Cards windows, Welcome guide, and the rest of the Adventure Tool window in the new card-sheet look:</strong> the same warm parchment/copper style as the Hero Sheet and hero tray, instead of the previous plainer style or (for the Welcome guide) Foundry's unchanged default window. The \"Assign Hero\" dialog picks up the new button/text colors automatically since it shares the same building blocks.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>The Hand and In-Play windows could initially open on top of each other; the In-Play window now immediately docks correctly below the Hand.</li>\n<li>The action buttons below hand cards and played cards could appear empty or oval. Play as endurance, discard, and return to hand now use clear icons and remain consistently circular.</li>\n<li>Foundry's global button layout displaced the four check medallions in the new card-style Hero Sheet; value and label are stacked correctly again. The special ability also no longer exposes an editable rich-text editor while the sheet is locked and now renders formatted read-only content instead.</li>\n<li>The card-style Hero Sheet's maximum life points couldn't be changed; now editable while in edit mode (current life points remain changeable at all times, as before, even while locked).</li>\n<li>The card-style Hero Sheet offered no way to remove a second equipment slot once added; there's now a trash button on that row while in edit mode.</li>\n<li>Critical rolls weren't accounted for in checks: a natural 1 or 20 counted like any other result and could even be misjudged as a failure or success depending on the modifier. Skill checks now correctly show all four outcomes (Critical success/Success/Failure/Critical failure) in chat; a natural 1 is always a critical success and a natural 20 always a critical failure, regardless of the modifier. Attack checks (equipment as well as the Close/Ranged/Magic/Dodge medallions) still only show Success/Failure, but now evaluate critical rolls correctly too.</li>\n<li>The \"adventure locked\" notice could get stuck in the top-left corner and become impossible to close - fixed.</li>\n<li>The Adventure Tool's lock stayed held if a player left Foundry instead of deliberately closing the tool - it's now released automatically.</li>\n<li>New \"Page navigation\" in the Adventure Tool (one of the three new icon panels): lists every page of the adventure, so you can jump ahead even when the current page's text has no matching forward link.</li>\n<li>\"Clean up board\" could leave one played card behind on the play surface, and removed cards stayed invisibly stuck in a hero's play pile - both fixed, hero decks are now fully reset during cleanup.</li>\n<li>The Hand and Played-Cards windows had accidentally become fully opaque with the new paper colour instead of staying the intended semi-transparent floating panel over the board - translucent again.</li>\n</ul>",
+        "markdown": "### Features\r\n- **Clean paper surface instead of a pixelated parchment image:** Sheets and module windows now use the consistent `#EEE3C8` background colour; the low-resolution parchment texture has been removed.\r\n- **New default Hero Sheet \"Aventuria Helpers Charactersheet\":** a compact sheet inspired by Aventuria's physical hero cards is now the default sheet and gets assigned automatically to newly created heroes. Its header remains visible while switching pages; icon-only flags open Hero, Skills, allowed cards, Images, Items, and Effects. Each user can move the complete flag rail to the left or right. The previous Hero Sheet remains selectable through “Configure Sheet” under the name \"Aventuria Helpers (old)\".\r\n- **Purpose-built hover effects for the card-style Hero Sheet:** Attribute and equipment checks brighten subtly and receive a focused medallion treatment. Skills use a quiet embossed effect instead, with a gently pulsing d20 appearing beneath the value. Page flags are highlighted by an anthracite edge.\r\n- **Endurance cost as a circle:** the equipment's endurance cost on the card-style Hero Sheet is now shown as a circled number, just like on Aventuria's own cards, instead of a separate icon.\r\n- **Special ability with its own symbol:** the Ready/Used toggle for the special ability on the card-style Hero Sheet now also shows Aventuria's special-ability symbol, greyed out while \"Used\".\r\n- **Compendiums grouped in a shared folder:** \"Macros\", \"Aventuria Helpers Guide\", and \"Changelog\" now appear bundled in a folder \"Aventuria Helpers\" in the sidebar's Compendium tab instead of being listed individually.\r\n- **Hero tray in the new card-sheet look:** the header bar, portrait, and deck/discard/endurance rows now share the same warm parchment/copper look as the new Hero Sheet, instead of the previous plainer style. The toggle button in the player list is also bigger now and glows with the same double-ring highlight as the check medallions on the Hero Sheet when you hover over it.\r\n- **More compact Adventure Tool header:** \"Prep\", \"History\", and \"Page navigation\" are now three small icon buttons instead of three always-visible boxes - click one to expand that panel when needed, everything else stays collapsed, leaving more room for the actual adventure text.\r\n- **Hand and Played-Cards windows, Welcome guide, and the rest of the Adventure Tool window in the new card-sheet look:** the same warm parchment/copper style as the Hero Sheet and hero tray, instead of the previous plainer style or (for the Welcome guide) Foundry's unchanged default window. The \"Assign Hero\" dialog picks up the new button/text colors automatically since it shares the same building blocks.\r\n\r\n### Bugs\r\n- The Hand and In-Play windows could initially open on top of each other; the In-Play window now immediately docks correctly below the Hand.\r\n- The action buttons below hand cards and played cards could appear empty or oval. Play as endurance, discard, and return to hand now use clear icons and remain consistently circular.\r\n- Foundry's global button layout displaced the four check medallions in the new card-style Hero Sheet; value and label are stacked correctly again. The special ability also no longer exposes an editable rich-text editor while the sheet is locked and now renders formatted read-only content instead.\r\n- The card-style Hero Sheet's maximum life points couldn't be changed; now editable while in edit mode (current life points remain changeable at all times, as before, even while locked).\r\n- The card-style Hero Sheet offered no way to remove a second equipment slot once added; there's now a trash button on that row while in edit mode.\r\n- Critical rolls weren't accounted for in checks: a natural 1 or 20 counted like any other result and could even be misjudged as a failure or success depending on the modifier. Skill checks now correctly show all four outcomes (Critical success/Success/Failure/Critical failure) in chat; a natural 1 is always a critical success and a natural 20 always a critical failure, regardless of the modifier. Attack checks (equipment as well as the Close/Ranged/Magic/Dodge medallions) still only show Success/Failure, but now evaluate critical rolls correctly too.\r\n- The \"adventure locked\" notice could get stuck in the top-left corner and become impossible to close - fixed.\r\n- The Adventure Tool's lock stayed held if a player left Foundry instead of deliberately closing the tool - it's now released automatically.\r\n- New \"Page navigation\" in the Adventure Tool (one of the three new icon panels): lists every page of the adventure, so you can jump ahead even when the current page's text has no matching forward link.\r\n- \"Clean up board\" could leave one played card behind on the play surface, and removed cards stayed invisibly stuck in a hero's play pile - both fixed, hero decks are now fully reset during cleanup.\r\n- The Hand and Played-Cards windows had accidentally become fully opaque with the new paper colour instead of staying the intended semi-transparent floating panel over the board - translucent again.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 100000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1787305209273,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.9aSGIEHYX1ZwnHAY"
+    },
+    {
+      "_id": "qxZRbiSSRGhpxgiD",
+      "name": "0.1.5",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>New welcome-screen entry \"Play Adventure\":</strong> A dedicated Adventure Tool walks you through the 10 standard adventures - pick an adventure, see its preparation box with the needed cards front and center, read it page by page (links to other pages of the same adventure jump straight ahead within the tool), step out any time and resume later. Only one person can use the tool at a time; everyone else sees a lock with their name while they do.</li>\n<li><strong>New \"Clean up board\" button</strong> in the welcome screen (also available as its own macro): removes every adventure-specific card currently on the Gameboard scene (back into their decks/stacks) and resets the marker tokens to their starting position - asks for confirmation first. The heroes' own decks/discard piles/hands and the shared stacks from \"First Steps\" are left exactly where they are.</li>\n<li><strong>The Hand card window now docks to the right of the Hero Tray by default</strong> instead of appearing wherever it last was - stays in the same place every time it opens. Still fully draggable if you want it elsewhere; a new \"Reset position\" entry in the \"…\" menu snaps it back.</li>\n<li><strong>New \"Played cards\" row in the Hero Tray:</strong> shows how many cards you currently have in play, and opens its own window via the view button (docks below the Hand card window by default, also draggable with a reset option) - from there you can discard or shuffle any played card back into your deck individually, and hovering a card shows the same large preview as in the Hand window. Ausdauer cards deliberately aren't shown here, they stay a counter-only in the Hero Tray.</li>\n<li>The Hand and \"Played cards\" windows are now 600 pixels wide by default, and can be dragged wider from their corner handle - they also dock reliably stacked directly on top of each other now, even if only one of the two gets reset via \"Reset position\".</li>\n<li>The \"Played cards\" window now has a \"Take back into hand\" button instead of \"Shuffle back into deck\" (the more common case) - \"Shuffle back into deck\" is still available, via right-click on the card.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>On smaller browser windows, the Hero Tray could extend down into the macro hotbar - it now sits near the top of the left-hand area (instead of hugging the bottom of the screen), so it never competes with the hotbar for space.</li>\n<li>The \"Played cards\" window sat visually flush against the Hand card window - there's a bit more breathing room between them now.</li>\n<li>The \"Played cards\" window had noticeably too much empty space below its buttons - it's more compact now.</li>\n<li>The cards in the \"Played cards\" window had an odd gap above and to their left - fixed.</li>\n<li>The Hand and \"Played cards\" windows closed with a noticeable delay (cards vanished, then it took another moment) - they close instantly now.</li>\n<li>The large card hover preview could run off the bottom of the screen for a card sitting low in its window - it now always stays fully on-screen.</li>\n</ul>",
+        "markdown": "### Features\r\n- **New welcome-screen entry \"Play Adventure\":** A dedicated Adventure Tool walks you through the 10 standard adventures - pick an adventure, see its preparation box with the needed cards front and center, read it page by page (links to other pages of the same adventure jump straight ahead within the tool), step out any time and resume later. Only one person can use the tool at a time; everyone else sees a lock with their name while they do.\r\n- **New \"Clean up board\" button** in the welcome screen (also available as its own macro): removes every adventure-specific card currently on the Gameboard scene (back into their decks/stacks) and resets the marker tokens to their starting position - asks for confirmation first. The heroes' own decks/discard piles/hands and the shared stacks from \"First Steps\" are left exactly where they are.\r\n- **The Hand card window now docks to the right of the Hero Tray by default** instead of appearing wherever it last was - stays in the same place every time it opens. Still fully draggable if you want it elsewhere; a new \"Reset position\" entry in the \"...\" menu snaps it back.\r\n- **New \"Played cards\" row in the Hero Tray:** shows how many cards you currently have in play, and opens its own window via the view button (docks below the Hand card window by default, also draggable with a reset option) - from there you can discard or shuffle any played card back into your deck individually, and hovering a card shows the same large preview as in the Hand window. Ausdauer cards deliberately aren't shown here, they stay a counter-only in the Hero Tray.\r\n- The Hand and \"Played cards\" windows are now 600 pixels wide by default, and can be dragged wider from their corner handle - they also dock reliably stacked directly on top of each other now, even if only one of the two gets reset via \"Reset position\".\r\n- The \"Played cards\" window now has a \"Take back into hand\" button instead of \"Shuffle back into deck\" (the more common case) - \"Shuffle back into deck\" is still available, via right-click on the card.\r\n\r\n### Bugs\r\n- On smaller browser windows, the Hero Tray could extend down into the macro hotbar - it now sits near the top of the left-hand area (instead of hugging the bottom of the screen), so it never competes with the hotbar for space.\r\n- The \"Played cards\" window sat visually flush against the Hand card window - there's a bit more breathing room between them now.\r\n- The \"Played cards\" window had noticeably too much empty space below its buttons - it's more compact now.\r\n- The cards in the \"Played cards\" window had an odd gap above and to their left - fixed.\r\n- The Hand and \"Played cards\" windows closed with a noticeable delay (cards vanished, then it took another moment) - they close instantly now.\r\n- The large card hover preview could run off the bottom of the screen for a card sitting low in its window - it now always stays fully on-screen.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 200000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1787305209273,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.qxZRbiSSRGhpxgiD"
+    },
+    {
+      "_id": "9plaWNl4XNkTp8QG",
       "name": "0.1.4.1",
       "type": "text",
       "system": {},
@@ -62,7 +140,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 100000,
+      "sort": 300000,
       "ownership": {
         "default": -1
       },
@@ -70,7 +148,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786944405844,
+        "createdTime": 1787305209273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -78,10 +156,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!irpFYIH540OEotN5.K7z0HjPESQi6PgM3"
+      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.9plaWNl4XNkTp8QG"
     },
     {
-      "_id": "ACgGJ5dzOxo1q224",
+      "_id": "fBpmEjGwAl0Hh5Ty",
       "name": "0.1.4",
       "type": "text",
       "system": {},
@@ -101,7 +179,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 200000,
+      "sort": 400000,
       "ownership": {
         "default": -1
       },
@@ -109,7 +187,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786944405844,
+        "createdTime": 1787305209273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -117,10 +195,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!irpFYIH540OEotN5.ACgGJ5dzOxo1q224"
+      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.fBpmEjGwAl0Hh5Ty"
     },
     {
-      "_id": "CDSuxImOCsqOFTLd",
+      "_id": "ppNdqGFpZNGoBsZE",
       "name": "0.1.3",
       "type": "text",
       "system": {},
@@ -140,7 +218,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 300000,
+      "sort": 500000,
       "ownership": {
         "default": -1
       },
@@ -148,7 +226,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786944405844,
+        "createdTime": 1787305209273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -156,10 +234,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!irpFYIH540OEotN5.CDSuxImOCsqOFTLd"
+      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.ppNdqGFpZNGoBsZE"
     },
     {
-      "_id": "KESQ15MIhpISvWZy",
+      "_id": "k0IAMR5I4HBtDXOc",
       "name": "0.1.2",
       "type": "text",
       "system": {},
@@ -179,7 +257,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 400000,
+      "sort": 600000,
       "ownership": {
         "default": -1
       },
@@ -187,7 +265,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786944405844,
+        "createdTime": 1787305209273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -195,10 +273,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!irpFYIH540OEotN5.KESQ15MIhpISvWZy"
+      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.k0IAMR5I4HBtDXOc"
     },
     {
-      "_id": "pySCXj9sdyQMVpRQ",
+      "_id": "bD4fRSq9oHrcA8Je",
       "name": "0.1.1",
       "type": "text",
       "system": {},
@@ -218,7 +296,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 500000,
+      "sort": 700000,
       "ownership": {
         "default": -1
       },
@@ -226,7 +304,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786944405844,
+        "createdTime": 1787305209273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -234,10 +312,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!irpFYIH540OEotN5.pySCXj9sdyQMVpRQ"
+      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.bD4fRSq9oHrcA8Je"
     },
     {
-      "_id": "0BHzvtrcfrXUgYk7",
+      "_id": "DOdA0rnYLLMTiSwc",
       "name": "0.1.0",
       "type": "text",
       "system": {},
@@ -257,7 +335,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 600000,
+      "sort": 800000,
       "ownership": {
         "default": -1
       },
@@ -265,7 +343,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786944405844,
+        "createdTime": 1787305209273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -273,7 +351,7 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!irpFYIH540OEotN5.0BHzvtrcfrXUgYk7"
+      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.DOdA0rnYLLMTiSwc"
     }
   ],
   "folder": null,
@@ -286,7 +364,7 @@
   "_stats": {
     "compendiumSource": null,
     "coreVersion": "14.364",
-    "createdTime": 1786944405844,
+    "createdTime": 1787305209273,
     "duplicateSource": null,
     "exportSource": null,
     "lastModifiedBy": null,
@@ -294,5 +372,5 @@
     "systemId": "universal-tabletop-system",
     "systemVersion": "1.2.1"
   },
-  "_key": "!journal!irpFYIH540OEotN5"
+  "_key": "!journal!3lQZgdHIXXBZ6XFf"
 }
