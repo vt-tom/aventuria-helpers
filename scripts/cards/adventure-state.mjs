@@ -13,6 +13,22 @@ const LOCK_SETTING = "adventureToolLock";
 export function registerAdventureState() {
   game.settings.register(MODULE_ID, PROGRESS_SETTING, { scope: "world", config: false, type: Object, default: {} });
   game.settings.register(MODULE_ID, LOCK_SETTING, { scope: "world", config: false, type: Object, default: {} });
+
+  // Live-Test-Fund 2026-08-21: `AventuriaHelpersAdventureTool#_onClose()` already releases the
+  // lock on a normal close, but that never fires if the holder just leaves Foundry (closed
+  // tab, network drop, logged out) without explicitly closing the tool window first - the lock
+  // stayed held forever in that case. `userConnected` fires on every connected client whenever
+  // any user's active status flips, in both directions (`Users#_activateSocketListeners`/
+  // `#handleUserActivity`, local v14 core source) - every online client checks it and clears
+  // the lock if the user going offline happens to be its holder. Safe for several clients to
+  // react to the same disconnect: `game.settings.set()` is idempotent here, and every player
+  // needs the Gamemaster role in a correctly set-up Aventuria world anyway (see CLAUDE.md), so
+  // world-setting writes aren't GM-exclusive to begin with.
+  Hooks.on("userConnected", (user, connected) => {
+    if (connected) return;
+    const lock = game.settings.get(MODULE_ID, LOCK_SETTING);
+    if (lock?.userId === user.id) game.settings.set(MODULE_ID, LOCK_SETTING, {});
+  });
 }
 
 /**

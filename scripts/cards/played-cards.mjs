@@ -9,6 +9,7 @@
  * (cards/endurance.mjs), a separate view for those is a possible later idea.
  */
 
+const MODULE_ID = "aventuria-helpers";
 const CCM_MODULE_ID = "complete-card-management";
 
 /**
@@ -65,4 +66,34 @@ export async function returnPlayedCardToDeck(card, deck) {
  */
 export async function returnPlayedCardToHand(card, hand) {
   return card.parent.pass(hand, [card.id], { updateData: clearPlacementUpdateData() });
+}
+
+/**
+ * Moves every card currently in a hero's Im-Spiel-Stapel back into their deck in one batch
+ * and shuffles once - used by "Board aufräumen" (`cards/cleanup-board.mjs`, Live-Test-Fund
+ * 2026-08-21) to reset a hero's play pile wholesale after an adventure, instead of looping
+ * `returnPlayedCardToDeck()` per card (which would shuffle once per card and, worse, leave a
+ * "ghost" placeable on the canvas mid-loop the same way `cleanup-board.mjs`'s own generic
+ * scene loop used to - see the fix there for that specific bug).
+ *
+ * Also strips the *entire* `aventuria-helpers` flag namespace, not just the
+ * `complete-card-management` one `clearPlacementUpdateData()` already covers - a card played
+ * `usedAsEndurance` (`cards/endurance.mjs`) still carries that flag afterwards, which
+ * `returnPlayedCardToDeck()`/`discardPlayedCard()`/`returnPlayedCardToHand()` above never had
+ * to account for (`played-cards-sheet.mjs` filters Ausdauer cards out of its own list, so
+ * those three never actually run against one in practice) - but board cleanup deliberately
+ * resets *every* played card including Ausdauer ones, so a leftover flag here would make a
+ * reshuffled card wrongly count towards `getEnduranceStatus()` (`cards/endurance.mjs`) if it's
+ * later drawn and played normally instead of as Ausdauer again.
+ * @param {Cards} playPile
+ * @param {Cards} deck
+ * @returns {Promise<Card[]>}
+ */
+export async function returnAllPlayedCardsToDeck(playPile, deck) {
+  const ids = playPile.cards.map((c) => c.id);
+  if (!ids.length) return [];
+  const updateData = { ...clearPlacementUpdateData(), [`flags.-=${MODULE_ID}`]: null };
+  const result = await playPile.pass(deck, ids, { updateData });
+  await deck.shuffle();
+  return result;
 }

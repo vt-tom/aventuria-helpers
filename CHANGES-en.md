@@ -2,19 +2,31 @@
 
 This file lists all gameplay-relevant changes to the module – newest version first.
 
-## 0.1.6 (Beta)
+## 0.2.0 (Beta)
 
 ### Features
+- **Clean paper surface instead of a pixelated parchment image:** Sheets and module windows now use the consistent `#EEE3C8` background colour; the low-resolution parchment texture has been removed.
 - **New default Hero Sheet "Aventuria Helpers Charactersheet":** a compact sheet inspired by Aventuria's physical hero cards is now the default sheet and gets assigned automatically to newly created heroes. Its header remains visible while switching pages; icon-only flags open Hero, Skills, allowed cards, Images, Items, and Effects. Each user can move the complete flag rail to the left or right. The previous Hero Sheet remains selectable through “Configure Sheet” under the name "Aventuria Helpers (old)".
 - **Purpose-built hover effects for the card-style Hero Sheet:** Attribute and equipment checks brighten subtly and receive a focused medallion treatment. Skills use a quiet embossed effect instead, with a gently pulsing d20 appearing beneath the value. Page flags are highlighted by an anthracite edge.
 - **Endurance cost as a circle:** the equipment's endurance cost on the card-style Hero Sheet is now shown as a circled number, just like on Aventuria's own cards, instead of a separate icon.
 - **Special ability with its own symbol:** the Ready/Used toggle for the special ability on the card-style Hero Sheet now also shows Aventuria's special-ability symbol, greyed out while "Used".
 - **Compendiums grouped in a shared folder:** "Macros", "Aventuria Helpers Guide", and "Changelog" now appear bundled in a folder "Aventuria Helpers" in the sidebar's Compendium tab instead of being listed individually.
+- **Hero tray in the new card-sheet look:** the header bar, portrait, and deck/discard/endurance rows now share the same warm parchment/copper look as the new Hero Sheet, instead of the previous plainer style. The toggle button in the player list is also bigger now and glows with the same double-ring highlight as the check medallions on the Hero Sheet when you hover over it.
+- **More compact Adventure Tool header:** "Prep", "History", and "Page navigation" are now three small icon buttons instead of three always-visible boxes - click one to expand that panel when needed, everything else stays collapsed, leaving more room for the actual adventure text.
+- **Hand and Played-Cards windows, Welcome guide, and the rest of the Adventure Tool window in the new card-sheet look:** the same warm parchment/copper style as the Hero Sheet and hero tray, instead of the previous plainer style or (for the Welcome guide) Foundry's unchanged default window. The "Assign Hero" dialog picks up the new button/text colors automatically since it shares the same building blocks.
 
 ### Bugs
+- The Hand and In-Play windows could initially open on top of each other; the In-Play window now immediately docks correctly below the Hand.
+- The action buttons below hand cards and played cards could appear empty or oval. Play as endurance, discard, and return to hand now use clear icons and remain consistently circular.
 - Foundry's global button layout displaced the four check medallions in the new card-style Hero Sheet; value and label are stacked correctly again. The special ability also no longer exposes an editable rich-text editor while the sheet is locked and now renders formatted read-only content instead.
 - The card-style Hero Sheet's maximum life points couldn't be changed; now editable while in edit mode (current life points remain changeable at all times, as before, even while locked).
 - The card-style Hero Sheet offered no way to remove a second equipment slot once added; there's now a trash button on that row while in edit mode.
+- Critical rolls weren't accounted for in checks: a natural 1 or 20 counted like any other result and could even be misjudged as a failure or success depending on the modifier. Skill checks now correctly show all four outcomes (Critical success/Success/Failure/Critical failure) in chat; a natural 1 is always a critical success and a natural 20 always a critical failure, regardless of the modifier. Attack checks (equipment as well as the Close/Ranged/Magic/Dodge medallions) still only show Success/Failure, but now evaluate critical rolls correctly too.
+- The "adventure locked" notice could get stuck in the top-left corner and become impossible to close - fixed.
+- The Adventure Tool's lock stayed held if a player left Foundry instead of deliberately closing the tool - it's now released automatically.
+- New "Page navigation" in the Adventure Tool (one of the three new icon panels): lists every page of the adventure, so you can jump ahead even when the current page's text has no matching forward link.
+- "Clean up board" could leave one played card behind on the play surface, and removed cards stayed invisibly stuck in a hero's play pile - both fixed, hero decks are now fully reset during cleanup.
+- The Hand and Played-Cards windows had accidentally become fully opaque with the new paper colour instead of staying the intended semi-transparent floating panel over the board - translucent again.
 
 ## 0.1.5
 

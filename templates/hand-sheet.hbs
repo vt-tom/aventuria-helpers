@@ -6,7 +6,7 @@
         <i class="fa-solid fa-circle-play"></i>
       </a>
       <img class="card-art" src="{{card.img}}" alt="{{card.name}}">
-      <button type="button" class="card-endurance" data-action="playAsEndurance" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.PlayAsEndurance'}}"></button>
+      <button type="button" class="card-endurance" data-action="playAsEndurance" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.PlayAsEndurance'}}" aria-label="{{localize 'AVENTURIA_HELPERS.HeroTray.PlayAsEndurance'}}"><i class="fa-solid fa-bolt" aria-hidden="true"></i></button>
     </li>
     {{/each}}
   </ol>

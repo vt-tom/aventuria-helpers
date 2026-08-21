@@ -1,9 +1,9 @@
 {
-  "_id": "HMGYKuNVhwXQ32dX",
+  "_id": "rdnWEOgmSzFoxP59",
   "name": "Aventuria Helpers - Changelog (deutsch)",
   "pages": [
     {
-      "_id": "lzglOjE6o06CVBdy",
+      "_id": "HUQG6WHXirbULrJJ",
       "name": "Änderungen – Aventuria Helfer",
       "type": "text",
       "system": {},
@@ -31,7 +31,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786944405831,
+        "createdTime": 1787305209259,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -39,10 +39,88 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!HMGYKuNVhwXQ32dX.lzglOjE6o06CVBdy"
+      "_key": "!journal.pages!rdnWEOgmSzFoxP59.HUQG6WHXirbULrJJ"
     },
     {
-      "_id": "hCsOPKtNaEkYerk9",
+      "_id": "EE6J0Hn1T17fmr8U",
+      "name": "0.2.0 (Beta)",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>Ruhige Papierfläche statt pixeliger Pergamentgrafik:</strong> Die Bögen und Modulfenster verwenden jetzt die einheitliche Hintergrundfarbe <code>#EEE3C8</code>; die niedrig aufgelöste Pergamenttextur wurde entfernt.</li>\n<li><strong>Neuer Standard-Heldenbogen \"Aventuria Helpers Charactersheet\":</strong> ein kompakter, an den Aventuria-Heldenkarten orientierter Bogen ist jetzt der Standardbogen und wird neu angelegten Helden automatisch zugewiesen. Sein Kopf bleibt beim Seitenwechsel sichtbar; reine Symbol-Fähnchen führen zu Held, Talenten, erlaubten Karten, Bildern, Items und Effekten. Die komplette Fähnchenleiste lässt sich je Benutzer nach links oder rechts verschieben. Der bisherige Heldenbogen bleibt unter dem Namen \"Aventuria Helpers (old)\" über „Sheet konfigurieren“ weiterhin wählbar.</li>\n<li><strong>Passende Hover-Effekte im Karten-Heldenbogen:</strong> Fertigkeitsproben und Grundausstattung werden dezent aufgehellt und wie ein Medaillon fokussiert. Talente erhalten stattdessen eine ruhige Prägung; unter ihrem Wert erscheint ein leicht pulsierendes W20-Symbol. Die Seiten-Fähnchen werden mit einer anthrazitfarbenen Kante hervorgehoben.</li>\n<li><strong>Ausdauer-Kosten als Kreis:</strong> Die Ausdauer-Kosten der Ausrüstung im Karten-Heldenbogen werden jetzt wie auf den Aventuria-Karten selbst als eingekreiste Zahl dargestellt statt mit separatem Symbol.</li>\n<li><strong>Sonderfertigkeit mit eigenem Symbol:</strong> Der Bereit/Verwendet-Schalter der Sonderfertigkeit im Karten-Heldenbogen zeigt jetzt zusätzlich das Aventuria-Symbol für Sonderfertigkeiten, im Zustand \"Verwendet\" eingegraut.</li>\n<li><strong>Kompendien in einem gemeinsamen Ordner:</strong> \"Macros\", \"Aventuria Helpers Guide\" und \"Changelog\" erscheinen im Kompendium-Tab der Sidebar jetzt gebündelt in einem Ordner \"Aventuria Helpers\" statt einzeln aufgelistet.</li>\n<li><strong>Heldenablage im neuen Kartenbogen-Look:</strong> Kopfleiste, Portrait und Deck-/Ablage-/Ausdauer-Zeilen tragen jetzt dieselbe warme Pergament-/Kupfer-Optik wie der neue Charakterbogen, statt der bisherigen schlichteren Optik. Der Umschalt-Button in der Spielerliste ist dabei ebenfalls größer geworden und zeigt beim Überfahren mit der Maus jetzt denselben Doppelring-Leuchteffekt wie die Proben-Medaillons im Charakterbogen.</li>\n<li><strong>Abenteuer-Tool-Kopfbereich kompakter:</strong> \"Vorbereitung\", \"Verlauf\" und \"Seiten-Navigation\" sind jetzt drei kleine Symbol-Buttons statt drei immer sichtbarer Kästen - ein Klick klappt bei Bedarf das passende Panel auf, alles andere bleibt zusammengeklappt und macht mehr Platz für den eigentlichen Abenteuertext.</li>\n<li><strong>Hand- und Ausgespielte-Karten-Fenster, Willkommensguide und das restliche Abenteuer-Tool-Fenster im neuen Kartenbogen-Look:</strong> dieselbe warme Pergament-/Kupfer-Optik wie Charakterbogen und Heldenablage, statt der bisherigen schlichteren Optik bzw. (beim Willkommensguide) Foundrys unverändertem Standard-Fenster. Der \"Held auswählen\"-Dialog übernimmt die neuen Knopf-/Schrift-Farben automatisch mit, da er dieselben Bausteine nutzt.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>Hand- und Im-Spiel-Fenster konnten beim ersten Öffnen übereinander erscheinen; das Im-Spiel-Fenster dockt jetzt sofort korrekt unterhalb der Hand an.</li>\n<li>Die Aktionsbuttons unter Handkarten und ausgespielten Karten konnten leer oder oval erscheinen. Ausdauer spielen, Ablegen und Zurück auf die Hand sind jetzt mit gut erkennbaren Symbolen versehen und bleiben einheitlich kreisrund.</li>\n<li>Im neuen Karten-Heldenbogen wurden die vier Probenmedaillons durch Foundrys globale Button-Darstellung verschoben; Zahl und Beschriftung stehen jetzt wieder sauber untereinander. Die Sonderfertigkeit zeigt im gesperrten Ansichtsmodus außerdem keinen weiterhin bedienbaren Rich-Text-Editor mehr, sondern nur noch den formatierten Inhalt.</li>\n<li>Im Karten-Heldenbogen ließen sich die maximalen Lebenspunkte nicht ändern; jetzt im Bearbeiten-Modus editierbar (die aktuellen Lebenspunkte bleiben wie gehabt jederzeit änderbar, auch gesperrt).</li>\n<li>Im Karten-Heldenbogen ließ sich eine hinzugefügte zweite Ausrüstung nicht mehr entfernen; dafür jetzt ein Papierkorb-Button an der Zeile im Bearbeiten-Modus.</li>\n<li>Kritische Würfe wurden bei Proben nicht berücksichtigt: eine gewürfelte 1 oder 20 zählte bislang wie jedes andere Ergebnis und konnte durch einen Modifikator sogar falsch als Misserfolg bzw. Erfolg gewertet werden. Bei Talentproben zeigt der Chat jetzt korrekt alle vier Ergebnisse (Kritischer Erfolg/Erfolg/Misserfolg/Kritischer Misserfolg); eine 1 ist immer ein kritischer Erfolg, eine 20 immer ein kritischer Misserfolg, unabhängig vom Modifikator. Angriffsproben (Ausrüstung sowie die Nahkampf-/Fernkampf-/Magie-/Ausweichen-Medaillons) zeigen weiterhin nur Erfolg/Misserfolg, werten einen kritischen Wurf aber ebenfalls korrekt aus.</li>\n<li>Der \"Abenteuer spielen gesperrt\"-Hinweis konnte oben links hängen bleiben und ließ sich dann nicht mehr schließen - behoben.</li>\n<li>Die Sperre des Abenteuer-Tools blieb bestehen, wenn ein Spieler Foundry verlässt statt das Tool bewusst zu schließen - wird jetzt automatisch freigegeben.</li>\n<li>Neue \"Seiten-Navigation\" im Abenteuer-Tool (eines der drei neuen Symbol-Panels): listet alle Seiten des Abenteuers, damit man auch ohne passenden Weiterführungslink im Text jederzeit weiterspringen kann.</li>\n<li>Nach \"Board aufräumen\" konnte eine ausgespielte Karte auf der Spieloberfläche zurückbleiben, und entfernte Karten blieben unsichtbar im Im-Spiel-Stapel eines Helden hängen - beides behoben, die Heldendecks werden beim Aufräumen jetzt vollständig zurückgesetzt.</li>\n<li>Hand- und Ausgespielte-Karten-Fenster waren durch die neue Papierfarbe versehentlich blickdicht geworden statt wie vorgesehen leicht durchscheinend über dem Spielbrett zu schweben - wieder durchscheinend.</li>\n</ul>",
+        "markdown": "### Features\r\n- **Ruhige Papierfläche statt pixeliger Pergamentgrafik:** Die Bögen und Modulfenster verwenden jetzt die einheitliche Hintergrundfarbe `#EEE3C8`; die niedrig aufgelöste Pergamenttextur wurde entfernt.\r\n- **Neuer Standard-Heldenbogen \"Aventuria Helpers Charactersheet\":** ein kompakter, an den Aventuria-Heldenkarten orientierter Bogen ist jetzt der Standardbogen und wird neu angelegten Helden automatisch zugewiesen. Sein Kopf bleibt beim Seitenwechsel sichtbar; reine Symbol-Fähnchen führen zu Held, Talenten, erlaubten Karten, Bildern, Items und Effekten. Die komplette Fähnchenleiste lässt sich je Benutzer nach links oder rechts verschieben. Der bisherige Heldenbogen bleibt unter dem Namen \"Aventuria Helpers (old)\" über „Sheet konfigurieren“ weiterhin wählbar.\r\n- **Passende Hover-Effekte im Karten-Heldenbogen:** Fertigkeitsproben und Grundausstattung werden dezent aufgehellt und wie ein Medaillon fokussiert. Talente erhalten stattdessen eine ruhige Prägung; unter ihrem Wert erscheint ein leicht pulsierendes W20-Symbol. Die Seiten-Fähnchen werden mit einer anthrazitfarbenen Kante hervorgehoben.\r\n- **Ausdauer-Kosten als Kreis:** Die Ausdauer-Kosten der Ausrüstung im Karten-Heldenbogen werden jetzt wie auf den Aventuria-Karten selbst als eingekreiste Zahl dargestellt statt mit separatem Symbol.\r\n- **Sonderfertigkeit mit eigenem Symbol:** Der Bereit/Verwendet-Schalter der Sonderfertigkeit im Karten-Heldenbogen zeigt jetzt zusätzlich das Aventuria-Symbol für Sonderfertigkeiten, im Zustand \"Verwendet\" eingegraut.\r\n- **Kompendien in einem gemeinsamen Ordner:** \"Macros\", \"Aventuria Helpers Guide\" und \"Changelog\" erscheinen im Kompendium-Tab der Sidebar jetzt gebündelt in einem Ordner \"Aventuria Helpers\" statt einzeln aufgelistet.\r\n- **Heldenablage im neuen Kartenbogen-Look:** Kopfleiste, Portrait und Deck-/Ablage-/Ausdauer-Zeilen tragen jetzt dieselbe warme Pergament-/Kupfer-Optik wie der neue Charakterbogen, statt der bisherigen schlichteren Optik. Der Umschalt-Button in der Spielerliste ist dabei ebenfalls größer geworden und zeigt beim Überfahren mit der Maus jetzt denselben Doppelring-Leuchteffekt wie die Proben-Medaillons im Charakterbogen.\r\n- **Abenteuer-Tool-Kopfbereich kompakter:** \"Vorbereitung\", \"Verlauf\" und \"Seiten-Navigation\" sind jetzt drei kleine Symbol-Buttons statt drei immer sichtbarer Kästen - ein Klick klappt bei Bedarf das passende Panel auf, alles andere bleibt zusammengeklappt und macht mehr Platz für den eigentlichen Abenteuertext.\r\n- **Hand- und Ausgespielte-Karten-Fenster, Willkommensguide und das restliche Abenteuer-Tool-Fenster im neuen Kartenbogen-Look:** dieselbe warme Pergament-/Kupfer-Optik wie Charakterbogen und Heldenablage, statt der bisherigen schlichteren Optik bzw. (beim Willkommensguide) Foundrys unverändertem Standard-Fenster. Der \"Held auswählen\"-Dialog übernimmt die neuen Knopf-/Schrift-Farben automatisch mit, da er dieselben Bausteine nutzt.\r\n\r\n### Bugs\r\n- Hand- und Im-Spiel-Fenster konnten beim ersten Öffnen übereinander erscheinen; das Im-Spiel-Fenster dockt jetzt sofort korrekt unterhalb der Hand an.\r\n- Die Aktionsbuttons unter Handkarten und ausgespielten Karten konnten leer oder oval erscheinen. Ausdauer spielen, Ablegen und Zurück auf die Hand sind jetzt mit gut erkennbaren Symbolen versehen und bleiben einheitlich kreisrund.\r\n- Im neuen Karten-Heldenbogen wurden die vier Probenmedaillons durch Foundrys globale Button-Darstellung verschoben; Zahl und Beschriftung stehen jetzt wieder sauber untereinander. Die Sonderfertigkeit zeigt im gesperrten Ansichtsmodus außerdem keinen weiterhin bedienbaren Rich-Text-Editor mehr, sondern nur noch den formatierten Inhalt.\r\n- Im Karten-Heldenbogen ließen sich die maximalen Lebenspunkte nicht ändern; jetzt im Bearbeiten-Modus editierbar (die aktuellen Lebenspunkte bleiben wie gehabt jederzeit änderbar, auch gesperrt).\r\n- Im Karten-Heldenbogen ließ sich eine hinzugefügte zweite Ausrüstung nicht mehr entfernen; dafür jetzt ein Papierkorb-Button an der Zeile im Bearbeiten-Modus.\r\n- Kritische Würfe wurden bei Proben nicht berücksichtigt: eine gewürfelte 1 oder 20 zählte bislang wie jedes andere Ergebnis und konnte durch einen Modifikator sogar falsch als Misserfolg bzw. Erfolg gewertet werden. Bei Talentproben zeigt der Chat jetzt korrekt alle vier Ergebnisse (Kritischer Erfolg/Erfolg/Misserfolg/Kritischer Misserfolg); eine 1 ist immer ein kritischer Erfolg, eine 20 immer ein kritischer Misserfolg, unabhängig vom Modifikator. Angriffsproben (Ausrüstung sowie die Nahkampf-/Fernkampf-/Magie-/Ausweichen-Medaillons) zeigen weiterhin nur Erfolg/Misserfolg, werten einen kritischen Wurf aber ebenfalls korrekt aus.\r\n- Der \"Abenteuer spielen gesperrt\"-Hinweis konnte oben links hängen bleiben und ließ sich dann nicht mehr schließen - behoben.\r\n- Die Sperre des Abenteuer-Tools blieb bestehen, wenn ein Spieler Foundry verlässt statt das Tool bewusst zu schließen - wird jetzt automatisch freigegeben.\r\n- Neue \"Seiten-Navigation\" im Abenteuer-Tool (eines der drei neuen Symbol-Panels): listet alle Seiten des Abenteuers, damit man auch ohne passenden Weiterführungslink im Text jederzeit weiterspringen kann.\r\n- Nach \"Board aufräumen\" konnte eine ausgespielte Karte auf der Spieloberfläche zurückbleiben, und entfernte Karten blieben unsichtbar im Im-Spiel-Stapel eines Helden hängen - beides behoben, die Heldendecks werden beim Aufräumen jetzt vollständig zurückgesetzt.\r\n- Hand- und Ausgespielte-Karten-Fenster waren durch die neue Papierfarbe versehentlich blickdicht geworden statt wie vorgesehen leicht durchscheinend über dem Spielbrett zu schweben - wieder durchscheinend.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 100000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1787305209259,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!rdnWEOgmSzFoxP59.EE6J0Hn1T17fmr8U"
+    },
+    {
+      "_id": "i5aAnyuJYFew9sM3",
+      "name": "0.1.5",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>Neuer Willkommensbildschirm-Eintrag \"Abenteuer spielen\":</strong> Ein eigenes Abenteuer-Tool führt durch die 10 Standard-Abenteuer - Abenteuer auswählen, den Vorbereitungs-Kasten mit den benötigten Karten prominent angezeigt bekommen, Seite für Seite lesen (Verweise auf andere Seiten desselben Abenteuers springen direkt im Tool weiter), jederzeit wieder aussteigen und später fortsetzen. Nur eine Person kann das Tool gleichzeitig benutzen; andere sehen währenddessen eine Sperre mit Namen.</li>\n<li><strong>Neuer Button \"Board aufräumen\"</strong> im Willkommensbildschirm (auch als eigenes Macro nutzbar): entfernt alle Abenteuer-spezifisch auf der Spielbrett-Szene liegenden Karten (zurück in ihre Decks/Stapel) und setzt die Spielmarken wieder an ihre Ausgangsposition zurück - fragt vorher einmal nach Bestätigung. Die Decks/Ablagen/Hände der Helden sowie die gemeinsamen Stapel aus \"Erste Schritte\" bleiben dabei unangetastet stehen.</li>\n<li><strong>Hand-Karten-Fenster dockt jetzt standardmäßig rechts neben der Heldenablage an</strong> statt irgendwo auf dem Bildschirm zu erscheinen - bleibt beim Öffnen immer an derselben Stelle. Lässt sich bei Bedarf trotzdem wie gewohnt per Ziehen verschieben; ein neuer Eintrag \"Position zurücksetzen\" im \"…\"-Menü holt es zurück an seinen Platz.</li>\n<li><strong>Neue Zeile \"Ausgespielte Karten\" in der Heldenablage:</strong> zeigt an, wie viele Karten du aktuell ausgespielt hast, und öffnet über den Ansehen-Button ein eigenes Fenster (dockt standardmäßig unterhalb des Hand-Karten-Fensters an, ebenfalls verschiebbar mit Reset-Option) - dort lässt sich jede ausgespielte Karte einzeln ablegen oder zurück ins Deck mischen, beim Überfahren mit der Maus erscheint dieselbe große Vorschau wie im Hand-Fenster. Ausdauerkarten werden hier bewusst nicht angezeigt, die bleiben weiterhin nur als Zähler in der Heldenablage.</li>\n<li>Hand-Karten-Fenster und \"Ausgespielte Karten\"-Fenster sind jetzt standardmäßig 600 Pixel breit, lassen sich aber am Eck-Ziehgriff jederzeit breiter ziehen - und docken zuverlässig exakt übereinander an, auch wenn nur eines der beiden über \"Position zurücksetzen\" zurückgesetzt wird.</li>\n<li>Im \"Ausgespielte Karten\"-Fenster gibt es jetzt statt \"Zurück ins Deck mischen\" den Button \"Zurück auf die Hand nehmen\" (der häufigere Fall) - \"Zurück ins Deck mischen\" ist weiterhin verfügbar, per Rechtsklick auf die Karte.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>Die Heldenablage konnte bei kleinerem Browserfenster unten in die Makro-Leiste hineinragen - sie sitzt jetzt oben im linken Bereich (statt am unteren Bildschirmrand) und kommt der Makro-Leiste dadurch nie mehr in die Quere.</li>\n<li>Das \"Ausgespielte Karten\"-Fenster klebte optisch direkt am Hand-Karten-Fenster - jetzt mit etwas mehr Abstand dazwischen.</li>\n<li>Das \"Ausgespielte Karten\"-Fenster hatte spürbar zu viel Leerraum unter den Buttons - ist jetzt kompakter.</li>\n<li>Die Karten im \"Ausgespielte Karten\"-Fenster hatten einen unschönen Abstand nach oben und links - behoben.</li>\n<li>Hand-Karten-Fenster und \"Ausgespielte Karten\"-Fenster schlossen sich mit spürbarer Verzögerung (Karten verschwanden, dann dauerte es noch einen Moment) - schließen sich jetzt sofort.</li>\n<li>Die große Karten-Vorschau beim Überfahren mit der Maus konnte bei einer weiter unten im Fenster liegenden Karte über den unteren Bildschirmrand hinausragen - bleibt jetzt immer vollständig sichtbar.</li>\n</ul>",
+        "markdown": "### Features\r\n- **Neuer Willkommensbildschirm-Eintrag \"Abenteuer spielen\":** Ein eigenes Abenteuer-Tool führt durch die 10 Standard-Abenteuer - Abenteuer auswählen, den Vorbereitungs-Kasten mit den benötigten Karten prominent angezeigt bekommen, Seite für Seite lesen (Verweise auf andere Seiten desselben Abenteuers springen direkt im Tool weiter), jederzeit wieder aussteigen und später fortsetzen. Nur eine Person kann das Tool gleichzeitig benutzen; andere sehen währenddessen eine Sperre mit Namen.\r\n- **Neuer Button \"Board aufräumen\"** im Willkommensbildschirm (auch als eigenes Macro nutzbar): entfernt alle Abenteuer-spezifisch auf der Spielbrett-Szene liegenden Karten (zurück in ihre Decks/Stapel) und setzt die Spielmarken wieder an ihre Ausgangsposition zurück - fragt vorher einmal nach Bestätigung. Die Decks/Ablagen/Hände der Helden sowie die gemeinsamen Stapel aus \"Erste Schritte\" bleiben dabei unangetastet stehen.\r\n- **Hand-Karten-Fenster dockt jetzt standardmäßig rechts neben der Heldenablage an** statt irgendwo auf dem Bildschirm zu erscheinen - bleibt beim Öffnen immer an derselben Stelle. Lässt sich bei Bedarf trotzdem wie gewohnt per Ziehen verschieben; ein neuer Eintrag \"Position zurücksetzen\" im \"...\"-Menü holt es zurück an seinen Platz.\r\n- **Neue Zeile \"Ausgespielte Karten\" in der Heldenablage:** zeigt an, wie viele Karten du aktuell ausgespielt hast, und öffnet über den Ansehen-Button ein eigenes Fenster (dockt standardmäßig unterhalb des Hand-Karten-Fensters an, ebenfalls verschiebbar mit Reset-Option) - dort lässt sich jede ausgespielte Karte einzeln ablegen oder zurück ins Deck mischen, beim Überfahren mit der Maus erscheint dieselbe große Vorschau wie im Hand-Fenster. Ausdauerkarten werden hier bewusst nicht angezeigt, die bleiben weiterhin nur als Zähler in der Heldenablage.\r\n- Hand-Karten-Fenster und \"Ausgespielte Karten\"-Fenster sind jetzt standardmäßig 600 Pixel breit, lassen sich aber am Eck-Ziehgriff jederzeit breiter ziehen - und docken zuverlässig exakt übereinander an, auch wenn nur eines der beiden über \"Position zurücksetzen\" zurückgesetzt wird.\r\n- Im \"Ausgespielte Karten\"-Fenster gibt es jetzt statt \"Zurück ins Deck mischen\" den Button \"Zurück auf die Hand nehmen\" (der häufigere Fall) - \"Zurück ins Deck mischen\" ist weiterhin verfügbar, per Rechtsklick auf die Karte.\r\n\r\n### Bugs\r\n- Die Heldenablage konnte bei kleinerem Browserfenster unten in die Makro-Leiste hineinragen - sie sitzt jetzt oben im linken Bereich (statt am unteren Bildschirmrand) und kommt der Makro-Leiste dadurch nie mehr in die Quere.\r\n- Das \"Ausgespielte Karten\"-Fenster klebte optisch direkt am Hand-Karten-Fenster - jetzt mit etwas mehr Abstand dazwischen.\r\n- Das \"Ausgespielte Karten\"-Fenster hatte spürbar zu viel Leerraum unter den Buttons - ist jetzt kompakter.\r\n- Die Karten im \"Ausgespielte Karten\"-Fenster hatten einen unschönen Abstand nach oben und links - behoben.\r\n- Hand-Karten-Fenster und \"Ausgespielte Karten\"-Fenster schlossen sich mit spürbarer Verzögerung (Karten verschwanden, dann dauerte es noch einen Moment) - schließen sich jetzt sofort.\r\n- Die große Karten-Vorschau beim Überfahren mit der Maus konnte bei einer weiter unten im Fenster liegenden Karte über den unteren Bildschirmrand hinausragen - bleibt jetzt immer vollständig sichtbar.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 200000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1787305209259,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!rdnWEOgmSzFoxP59.i5aAnyuJYFew9sM3"
+    },
+    {
+      "_id": "bVg76zJlpwSXWmSB",
       "name": "0.1.4.1",
       "type": "text",
       "system": {},
@@ -62,7 +140,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 100000,
+      "sort": 300000,
       "ownership": {
         "default": -1
       },
@@ -70,7 +148,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786944405831,
+        "createdTime": 1787305209259,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -78,10 +156,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!HMGYKuNVhwXQ32dX.hCsOPKtNaEkYerk9"
+      "_key": "!journal.pages!rdnWEOgmSzFoxP59.bVg76zJlpwSXWmSB"
     },
     {
-      "_id": "IsKl8A2sNipUrQwN",
+      "_id": "V6FZGowYSWQDIZhq",
       "name": "0.1.4",
       "type": "text",
       "system": {},
@@ -101,7 +179,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 200000,
+      "sort": 400000,
       "ownership": {
         "default": -1
       },
@@ -109,7 +187,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786944405831,
+        "createdTime": 1787305209259,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -117,10 +195,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!HMGYKuNVhwXQ32dX.IsKl8A2sNipUrQwN"
+      "_key": "!journal.pages!rdnWEOgmSzFoxP59.V6FZGowYSWQDIZhq"
     },
     {
-      "_id": "ml9xw1hxzqgQIbl9",
+      "_id": "awv42Ra48LJbWRSZ",
       "name": "0.1.3",
       "type": "text",
       "system": {},
@@ -140,7 +218,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 300000,
+      "sort": 500000,
       "ownership": {
         "default": -1
       },
@@ -148,7 +226,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786944405831,
+        "createdTime": 1787305209259,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -156,10 +234,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!HMGYKuNVhwXQ32dX.ml9xw1hxzqgQIbl9"
+      "_key": "!journal.pages!rdnWEOgmSzFoxP59.awv42Ra48LJbWRSZ"
     },
     {
-      "_id": "Xpbiw7swTPoF23CB",
+      "_id": "MJLCOKgBIhb7XfOK",
       "name": "0.1.2",
       "type": "text",
       "system": {},
@@ -179,7 +257,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 400000,
+      "sort": 600000,
       "ownership": {
         "default": -1
       },
@@ -187,7 +265,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786944405831,
+        "createdTime": 1787305209259,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -195,10 +273,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!HMGYKuNVhwXQ32dX.Xpbiw7swTPoF23CB"
+      "_key": "!journal.pages!rdnWEOgmSzFoxP59.MJLCOKgBIhb7XfOK"
     },
     {
-      "_id": "pIsOTC9kCj8geive",
+      "_id": "xpg1DDcgdccp1Mej",
       "name": "0.1.1",
       "type": "text",
       "system": {},
@@ -218,7 +296,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 500000,
+      "sort": 700000,
       "ownership": {
         "default": -1
       },
@@ -226,7 +304,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786944405831,
+        "createdTime": 1787305209259,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -234,10 +312,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!HMGYKuNVhwXQ32dX.pIsOTC9kCj8geive"
+      "_key": "!journal.pages!rdnWEOgmSzFoxP59.xpg1DDcgdccp1Mej"
     },
     {
-      "_id": "DekqbMAyKjcKWOXE",
+      "_id": "A3KK4MzcrAUnNRQ6",
       "name": "0.1.0",
       "type": "text",
       "system": {},
@@ -257,7 +335,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 600000,
+      "sort": 800000,
       "ownership": {
         "default": -1
       },
@@ -265,7 +343,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1786944405831,
+        "createdTime": 1787305209259,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -273,7 +351,7 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!HMGYKuNVhwXQ32dX.DekqbMAyKjcKWOXE"
+      "_key": "!journal.pages!rdnWEOgmSzFoxP59.A3KK4MzcrAUnNRQ6"
     }
   ],
   "folder": null,
@@ -286,7 +364,7 @@
   "_stats": {
     "compendiumSource": null,
     "coreVersion": "14.364",
-    "createdTime": 1786944405831,
+    "createdTime": 1787305209259,
     "duplicateSource": null,
     "exportSource": null,
     "lastModifiedBy": null,
@@ -294,5 +372,5 @@
     "systemId": "universal-tabletop-system",
     "systemVersion": "1.2.1"
   },
-  "_key": "!journal!HMGYKuNVhwXQ32dX"
+  "_key": "!journal!rdnWEOgmSzFoxP59"
 }

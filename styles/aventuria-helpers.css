@@ -15,6 +15,59 @@
   --amethyst-ink: #f5eefc;
   --verdigris: #356456;
   --verdigris-ink: #eafaf3;
+
+  /* Kupfer-/Pergament-Tokens (Stand 2026-08-21): gemeinsame Werte fuer die seit
+     2026-08-21 modulweit vereinheitlichte Parchment-/Kupfer-Optik (Heldenablage,
+     Hand-/Ausgespielte-Karten-Sheet, Willkommensguide, Abenteuer-Tool,
+     Charakterbogen) - vorher an ueber 100 Stellen wortwoertlich dupliziert
+     (Nutzerwunsch CSS-Vereinfachung/project/TODO.md, "Option A": gemeinsame
+     Tokens statt einer Datei je Fenster). Jeder Wert unten wurde vor der
+     Einfuehrung per Grep gegen beide CSS-Dateien geprueft (exakt identische
+     Vorkommen, keine zufaellige Uebereinstimmung) - siehe project/CHANGELOG.md
+     fuer die vollstaendige Fundliste. Ergaenzt die obige --paper/--gold/...
+     Palette, die fuer noch nicht umgestellte Bereiche (alter Heldenbogen, Combat
+     Tracker, Proben-Dialog/-Chatkarte, Assign-Hero-Fensterrahmen) unveraendert
+     weiterlaeuft. `styles/card-hero-sheet.css` referenziert diese Tokens ueber
+     seine eigenen lokalen --card-*-Aliase (siehe dort), damit dessen zahlreiche
+     bestehende var(--card-*)-Aufrufe unangetastet bleiben. */
+  --copper-ink: #211b17;
+  --copper-muted: #6b5c4c;
+  --copper-paper: #eee8dc;
+  --copper-line: #925e49;
+  --copper-highlight: #c9713a;
+  --copper-highlight-glow: #c9713a8c;
+  --copper-highlight-ink: #8b3f1f;
+  --copper-ghost-ink: #8b5a4a;
+  --copper-frame: #777068;
+  --copper-frame-dark: #51483e;
+  --copper-outer-frame: #716b63;
+  --copper-font: "Gentium Basic", Georgia, serif;
+  --copper-panel: #fffaf2aa;
+  --copper-chip: #eee5d6;
+  --copper-chip-hover: #fff3e6;
+  --copper-medallion-bg: radial-gradient(circle at 40% 35%, #fff, #e8decc 65%, #a99c88);
+  --copper-medallion-shadow: 0 2px 4px #0006;
+  --copper-glow-ring: #8f684b;
+  --copper-glow: 0 0 0 2px #f8e6b6, 0 0 0 4px var(--copper-glow-ring);
+  --copper-header-bg:
+    repeating-radial-gradient(ellipse at 50% 0, transparent 0 8px, #b5ced011 9px 10px),
+    linear-gradient(140deg, #0e2933, #173b47 55%, #0b2028);
+  --copper-header-color: #fff8eb;
+  --copper-header-shadow: inset 0 0 14px #0009;
+  --copper-header-hover-color: #ffe2a1;
+  --copper-header-hover-glow: 0 0 5px #d29a48;
+  /* Aufloesungsunabhaengige Papierflaeche statt der in grossen Boegen
+     sichtbar pixeligen box-parchment.webp-Textur. */
+  --copper-parchment-bg: #eee3c8;
+  /* Muss trotz gleicher Basisfarbe wie --copper-parchment-bg tatsaechlich
+     durchscheinend bleiben (color-mix statt Volltonfarbe) - Hand-/
+     Ausgespielte-Karten-Sheet sind bewusst halbdurchsichtig schwebende Panels
+     ueber dem Spielbrett, siehe deren .window-content-Regel weiter unten.
+     Ein erster Entwurf hatte hier versehentlich denselben deckenden Hex-Wert
+     wie --copper-parchment-bg eingetragen und damit diese Transluzenz
+     stillschweigend entfernt (Review-Fund 2026-08-21). */
+  --copper-parchment-bg-translucent: color-mix(in srgb, var(--copper-parchment-bg) 55%, transparent);
+
   font-family: "Segoe UI", system-ui, sans-serif;
   color: var(--ink);
 }
@@ -1299,11 +1352,50 @@ button.skill-value:active {
 }
 
 /* ---------- Welcome screen ---------- */
+/* Parchment-Redesign (Stand 2026-08-21, Nutzerentscheidung nach Klickdummy-Vergleich
+   project/design-unification/, Abschnitt 5): bislang Foundrys unveränderter Standard-
+   Fensterkopf und flaches Paper - jetzt dieselbe dunkle Metall-Kopfleiste, Pergament-Textur,
+   Gentium Basic und Kupfer-Akzente wie die übrigen bereits umgestellten Fenster. `.w-btn`/
+   `.welcome-actions`/`.guide-category`/`.setup-step*` werden laut Kommentar bei
+   "Assign-hero picker" unten auch vom "Held auswählen"-Dialog wiederverwendet - der zieht die
+   neue Optik dadurch automatisch mit, ohne eigene Änderung dort. */
+.welcome-screen .window-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  color: var(--copper-header-color);
+  background: var(--copper-header-bg);
+  box-shadow: var(--copper-header-shadow);
+}
+
+.welcome-screen .window-header .window-icon {
+  color: var(--copper-header-color);
+}
+
+.welcome-screen .window-header .window-title {
+  font-family: var(--copper-font);
+  font-weight: 700;
+  text-shadow: 0 1px 2px #000;
+}
+
+.welcome-screen .window-header .header-control {
+  color: var(--copper-header-color);
+  background: none;
+  border: none;
+}
+
+.welcome-screen .window-header .header-control:hover,
+.welcome-screen .window-header .header-control:focus-visible {
+  color: var(--copper-header-hover-color);
+  text-shadow: var(--copper-header-hover-glow);
+  outline: none;
+}
 
 .aventuria-helpers.welcome-screen .window-content {
-  background: var(--paper);
   max-height: 80vh;
   overflow-y: auto;
+  background: var(--copper-parchment-bg);
 }
 
 .aventuria-welcome {
@@ -1313,18 +1405,18 @@ button.skill-value:active {
   gap: 0.75rem;
   text-align: center;
   padding: 0.5rem 1rem 1rem;
+  color: var(--copper-ink);
+  font-family: var(--copper-font);
 }
 
 .aventuria-welcome h2 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
   font-size: 1.4rem;
-  color: var(--ink);
 }
 
 .aventuria-welcome p {
   margin: 0;
-  color: var(--muted);
+  color: var(--copper-muted);
   line-height: 1.5;
 }
 
@@ -1339,22 +1431,24 @@ button.skill-value:active {
 .aventuria-welcome .w-btn {
   font: inherit;
   font-size: 0.85rem;
-  font-weight: 600;
-  background: var(--gold);
-  color: var(--panel);
-  border: 1px solid var(--gold);
-  border-radius: 5px;
-  padding: 0.55rem 1rem;
+  font-weight: 700;
+  background: var(--copper-chip);
+  color: #4a3f34;
+  border: 1px solid var(--copper-line);
+  border-radius: 20px;
+  padding: 0.55rem 1.1rem;
   cursor: pointer;
 }
 
 .aventuria-welcome .w-btn:hover {
-  filter: brightness(1.08);
+  border-color: var(--copper-highlight);
+  background: var(--copper-chip-hover);
+  color: var(--copper-highlight-ink);
 }
 
 .aventuria-welcome .w-btn.ghost {
   background: none;
-  color: var(--gold);
+  color: var(--copper-ghost-ink);
 }
 
 /* Masthead for the whole guide - opens the language-appropriate JournalEntry from the
@@ -1364,16 +1458,17 @@ button.skill-value:active {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  background: var(--gold);
-  color: var(--panel);
-  border: 1px solid var(--gold);
-  border-radius: 5px;
-  padding: 0.6rem 1.6rem;
+  border: 3px double var(--copper-frame);
+  border-radius: 24px;
+  background: var(--copper-medallion-bg);
+  color: var(--copper-ink);
+  padding: 0.6rem 1.7rem;
+  box-shadow: 0 2px 6px #0006;
   cursor: pointer;
 }
 
 .aventuria-welcome .guide-title:hover {
-  filter: brightness(1.08);
+  filter: brightness(1.08) saturate(1.1);
 }
 
 /* Secondary entry point below the guide masthead - opens the "changelog" compendium's
@@ -1385,15 +1480,16 @@ button.skill-value:active {
   font-size: 0.85rem;
   font-weight: 600;
   background: none;
-  color: var(--gold);
-  border: 1px solid var(--gold);
-  border-radius: 5px;
+  color: var(--copper-highlight-ink);
+  border: 1px solid var(--copper-line);
+  border-radius: 20px;
   padding: 0.4rem 1.2rem;
   cursor: pointer;
 }
 
 .aventuria-welcome .changelog-title:hover {
-  filter: brightness(1.08);
+  border-color: var(--copper-highlight);
+  background: rgba(201, 113, 58, 0.12);
 }
 
 /* Wraps one guide category (a heading plus its entry points) - more categories are
@@ -1405,7 +1501,7 @@ button.skill-value:active {
   gap: 0.5rem;
   width: 100%;
   padding-top: 0.75rem;
-  border-top: 1px dashed var(--line);
+  border-top: 1px dashed var(--copper-line);
 }
 
 .aventuria-welcome.getting-started {
@@ -1422,9 +1518,9 @@ button.skill-value:active {
   gap: 0.75rem;
   align-items: flex-start;
   padding: 0.6rem 0.75rem;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 6px;
+  background: var(--copper-panel);
+  border: 1px solid var(--copper-line);
+  border-radius: 10px;
 }
 
 .setup-step-num {
@@ -1432,13 +1528,15 @@ button.skill-value:active {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.7rem;
+  height: 1.7rem;
   border-radius: 50%;
-  background: var(--gold);
-  color: var(--panel);
+  border: 2px double var(--copper-frame);
+  background: var(--copper-medallion-bg);
+  color: var(--copper-ink);
   font-weight: 700;
   font-size: 0.85rem;
+  box-shadow: var(--copper-medallion-shadow);
 }
 
 .setup-step-body {
@@ -1451,14 +1549,13 @@ button.skill-value:active {
 .setup-step-body h3 {
   margin: 0;
   font-size: 0.95rem;
-  color: var(--ink);
 }
 
 .setup-step-body p {
   margin: 0;
   font-size: 0.85rem;
   line-height: 1.4;
-  color: var(--muted);
+  color: var(--copper-muted);
   text-align: left;
 }
 
@@ -1489,23 +1586,23 @@ button.skill-value:active {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
-  border: 1px solid var(--line);
-  background: var(--panel);
-  color: var(--muted);
+  border: 1px solid var(--copper-line);
+  background: var(--copper-chip);
+  color: var(--copper-muted);
   font-size: 0.72rem;
   font-weight: 600;
   cursor: pointer;
 }
 
 .setup-step-dot:hover {
-  border-color: var(--gold);
-  color: var(--ink);
+  border-color: var(--copper-highlight);
+  color: var(--copper-ink);
 }
 
 .setup-step-dot.active {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: var(--panel);
+  border: 2px double var(--copper-frame);
+  background: var(--copper-medallion-bg);
+  color: var(--copper-ink);
 }
 
 /* ---------- Assign-hero picker (Held wählen: Spieler + Spielernummer) ---------- */
@@ -1786,19 +1883,25 @@ body.ahb-tray-active #ui-left-column-1 {
   position: relative;
 }
 
+/* Medaillon mit Hover-Glow (Stand 2026-08-21, Nutzerentscheidung nach Klickdummy-Vergleich
+   project/design-unification/, Abschnitt 7, "Variante A") - radialer Metall-Verlauf statt
+   Flachfarbe plus derselbe Doppelring-Glow, den die Proben-Medaillons im Charakterbogen schon
+   haben (.card-stat-roll strong:hover in card-hero-sheet.css), statt nur eines Farbwechsels.
+   Auf Nutzerwunsch gleichzeitig von 44px auf 56px vergrößert. */
 .ahb-tray-toggle {
   position: absolute;
   bottom: 4px;
   left: 100%;
   margin-left: 10px;
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
+  padding: 7px;
+  border: 3px double var(--copper-frame);
   border-radius: 50%;
-  border: 2px solid #a9822e;
-  background: #f6ecd4;
-  padding: 6px;
+  background: var(--copper-medallion-bg);
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 150ms ease, filter 150ms ease, transform 150ms ease;
   z-index: 1;
 }
 
@@ -1811,30 +1914,30 @@ body.ahb-tray-active #ui-left-column-1 {
 
 .ahb-tray-toggle:hover,
 .ahb-tray-toggle:focus-visible {
-  border-color: #f6ecd4;
-  background: #a9822e;
+  filter: brightness(1.08) saturate(1.08);
+  box-shadow: var(--copper-glow), 0 4px 12px rgba(0, 0, 0, 0.5);
+  transform: scale(1.08);
   outline: none;
 }
 
+/* Parchment-Redesign (Stand 2026-08-21, Nutzerentscheidung nach Klickdummy-Vergleich
+   project/design-unification/, "Variante A"): dieselbe warme Parchment-/Karten-Optik wie
+   der Charakterbogen (styles/card-hero-sheet.css) - Gentium Basic, dunkle Metall-Kopfleiste,
+   kupferfarbene Medaillons/Pillen, Pergament-Hintergrund. Struktur/Klassen unverändert
+   gegenüber der vorherigen sans-serif-Optik, nur die visuelle Sprache. */
 .hero-tray {
   pointer-events: auto;
   width: 320px;
   flex: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  background: var(--paper);
-  border: 2px solid var(--gold);
-  border-radius: 10px;
-  padding: 0.75rem;
-  font-size: 0.88rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  border: 4px solid var(--copper-outer-frame);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), inset 0 0 0 2px #aaa195;
 }
 
 .hero-tray .tray-root {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
 }
 
 .hero-tray .tray-bar {
@@ -1842,15 +1945,19 @@ body.ahb-tray-active #ui-left-column-1 {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  color: var(--copper-header-color);
+  background: var(--copper-header-bg);
+  box-shadow: var(--copper-header-shadow);
 }
 
 .hero-tray .tray-label {
-  font-family: Georgia, "Iowan Old Style", serif;
+  font-family: var(--copper-font);
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--ink);
+  text-shadow: 0 1px 2px #000;
   min-width: 0;
   overflow: hidden;
   white-space: nowrap;
@@ -1868,12 +1975,12 @@ body.ahb-tray-active #ui-left-column-1 {
 .hero-tray .tray-help,
 .hero-tray .tray-toggle {
   flex: none;
-  width: 30px;
-  height: 30px;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  background: var(--panel);
-  color: var(--muted);
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--copper-header-color);
   cursor: pointer;
   font-size: 0.85rem;
 }
@@ -1882,8 +1989,8 @@ body.ahb-tray-active #ui-left-column-1 {
 .hero-tray .tray-config:focus-visible,
 .hero-tray .tray-help:hover,
 .hero-tray .tray-help:focus-visible {
-  border-color: var(--gold);
-  color: var(--gold);
+  color: var(--copper-header-hover-color);
+  text-shadow: var(--copper-header-hover-glow);
   outline: none;
 }
 
@@ -1891,14 +1998,13 @@ body.ahb-tray-active #ui-left-column-1 {
    dashed border + transparent fill instead of the shared solid-panel look, so the
    "close/switch to player list" action doesn't visually blend in with Config/Help. */
 .hero-tray .tray-toggle {
-  border-style: dashed;
-  background: transparent;
+  border: 1px dashed #6b6259;
 }
 
 .hero-tray .tray-toggle:hover,
 .hero-tray .tray-toggle:focus-visible {
-  border-color: var(--ruby);
-  color: var(--ruby);
+  border-color: #d97a6a;
+  color: #ff9a89;
   outline: none;
 }
 
@@ -1907,25 +2013,29 @@ body.ahb-tray-active #ui-left-column-1 {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  border: 3px dashed var(--line);
-  background: var(--panel);
-  color: var(--muted);
+  border: 3px dashed var(--copper-line);
+  background: var(--copper-paper);
+  color: var(--copper-muted);
   cursor: pointer;
   font-size: 1.5rem;
-  margin: 0.25rem 0;
+  margin: 1rem auto;
 }
 
 .hero-tray .tray-pick:hover,
 .hero-tray .tray-pick:focus-visible {
-  border-color: var(--gold);
-  color: var(--gold);
+  border-color: var(--copper-highlight);
+  color: var(--copper-highlight);
   outline: none;
 }
 
 .hero-tray .tray-board {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.55rem;
+  padding: 0.75rem;
+  color: var(--copper-ink);
+  font-family: var(--copper-font);
+  background: var(--copper-parchment-bg);
 }
 
 .hero-tray .tray-head {
@@ -1935,20 +2045,23 @@ body.ahb-tray-active #ui-left-column-1 {
 }
 
 .hero-tray .tray-portrait {
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50% 50% 40% 40%;
   object-fit: cover;
   flex: none;
-  border: 2px solid var(--gold);
+  border: 3px solid var(--copper-frame-dark);
+  background: #ada396;
+  padding: 1px;
   cursor: pointer;
+  box-shadow: 0 3px 8px #000a;
   transition: transform 120ms ease, box-shadow 120ms ease;
 }
 
 .hero-tray .tray-portrait:hover,
 .hero-tray .tray-portrait:focus-visible {
   transform: scale(1.05);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 45%, transparent);
+  box-shadow: 0 0 0 3px var(--copper-highlight-glow), 0 3px 8px #000a;
   outline: none;
 }
 
@@ -1961,35 +2074,35 @@ body.ahb-tray-active #ui-left-column-1 {
 .hero-tray .tray-delete {
   flex: none;
   margin-left: auto;
-  width: 20px;
-  height: 20px;
-  border: 1px solid var(--line);
+  width: 22px;
+  height: 22px;
+  border: 1px solid #a77b63;
   border-radius: 50%;
-  background: var(--panel);
-  color: var(--muted);
+  background: #fffaf2;
+  color: #8b3530;
   cursor: pointer;
-  font-size: 0.6rem;
+  font-size: 0.65rem;
 }
 
 .hero-tray .tray-delete:hover,
 .hero-tray .tray-delete:focus-visible {
-  border-color: var(--ruby);
-  color: var(--ruby);
+  border-color: #a8383d;
+  color: #a8383d;
   outline: none;
 }
 
 .hero-tray .tray-player {
-  font-size: 0.75rem;
-  color: var(--muted);
+  font-size: 0.72rem;
+  color: var(--copper-muted);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .hero-tray .tray-hero {
-  font-family: Georgia, "Iowan Old Style", serif;
+  font-family: var(--copper-font);
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1999,10 +2112,10 @@ body.ahb-tray-active #ui-left-column-1 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 0.4rem 0.55rem;
+  background: var(--copper-panel);
+  border: 1px solid var(--copper-line);
+  border-radius: 40px;
+  padding: 0.3rem 0.6rem 0.3rem 0.3rem;
 }
 
 /* Ready/spent Ausdauer share one row instead of two stacked .tray-stacks -
@@ -2013,12 +2126,21 @@ body.ahb-tray-active #ui-left-column-1 {
    ends. */
 .hero-tray .tray-stack-endurance {
   justify-content: space-between;
+  gap: 0.5rem;
+  background: transparent;
+  border: 0;
+  padding: 0;
 }
 
 .hero-tray .tray-endurance-half {
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 0.35rem;
+  background: var(--copper-panel);
+  border: 1px solid var(--copper-line);
+  border-radius: 40px;
+  padding: 0.3rem 0.6rem 0.3rem 0.3rem;
 }
 
 .hero-tray .tray-stack-head {
@@ -2026,25 +2148,31 @@ body.ahb-tray-active #ui-left-column-1 {
   align-items: center;
   gap: 0.35rem;
   flex: none;
-  width: 3.4rem;
+  width: 3.2rem;
 }
 
-.hero-tray .tray-stack-head img {
-  width: 28px;
-  height: 28px;
+.hero-tray .tray-stack-head img,
+.hero-tray .tray-stack-head i {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 2px double var(--copper-frame);
+  border-radius: 50%;
   object-fit: contain;
+  background: var(--copper-medallion-bg);
+  box-shadow: var(--copper-medallion-shadow);
+  padding: 4px;
 }
 
 .hero-tray .tray-stack-head i {
-  width: 28px;
-  text-align: center;
-  font-size: 1.1rem;
-  color: var(--muted);
+  font-size: 0.85rem;
+  color: #4a3f34;
 }
 
 .hero-tray .tray-count {
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-variant-numeric: tabular-nums;
 }
 
@@ -2052,25 +2180,26 @@ body.ahb-tray-active #ui-left-column-1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 0.25rem;
+  gap: 0.3rem;
   flex: 1;
 }
 
 .hero-tray .tray-stack-actions button {
-  width: 28px;
-  height: 28px;
-  border: none;
-  border-radius: 6px;
-  background: none;
-  color: var(--muted);
+  width: 26px;
+  height: 26px;
+  border: 1px solid #79695d;
+  border-radius: 50%;
+  background: var(--copper-chip);
+  color: #4a3f34;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
 }
 
 .hero-tray .tray-stack-actions button:hover,
 .hero-tray .tray-stack-actions button:focus-visible {
-  background: color-mix(in srgb, var(--gold) 16%, transparent);
-  color: var(--gold);
+  border-color: var(--copper-highlight);
+  background: var(--copper-chip-hover);
+  color: var(--copper-highlight-ink);
   outline: none;
 }
 
@@ -2087,7 +2216,8 @@ body.ahb-tray-active #ui-left-column-1 {
    to 0°). The "spent" row's icon is dimmed to visually echo a rotated/tapped
    card without actually rotating the icon image itself. */
 .hero-tray .tray-stack-head img.spent {
-  opacity: 0.45;
+  filter: grayscale(1);
+  opacity: 0.6;
 }
 
 /* ---------- Hand-Sheet (eigene Optik für Complete Card Managements Docked-Hand-Sheet, siehe scripts/sheets/hand-sheet.mjs) ---------- */
@@ -2123,36 +2253,41 @@ body:not(.ahb-tray-active) .played-cards-sheet {
    identischem Aufbau, nur an unterschiedlichen Stellen neben der Ablage.
    Sheet-spezifisches (Play-Icon-Overlay, Ausdauer-/Ablegen-/Zurückmisch-
    Buttons) bleibt weiter unten getrennt. */
+/* Parchment-Redesign (Stand 2026-08-21, Nutzerentscheidung nach Klickdummy-Vergleich
+   project/design-unification/, Abschnitte 3/4): dieselbe dunkle Metall-Kopfleiste wie
+   Heldenablage/Charakterbogen/Abenteuer-Tool statt des vorherigen hellen Paper-Kopfs mit
+   goldener Trennlinie. */
 .hand-sheet .window-header,
 .played-cards-sheet .window-header {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  background: var(--paper);
-  border-bottom: 2px solid var(--gold);
   padding: 0.3rem 0.6rem;
+  color: var(--copper-header-color);
+  background: var(--copper-header-bg);
+  box-shadow: var(--copper-header-shadow);
 }
 
 .hand-sheet .window-header .window-icon,
 .played-cards-sheet .window-header .window-icon {
-  color: var(--gold);
+  color: var(--copper-header-color);
 }
 
 .hand-sheet .window-header .window-title,
 .played-cards-sheet .window-header .window-title {
   flex: 1;
   margin: 0;
-  font-family: Georgia, "Iowan Old Style", serif;
+  font-family: var(--copper-font);
   font-weight: 700;
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--ink);
+  text-shadow: 0 1px 2px #000;
 }
 
 .hand-sheet .window-header .header-control,
 .played-cards-sheet .window-header .header-control {
-  color: var(--gold);
+  color: var(--copper-header-color);
   background: none;
   border: none;
 }
@@ -2161,7 +2296,8 @@ body:not(.ahb-tray-active) .played-cards-sheet {
 .hand-sheet .window-header .header-control:focus-visible,
 .played-cards-sheet .window-header .header-control:hover,
 .played-cards-sheet .window-header .header-control:focus-visible {
-  color: var(--ink);
+  color: var(--copper-header-hover-color);
+  text-shadow: var(--copper-header-hover-glow);
   outline: none;
 }
 
@@ -2196,10 +2332,12 @@ body:not(.ahb-tray-active) .played-cards-sheet {
   max-height: 90vh;
 }
 
+/* Einheitliche, auflösungsunabhängige Papierfarbe statt der pixeligen
+   Pergamentgrafik. */
 .hand-sheet .window-content,
 .played-cards-sheet .window-content {
-  background: color-mix(in srgb, var(--paper) 55%, transparent);
   padding: 0.5rem 0.75rem;
+  background: var(--copper-parchment-bg-translucent);
 }
 
 /* The actual scroll container - single row (flex-wrap: nowrap), horizontal
@@ -2263,8 +2401,8 @@ body:not(.ahb-tray-active) .played-cards-sheet {
   height: 100px;
   width: fit-content;
   border-radius: 8px;
-  border: 2px solid var(--gold);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+  border: 3px solid var(--copper-frame-dark);
+  box-shadow: 0 3px 8px #000a;
   transition: transform 150ms ease, box-shadow 150ms ease;
 }
 
@@ -2280,7 +2418,7 @@ body:not(.ahb-tray-active) .played-cards-sheet {
 }
 
 .hand-sheet .cards [data-action="playCard"] {
-  color: var(--gold);
+  color: #e8a15c;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
 }
 
@@ -2295,70 +2433,80 @@ body:not(.ahb-tray-active) .played-cards-sheet {
    exact CSS/DOM interaction that caused it. */
 .hand-sheet .cards .card-endurance {
   appearance: none;
-  margin: 0.3rem 0 0;
+  box-sizing: border-box;
+  align-self: center;
+  flex: 0 0 26px;
+  margin: 0.35rem 0 0;
   padding: 0;
-  height: 20px;
-  border: 1px solid var(--gold);
-  border-radius: 5px;
-  background-color: color-mix(in srgb, var(--gold) 14%, transparent);
-  /* Root-relative (leading "/"), not "modules/..." - a CSS url() resolves
-     against this stylesheet's own path (styles/aventuria-helpers.css), not
-     the page, so the plain relative form silently 404'd (icon never showed,
-     just the button's border/background) even though the exact same path
-     works fine as an <img src> elsewhere, which resolves against the page. */
-  background-image: url("/modules/aventuria/assets/icons/endurance.webp");
-  background-size: 13px 13px;
-  background-position: center;
-  background-repeat: no-repeat;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  max-width: 26px;
+  min-height: 26px;
+  max-height: 26px;
+  aspect-ratio: 1;
+  border: 2px solid var(--copper-frame);
+  border-radius: 50%;
+  color: #4a3f34;
+  background: var(--copper-medallion-bg);
+  font-size: 0.75rem;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--copper-medallion-shadow);
   cursor: pointer;
-  transition: background-color 150ms ease;
+  transition: border-color 150ms ease, color 150ms ease, filter 150ms ease;
 }
 
 .hand-sheet .cards .card-endurance:hover,
 .hand-sheet .cards .card-endurance:focus-visible {
-  background-color: color-mix(in srgb, var(--gold) 32%, transparent);
+  border-color: var(--copper-highlight);
+  color: var(--copper-highlight-ink);
+  filter: brightness(1.08) saturate(1.15);
   outline: none;
 }
 
 /* ---------- Played-Cards-Sheet-eigene Elemente ---------- */
-/* "Ablegen"/"Zurück ins Deck mischen" - selbes Grundmuster wie .card-endurance
+/* "Ablegen"/"Zurück auf die Hand" - selbes Grundmuster wie .card-endurance
    oben (Button unterhalb der Kartenkunst statt Overlay), aber zwei Buttons
    nebeneinander statt einem einzelnen. */
 .played-cards-sheet .cards .card-actions {
   display: flex;
+  justify-content: center;
   gap: 0.3rem;
   margin-top: 0.3rem;
 }
 
 .played-cards-sheet .cards .card-actions button {
   appearance: none;
-  flex: 1;
-  height: 20px;
-  border: 1px solid var(--gold);
-  border-radius: 5px;
-  background-color: color-mix(in srgb, var(--gold) 14%, transparent);
-  color: var(--gold);
-  font-size: 0.7rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  box-sizing: border-box;
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  max-width: 26px;
+  min-height: 26px;
+  max-height: 26px;
+  aspect-ratio: 1;
+  border: 2px solid var(--copper-frame);
+  border-radius: 50%;
+  background: var(--copper-medallion-bg);
+  color: #4a3f34;
+  font-size: 0.75rem;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--copper-medallion-shadow);
   cursor: pointer;
-  transition: background-color 150ms ease;
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
 }
 
 .played-cards-sheet .cards .card-actions button:hover,
 .played-cards-sheet .cards .card-actions button:focus-visible {
-  background-color: color-mix(in srgb, var(--gold) 32%, transparent);
+  border-color: var(--copper-highlight);
+  background: var(--copper-chip-hover);
+  color: var(--copper-highlight-ink);
   outline: none;
-}
-
-/* Root-relative (leading "/") - see the identical comment on .card-endurance
-   above for why. */
-.played-cards-sheet .cards .card-discard {
-  background-image: url("/modules/aventuria/assets/icons/discard-symbol.webp");
-  background-size: 13px 13px;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 .played-cards-sheet .played-cards-empty {
@@ -2394,7 +2542,7 @@ body:not(.ahb-tray-active) .played-cards-sheet {
   display: block;
   width: 100%;
   border-radius: 12px;
-  border: 3px solid var(--gold);
+  border: 3px solid var(--copper-frame-dark);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65);
 }
 
@@ -2406,10 +2554,48 @@ body:not(.ahb-tray-active) .played-cards-sheet {
    `adventure-tool.mjs`) makes aventuria's own bundled CSS apply instead, wholesale reuse
    instead of re-implementing asides/tables/icons from scratch. */
 
+/* Parchment-Redesign (Stand 2026-08-21, Nutzerentscheidung nach Klickdummy-Vergleich
+   project/design-unification/, Abschnitt 6): der Kopfbereich (Icon-Zeile/Panel) wurde bereits
+   in einer früheren Runde umgestellt (siehe Kommentar bei .adventure-tool-icon-row unten) -
+   hier folgen Fensterkopf, Fensterhintergrund, Auswahlliste und Sperr-Hinweis nach, damit das
+   ganze Fenster konsistent ist statt nur der Kopfbereich. */
+.aventuria-helpers.adventure-tool .window-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  color: var(--copper-header-color);
+  background: var(--copper-header-bg);
+  box-shadow: var(--copper-header-shadow);
+}
+
+.aventuria-helpers.adventure-tool .window-header .window-icon {
+  color: var(--copper-header-color);
+}
+
+.aventuria-helpers.adventure-tool .window-header .window-title {
+  font-family: var(--copper-font);
+  font-weight: 700;
+  text-shadow: 0 1px 2px #000;
+}
+
+.aventuria-helpers.adventure-tool .window-header .header-control {
+  color: var(--copper-header-color);
+  background: none;
+  border: none;
+}
+
+.aventuria-helpers.adventure-tool .window-header .header-control:hover,
+.aventuria-helpers.adventure-tool .window-header .header-control:focus-visible {
+  color: var(--copper-header-hover-color);
+  text-shadow: var(--copper-header-hover-glow);
+  outline: none;
+}
+
 .aventuria-helpers.adventure-tool .window-content {
-  background: var(--paper);
   max-height: 80vh;
   overflow-y: auto;
+  background: var(--copper-parchment-bg);
 }
 
 .adventure-tool-root {
@@ -2422,13 +2608,13 @@ body:not(.ahb-tray-active) .played-cards-sheet {
   align-items: center;
   gap: 0.75rem;
   padding: 2rem 1rem;
-  color: var(--muted);
+  color: var(--copper-muted);
   text-align: center;
 }
 
 .adventure-tool-locked i {
   font-size: 2rem;
-  color: var(--gold);
+  color: var(--copper-highlight);
 }
 
 .adventure-tool-warning {
@@ -2445,7 +2631,7 @@ body:not(.ahb-tray-active) .played-cards-sheet {
 }
 
 .adventure-tool-picker > p {
-  color: var(--muted);
+  color: var(--copper-muted);
   margin: 0 0 0.75rem;
 }
 
@@ -2459,11 +2645,11 @@ body:not(.ahb-tray-active) .played-cards-sheet {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.6rem 0.8rem;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--panel);
-  color: var(--ink);
+  padding: 0.5rem 0.8rem 0.5rem 0.5rem;
+  border: 1px solid var(--copper-line);
+  border-radius: 40px;
+  background: var(--copper-panel);
+  color: var(--copper-ink);
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -2471,7 +2657,7 @@ body:not(.ahb-tray-active) .played-cards-sheet {
 
 .adventure-tool-option:hover,
 .adventure-tool-option:focus-visible {
-  border-color: var(--gold);
+  border-color: var(--copper-highlight);
   outline: none;
 }
 
@@ -2480,13 +2666,15 @@ body:not(.ahb-tray-active) .played-cards-sheet {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.8rem;
+  height: 1.8rem;
   border-radius: 50%;
-  background: var(--gold);
-  color: var(--panel);
+  border: 2px double var(--copper-frame);
+  background: var(--copper-medallion-bg);
+  color: var(--copper-ink);
   font-weight: 700;
   font-size: 0.85rem;
+  box-shadow: var(--copper-medallion-shadow);
 }
 
 .adventure-tool-option-name {
@@ -2500,7 +2688,7 @@ body:not(.ahb-tray-active) .played-cards-sheet {
   gap: 1rem;
   flex-wrap: wrap;
   padding-bottom: 0.6rem;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--copper-line);
   margin-bottom: 0.75rem;
 }
 
@@ -2512,28 +2700,67 @@ body:not(.ahb-tray-active) .played-cards-sheet {
 
 .adventure-tool-entry {
   font-size: 0.8rem;
-  color: var(--muted);
+  color: var(--copper-muted);
 }
 
 .adventure-tool-page {
-  font-family: Georgia, "Iowan Old Style", serif;
+  font-family: var(--copper-font);
   font-weight: 700;
   font-size: 1.15rem;
 }
 
-.adventure-tool-head-actions {
+/* Compact icon row (Stand 2026-08-21, Nutzerentscheidung nach Klickdummy-Vergleich
+   project/design-unification/, "Variante A") - replaces the previous
+   .adventure-tool-head-actions row of just the two ghost buttons: now also holds the three
+   Vorbereitung/Verlauf/Seiten-Navigation toggle icons (see .adventure-tool-icon-btn), which
+   used to be three always-stacked <details> boxes taking up a lot of vertical space before
+   the actual page content (Live-Test-Fund 2026-08-21, TODO.md). */
+.adventure-tool-icon-row {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 0.4rem;
+}
+
+.adventure-tool-icon-btn {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--copper-line);
+  border-radius: 50%;
+  background: var(--copper-chip);
+  color: #4a3f34;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.adventure-tool-icon-btn:hover,
+.adventure-tool-icon-btn:focus-visible {
+  border-color: var(--copper-highlight);
+  background: var(--copper-chip-hover);
+  color: var(--copper-highlight-ink);
+  outline: none;
+}
+
+.adventure-tool-icon-btn.active {
+  border: 2px double var(--copper-frame);
+  background: var(--copper-medallion-bg);
+  color: var(--copper-ink);
+}
+
+/* Pushes the two ghost buttons (Anderes Abenteuer/Freigeben) to the row's right edge,
+   away from the three toggle icons on its left. */
+.adventure-tool-icon-sep {
+  flex: 1;
+  min-width: 0.5rem;
 }
 
 .at-btn {
   flex: none;
   padding: 0.4rem 0.7rem;
-  border: 1px solid var(--gold);
-  border-radius: 6px;
-  background: var(--gold);
-  color: var(--panel);
+  border: 1px solid var(--copper-line);
+  border-radius: 20px;
+  background: var(--copper-chip);
+  color: #4a3f34;
   font: inherit;
   font-size: 0.82rem;
   cursor: pointer;
@@ -2541,71 +2768,66 @@ body:not(.ahb-tray-active) .played-cards-sheet {
 
 .at-btn:hover,
 .at-btn:focus-visible {
-  filter: brightness(1.08);
+  border-color: var(--copper-highlight);
+  background: var(--copper-chip-hover);
+  color: var(--copper-highlight-ink);
   outline: none;
 }
 
 .at-btn.ghost {
   background: transparent;
-  color: var(--gold);
+  color: var(--copper-ghost-ink);
 }
 
 .at-btn.ghost:hover,
 .at-btn.ghost:focus-visible {
-  background: rgba(169, 130, 46, 0.12);
+  background: rgba(201, 113, 58, 0.12);
+  color: var(--copper-highlight-ink);
 }
 
-.adventure-tool-prep,
-.adventure-tool-history {
-  margin-bottom: 0.75rem;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--panel);
+/* Single shared panel for whichever of Vorbereitung/Verlauf/Seiten-Navigation is currently
+   expanded (at most one at a time, see AventuriaHelpersAdventureTool#activePanel) - replaces
+   the three separately-styled, always-stacked <details> boxes. */
+.adventure-tool-panel {
+  margin: 0.6rem 0 0;
+  border: 1px solid var(--copper-line);
+  border-radius: 10px;
+  background: var(--copper-panel);
   padding: 0.5rem 0.7rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-.adventure-tool-prep summary,
-.adventure-tool-history summary {
-  cursor: pointer;
-  font-weight: 700;
-  color: var(--amber);
-}
-
-.adventure-tool-prep-body {
-  margin-top: 0.5rem;
-}
-
-.adventure-tool-history ul {
+.adventure-tool-panel-list {
   list-style: none;
-  margin: 0.5rem 0 0;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
 }
 
-.adventure-tool-history-entry {
+.adventure-tool-panel-entry {
   width: 100%;
   text-align: left;
   padding: 0.25rem 0.4rem;
   border: none;
   border-radius: 4px;
   background: transparent;
-  color: var(--ink);
+  color: var(--copper-ink);
   font: inherit;
   font-size: 0.85rem;
   cursor: pointer;
 }
 
-.adventure-tool-history-entry:hover,
-.adventure-tool-history-entry:focus-visible {
-  background: rgba(169, 130, 46, 0.12);
+.adventure-tool-panel-entry:hover,
+.adventure-tool-panel-entry:focus-visible {
+  background: rgba(201, 113, 58, 0.12);
   outline: none;
 }
 
-.adventure-tool-history-entry.active {
+.adventure-tool-panel-entry.active {
   font-weight: 700;
-  color: var(--gold);
+  color: var(--copper-highlight-ink);
   cursor: default;
 }
 
