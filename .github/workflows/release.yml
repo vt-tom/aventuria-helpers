@@ -36,6 +36,8 @@ jobs:
             exit 1
           }
 
+      - run: npm run packs
+
       - run: npm run zip
 
       - name: Create GitHub release

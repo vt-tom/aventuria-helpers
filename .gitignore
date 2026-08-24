@@ -1,4 +1,11 @@
 CLAUDE.md
 project/
 node_modules/
-packs/**/LOCK
+
+# Compiled LevelDB compendium packs (build output of `npm run pack:*` from packs/_source/**,
+# the tracked source of truth). Foundry rewrites LOG/MANIFEST-*/CURRENT internals on every
+# start/stop even without content changes, which is pure git noise - see CLAUDE.md's
+# "Release-Ablauf". `npm run packs` rebuilds all three before a release zip.
+packs/macros/
+packs/guide/
+packs/changelog/

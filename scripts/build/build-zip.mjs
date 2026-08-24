@@ -4,18 +4,22 @@
  * contents loose at the archive root), the layout Foundry expects when a
  * user drops the zip into their `Data/modules/` folder.
  *
- * Excludes exactly what `.gitignore` excludes (the local-only `project/`
- * folder - dev docs, scratch/reference material, the superseded prototype -
- * plus `node_modules` and LevelDB `LOCK` files) plus `.git` itself, which
- * isn't part of `.gitignore` (git doesn't need to ignore itself) but
- * obviously isn't part of the module either. Not a general `.gitignore`
- * parser - just the handful of concrete entries that file currently has; if
- * `.gitignore` grows new patterns, mirror them in `shouldExclude()` below.
+ * Excludes the local-only `project/` folder (dev docs, scratch/reference
+ * material, the superseded prototype), `node_modules`, LevelDB `LOCK` files,
+ * and `.git` itself (not part of `.gitignore` - git doesn't need to ignore
+ * itself - but obviously not part of the module either). NOT a mirror of
+ * `.gitignore`: the compiled `packs/<name>` LevelDB directories are gitignored
+ * (build output of `npm run pack:*` from `packs/_source/**`, see CLAUDE.md's
+ * "Compendium-Packs: Source/Build-Trennung") but must still ship in the zip -
+ * `shouldExclude()` deliberately does not exclude them. If `.gitignore` grows
+ * a new pattern, judge per-pattern whether it belongs here too; don't assume
+ * it should.
  *
  * Works off the current working-tree state, not the last git commit -
- * deliberately, since e.g. the packs' LevelDB log/manifest files rotate
- * file names on every write and are almost always ahead of the last commit,
- * but still need to ship.
+ * deliberately, since the compiled packs aren't committed at all (their LevelDB
+ * log/manifest files rotate file names on every write, pure git noise) but
+ * still need to ship; the release workflow runs `npm run packs` to (re)build
+ * them from `packs/_source/**` immediately before this script.
  *
  * No versioning yet (matches the current `project/TODO.md`/`project/PROJECT.md`
  * stance) - re-run via `npm run zip` any time a fresh snapshot is needed, e.g.

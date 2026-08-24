@@ -14,6 +14,8 @@
     "pack:changelog": "fvtt package pack changelog --type Module --id aventuria-helpers --compendiumType JournalEntry --in packs/_source/changelog --out packs",
     "unpack:changelog": "fvtt package unpack changelog --type Module --id aventuria-helpers --compendiumType JournalEntry --out packs/_source/changelog --clean",
     "changelog": "npm run build:changelog && npm run pack:changelog",
+    "packs": "npm run pack:macros && npm run pack:guide && npm run pack:changelog",
+    "check:packs": "node scripts/build/check-packs-sync.mjs",
     "zip": "node scripts/build/build-zip.mjs"
   },
   "repository": {
