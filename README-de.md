@@ -7,7 +7,7 @@ Zusatzmodul für [Foundry VTT](https://foundryvtt.com/) (v14), das das offiziell
 > [!IMPORTANT]
 > Der gesamte Code und die Dokumentation dieses Moduls sind mit KI-Unterstützung entstanden. Die verwendeten Grafiken/Bilder stammen dagegen **nicht** von KI, sondern aus dem Aventuria-Modul oder anderen Quellen und sind von der [MIT-Lizenz](#lizenz) dieses Repos nicht erfasst.
 
-📺 [Vorstellungsvideo (Beta) auf YouTube](https://youtu.be/ULqy7jcTmLY)
+[![Vorstellungsvideo (Beta) auf YouTube](https://img.youtube.com/vi/ULqy7jcTmLY/hqdefault.jpg)](https://youtu.be/ULqy7jcTmLY)
 
 ## Funktionen
 

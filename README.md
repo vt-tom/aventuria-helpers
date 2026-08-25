@@ -7,7 +7,7 @@ Add-on module for [Foundry VTT](https://foundryvtt.com/) (v14) that extends the 
 > [!IMPORTANT]
 > All code and documentation in this module were created with AI assistance. The images used, however, are **not** AI-generated - they come from the Aventuria module or other sources and are not covered by this repo's [MIT license](#license).
 
-📺 [Introduction video (Beta) on YouTube](https://youtu.be/ULqy7jcTmLY)
+[![Introduction video (Beta) on YouTube](https://img.youtube.com/vi/ULqy7jcTmLY/hqdefault.jpg)](https://youtu.be/ULqy7jcTmLY)
 
 ## Features
 
