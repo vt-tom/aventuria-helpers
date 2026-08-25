@@ -1,3 +1,5 @@
+import { setHeroExhausted } from "./actors/hero-exhaust.mjs";
+
 const ICONS = "modules/aventuria/assets/icons/";
 const CARD_TEMPLATE = "modules/aventuria-helpers/templates/chat/probe-card.hbs";
 
@@ -13,8 +15,8 @@ const ATTRIBUTES = {
 const SKILL_ICON = "talent.webp";
 
 /**
- * Prompts for a situational modifier. Positive values are subtracted from the roll
- * (easier), negative values are added (harder) - explained in the dialog itself.
+ * Prompts for a situational modifier. Positive values are added to the target value
+ * (easier), negative values are subtracted (harder) - explained in the dialog itself.
  * @param {string} title    Dialog window title.
  * @param {string} label    Name of the thing being tested, shown in the target line.
  * @param {string} icon     Icon path shown next to the label.
@@ -52,24 +54,26 @@ async function promptModifier(title, label, icon, target, extra = "") {
 }
 
 /**
- * Rolls 1d20 against a target, roll-under (total = d20 - modifier <= target). A natural 1
- * is always a critical success and a natural 20 is always a critical failure, regardless
- * of the modifier - both override what the modified total alone would say.
+ * Rolls 1d20 against a target, roll-under (d20 <= effective target). Per Aventuria's rules
+ * an Erschwernis/Erleichterung applies to the target value itself, not to the die result -
+ * TODO.md Bugs entry (clarified 2026-08-24, previously "noch prüfen"). A natural 1 is always
+ * a critical success and a natural 20 is always a critical failure, regardless of the
+ * modifier - both override what the effective target alone would say.
  * @param {number} modifier
  * @param {number} target
- * @returns {Promise<{roll: Roll, dieResult: number, total: number, success: boolean, tier: "criticalSuccess"|"success"|"failure"|"criticalFailure"}>}
+ * @returns {Promise<{roll: Roll, dieResult: number, effectiveTarget: number, success: boolean, tier: "criticalSuccess"|"success"|"failure"|"criticalFailure"}>}
  */
 async function rollD20(modifier, target) {
   const roll = new Roll("1d20");
   await roll.evaluate();
   const dieResult = roll.total;
-  const total = dieResult - modifier;
+  const effectiveTarget = target + modifier;
   let tier;
   if (dieResult === 1) tier = "criticalSuccess";
   else if (dieResult === 20) tier = "criticalFailure";
-  else tier = total <= target ? "success" : "failure";
+  else tier = dieResult <= effectiveTarget ? "success" : "failure";
   const success = tier === "criticalSuccess" || tier === "success";
-  return { roll, dieResult, total, success, tier };
+  return { roll, dieResult, effectiveTarget, success, tier };
 }
 
 /**
@@ -127,7 +131,7 @@ async function rollProbe(actor, label, icon, target, showCritical) {
   );
   if (modifier === null) return;
 
-  const { roll, dieResult, total, success, tier } = await rollD20(modifier, target);
+  const { roll, dieResult, effectiveTarget, success, tier } = await rollD20(modifier, target);
 
   const content = await renderTemplate(CARD_TEMPLATE, {
     label,
@@ -135,9 +139,9 @@ async function rollProbe(actor, label, icon, target, showCritical) {
     target,
     dieResult,
     hasModifier: modifier !== 0,
-    operator: modifier >= 0 ? "−" : "+",
+    operator: modifier >= 0 ? "+" : "−",
     modifierAbs: Math.abs(modifier),
-    total,
+    effectiveTarget,
     success,
     outcomeLabel: outcomeLabel(tier, { showCritical }),
   });
@@ -209,7 +213,7 @@ export async function rollEquipment(actor, key) {
   );
   if (modifier === null) return;
 
-  const { roll, dieResult, total, success, tier } = await rollD20(modifier, target);
+  const { roll, dieResult, effectiveTarget, success, tier } = await rollD20(modifier, target);
 
   let damageRoll = null;
   if (damageFormula) {
@@ -223,9 +227,9 @@ export async function rollEquipment(actor, key) {
     target,
     dieResult,
     hasModifier: modifier !== 0,
-    operator: modifier >= 0 ? "−" : "+",
+    operator: modifier >= 0 ? "+" : "−",
     modifierAbs: Math.abs(modifier),
-    total,
+    effectiveTarget,
     success,
     outcomeLabel: outcomeLabel(tier, { showCritical: false }),
     damage: damageRoll ? { formula: equipment.damage, total: damageRoll.total } : null,
@@ -238,8 +242,5 @@ export async function rollEquipment(actor, key) {
     content,
   });
 
-  await actor.update({
-    "system.basicEquipment.exhaust": true,
-    "system.secondEquipment.exhaust": true,
-  });
+  await setHeroExhausted(actor, true);
 }

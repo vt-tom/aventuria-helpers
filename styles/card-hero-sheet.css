@@ -231,7 +231,7 @@
 .card-page-stack { min-height: 0; overflow: hidden; background: var(--copper-parchment-bg); }
 .card-page { position: relative; height: 100%; padding: 15px 20px 20px; display: none; overflow-y: auto; scrollbar-gutter: stable; scrollbar-color: #82624e #d8ccbb; }
 .card-page.active { display: block; }
-.card-page h2 { margin: 0 0 9px; display: flex; align-items: center; gap: 10px; font-size: 20px; text-align: center; }
+.card-page h2 { margin: 0 0 9px; display: flex; align-items: center; gap: 10px; font-size: 20px; text-align: center; color: var(--card-ink); }
 .card-page h2::before, .card-page h2::after { content: ""; height: 1px; flex: 1; background: var(--card-line); }
 .card-editing-label { position: sticky; z-index: 4; top: -15px; float: right; margin: -15px -20px 2px 8px; padding: 4px 8px; border-radius: 0 0 0 7px; color: var(--copper-header-color); background: #80502f; font: 700 11px system-ui, sans-serif; }
 
@@ -327,8 +327,8 @@
   50% { transform: scale(1) rotate(14deg); }
 }
 
-.card-categories { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--card-line); border-radius: 9px; overflow: hidden; }
-.card-categories th, .card-categories td { height: 50px; padding: 4px; border-right: 1px solid #b98b73; border-bottom: 1px solid #b98b73; text-align: center; }
+.card-categories { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--card-line); border-radius: 9px; overflow: hidden; background: var(--card-paper); }
+.card-categories th, .card-categories td { height: 50px; padding: 4px; border-right: 1px solid #b98b73; border-bottom: 1px solid #b98b73; text-align: center; color: var(--card-ink); background: var(--card-paper); }
 .card-categories th { text-align: left; }
 .card-categories button { width: 36px; height: 36px; padding: 5px; border: 1px solid transparent; border-radius: 50%; background: #d7cdc0; opacity: .35; }
 .card-categories button.on { border-color: #6a825b; background: #e6eddb; opacity: 1; }

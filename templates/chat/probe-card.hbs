@@ -2,17 +2,14 @@
   <header class="probe-head">
     <img src="{{icon}}" alt="">
     <span class="probe-label">{{label}}</span>
-    <span class="probe-target">{{localize "AVENTURIA_HELPERS.Probe.Target"}} {{target}}</span>
+    <span class="probe-target">
+      {{localize "AVENTURIA_HELPERS.Probe.Target"}} {{target}}{{#if hasModifier}} {{operator}} {{modifierAbs}} = {{effectiveTarget}}{{/if}}
+    </span>
   </header>
 
   <div class="probe-math">
+    <span class="die-label">{{localize "AVENTURIA_HELPERS.Probe.RollResult"}}</span>
     <span class="die">{{dieResult}}</span>
-    {{#if hasModifier}}
-      <span class="op">{{operator}}</span>
-      <span class="mod">{{modifierAbs}}</span>
-    {{/if}}
-    <span class="eq">=</span>
-    <span class="total">{{total}}</span>
   </div>
 
   <div class="probe-outcome">{{outcomeLabel}}</div>

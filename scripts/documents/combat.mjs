@@ -1,4 +1,5 @@
 import { resetCardRotations } from "../macros/reset-card-rotations.mjs";
+import { readyAllHeroes } from "../actors/hero-exhaust.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 const CCM_MODULE_ID = "complete-card-management";
@@ -67,18 +68,27 @@ export function registerCombat() {
     };
 
     /**
-     * After a round ends, offers to reset every card on the current scene back to its
-     * upright rotation via this module's own card-rotation macro (Complete Card Management).
+     * After a round ends, offers to reset every card on the current scene back to its upright
+     * rotation via this module's own card-rotation macro (Complete Card Management), and
+     * (project/TODO.md Features, 2026-08-24) ready every hero's exhausted equipment at the same
+     * time - same underlying rule for both: whatever was used last round becomes available
+     * again at the start of the next one. Shares one confirmation instead of asking twice per
+     * round. The hero-readying half doesn't need Complete Card Management (it's a plain Actor
+     * update), so it still runs even without that dependency active, unlike the card-rotation
+     * reset.
      * @inheritdoc
      */
     async nextRound() {
       const result = await super.nextRound();
-      if (game.user.isGM && game.modules.get(CCM_MODULE_ID)?.active) {
+      if (game.user.isGM) {
         const confirmed = await foundry.applications.api.DialogV2.confirm({
-          window: { title: "AVENTURIA_HELPERS.Macros.ResetCardRotations.ConfirmTitle" },
-          content: `<p>${game.i18n.localize("AVENTURIA_HELPERS.Macros.ResetCardRotations.ConfirmBody")}</p>`,
+          window: { title: "AVENTURIA_HELPERS.Combat.RoundEndResetConfirmTitle" },
+          content: `<p>${game.i18n.localize("AVENTURIA_HELPERS.Combat.RoundEndResetConfirmBody")}</p>`,
         });
-        if (confirmed) await resetCardRotations();
+        if (confirmed) {
+          if (game.modules.get(CCM_MODULE_ID)?.active) await resetCardRotations();
+          await readyAllHeroes();
+        }
       }
       return result;
     }

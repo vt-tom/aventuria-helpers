@@ -1,4 +1,5 @@
 import { rollAttribute, rollSkill, rollEquipment } from "../probe-roll.mjs";
+import { isHeroExhausted, setHeroExhausted } from "../actors/hero-exhaust.mjs";
 
 const { api, sheets } = foundry.applications;
 
@@ -345,11 +346,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
    * @param {HTMLElement} target
    */
   static async #toggleExhaust(event, target) {
-    const current = this.actor.system.basicEquipment?.exhaust || this.actor.system.secondEquipment?.exhaust;
-    await this.actor.update({
-      "system.basicEquipment.exhaust": !current,
-      "system.secondEquipment.exhaust": !current,
-    });
+    await setHeroExhausted(this.actor, !isHeroExhausted(this.actor));
   }
 
   /**

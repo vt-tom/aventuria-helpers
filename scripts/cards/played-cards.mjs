@@ -2,12 +2,16 @@
  * Card actions for the "Ausgespielte Karten" sheet
  * (scripts/sheets/played-cards-sheet.mjs) - moving a played card out of the
  * hero's Im-Spiel-Stapel, back onto the hand, into the discard pile, or back
- * into the deck (shuffled in). Exhaust/Ready for a specific Ausdauer card
- * intentionally isn't here - Nutzerentscheidung 2026-08-17: the new sheet
- * only shows non-Ausdauer played cards for now (project/PROJECT.md 2.2), Ausdauer
- * stays exclusively in the Heldenablage's own ready/spent counters
- * (cards/endurance.mjs), a separate view for those is a possible later idea.
+ * into the deck (shuffled in), plus toggling a card's own exhausted state
+ * (`toggleCardExhausted()` below, added 2026-08-24). The Heldenablage's
+ * Ausdauer ready/spent counters (cards/endurance.mjs) remain a separate,
+ * count-based mechanism for Ausdauer cards specifically - Nutzerentscheidung
+ * 2026-08-17: this sheet only shows non-Ausdauer played cards
+ * (project/PROJECT.md 2.2), a dedicated view for Ausdauer cards is a possible
+ * later idea, not built here.
  */
+
+import { getCardRotation, setCardRotation } from "./card-rotation.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 const CCM_MODULE_ID = "complete-card-management";
@@ -66,6 +70,30 @@ export async function returnPlayedCardToDeck(card, deck) {
  */
 export async function returnPlayedCardToHand(card, hand) {
   return card.parent.pass(hand, [card.id], { updateData: clearPlacementUpdateData() });
+}
+
+/**
+ * Whether a played card is currently exhausted (i.e. rotated) on the canvas - see
+ * `toggleCardExhausted()` below for what "exhausted" means here.
+ * @param {Card} card
+ * @returns {boolean}
+ */
+export function isCardExhausted(card) {
+  return getCardRotation(card).rotation !== 0;
+}
+
+/**
+ * Toggles whether a played card is exhausted, using the same canvas-rotation mechanism
+ * `cards/endurance.mjs` uses for a hero's Ausdauer cards and "Karten zurückdrehen"
+ * (macros/reset-card-rotations.mjs) resets at round end (0° ready, 90° exhausted) - a manual
+ * per-card "Karte erschöpfen" toggle on the played-cards sheet (project/TODO.md), independent
+ * of a hero's Ausdauer ready/spent count, for cards exhausted by use (e.g. Aventuria's rule
+ * that using a weapon exhausts the whole hero card) without an automated trigger for it yet.
+ * @param {Card} card    The played card, currently embedded in the hero's Im-Spiel-Stapel.
+ * @returns {Promise<boolean>} Whether the card had a canvas placement to toggle.
+ */
+export async function toggleCardExhausted(card) {
+  return setCardRotation(card, isCardExhausted(card) ? 0 : 90);
 }
 
 /**

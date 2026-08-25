@@ -2,13 +2,15 @@
  * Own sheet for the hero's "ausgespielte Karten" - the non-Ausdauer cards
  * currently sitting in the Im-Spiel-Stapel (`playPile`), i.e. cards played
  * from the Hand that aren't just spent Ausdauer. Lets the player clean up
- * their own play area: discard a resolved card, or take it back onto their
- * hand (the primary "undo a play" action, Nutzerwunsch 2026-08-19 - shuffling
- * back into the deck is comparatively rare, so that moved to a right-click
- * context menu on the card instead of its own button, same mechanism CCM's
- * own `DockedHandSheet` already uses for flip/next-face/previous-face -
+ * their own play area: discard a resolved card, take it back onto their hand,
+ * or shuffle it back into the deck - all three live in a right-click context
+ * menu on the card (Nutzerwunsch 2026-08-24: none of the three is common
+ * enough on its own to keep permanently visible next to the card art, unlike
+ * the "Karte erschöpfen" toggle below, which stays a normal button since it's
+ * the action actually used during play) - same mechanism CCM's own
+ * `DockedHandSheet` already uses for flip/next-face/previous-face -
  * `this._createContextMenu()`, a core `ApplicationV2` method, so no CCM
- * internals needed). project/PROJECT.md 2.2 - built on the same docking mixin as the Hand sheet
+ * internals needed. project/PROJECT.md 2.2 - built on the same docking mixin as the Hand sheet
  * (`DockableSheetMixin`, `dockable-sheet-mixin.mjs`), docked below the Hand
  * sheet (same right-of-tray column, Nutzerfeedback 2026-08-17: not below the
  * tray itself, which felt like the wrong place) when it's open, falling back
@@ -30,7 +32,13 @@
  */
 
 import { resolveStacks } from "../cards/stacks.mjs";
-import { discardPlayedCard, returnPlayedCardToHand, returnPlayedCardToDeck } from "../cards/played-cards.mjs";
+import {
+  discardPlayedCard,
+  returnPlayedCardToHand,
+  returnPlayedCardToDeck,
+  isCardExhausted,
+  toggleCardExhausted,
+} from "../cards/played-cards.mjs";
 import { DockableSheetMixin } from "./dockable-sheet-mixin.mjs";
 import { showCardPreview, hideCardPreview } from "./card-hover-preview.mjs";
 
@@ -49,19 +57,32 @@ export function registerPlayedCardsSheet() {
      * `handSheet` instance variable) if it's currently open and visible;
      * falls back to the Hand sheet's own default spot (right of the tray) if
      * it isn't, rather than leaving this sheet with nowhere sensible to dock.
-     * Vertical gap is wider than the horizontal tray gap (28px vs. 16px) -
-     * Nutzerfeedback 2026-08-19: 16px read as touching/overlapping once both
-     * sheets got their own window chrome (border, drop shadow) right up
-     * against each other.
+     * Bottom-aligns with the tray itself (Nutzerwunsch 2026-08-24) rather than
+     * using a fixed 28px gap below the Hand sheet - in practice the tray is
+     * often *shorter* than Hand + this sheet stacked with that fixed gap
+     * (Live-Test-Fund 2026-08-24: an initial version floored `top` at
+     * `handRect.bottom + 28`, which - since that's exactly the larger of the
+     * two values whenever the tray is the shorter one - always won out over
+     * the tray-aligned value via `Math.max()`, silently making this whole
+     * adjustment a no-op for that, apparently common, case). 190 is
+     * `DockableSheetMixin`'s own fixed default height
+     * (`dockable-sheet-mixin.mjs`) - safe to hardcode here since a resized (no
+     * longer "docked") sheet never reaches this computation at all
+     * (`updateDockPosition()` bails out before calling this callback in that
+     * case). The floor is now just `handRect.bottom` (no extra gap) - enough
+     * to rule out an actual overlap with the Hand sheet, without also
+     * blocking the now-common case of a shorter-than-both-stacked tray from
+     * pulling this sheet up closer to the Hand sheet than the old fixed gap.
      */
     (trayRect) => {
       const handEl = document.querySelector(".hand-sheet");
       if (handEl?.getClientRects().length) {
         const handRect = handEl.getBoundingClientRect();
-        return { left: handRect.left, top: handRect.bottom + 28 };
+        return { left: handRect.left, top: Math.max(handRect.bottom, trayRect.bottom - 190) };
       }
       return { left: trayRect.right + 16, top: trayRect.top };
     },
+    "playedCardsSheetPosition",
   ) {
     /**
      * One deferred first-render docking pass. Foundry applies its initial
@@ -78,8 +99,7 @@ export function registerPlayedCardsSheet() {
       actions: {
         // `this` (not the outer `AventuriaHelpersPlayedCardsSheet` binding) -
         // see the identical comment in hand-sheet.mjs for why.
-        discardCard: this.#onDiscardCard,
-        returnToHand: this.#onReturnToHand,
+        toggleExhaust: this.#onToggleExhaust,
       },
     };
 
@@ -97,52 +117,37 @@ export function registerPlayedCardsSheet() {
      */
     async _prepareContext(options) {
       const context = await super._prepareContext(options);
-      context.cards = this.document.cards.filter((card) => !card.getFlag(MODULE_ID, "usedAsEndurance"));
+      context.cards = this.document.cards
+        .filter((card) => !card.getFlag(MODULE_ID, "usedAsEndurance"))
+        .map((card) => ({ card, exhausted: isCardExhausted(card) }));
       context.empty = !context.cards.length;
       return context;
     }
 
     /**
-     * Moves a played card into the discard pile - see `discardPlayedCard()`
-     * in `cards/played-cards.mjs`.
+     * Toggles whether a played card is exhausted (canvas rotation, see
+     * `toggleCardExhausted()` in `cards/played-cards.mjs`) - the sheet's own
+     * permanent button, unlike discard/return-to-hand/return-to-deck below,
+     * which all moved into the right-click context menu (Nutzerwunsch
+     * 2026-08-24, project/TODO.md).
      * @this AventuriaHelpersPlayedCardsSheet
      * @param {PointerEvent} event
      * @param {HTMLElement} target
      */
-    static async #onDiscardCard(event, target) {
+    static async #onToggleExhaust(event, target) {
       if (!this.isEditable) return;
       const id = target.closest("[data-card-id]").dataset.cardId;
       const card = this.document.cards.get(id);
-      const stacks = resolveStacks();
-      if (!stacks?.discard) return;
-      await discardPlayedCard(card, stacks.discard);
+      await toggleCardExhausted(card);
     }
 
     /**
-     * Takes a played card back onto the hand - see `returnPlayedCardToHand()`
-     * in `cards/played-cards.mjs`. The sheet's own button action (primary
-     * "undo a play"); shuffling back into the deck is the rarer action, moved
-     * to the right-click context menu instead (`_getCardContextOptions()`
-     * below).
-     * @this AventuriaHelpersPlayedCardsSheet
-     * @param {PointerEvent} event
-     * @param {HTMLElement} target
-     */
-    static async #onReturnToHand(event, target) {
-      if (!this.isEditable) return;
-      const id = target.closest("[data-card-id]").dataset.cardId;
-      const card = this.document.cards.get(id);
-      const stacks = resolveStacks();
-      if (!stacks?.hand) return;
-      await returnPlayedCardToHand(card, stacks.hand);
-    }
-
-    /**
-     * Right-click context menu entries for a played card - currently just
-     * "Zurück ins Deck mischen" (`returnPlayedCardToDeck()`), demoted here
-     * from its own button (Nutzerwunsch 2026-08-19: rare enough not to need
-     * a permanent button next to "Ablegen"/"Zurück auf die Hand nehmen").
-     * Same `_createContextMenu()`/`ContextMenuEntry` mechanism CCM's own
+     * Right-click context menu entries for a played card - "Ablegen", "Zurück
+     * auf die Hand nehmen" and "Zurück ins Deck mischen", none common enough
+     * during play to keep as permanent buttons next to "Karte erschöpfen"
+     * (Nutzerwunsch 2026-08-24, project/TODO.md - "Zurück ins Deck mischen"
+     * was already here since 2026-08-19, the other two moved in alongside
+     * it). Same `_createContextMenu()`/`ContextMenuEntry` mechanism CCM's own
      * `DockedHandSheet._getCardContextOptions()` uses for flip/next-face/
      * previous-face (`ccm.mjs`) - a core `ApplicationV2` method, not
      * something specific to that class, so usable here without depending on
@@ -151,16 +156,38 @@ export function registerPlayedCardsSheet() {
      */
     _getCardContextOptions() {
       if (!this.isEditable) return [];
-      return [{
-        name: "AVENTURIA_HELPERS.HeroTray.ReturnToDeck",
-        icon: "<i class=\"fa-solid fa-fw fa-shuffle\"></i>",
-        callback: async (li) => {
-          const card = this.document.cards.get(li.dataset.cardId);
-          const stacks = resolveStacks();
-          if (!stacks?.deck) return;
-          await returnPlayedCardToDeck(card, stacks.deck);
+      return [
+        {
+          name: "AVENTURIA_HELPERS.HeroTray.ReturnToHand",
+          icon: "<i class=\"fa-solid fa-fw fa-hand\"></i>",
+          callback: async (li) => {
+            const card = this.document.cards.get(li.dataset.cardId);
+            const stacks = resolveStacks();
+            if (!stacks?.hand) return;
+            await returnPlayedCardToHand(card, stacks.hand);
+          },
         },
-      }];
+        {
+          name: "AVENTURIA_HELPERS.HeroTray.DiscardCard",
+          icon: "<i class=\"fa-solid fa-fw fa-trash-can\"></i>",
+          callback: async (li) => {
+            const card = this.document.cards.get(li.dataset.cardId);
+            const stacks = resolveStacks();
+            if (!stacks?.discard) return;
+            await discardPlayedCard(card, stacks.discard);
+          },
+        },
+        {
+          name: "AVENTURIA_HELPERS.HeroTray.ReturnToDeck",
+          icon: "<i class=\"fa-solid fa-fw fa-shuffle\"></i>",
+          callback: async (li) => {
+            const card = this.document.cards.get(li.dataset.cardId);
+            const stacks = resolveStacks();
+            if (!stacks?.deck) return;
+            await returnPlayedCardToDeck(card, stacks.deck);
+          },
+        },
+      ];
     }
 
     /**

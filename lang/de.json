@@ -55,8 +55,9 @@
       "UseEquipment": "Ausrüstung verwenden (Probe + Schaden, danach erschöpft)",
       "Target": "Zielwert",
       "Modifier": "Modifikator",
-      "Hint": "Positive Werte erleichtern die Probe und werden vom Ergebnis abgezogen. Negative Werte erschweren die Probe und werden addiert.",
+      "Hint": "Positive Werte erleichtern die Probe und werden zum Zielwert addiert. Negative Werte erschweren die Probe und werden vom Zielwert abgezogen.",
       "Roll": "Würfeln",
+      "RollResult": "Wurf",
       "Success": "Erfolg",
       "Failure": "Misserfolg",
       "CriticalSuccess": "Kritischer Erfolg",
@@ -229,7 +230,9 @@
       "AddEnemyPhase": "Gegneraktionen hinzufügen",
       "EnemyPhaseName": "Gegneraktionen",
       "AddRoundEnd": "Rundenende hinzufügen",
-      "RoundEndName": "Rundenende"
+      "RoundEndName": "Rundenende",
+      "RoundEndResetConfirmTitle": "Runde beendet",
+      "RoundEndResetConfirmBody": "Sollen alle Karten auf der Spieloberfläche zurückgedreht und alle erschöpften Helden bereitgemacht werden?"
     },
     "HeroTray": {
       "Title": "Heldenablage",
@@ -271,6 +274,8 @@
       "HandTooltip": "Hand – die Karten, die du aktuell hältst",
       "ExhaustEndurance": "Ausdauer erschöpfen (Karte um 90° drehen)",
       "ReadyEndurance": "Ausdauer bereit machen (Karte zurückdrehen)",
+      "ExhaustCard": "Karte erschöpfen (um 90° drehen)",
+      "ReadyCard": "Karte bereit machen (zurückdrehen)",
       "ResetDock": "Position zurücksetzen",
       "PreviewTitle": "Kartenvorschau",
       "PreviewAmount": "Anzahl Karten",
@@ -283,12 +288,18 @@
         "GmOnly": "Nur die Spielleitung kann Karten zurückdrehen.",
         "NoScene": "Keine Spieloberfläche geöffnet.",
         "NoneRotated": "Keine Karte war gedreht.",
-        "Done": "{count} Karte(n) zurückgedreht.",
-        "ConfirmTitle": "Runde beendet",
-        "ConfirmBody": "Sollen alle Karten auf der Spieloberfläche wieder in ihre Ausgangsposition zurückgedreht werden?"
+        "Done": "{count} Karte(n) zurückgedreht."
       },
       "OpenWelcomeScreen": {
         "Name": "Aventuria-Guide öffnen"
+      },
+      "ExhaustHero": {
+        "Name": "Held erschöpfen",
+        "NoHero": "Kein Held gefunden - wähle ein Heldentoken aus oder ordne dir einen Helden zu."
+      },
+      "ReadyHero": {
+        "Name": "Held bereitmachen",
+        "NoHero": "Kein Held gefunden - wähle ein Heldentoken aus oder ordne dir einen Helden zu."
       }
     },
     "CleanUpBoard": {

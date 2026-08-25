@@ -1,3 +1,5 @@
+const MODULE_ID = "aventuria-helpers";
+
 /**
  * Adds "dock to the Heldenablage tray, but stay optionally drag/drop-able
  * with a reset" behavior to an ApplicationV2 subclass - shared by
@@ -16,8 +18,16 @@
  * @param {typeof foundry.applications.api.ApplicationV2} Base
  * @param {(trayRect: DOMRect) => {left: number, top: number}} getOffset
  *   Computes the target `left`/`top` from the tray's live bounding rect.
+ * @param {string} settingKey
+ *   Client-setting key (registered in `aventuria-helpers.mjs`) a manually-moved position is
+ *   persisted under, so it survives fully closing and reopening the sheet - both view-toggle
+ *   buttons in `hero-tray.mjs` throw the old instance away on close (`rendered` becomes
+ *   `false`) and construct a fresh one on the next click, which previously reset `docked` back
+ *   to its `true` default every time, silently undoing a manual drag the moment the window was
+ *   closed (TODO.md Bugs, 2026-08-24: "Position wird nicht gemerkt, öffnet wieder an der
+ *   Ursprungsposition"). Required, not optional - both current subclasses always pass one.
  */
-export function DockableSheetMixin(Base, getOffset) {
+export function DockableSheetMixin(Base, getOffset, settingKey) {
   return class extends Base {
     /** @inheritdoc */
     static DEFAULT_OPTIONS = {
@@ -64,7 +74,7 @@ export function DockableSheetMixin(Base, getOffset) {
     /**
      * Whether this instance should auto-follow the tray's position (see
      * `updateDockPosition()`) - flipped to `false` by `_onPosition()` the
-     * moment the user drags the window away, and back to `true` by
+     * moment the user drags/resizes the window away, and back to `true` by
      * "Position zurücksetzen" (`#onResetDock()`).
      */
     docked = true;
@@ -74,6 +84,40 @@ export function DockableSheetMixin(Base, getOffset) {
      * call isn't mistaken for a user-initiated drag.
      */
     #repositioning = false;
+
+    /**
+     * The `{left, top, width, height}` `updateDockPosition()` last applied - `_onPosition()`
+     * below compares against this (not just `#repositioning`) to tell an actual user
+     * drag/resize apart from Foundry core's own render() pipeline, which unconditionally
+     * re-applies `options.position` once more right after this sheet's *first* render
+     * ("Update application position" in application.mjs) - outside `updateDockPosition()`'s
+     * own call, so `#repositioning` alone can't guard it. Since that reapplied object is the
+     * very same one `updateDockPosition()` just wrote left/top into, it carries identical
+     * values - `#repositioning` being `false` at that point used to make `_onPosition()`
+     * flip `docked` to `false` right after the very first render regardless, silently
+     * breaking every *later* auto-redock (Live-Test-Fund 2026-08-24: the Ausgespielte-
+     * Karten-Sheet, opened before the Hand sheet, never noticed the Hand sheet opening
+     * afterwards and stayed at its Hand-less fallback spot, exactly on top of it).
+     * @type {{left: number, top: number, width: number|string, height: number|string}|null}
+     */
+    #lastDockedPosition = null;
+
+    /**
+     * Restores a manually-moved position saved under `settingKey` (see the mixin's own doc
+     * comment) before `_onRender()`'s `updateDockPosition()` gets a chance to auto-dock this
+     * fresh instance - runs before `_onRender()` in Foundry's own render lifecycle
+     * (`application.mjs`: `_onFirstRender` is awaited, then `_onRender`), so setting `docked`
+     * to `false` here reliably gates the following auto-dock.
+     * @inheritdoc
+     */
+    async _onFirstRender(context, options) {
+      await super._onFirstRender(context, options);
+      const saved = game.settings.get(MODULE_ID, settingKey);
+      if (saved?.left != null) {
+        this.docked = false;
+        this.setPosition(saved);
+      }
+    }
 
     /**
      * Re-docks relative to `#aventuria-helpers-hero-tray`'s live
@@ -93,8 +137,11 @@ export function DockableSheetMixin(Base, getOffset) {
 
       const { left, top } = getOffset(tray.getBoundingClientRect());
       this.#repositioning = true;
-      this.setPosition({ left, top });
+      const applied = this.setPosition({ left, top });
       this.#repositioning = false;
+      this.#lastDockedPosition = {
+        left: applied.left, top: applied.top, width: applied.width, height: applied.height,
+      };
       // Lets a dependent sheet (e.g. Played-Cards-Sheet docking below the
       // Hand sheet's own live position, played-cards-sheet.mjs) re-run its
       // own updateDockPosition() right away instead of only on its own next
@@ -112,24 +159,45 @@ export function DockableSheetMixin(Base, getOffset) {
      * Detects a user-driven reposition (header drag, or the corner resize
      * handle - both funnel through `setPosition()` in core) to stop
      * auto-docking until explicitly reset. Ignores calls made from within
-     * `updateDockPosition()` itself, flagged via `#repositioning`. A resize
-     * un-docks the sheet too, same as a drag; it stays exactly where/how big
-     * it was left until "Position zurücksetzen" (which only restores
-     * `left`/`top`, not the size the user dragged it to).
+     * `updateDockPosition()` itself, flagged via `#repositioning` - but that
+     * flag alone isn't enough (see `#lastDockedPosition`'s doc comment):
+     * Foundry core also re-applies the exact same position object once more,
+     * unprompted, right after this sheet's first render, outside
+     * `updateDockPosition()`'s own call. Only treat this as a real user move
+     * if it actually changed something `updateDockPosition()` didn't just
+     * set itself. A resize still un-docks the sheet, same as a drag; it
+     * stays exactly where/how big it was left until "Position zurücksetzen"
+     * (which only restores `left`/`top`, not the size the user dragged it to).
      * @inheritdoc
      */
     _onPosition(position) {
       super._onPosition(position);
-      if (!this.#repositioning) this.docked = false;
+      if (this.#repositioning) return;
+      const last = this.#lastDockedPosition;
+      if (
+        last
+        && position.left === last.left && position.top === last.top
+        && position.width === last.width && position.height === last.height
+      ) {
+        return;
+      }
+      this.docked = false;
+      // Persisted so the manual position survives fully closing and reopening the sheet, not
+      // just later renders of this same instance - see the mixin's own doc comment.
+      game.settings.set(MODULE_ID, settingKey, {
+        left: position.left, top: position.top, width: position.width, height: position.height,
+      });
     }
 
     /**
-     * "Position zurücksetzen" header-controls entry: re-enables auto-docking
-     * and immediately snaps back to the Heldenablage.
+     * "Position zurücksetzen" header-controls entry: re-enables auto-docking, snaps back to
+     * the Heldenablage, and clears the persisted manual position (see `_onFirstRender()`) so a
+     * later fresh instance starts docked again too, instead of reapplying the just-abandoned spot.
      * @this InstanceType<ReturnType<typeof DockableSheetMixin>>
      */
     static async #onResetDock() {
       this.docked = true;
+      await game.settings.set(MODULE_ID, settingKey, {});
       this.updateDockPosition();
     }
 

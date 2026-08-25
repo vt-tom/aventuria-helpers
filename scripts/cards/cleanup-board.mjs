@@ -1,9 +1,18 @@
 import { placeBoardTokens, TOKEN_FOLDER_NAME } from "../actors/import-board-tokens.mjs";
 import { resolveStacks } from "./stacks.mjs";
 import { returnAllPlayedCardsToDeck } from "./played-cards.mjs";
+import { ADVENTURE_DECK_FLAG, HENCHMEN_DECK_FLAG } from "./prepare-quickstart.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 const CCM_MODULE_ID = "complete-card-management";
+
+/**
+ * Fixed IDs of Aventuria's two shared "in play" piles (see `place-board-stacks.mjs`'s header
+ * comment) - neither is itself placed on the scene, so the generic scene-clearing loop below
+ * never reaches cards sitting in them.
+ */
+const ADVENTURE_IN_PLAY_ID = "adventureInPlay0";
+const HENCHMAN_IN_PLAY_ID = "henchmanInPlay00";
 
 /**
  * Resets the Aventuria Gameboard scene after an adventure: removes every *adventure-specific*
@@ -50,6 +59,20 @@ const CCM_MODULE_ID = "complete-card-management";
  * "Ausgespielte Karten" sheet's own "Zurück ins Deck mischen" (`returnAllPlayedCardsToDeck()`,
  * `cards/played-cards.mjs`) - handled separately from the generic scene loop below (skipped
  * there via `playPileIds`) so each played card is only ever passed back once.
+ *
+ * Third gap, TODO.md Bugs (2026-08-24): cards a Gameboard region auto-passes into the shared
+ * "Abenteuerkarten im Spiel"/"Schergen im Spiel" piles (`adventureInPlay0`/`henchmanInPlay00`,
+ * see `place-board-stacks.mjs`'s header comment and `prepare-quickstart.mjs#placeAdventureCards()`)
+ * were never reset either - neither pile is itself placed on the scene, so the generic loop
+ * below never reaches the cards sitting in them, same "off-canvas ghost" class of bug as (2)
+ * above, just for shared GM piles instead of a per-hero one. Reused `returnAllPlayedCardsToDeck()`
+ * again (its logic is generic over any source/target `Cards` pair despite the hero-specific
+ * name) to shuffle them back into the matching Schnellstarter deck (`ADVENTURE_DECK_FLAG`/
+ * `HENCHMEN_DECK_FLAG`, `prepare-quickstart.mjs`) - currently the only decks this module's own
+ * tooling ever creates for either pile, so both are safe, unambiguous return targets; a no-op
+ * per pile if its deck was never created (e.g. cleaning up a non-Schnellstarter table) or the
+ * pile is already empty. Nutzerentscheidung 2026-08-24: Schergen im Spiel wird trotz nicht
+ * explizit im ursprünglichen Bug-Report erwähnt mit einbezogen, da strukturell identische Lücke.
  * @returns {Promise<boolean>} Whether the cleanup actually ran (false on any guard failure or cancel).
  */
 export async function cleanUpBoard() {
@@ -102,6 +125,18 @@ export async function cleanUpBoard() {
     if (!stacks.playPile?.cards?.size || !stacks.deck) continue;
     returnedCount += stacks.playPile.cards.size;
     await returnAllPlayedCardsToDeck(stacks.playPile, stacks.deck);
+  }
+
+  const sharedInPlayPiles = [
+    { pileId: ADVENTURE_IN_PLAY_ID, deckFlag: ADVENTURE_DECK_FLAG },
+    { pileId: HENCHMAN_IN_PLAY_ID, deckFlag: HENCHMEN_DECK_FLAG },
+  ];
+  for (const { pileId, deckFlag } of sharedInPlayPiles) {
+    const pile = game.cards.get(pileId);
+    const deck = game.cards.find((c) => c.getFlag(MODULE_ID, deckFlag));
+    if (!pile?.cards?.size || !deck) continue;
+    returnedCount += pile.cards.size;
+    await returnAllPlayedCardsToDeck(pile, deck);
   }
 
   const tokenFolder = game.folders.find((f) => f.type === "Actor" && f.name === TOKEN_FOLDER_NAME);

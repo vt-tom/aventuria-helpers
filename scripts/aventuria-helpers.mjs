@@ -5,6 +5,7 @@ import { registerChangelogAutoOpen } from "./apps/changelog.mjs";
 import { resetCardRotations } from "./macros/reset-card-rotations.mjs";
 import { openWelcomeScreen } from "./macros/open-welcome-screen.mjs";
 import { cleanUpBoard } from "./cards/cleanup-board.mjs";
+import { exhaustHero, readyHero } from "./actors/hero-exhaust.mjs";
 import { registerCombat, registerEnemyPhaseCombatant, registerRoundEndCombatant } from "./documents/combat.mjs";
 import { registerHeroTray } from "./apps/hero-tray.mjs";
 import { registerHandSheet } from "./sheets/hand-sheet.mjs";
@@ -21,6 +22,18 @@ Hooks.once("init", () => {
     type: String,
     default: "left",
   });
+
+  // Manually-moved position of the Hand/Ausgespielte-Karten sheets, so it survives fully
+  // closing and reopening them - see DockableSheetMixin's own doc comment (TODO.md Bugs,
+  // 2026-08-24). `{}` means "no override, stay docked".
+  for (const key of ["handSheetPosition", "playedCardsSheetPosition"]) {
+    game.settings.register(MODULE_ID, key, {
+      scope: "client",
+      config: false,
+      type: Object,
+      default: {},
+    });
+  }
 
   foundry.documents.collections.Actors.registerSheet(MODULE_ID, AventuriaHelpersHeroSheet, {
     types: ["aventuria.hero"],
@@ -46,5 +59,7 @@ Hooks.once("init", () => {
   registerPlayedCardsSheet();
   registerHeroTray();
 
-  game.modules.get(MODULE_ID).api = { resetCardRotations, openWelcomeScreen, cleanUpBoard };
+  game.modules.get(MODULE_ID).api = {
+    resetCardRotations, openWelcomeScreen, cleanUpBoard, exhaustHero, readyHero,
+  };
 });

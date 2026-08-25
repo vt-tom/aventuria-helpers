@@ -1,0 +1,27 @@
+{
+  "_id": "Hx7mQa2NpLtRs9Ke",
+  "flags": {},
+  "name": "Held erschöpfen",
+  "sort": 300000,
+  "_stats": {
+    "compendiumSource": null,
+    "coreVersion": "14.364",
+    "createdTime": 1787000000000,
+    "duplicateSource": null,
+    "exportSource": null,
+    "lastModifiedBy": null,
+    "modifiedTime": null,
+    "systemId": "universal-tabletop-system",
+    "systemVersion": "1.2.1"
+  },
+  "author": null,
+  "command": "game.modules.get(\"aventuria-helpers\").api.exhaustHero();",
+  "img": "modules/aventuria/assets/icons/exhaust-card.webp",
+  "ownership": {
+    "default": 0
+  },
+  "scope": "global",
+  "type": "script",
+  "folder": null,
+  "_key": "!macros!Hx7mQa2NpLtRs9Ke"
+}

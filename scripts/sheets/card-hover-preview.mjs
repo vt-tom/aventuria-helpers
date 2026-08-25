@@ -9,6 +9,21 @@
  * Extracted from hand-sheet.mjs when Played-Cards-Sheet needed the exact
  * same behavior (project/PROJECT.md 2.2 follow-up, Nutzerwunsch 2026-08-19) - same
  * "genuine, immediate duplication" reasoning as `DockableSheetMixin`.
+ *
+ * Always lives in *this script's own* `document` (the main Foundry window) - this module never
+ * re-runs inside a popup opened via Foundry's "Detach Window" (only stylesheets get cloned
+ * there, see `DetachedWindowManager#applyHarness()`; a sheet's already-rendered DOM is just
+ * moved into it via `adoptNode()`), so the bare `document`/`window` globals below always
+ * correctly refer to the main window regardless of which window a hovered `.card` currently
+ * lives in. An earlier attempt (2026-08-24) created the preview in the hovered card's own
+ * `ownerDocument` instead, reasoning it needed to appear *in* the detached popup - reverted the
+ * same day (TODO.md Bugs, Nutzer-Feedback nach Test): Foundry sizes a detached popup to exactly
+ * fit the sheet it hosts (`#detach()`, `application.mjs`: "Set the detached window size to the
+ * fully rendered size of the app"), leaving no spare viewport room for a floating overlay next
+ * to it - the relative left/right-of-sheet positioning math below is meaningless there anyway,
+ * `getBoundingClientRect()` on a popup-hosted element is relative to that popup's own viewport,
+ * not this one. `showCardPreview()` now detects that case and centers the preview on the main
+ * window's game surface instead (Nutzervorschlag).
  */
 
 let previewEl = null;
@@ -44,6 +59,19 @@ export function showCardPreview(cardEl, sheetEl) {
   el.querySelector("img").src = img.src;
   el.classList.add("visible");
 
+  // The hovered card lives in a detached popup, not this (main) window - see this module's own
+  // doc comment for why relative positioning against it doesn't make sense here. Center on the
+  // game surface instead; `.centered`'s own CSS handles both axes. Clears any inline left/top
+  // left over from a previous, non-centered hover - inline styles would otherwise outrank the
+  // CSS class's own 50%/50% values.
+  if (cardEl.ownerDocument !== document) {
+    el.style.left = "";
+    el.style.top = "";
+    el.classList.add("centered");
+    return;
+  }
+  el.classList.remove("centered");
+
   const sheetRect = sheetEl.getBoundingClientRect();
   const cardRect = cardEl.getBoundingClientRect();
   const previewWidth = el.offsetWidth || 320;
@@ -73,5 +101,5 @@ export function showCardPreview(cardEl, sheetEl) {
 
 /** Hides the floating preview, if currently shown. */
 export function hideCardPreview() {
-  previewEl?.classList.remove("visible");
+  previewEl?.classList.remove("visible", "centered");
 }

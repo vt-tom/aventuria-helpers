@@ -1,0 +1,27 @@
+{
+  "_id": "Vw4bPz8YcJdFq1Xn",
+  "flags": {},
+  "name": "Held bereitmachen",
+  "sort": 400000,
+  "_stats": {
+    "compendiumSource": null,
+    "coreVersion": "14.364",
+    "createdTime": 1787000000001,
+    "duplicateSource": null,
+    "exportSource": null,
+    "lastModifiedBy": null,
+    "modifiedTime": null,
+    "systemId": "universal-tabletop-system",
+    "systemVersion": "1.2.1"
+  },
+  "author": null,
+  "command": "game.modules.get(\"aventuria-helpers\").api.readyHero();",
+  "img": "icons/svg/regen.svg",
+  "ownership": {
+    "default": 0
+  },
+  "scope": "global",
+  "type": "script",
+  "folder": null,
+  "_key": "!macros!Vw4bPz8YcJdFq1Xn"
+}

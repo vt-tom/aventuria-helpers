@@ -55,8 +55,9 @@
       "UseEquipment": "Use equipment (check + damage, then exhausted)",
       "Target": "Target value",
       "Modifier": "Modifier",
-      "Hint": "Positive values make the check easier and are subtracted from the result. Negative values make the check harder and are added.",
+      "Hint": "Positive values make the check easier and are added to the target value. Negative values make the check harder and are subtracted from the target value.",
       "Roll": "Roll",
+      "RollResult": "Roll",
       "Success": "Success",
       "Failure": "Failure",
       "CriticalSuccess": "Critical success",
@@ -229,7 +230,9 @@
       "AddEnemyPhase": "Add enemy actions",
       "EnemyPhaseName": "Enemy Actions",
       "AddRoundEnd": "Add round end",
-      "RoundEndName": "Round End"
+      "RoundEndName": "Round End",
+      "RoundEndResetConfirmTitle": "Round ended",
+      "RoundEndResetConfirmBody": "Rotate all cards on the scene back to their original position and ready every exhausted hero?"
     },
     "HeroTray": {
       "Title": "Hero Tray",
@@ -271,6 +274,8 @@
       "HandTooltip": "Hand – the cards you currently hold",
       "ExhaustEndurance": "Exhaust Ausdauer (rotate a card 90°)",
       "ReadyEndurance": "Make Ausdauer ready (rotate a card back)",
+      "ExhaustCard": "Exhaust card (rotate 90°)",
+      "ReadyCard": "Make card ready (rotate back)",
       "ResetDock": "Reset position",
       "PreviewTitle": "Card Preview",
       "PreviewAmount": "Number of cards",
@@ -283,9 +288,15 @@
         "GmOnly": "Only the GM can reset card rotations.",
         "NoScene": "No scene is open.",
         "NoneRotated": "No card was rotated.",
-        "Done": "{count} card(s) reset.",
-        "ConfirmTitle": "Round ended",
-        "ConfirmBody": "Should all cards on the scene be rotated back to their original position?"
+        "Done": "{count} card(s) reset."
+      },
+      "ExhaustHero": {
+        "Name": "Exhaust hero",
+        "NoHero": "No hero found - select a hero token or assign a hero to yourself."
+      },
+      "ReadyHero": {
+        "Name": "Ready hero",
+        "NoHero": "No hero found - select a hero token or assign a hero to yourself."
       },
       "OpenWelcomeScreen": {
         "Name": "Open Aventuria guide"

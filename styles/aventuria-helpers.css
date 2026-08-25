@@ -1221,6 +1221,14 @@ button.skill-value:active {
   gap: 0.5rem;
 }
 
+/* Foundrys eigenes Dark-Theme setzt für ein bloßes <label> ohne eigene Textfarbe einen hellen
+   Ton (gedacht für dunkle Foundry-eigene Panels) - auf dem hellen Parchment-Hintergrund dieses
+   Dialogs praktisch unlesbar (TODO.md Bugs, 2026-08-24, Nutzer-Screenshot im Dark Mode).
+   Explizite Farbe wie beim analogen `.assign-hero-body .form-group label` behebt das. */
+.probe-dialog .form-group label {
+  color: var(--muted);
+}
+
 .probe-dialog .form-group input {
   width: 5rem;
   text-align: center;
@@ -1284,27 +1292,23 @@ button.skill-value:active {
   margin-left: auto;
   font-size: 0.78rem;
   color: var(--muted);
+  text-align: right;
 }
 
 .probe-card .probe-math {
   display: flex;
   align-items: baseline;
-  gap: 0.35rem;
+  justify-content: center;
+  gap: 0.4rem;
   font-variant-numeric: tabular-nums;
 }
 
-.probe-card .probe-math .die {
-  font-size: 1.3rem;
-  font-weight: 700;
-}
-
-.probe-card .probe-math .op,
-.probe-card .probe-math .eq {
+.probe-card .probe-math .die-label {
+  font-size: 0.78rem;
   color: var(--muted);
 }
 
-.probe-card .probe-math .total {
-  margin-left: auto;
+.probe-card .probe-math .die {
   font-size: 1.3rem;
   font-weight: 700;
 }
@@ -1412,6 +1416,7 @@ button.skill-value:active {
 .aventuria-welcome h2 {
   margin: 0;
   font-size: 1.4rem;
+  color: var(--copper-ink);
 }
 
 .aventuria-welcome p {
@@ -1549,6 +1554,7 @@ button.skill-value:active {
 .setup-step-body h3 {
   margin: 0;
   font-size: 0.95rem;
+  color: var(--copper-ink);
 }
 
 .setup-step-body p {
@@ -1869,6 +1875,23 @@ body.ahb-tray-active #ui-left-column-1 {
   justify-content: flex-start;
 }
 
+/* Fix, 2026-08-24 (TODO.md Bugs, reproduced with a narrow/short browser window): the tray's
+   fixed 320px width (see `.hero-tray` below) deliberately overflows `#ui-left-column-1`s own
+   narrow ~72px container (see that rule's own comment) - on a wide enough window that overflow
+   lands in empty canvas space, harmless. On a narrow window it can reach into #ui-middle's
+   horizontally-centered 60%-wide region (game.less: `#ui-left{width:50%}` vs.
+   `#ui-middle{width:60%}`, centered - their boxes overlap by design whenever the viewport is
+   narrow enough), which holds #ui-bottom/#hotbar. Both #ui-left and #ui-middle sit at the same
+   `--z-index-app` (foundry2.css) - core's own scene-controls/player-list content never actually
+   reaches into that shared region, so this tie never mattered before the tray's own deliberate
+   overflow. Ties resolve by DOM order (`#ui-middle` is declared after `#ui-left` in game.hbs), so
+   the hotbar paints on top of the tray wherever they overlap - reads visually as the tray sitting
+   "behind" the hotbar. `#ui-left`'s z-index is bumped only while the tray is actually shown, not
+   for Foundry's own #ui-left content (scene controls, native player list) in general. */
+body.ahb-tray-active #ui-left {
+  z-index: calc(var(--z-index-app) + 1);
+}
+
 /* Toggle-to-tray bubble, injected into #players-active (see injectToggleButton()
    in hero-tray.mjs) - a positioning context on that specific native element,
    not on #players itself: #players is a column flex item with no explicit
@@ -1933,6 +1956,10 @@ body.ahb-tray-active #ui-left-column-1 {
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), inset 0 0 0 2px #aaa195;
+  /* Covers both the populated (.tray-board) and empty (.tray-pick) state - previously only
+     .tray-board painted this background, so an empty tray (no hero assigned yet) showed the
+     canvas straight through below the header bar (TODO.md Bugs, 2026-08-24). */
+  background: var(--copper-parchment-bg);
 }
 
 .hero-tray .tray-root {
@@ -2467,9 +2494,10 @@ body:not(.ahb-tray-active) .played-cards-sheet {
 }
 
 /* ---------- Played-Cards-Sheet-eigene Elemente ---------- */
-/* "Ablegen"/"Zurück auf die Hand" - selbes Grundmuster wie .card-endurance
-   oben (Button unterhalb der Kartenkunst statt Overlay), aber zwei Buttons
-   nebeneinander statt einem einzelnen. */
+/* "Karte erschöpfen"/"Karte bereit machen" (ein einziger Umschalt-Button, Icon/Tooltip je nach
+   Zustand, seit 2026-08-24 - "Ablegen"/"Zurück auf die Hand nehmen" wanderten dabei ins
+   Rechtsklick-Menü, siehe played-cards-sheet.mjs) - selbes Grundmuster wie .card-endurance
+   oben (Button unterhalb der Kartenkunst statt Overlay). */
 .played-cards-sheet .cards .card-actions {
   display: flex;
   justify-content: center;
@@ -2509,6 +2537,14 @@ body:not(.ahb-tray-active) .played-cards-sheet {
   outline: none;
 }
 
+/* Same dimming echo as the Heldenablage's own spent-Ausdauer icon
+   (.hero-tray .tray-stack-head img.spent above) - a visual cue for a card's
+   exhausted state without actually rotating the card art itself. */
+.played-cards-sheet .cards .card.exhausted img {
+  filter: grayscale(1);
+  opacity: 0.6;
+}
+
 .played-cards-sheet .played-cards-empty {
   margin: 0;
   padding: 0.5rem 0.25rem;
@@ -2536,6 +2572,15 @@ body:not(.ahb-tray-active) .played-cards-sheet {
 .hand-card-preview.visible {
   opacity: 1;
   visibility: visible;
+}
+
+/* Hovered card lives in a detached popup (TODO.md Bugs, 2026-08-24) - `left`/`top` aren't set
+   by JS in that case (see card-hover-preview.mjs), center on the main window's game surface
+   instead of the usual next-to-the-sheet placement, which only makes sense within this window. */
+.hand-card-preview.centered {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .hand-card-preview img {

@@ -31,8 +31,14 @@ const QUICKSTART_HERO_START = {
 /** `system.serialNumber` range of the henchmen prepared in the background for the adventure. */
 const HENCHMAN_RANGE = [736, 742];
 
-/** Flag on the world Cards deck `prepareHenchmenDeck()` creates, so re-running doesn't duplicate it. */
-const HENCHMEN_DECK_FLAG = "quickstartHenchmen";
+/**
+ * Flag on the world Cards deck `prepareHenchmenDeck()` creates, so re-running doesn't
+ * duplicate it. Exported for `cards/cleanup-board.mjs`, same reasoning as
+ * `ADVENTURE_DECK_FLAG` above - the only henchmen deck this module's own tooling creates, so
+ * a safe return target for cards sitting in the shared "Schergen im Spiel" pile
+ * (`henchmanInPlay00`).
+ */
+export const HENCHMEN_DECK_FLAG = "quickstartHenchmen";
 
 /**
  * Master card compendium Aventuria's own (dialog-driven) `createHenchmanDeck()` macro draws
@@ -56,8 +62,14 @@ const HENCHMEN_DECK_IMG = "modules/aventuria/assets/cards-en/henchmen/Aventuria-
  */
 const HENCHMAN_DECK_POSITION = { x: 5430.799999999999, y: 4552.6, rotation: 0 };
 
-/** Flag on the world Cards deck `prepareAdventureDeck()` creates, so re-running doesn't duplicate it. */
-const ADVENTURE_DECK_FLAG = "quickstartAdventureDeck";
+/**
+ * Flag on the world Cards deck `prepareAdventureDeck()` creates, so re-running doesn't
+ * duplicate it. Exported for `cards/cleanup-board.mjs`, which resolves this same deck as the
+ * return target for cards sitting in the shared "Abenteuerkarten im Spiel" pile
+ * (`adventureInPlay0`) - currently the only adventure/event deck this module's tooling ever
+ * creates, see the cleanup function's own doc comment for why that's a safe assumption.
+ */
+export const ADVENTURE_DECK_FLAG = "quickstartAdventureDeck";
 
 /** Aventuria's own pre-built Schnellstarter adventure/event card deck, per language - given directly by the user (Stand 2026-08-16), not researched. */
 const ADVENTURE_DECK_UUID = {

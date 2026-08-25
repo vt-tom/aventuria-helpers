@@ -19,7 +19,8 @@ let tray = null;
  * The currently open Hand sheet, if any - reused instead of stacking a new
  * window per click, since the sheet's header (and with it the close button) is
  * hidden for a more minimal, docked look (see `.hand-sheet .window-header` in
- * the CSS).
+ * the CSS). Also lets the "Ansehen" button toggle it closed again on a second
+ * click (TODO.md Bugs, 2026-08-24) instead of only ever bringing it to front.
  */
 let handSheet = null;
 
@@ -28,6 +29,18 @@ let handSheet = null;
  * stacking a new window per click, same pattern as `handSheet` above.
  */
 let playedCardsSheet = null;
+
+/**
+ * The currently open Deck sheet, if any - same reuse/toggle-close pattern as
+ * `handSheet`/`playedCardsSheet` above, added 2026-08-24 so "Deck ansehen" no
+ * longer stacks a new window on every click.
+ */
+let deckSheet = null;
+
+/**
+ * The currently open Discard sheet, if any - same pattern as `deckSheet` above.
+ */
+let discardSheet = null;
 
 /**
  * Permanent HUD element showing the current user's own Aventuria hero (portrait,
@@ -234,9 +247,13 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
   static async #onViewDeck() {
     const stacks = resolveStacks();
     if (!stacks?.deck) return;
-    const sheet = new ccm.apps.CardsSheets.DeckSheet(stacks.deck);
-    sheet.tabGroups.primary = "cards";
-    sheet.render({ force: true });
+    if (deckSheet?.rendered && deckSheet.document === stacks.deck) {
+      await deckSheet.close();
+      return;
+    }
+    deckSheet = new ccm.apps.CardsSheets.DeckSheet(stacks.deck);
+    deckSheet.tabGroups.primary = "cards";
+    await deckSheet.render({ force: true });
   }
 
   /**
@@ -247,21 +264,27 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
   static async #onViewDiscard() {
     const stacks = resolveStacks();
     if (!stacks?.discard) return;
-    new ccm.apps.CardsSheets.PileSheet(stacks.discard).render({ force: true });
+    if (discardSheet?.rendered && discardSheet.document === stacks.discard) {
+      await discardSheet.close();
+      return;
+    }
+    discardSheet = new ccm.apps.CardsSheets.PileSheet(stacks.discard);
+    await discardSheet.render({ force: true });
   }
 
   /**
    * Opens the Hand in the module's own reskinned docked-hand sheet (explicitly
    * instantiated, not `hand.sheet`, since CCM registers its Cards sheets without
    * `makeDefault`). Reuses an already-open instance instead of stacking a new
-   * window each click - see `handSheet` above.
+   * window each click, and (2026-08-24, TODO.md Bugs) closes it again on a second
+   * click instead of only ever bringing it to front - see `handSheet` above.
    * @this AventuriaHelpersHeroTray
    */
   static async #onViewHand() {
     const stacks = resolveStacks();
     if (!stacks?.hand) return;
     if (handSheet?.rendered && handSheet.document === stacks.hand) {
-      handSheet.bringToFront();
+      await handSheet.close();
       return;
     }
     handSheet = new AventuriaHelpersHandSheet(stacks.hand);
@@ -272,14 +295,16 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    * Opens the hero's Im-Spiel-Stapel in the module's own "Ausgespielte
    * Karten" sheet (non-Ausdauer played cards only - see
    * `sheets/played-cards-sheet.mjs`). Reuses an already-open instance instead
-   * of stacking a new window each click - see `playedCardsSheet` above.
+   * of stacking a new window each click, and (2026-08-24, TODO.md Bugs) closes
+   * it again on a second click instead of only ever bringing it to front - see
+   * `playedCardsSheet` above.
    * @this AventuriaHelpersHeroTray
    */
   static async #onViewPlayedCards() {
     const stacks = resolveStacks();
     if (!stacks?.playPile) return;
     if (playedCardsSheet?.rendered && playedCardsSheet.document === stacks.playPile) {
-      playedCardsSheet.bringToFront();
+      await playedCardsSheet.close();
       return;
     }
     playedCardsSheet = new AventuriaHelpersPlayedCardsSheet(stacks.playPile);

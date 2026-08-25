@@ -10,8 +10,9 @@
  * of our own is needed for that part.
  */
 
+import { getCardRotation, setCardRotation } from "./card-rotation.mjs";
+
 const MODULE_ID = "aventuria-helpers";
-const CCM_MODULE_ID = "complete-card-management";
 const CCM_MOVE_CARD_TYPE = "complete-card-management.moveCard";
 
 /**
@@ -101,16 +102,9 @@ function findPlayRegion(pile) {
 }
 
 /**
- * Resolves every Ausdauer card currently sitting in the Im-Spiel-Stapel, each
- * with its normalized rotation - read straight from whichever per-scene
- * canvas flag CCM's own card HUD rotation control writes to (a card only has
- * one such placement at a time in practice), rather than assuming the
- * currently viewed scene is the one it was placed on. CCM's rotate control
- * just adds/subtracts 90° to a running total rather than wrapping it into
- * [0, 360) - a full clockwise turn lands back at the same visual orientation
- * but stores 360, not 0 - so the raw value is normalized (mod 360, shifted
- * positive first since a counter-clockwise rotation can go negative) before
- * treating it as ready/spent.
+ * Resolves every Ausdauer card currently sitting in the Im-Spiel-Stapel, each with its
+ * normalized rotation (`getCardRotation()`, cards/card-rotation.mjs) - rather than assuming the
+ * currently viewed scene is the one it was placed on.
  * @param {Cards} playPile
  * @returns {{card: Card, sceneId: string|undefined, rotation: number}[]}
  */
@@ -118,10 +112,7 @@ function getEnduranceCards(playPile) {
   const cards = [];
   for (const card of playPile.cards) {
     if (!card.getFlag(MODULE_ID, "usedAsEndurance")) continue;
-    const placements = card.flags?.[CCM_MODULE_ID] ?? {};
-    const sceneId = Object.keys(placements).find((key) => placements[key]?.rotation !== undefined);
-    const rawRotation = sceneId ? placements[sceneId].rotation : 0;
-    cards.push({ card, sceneId, rotation: ((rawRotation % 360) + 360) % 360 });
+    cards.push({ card, ...getCardRotation(card) });
   }
   return cards;
 }
@@ -150,9 +141,8 @@ export function getEnduranceStatus(playPile) {
  */
 export async function exhaustEndurance(playPile) {
   const target = getEnduranceCards(playPile).find((c) => c.rotation === 0);
-  if (!target?.sceneId) return false;
-  await target.card.update({ [`flags.${CCM_MODULE_ID}.${target.sceneId}.rotation`]: 90 });
-  return true;
+  if (!target) return false;
+  return setCardRotation(target.card, 90);
 }
 
 /**
@@ -165,7 +155,6 @@ export async function exhaustEndurance(playPile) {
  */
 export async function readyEndurance(playPile) {
   const target = getEnduranceCards(playPile).find((c) => c.rotation !== 0);
-  if (!target?.sceneId) return false;
-  await target.card.update({ [`flags.${CCM_MODULE_ID}.${target.sceneId}.rotation`]: 0 });
-  return true;
+  if (!target) return false;
+  return setCardRotation(target.card, 0);
 }

@@ -4,11 +4,14 @@
   {{else}}
   <ol class="cards">
     {{#each cards}}
-    <li class="card" data-card-id="{{id}}">
-      <img class="card-art" src="{{img}}" alt="{{name}}">
+    <li class="card{{#if this.exhausted}} exhausted{{/if}}" data-card-id="{{this.card.id}}">
+      <img class="card-art" src="{{this.card.img}}" alt="{{this.card.name}}">
       <div class="card-actions">
-        <button type="button" class="card-discard" data-action="discardCard" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.DiscardCard'}}" aria-label="{{localize 'AVENTURIA_HELPERS.HeroTray.DiscardCard'}}"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button>
-        <button type="button" class="card-return" data-action="returnToHand" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ReturnToHand'}}" aria-label="{{localize 'AVENTURIA_HELPERS.HeroTray.ReturnToHand'}}"><i class="fa-solid fa-hand" aria-hidden="true"></i></button>
+        {{#if this.exhausted}}
+        <button type="button" class="card-exhaust" data-action="toggleExhaust" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ReadyCard'}}" aria-label="{{localize 'AVENTURIA_HELPERS.HeroTray.ReadyCard'}}"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i></button>
+        {{else}}
+        <button type="button" class="card-exhaust" data-action="toggleExhaust" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ExhaustCard'}}" aria-label="{{localize 'AVENTURIA_HELPERS.HeroTray.ExhaustCard'}}"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i></button>
+        {{/if}}
       </div>
     </li>
     {{/each}}

@@ -83,6 +83,7 @@ export function registerHandSheet() {
   AventuriaHelpersHandSheet = class extends DockableSheetMixin(
     ccm.apps.CardsSheets.DockedHandSheet,
     (trayRect) => ({ left: trayRect.right + 16, top: trayRect.top }),
+    "handSheetPosition",
   ) {
     /** @inheritdoc */
     static DEFAULT_OPTIONS = {

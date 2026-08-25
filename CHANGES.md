@@ -2,6 +2,26 @@
 
 Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Version zuerst.
 
+## 0.2.2
+
+### Features
+- **"Karte erschöpfen" im Ausgespielte-Karten-Fenster:** Jede ausgespielte Karte hat jetzt einen eigenen Erschöpfen/Bereit-machen-Button, erkennbar an einer gedimmten Kartendarstellung im erschöpften Zustand. "Ablegen" und "Zurück auf die Hand nehmen" sind dafür (zusammen mit dem bereits vorhandenen "Zurück ins Deck mischen") ins Rechtsklick-Menü der Karte gewandert.
+- **Ausgespielte-Karten-Fenster schließt jetzt bündig mit der Heldenablage ab**, statt mit festem Abstand unter der Hand zu docken und dabei sichtbar Leerraum darunter zu lassen.
+- **Neue Macros "Held erschöpfen" und "Held bereitmachen":** wirken auf den ausgewählten Heldentoken (oder den eigenen zugewiesenen Helden), gleicher Effekt wie der bereits vorhandene Erschöpfen-Button auf dem Heldenbogen. Am Ende jeder Kampfrunde werden jetzt zusätzlich automatisch alle erschöpften Helden bereitgemacht, zusammen mit der bestehenden Abfrage zum Kartenzurückdrehen.
+- **Die "Ansehen"-Buttons in der Heldenablage** (Deck, Ablage, Hand, Ausgespielte Karten) schließen das jeweilige Fenster jetzt auch wieder, wenn man sie bei bereits geöffnetem Fenster erneut anklickt.
+- **Hand- und Ausgespielte-Karten-Fenster merken sich jetzt eine per Hand verschobene Position**, auch wenn das Fenster zwischendurch komplett geschlossen und wieder geöffnet wird.
+
+### Bugs
+- Wurde das Ausgespielte-Karten-Fenster geöffnet, bevor das Hand-Fenster offen war, blieb es beim späteren Öffnen der Hand dauerhaft auf deren Position stehen statt automatisch darunter zu rutschen (auch "Position zurücksetzen" half nicht) - behoben.
+- Eine Erschwernis/Erleichterung bei einer Probe wurde in der Ergebnis-Chatkarte fälschlich als Abzug vom Würfelergebnis dargestellt statt als Änderung des Zielwerts - das Ergebnis (bestanden/nicht bestanden) war davon nicht betroffen, nur die Anzeige ist jetzt korrekt.
+- Die Heldenablage hatte ohne zugewiesenen Helden keinen sichtbaren Hintergrund - behoben.
+- "Board aufräumen" übersah Karten, die während des Spiels automatisch in den gemeinsamen "Abenteuerkarten im Spiel"- bzw. "Schergen im Spiel"-Stapel gewandert waren - werden jetzt ebenfalls zurück in ihr Deck gemischt.
+- Bei kleinem Browserfenster konnte die Heldenablage hinter Foundrys Makro-Leiste verschwinden - behoben.
+- Beim Lösen des Hand- oder Ausgespielte-Karten-Fensters in ein eigenes Browser-Fenster ("Detach Window") war die große Karten-Vorschau beim Überfahren einer Karte nicht sichtbar - erscheint jetzt zentriert auf der Spieloberfläche im Hauptfenster.
+- Im Dark Mode war die Beschriftung "Modifikator" im Proben-Dialog kaum lesbar - behoben.
+- Im Dark Mode waren die Überschrift "Aventuria" und Schritttitel wie "Held zuweisen" im Willkommensbildschirm kaum lesbar - behoben.
+- Im Dark Mode waren die Seitentitel "Ausrüstung"/"Sonderfertigkeiten" im Charakterbogen kaum lesbar, und die Tabelle "Erlaubte Aktionskarten" hatte einen schmutzig-grauen statt hellen Hintergrund - behoben.
+
 ## 0.2.0 (Beta)
 
 ### Features
