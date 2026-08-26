@@ -2,6 +2,11 @@
 
 Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Version zuerst.
 
+## 0.2.3
+
+### Features
+- **Heldentoken dreht sich mit der Ausrüstung mit:** Wird die Ausrüstung eines Helden erschöpft (per Wurf, Sheet-Button oder Macro), dreht sich sein Token auf der Szene automatisch um 90° im Uhrzeigersinn - beim Bereitmachen (auch automatisch am Ende jeder Kampfrunde) dreht er sich wieder zurück.
+
 ## 0.2.2
 
 ### Features
