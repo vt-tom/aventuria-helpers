@@ -426,15 +426,8 @@
   object-fit: contain;
 }
 
-.aventuria-hero-sheet .s-level select {
-  appearance: none;
-  font-weight: 700;
+.aventuria-hero-sheet .s-level strong {
   font-size: 0.85rem;
-  padding: 0 0.1rem;
-}
-
-.aventuria-hero-sheet .s-level select option {
-  color: var(--ink);
 }
 
 .aventuria-hero-sheet .s-actions {
@@ -781,6 +774,100 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 0.25rem;
+}
+
+/* ---------- Level-Up ---------- */
+
+.aventuria-hero-sheet .levelup {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.4rem 0.55rem;
+}
+
+.aventuria-hero-sheet .levelup h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.aventuria-hero-sheet .levelup-ap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.aventuria-hero-sheet .levelup-ap strong {
+  min-width: 1.6rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.aventuria-hero-sheet .levelup-ap button {
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.aventuria-hero-sheet .levelup-ap button:hover,
+.aventuria-hero-sheet .levelup-ap button:focus-visible {
+  border-color: var(--gold);
+  outline: none;
+}
+
+.aventuria-hero-sheet .levelup-tracks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.aventuria-hero-sheet .levelup-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+}
+
+.aventuria-hero-sheet .levelup-track .muted {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.aventuria-hero-sheet .levelup-track button {
+  flex: 0 0 auto;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.16rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--verdigris);
+  background: none;
+  color: var(--verdigris);
+  cursor: pointer;
+}
+
+.aventuria-hero-sheet .levelup-track button:hover,
+.aventuria-hero-sheet .levelup-track button:focus-visible {
+  background: var(--verdigris);
+  color: var(--verdigris-ink);
+}
+
+.aventuria-hero-sheet .levelup-track button:disabled {
+  opacity: 0.5;
+  cursor: default;
+  background: none;
+  color: var(--muted);
+  border-color: var(--line);
 }
 
 /* ---------- Skills ---------- */
@@ -1622,6 +1709,118 @@ button.skill-value:active {
   overflow-y: auto;
 }
 
+/* ---------- Level-up dialog ---------- */
+/* Own Application/DOM tree (opened from the hero sheet's "Steigern" buttons), reuses
+   .aventuria-welcome/.w-btn/.welcome-actions like the assign-hero picker above - needs the same
+   explicit .window-content background, otherwise Foundry's dark theme leaves this dialog's own
+   parchment-toned text on its own dark .window-content background (Nutzer-Screenshot 2026-08-26,
+   unlesbar) instead of the intended light parchment. */
+.aventuria-helpers.level-up-dialog .window-content {
+  background: var(--paper);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* ---------- Card-upgrade dialog ---------- */
+/* Own Application/DOM tree (opened from the "Stufenaufstieg"-Tab's "Aktionskarten verbessern"
+   button), same reused .aventuria-welcome/.w-btn/.welcome-actions shell and the same
+   .window-content background override the level-up dialog above needed (Dark-Mode-Fix von
+   Anfang an mit eingeplant, nicht erst nachträglich wie beim Levelup-Dialog). */
+.aventuria-helpers.card-upgrade-dialog .window-content {
+  background: var(--paper);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.card-upgrade-dialog-body {
+  align-items: stretch;
+  text-align: left;
+}
+
+.upgrade-section h3 {
+  margin: 0.6rem 0 0.3rem;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+
+.upgrade-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.upgrade-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.upgrade-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+}
+
+.upgrade-row.selected {
+  border-color: var(--gold);
+  background: rgba(169, 130, 46, 0.08);
+}
+
+.upgrade-select {
+  flex: none;
+  display: flex;
+}
+
+.upgrade-card {
+  flex: none;
+  cursor: default;
+}
+
+.upgrade-card img.card-art {
+  height: 72px;
+  width: fit-content;
+  border-radius: 6px;
+  border: 3px solid var(--copper-frame-dark);
+  box-shadow: 0 2px 6px #0008;
+}
+
+.upgrade-arrow {
+  flex: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.upgrade-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.upgrade-info strong {
+  font-size: 0.85rem;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upgrade-info span {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.upgrade-summary {
+  margin: 0.6rem 0 0;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+}
+
 .assign-hero-body {
   align-items: stretch;
   text-align: left;
@@ -1722,6 +1921,77 @@ button.skill-value:active {
   border-radius: 6px;
   color: var(--ruby);
   font-size: 0.85rem;
+}
+
+.level-up-summary {
+  margin: 0 0 0.6rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* Foundry core styles every bare `table` with theme-aware `--table-*` variables (dark grey rows
+   in Foundry's dark theme, see `less2/variables.less`) - without an explicit override here that
+   shows through underneath this dialog's own light parchment text colors (calibrated for the
+   `--paper`-background `.window-content` override above, not for a dark row background sitting
+   on top of it), making the table barely readable in Dark Mode (Nutzer-Screenshot 2026-08-26).
+   Neutralizing the row backgrounds lets the light parchment page background show through evenly
+   instead, matching the rest of this dialog. */
+.level-up-changes {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0.6rem;
+  background: none;
+}
+
+.level-up-changes tbody tr:nth-child(even),
+.level-up-changes tbody tr:nth-child(odd) {
+  background: none;
+}
+
+.level-up-changes th,
+.level-up-changes td {
+  padding: 0.3rem 0.4rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.85rem;
+  text-align: left;
+  background: none;
+}
+
+.level-up-changes th {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.level-up-changes td.from {
+  color: var(--muted);
+}
+
+.level-up-changes td.arrow {
+  width: 1.5rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+.level-up-changes td.to {
+  font-weight: 700;
+  color: var(--verdigris);
+}
+
+.level-up-ability-description td {
+  padding-top: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+
+.level-up-ap {
+  margin: 0 0 0.6rem;
+  font-size: 0.9rem;
+}
+
+.level-up-ap.insufficient {
+  color: var(--ruby);
+  font-weight: 700;
 }
 
 .assign-hero-body .form-group {

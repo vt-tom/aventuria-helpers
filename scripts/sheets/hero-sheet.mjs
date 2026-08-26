@@ -1,5 +1,8 @@
 import { rollAttribute, rollSkill, rollEquipment } from "../probe-roll.mjs";
 import { isHeroExhausted, setHeroExhausted } from "../actors/hero-exhaust.mjs";
+import { getHeroFirstName, getLevelUpPreview, getAdventurePoints, getCardLevel } from "../cards/level-up-hero.mjs";
+import { AventuriaHelpersLevelUpDialog } from "../apps/level-up-dialog.mjs";
+import { AventuriaHelpersCardUpgradeDialog } from "../apps/card-upgrade-dialog.mjs";
 
 const { api, sheets } = foundry.applications;
 
@@ -89,6 +92,9 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
       switchTab: AventuriaHelpersHeroSheet.#switchTab,
       toggleLock: AventuriaHelpersHeroSheet.#toggleLock,
       toggleAbilityUsed: AventuriaHelpersHeroSheet.#toggleAbilityUsed,
+      adjustAdventurePoints: AventuriaHelpersHeroSheet.#adjustAdventurePoints,
+      levelUp: AventuriaHelpersHeroSheet.#levelUp,
+      upgradeCards: AventuriaHelpersHeroSheet.#upgradeCards,
       viewDoc: AventuriaHelpersHeroSheet.#viewDoc,
       createDoc: AventuriaHelpersHeroSheet.#createDoc,
       deleteDoc: AventuriaHelpersHeroSheet.#deleteDoc,
@@ -123,6 +129,21 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
     return !!this.actor.getFlag("aventuria-helpers", "specialAbilityUsed");
   }
 
+  /** Current Abenteuerpunkte-Kontostand (module flag, defaults to 0). */
+  get adventurePoints() {
+    return getAdventurePoints(this.actor);
+  }
+
+  /** Current Heldenkarte-Stufe (1-3, module flag, defaults to 1). */
+  get heroCardLevel() {
+    return getCardLevel(this.actor, "hero");
+  }
+
+  /** Current Talentkarte-Stufe (1-3, module flag, defaults to 1). */
+  get skillCardLevel() {
+    return getCardLevel(this.actor, "skill");
+  }
+
   /**
    * Whether this hero's data can be edited from this sheet. Combines Foundry's own
    * permission check with the module's own "Spielmodus"/lock flag, which lets an
@@ -150,6 +171,12 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
       abilityUsed: this.abilityUsed,
       config: CONFIG.Aventuria,
       levelChoices: { 1: "I", 2: "II", 3: "III" },
+      adventurePoints: this.adventurePoints,
+      heroCardLevel: this.heroCardLevel,
+      skillCardLevel: this.skillCardLevel,
+      levelUpKnown: !!getHeroFirstName(this.actor),
+      levelUpHero: getLevelUpPreview(this.actor, "hero"),
+      levelUpSkill: getLevelUpPreview(this.actor, "skill"),
       tabs: {
         held: { active: this.tab === "held" },
         talente: { active: this.tab === "talente" },
@@ -168,7 +195,8 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
         endurance: ICONS + "endurance.webp",
         exhaust: ICONS + "exhaust-card.webp",
         chalice: ICONS + "magic-chalice.webp",
-        level: `${ICONS}level-${system.level ?? 1}.webp`,
+        heroLevel: `${ICONS}level-${this.heroCardLevel}.webp`,
+        skillLevel: `${ICONS}level-${this.skillCardLevel}.webp`,
       },
       basicEquipmentIcon: this.#attackTypeIcon(system.basicEquipment.attackType),
       secondEquipmentIcon: this.#attackTypeIcon(system.secondEquipment.attackType),
@@ -377,6 +405,39 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
   static async #toggleAbilityUsed() {
     const used = this.actor.getFlag("aventuria-helpers", "specialAbilityUsed");
     await this.actor.setFlag("aventuria-helpers", "specialAbilityUsed", !used);
+  }
+
+  /**
+   * Manually adjusts the Abenteuerpunkte-Kontostand by +/-1. Not clamped to an upper bound
+   * (unlike life points) since there's no in-game maximum for adventure points; clamped to a
+   * minimum of 0. Not logged in `apLog` - same as life points, only an actual card level-up is.
+   * @this AventuriaHelpersHeroSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #adjustAdventurePoints(event, target) {
+    const delta = Number(target.dataset.delta) || 0;
+    const current = getAdventurePoints(this.actor);
+    await this.actor.setFlag("aventuria-helpers", "adventurePoints", Math.max(0, current + delta));
+  }
+
+  /**
+   * Opens the Level-Up dialog for one of the two independent tracks (Heldenkarte/Talentkarte).
+   * @this AventuriaHelpersHeroSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static async #levelUp(event, target) {
+    const track = target.dataset.track;
+    new AventuriaHelpersLevelUpDialog(this.actor, track).render({ force: true });
+  }
+
+  /**
+   * Opens the "Aktionskarten verbessern" dialog (Deck-Karten gegen den Erfahrungsschatz tauschen).
+   * @this AventuriaHelpersHeroSheet
+   */
+  static async #upgradeCards() {
+    new AventuriaHelpersCardUpgradeDialog(this.actor).render({ force: true });
   }
 
   /**

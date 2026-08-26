@@ -5,6 +5,8 @@ Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Ve
 ## 0.2.2
 
 ### Features
+- **Abenteuerpunkte & Stufenaufstieg:** Der Charakterbogen hat jetzt einen Bereich "Stufenaufstieg" mit einem Abenteuerpunkte-Konto (manuell per +/- eintragbar) und zwei unabhängigen "Steigern"-Buttons für Heldenkarte und Talentkarte (Kosten: je 3 Abenteuerpunkte, maximal Stufe III). Ein Dialog zeigt vorher genau, welche Werte sich ändern ("Nahkampf 14 → 16" usw.) und muss bestätigt werden, bevor etwas geschrieben wird. Verfügbar für die 12 Schnellstarter-Helden aus "Kelche der Macht".
+- **Aktionskarten verbessern:** Im "Stufenaufstieg"-Bereich lässt sich jetzt auch das Heldendeck selbst verbessern - einzelne Aktionskarten gegen die gleichnamige, eine Stufe höhere Karte aus dem Erfahrungsschatz des Helden tauschen (1 Abenteuerpunkt je Karte). Ein neues Fenster zeigt alle möglichen Karten paarweise nebeneinander (aktuelle Karte und Zielkarte, mit vergrößerter Vorschau bei Mouseover), mehrere Karten lassen sich gleichzeitig markieren und in einem Schritt bestätigen. Karten lassen sich auch wieder zurückstufen - die dafür bezahlten Abenteuerpunkte werden dabei vollständig erstattet.
 - **"Karte erschöpfen" im Ausgespielte-Karten-Fenster:** Jede ausgespielte Karte hat jetzt einen eigenen Erschöpfen/Bereit-machen-Button, erkennbar an einer gedimmten Kartendarstellung im erschöpften Zustand. "Ablegen" und "Zurück auf die Hand nehmen" sind dafür (zusammen mit dem bereits vorhandenen "Zurück ins Deck mischen") ins Rechtsklick-Menü der Karte gewandert.
 - **Ausgespielte-Karten-Fenster schließt jetzt bündig mit der Heldenablage ab**, statt mit festem Abstand unter der Hand zu docken und dabei sichtbar Leerraum darunter zu lassen.
 - **Neue Macros "Held erschöpfen" und "Held bereitmachen":** wirken auf den ausgewählten Heldentoken (oder den eigenen zugewiesenen Helden), gleicher Effekt wie der bereits vorhandene Erschöpfen-Button auf dem Heldenbogen. Am Ende jeder Kampfrunde werden jetzt zusätzlich automatisch alle erschöpften Helden bereitgemacht, zusammen mit der bestehenden Abfrage zum Kartenzurückdrehen.
@@ -12,6 +14,7 @@ Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Ve
 - **Hand- und Ausgespielte-Karten-Fenster merken sich jetzt eine per Hand verschobene Position**, auch wenn das Fenster zwischendurch komplett geschlossen und wieder geöffnet wird.
 
 ### Bugs
+- Bereits vor dem "Aktionskarten verbessern"-Feature zugewiesene Helden bekommen ihren Erfahrungsschatz jetzt automatisch beim nächsten Weltstart nachgeliefert, statt dass ihn erst jemand über den Hinweis-Button im Dialog manuell anlegen muss.
 - Wurde das Ausgespielte-Karten-Fenster geöffnet, bevor das Hand-Fenster offen war, blieb es beim späteren Öffnen der Hand dauerhaft auf deren Position stehen statt automatisch darunter zu rutschen (auch "Position zurücksetzen" half nicht) - behoben.
 - Eine Erschwernis/Erleichterung bei einer Probe wurde in der Ergebnis-Chatkarte fälschlich als Abzug vom Würfelergebnis dargestellt statt als Änderung des Zielwerts - das Ergebnis (bestanden/nicht bestanden) war davon nicht betroffen, nur die Anzeige ist jetzt korrekt.
 - Die Heldenablage hatte ohne zugewiesenen Helden keinen sichtbaren Hintergrund - behoben.

@@ -30,9 +30,14 @@ const CCM_MODULE_ID = "complete-card-management";
  * Same underlying flag `cleanup-board.mjs`'s "Board aufräumen" already has to
  * account for, just via a different API (`unsetFlag()` there vs. a merged
  * deletion key here, since `pass()` builds the new card in one step).
+ *
+ * Exported (not just used locally) since `cards/upgrade-card.mjs`'s Erfahrungsschatz
+ * card-swap needs the exact same cleanup for the same reason, even though its cards
+ * are never actually scene-placed in practice (deck/Erfahrungsschatz cards, unlike
+ * played ones) - defensive reuse instead of a second, near-duplicate implementation.
  * @returns {object}
  */
-function clearPlacementUpdateData() {
+export function clearPlacementUpdateData() {
   return { [`flags.-=${CCM_MODULE_ID}`]: null };
 }
 

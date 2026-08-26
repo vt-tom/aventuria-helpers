@@ -2,6 +2,7 @@
   <nav class="card-flag-rail" role="tablist" aria-label="{{localize 'AVENTURIA_HELPERS.HeroSheet.Label'}}">
     <button type="button" class="card-flag always-active {{#if tabs.held.active}}active{{/if}}" data-action="switchTab" data-tab="held" role="tab" aria-selected="{{tabs.held.active}}" data-tooltip="{{localize 'TYPES.Actor.aventuria.hero'}}"><i class="fa-solid fa-user"></i></button>
     <button type="button" class="card-flag always-active {{#if tabs.skills.active}}active{{/if}}" data-action="switchTab" data-tab="skills" role="tab" aria-selected="{{tabs.skills.active}}" data-tooltip="{{localize 'AVENTURIA_HELPERS.CardHeroSheet.SkillsTab'}}"><img src="{{navIcons.skills}}" alt=""></button>
+    <button type="button" class="card-flag always-active {{#if tabs.levelup.active}}active{{/if}}" data-action="switchTab" data-tab="levelup" role="tab" aria-selected="{{tabs.levelup.active}}" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.SectionTitle'}}"><img src="{{navIcons.levelup}}" alt=""></button>
     <button type="button" class="card-flag always-active {{#if tabs.categories.active}}active{{/if}}" data-action="switchTab" data-tab="categories" role="tab" aria-selected="{{tabs.categories.active}}" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.ActionCardsTab'}}"><i class="fa-solid fa-cards"></i></button>
     <button type="button" class="card-flag always-active {{#if tabs.images.active}}active{{/if}}" data-action="switchTab" data-tab="images" role="tab" aria-selected="{{tabs.images.active}}" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.ImagesTab'}}"><i class="fa-solid fa-images"></i></button>
     <button type="button" class="card-flag always-active {{#if tabs.items.active}}active{{/if}}" data-action="switchTab" data-tab="items" role="tab" aria-selected="{{tabs.items.active}}" data-tooltip="{{localize 'AVENTURIA_HELPERS.CardHeroSheet.ItemsTab'}}"><i class="fa-solid fa-box-open"></i></button>
@@ -51,10 +52,16 @@
             <button type="button" class="always-active" data-action="adjustLife" data-delta="1" data-tooltip="{{localize 'AVENTURIA_HELPERS.CardHeroSheet.IncreaseLife'}}"><i class="fa-solid fa-plus"></i></button>
           </div>
         </div>
-        <label class="card-level-medallion">
-          <img src="{{icons.level}}" alt="">
-          {{#if editable}}<select name="system.level">{{selectOptions levelChoices selected=system.level}}</select>{{else}}<span>{{lookup levelChoices system.level}}</span>{{/if}}
-        </label>
+        <div class="card-level-medallions">
+          <span class="card-level-medallion" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.CharacterArt'}}">
+            <img src="{{icons.heroLevel}}" alt="">
+            <span>{{lookup levelChoices heroCardLevel}}</span>
+          </span>
+          <span class="card-level-medallion" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.SkillCard'}}">
+            <img src="{{icons.skillLevel}}" alt="">
+            <span>{{lookup levelChoices skillCardLevel}}</span>
+          </span>
+        </div>
       </div>
 
       <div class="card-name-ribbon">
@@ -125,6 +132,48 @@
               {{/if}}
             </div>
           {{/each}}
+        </div>
+      </section>
+
+      <section class="card-page {{#if tabs.levelup.active}}active{{/if}}">
+        <h2>{{localize "AVENTURIA_HELPERS.LevelUp.SectionTitle"}}</h2>
+        <div class="card-levelup">
+          <div class="card-levelup-ap">
+            <span class="card-levelup-ap-label">{{localize "AVENTURIA_HELPERS.LevelUp.AdventurePoints"}}</span>
+            <button type="button" class="always-active" data-action="adjustAdventurePoints" data-delta="-1" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.DecreaseAp'}}"><i class="fa-solid fa-minus"></i></button>
+            <strong>{{adventurePoints}}</strong>
+            <button type="button" class="always-active" data-action="adjustAdventurePoints" data-delta="1" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.IncreaseAp'}}"><i class="fa-solid fa-plus"></i></button>
+          </div>
+          <div class="card-levelup-tracks">
+            <div class="card-levelup-track">
+              <span>{{localize "AVENTURIA_HELPERS.HeroSheet.CharacterArt"}} {{lookup levelChoices heroCardLevel}}</span>
+              {{#if levelUpKnown}}
+                {{#unless levelUpHero.atMax}}
+                  <button type="button" class="always-active" data-action="levelUp" data-track="hero" {{#if levelUpHero.dataMissing}}disabled data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.DataMissing'}}"{{/if}}>{{localize "AVENTURIA_HELPERS.LevelUp.LevelUpButton"}}</button>
+                {{else}}
+                  <span class="muted">{{localize "AVENTURIA_HELPERS.LevelUp.AtMax"}}</span>
+                {{/unless}}
+              {{else}}
+                <span class="muted" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.NotAvailable'}}">{{localize "AVENTURIA_HELPERS.LevelUp.NotAvailableShort"}}</span>
+              {{/if}}
+            </div>
+            <div class="card-levelup-track">
+              <span>{{localize "AVENTURIA_HELPERS.HeroSheet.SkillCard"}} {{lookup levelChoices skillCardLevel}}</span>
+              {{#if levelUpKnown}}
+                {{#unless levelUpSkill.atMax}}
+                  <button type="button" class="always-active" data-action="levelUp" data-track="skill" {{#if levelUpSkill.dataMissing}}disabled data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.DataMissing'}}"{{/if}}>{{localize "AVENTURIA_HELPERS.LevelUp.LevelUpButton"}}</button>
+                {{else}}
+                  <span class="muted">{{localize "AVENTURIA_HELPERS.LevelUp.AtMax"}}</span>
+                {{/unless}}
+              {{else}}
+                <span class="muted" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.NotAvailable'}}">{{localize "AVENTURIA_HELPERS.LevelUp.NotAvailableShort"}}</span>
+              {{/if}}
+            </div>
+          </div>
+          <div class="card-levelup-cards">
+            <span>{{localize "AVENTURIA_HELPERS.CardUpgrade.SectionTitle"}}</span>
+            <button type="button" class="always-active" data-action="upgradeCards">{{localize "AVENTURIA_HELPERS.CardUpgrade.OpenButton"}}</button>
+          </div>
         </div>
       </section>
 

@@ -12,6 +12,7 @@ import { registerHandSheet } from "./sheets/hand-sheet.mjs";
 import { registerPlayedCardsSheet } from "./sheets/played-cards-sheet.mjs";
 import { registerPlayerSlotAssignments } from "./cards/player-slots.mjs";
 import { registerAdventureState } from "./cards/adventure-state.mjs";
+import { registerExperienceStackMigration, migrateExperienceStacks } from "./cards/experience-stack.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 
@@ -50,6 +51,7 @@ Hooks.once("init", () => {
   registerChangelogAutoOpen();
   registerPlayerSlotAssignments();
   registerAdventureState();
+  registerExperienceStackMigration();
   registerCombat();
   registerEnemyPhaseCombatant();
   registerRoundEndCombatant();
@@ -60,6 +62,6 @@ Hooks.once("init", () => {
   registerHeroTray();
 
   game.modules.get(MODULE_ID).api = {
-    resetCardRotations, openWelcomeScreen, cleanUpBoard, exhaustHero, readyHero,
+    resetCardRotations, openWelcomeScreen, cleanUpBoard, exhaustHero, readyHero, migrateExperienceStacks,
   };
 });

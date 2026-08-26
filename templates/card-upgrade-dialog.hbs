@@ -1,0 +1,75 @@
+<div class="aventuria-welcome card-upgrade-dialog-body">
+  {{#if (not available)}}
+    {{#if missingExperience}}
+      <p class="assign-hero-warning">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        {{localize "AVENTURIA_HELPERS.CardUpgrade.MissingExperience"}}
+      </p>
+      <button type="button" class="w-btn" data-action="ensureExperience">{{localize "AVENTURIA_HELPERS.CardUpgrade.CreateExperience"}}</button>
+    {{else}}
+      <p class="assign-hero-warning">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        {{localize "AVENTURIA_HELPERS.CardUpgrade.NotAvailable"}}
+      </p>
+    {{/if}}
+  {{else}}
+    <section class="upgrade-section">
+      <h3>{{localize "AVENTURIA_HELPERS.CardUpgrade.SectionUp" cost=cost}}</h3>
+      {{#if changesUp.length}}
+        <div class="upgrade-list">
+          {{#each changesUp}}
+            <div class="upgrade-row {{#if this.selected}}selected{{/if}}">
+              <label class="upgrade-select">
+                <input type="checkbox" data-action="toggleSelection" data-deck-card-id="{{this.deckCardId}}" data-direction="{{this.direction}}" {{#if this.selected}}checked{{/if}}>
+              </label>
+              <div class="upgrade-card" data-card-id="{{this.deckCardId}}"><img class="card-art" src="{{this.deckImg}}" alt="{{this.name}}"></div>
+              <div class="upgrade-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+              <div class="upgrade-card" data-card-id="{{this.experienceCardId}}"><img class="card-art" src="{{this.experienceImg}}" alt="{{this.name}}"></div>
+              <div class="upgrade-info">
+                <strong>{{this.name}}</strong>
+                <span>{{localize "AVENTURIA_HELPERS.LevelUp.StepSummary" from=this.fromLevel to=this.toLevel}}</span>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      {{else}}
+        <p class="upgrade-empty">{{localize "AVENTURIA_HELPERS.CardUpgrade.EmptyUp"}}</p>
+      {{/if}}
+    </section>
+
+    <section class="upgrade-section">
+      <h3>{{localize "AVENTURIA_HELPERS.CardUpgrade.SectionDown" cost=cost}}</h3>
+      {{#if changesDown.length}}
+        <div class="upgrade-list">
+          {{#each changesDown}}
+            <div class="upgrade-row {{#if this.selected}}selected{{/if}}">
+              <label class="upgrade-select">
+                <input type="checkbox" data-action="toggleSelection" data-deck-card-id="{{this.deckCardId}}" data-direction="{{this.direction}}" {{#if this.selected}}checked{{/if}}>
+              </label>
+              <div class="upgrade-card" data-card-id="{{this.deckCardId}}"><img class="card-art" src="{{this.deckImg}}" alt="{{this.name}}"></div>
+              <div class="upgrade-arrow"><i class="fa-solid fa-arrow-left"></i></div>
+              <div class="upgrade-card" data-card-id="{{this.experienceCardId}}"><img class="card-art" src="{{this.experienceImg}}" alt="{{this.name}}"></div>
+              <div class="upgrade-info">
+                <strong>{{this.name}}</strong>
+                <span>{{localize "AVENTURIA_HELPERS.LevelUp.StepSummary" from=this.fromLevel to=this.toLevel}}</span>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      {{else}}
+        <p class="upgrade-empty">{{localize "AVENTURIA_HELPERS.CardUpgrade.EmptyDown"}}</p>
+      {{/if}}
+    </section>
+
+    <p class="upgrade-summary">
+      {{localize "AVENTURIA_HELPERS.CardUpgrade.Summary" count=selectedCount delta=netDeltaLabel result=resultingAp}}
+    </p>
+  {{/if}}
+
+  <div class="welcome-actions">
+    <button type="button" class="w-btn ghost" data-action="close">{{localize "AVENTURIA_HELPERS.CardUpgrade.Cancel"}}</button>
+    {{#if available}}
+      <button type="button" class="w-btn" data-action="confirm" {{#unless canConfirm}}disabled{{/unless}}>{{localize "AVENTURIA_HELPERS.CardUpgrade.Confirm"}}</button>
+    {{/if}}
+  </div>
+</div>
