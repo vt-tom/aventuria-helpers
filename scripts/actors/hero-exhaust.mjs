@@ -7,10 +7,14 @@
  * (`documents/combat.mjs`) - same underlying rule (whatever a hero used last round becomes
  * available again). `AventuriaHelpersHeroSheet#toggleExhaust` (sheets/hero-sheet.mjs) and
  * `probe-roll.mjs#rollEquipment()` reuse `setHeroExhausted()` below instead of duplicating the
- * two-field update, so all three entry points stay in sync.
+ * two-field update, so all three entry points stay in sync. Since 2026-08-26, `setHeroExhausted()`
+ * also rotates the hero's token(s) on the current Scene (`rotateHeroToken()`), so all of the
+ * above - including the round-end auto-ready - visually mirror the exhaust state on the board too.
  */
 
 const HERO_TYPE = "aventuria.hero";
+const EXHAUSTED_TOKEN_ROTATION = 90;
+const READY_TOKEN_ROTATION = 0;
 
 /**
  * Whether either of a hero's two equipment slots is currently marked exhausted. Per Aventuria's
@@ -31,11 +35,30 @@ export function isHeroExhausted(actor) {
  * @param {boolean} exhausted
  * @returns {Promise<Actor>}
  */
-export function setHeroExhausted(actor, exhausted) {
-  return actor.update({
+export async function setHeroExhausted(actor, exhausted) {
+  const result = await actor.update({
     "system.basicEquipment.exhaust": exhausted,
     "system.secondEquipment.exhaust": exhausted,
   });
+  await rotateHeroToken(actor, exhausted);
+  return result;
+}
+
+/**
+ * Mirrors the equipment-exhaust state on the board: rotates every one of the hero's tokens on
+ * the currently viewed Scene 90° clockwise while exhausted, back to the upright 0° `place-hero-
+ * stacks.mjs`/`HERO_PLACEMENTS` default once readied (project/TODO.md, 2026-08-26 - matches
+ * Aventuria's own reference "Exhaust Hero" macro naming, see module doc comment above). A no-op
+ * if the hero has no token on the current scene yet (canvas not ready, or never placed) -
+ * `Actor#getActiveTokens()` already returns an empty array in that case.
+ * @param {Actor} actor
+ * @param {boolean} exhausted
+ * @returns {Promise<void>}
+ */
+async function rotateHeroToken(actor, exhausted) {
+  const rotation = exhausted ? EXHAUSTED_TOKEN_ROTATION : READY_TOKEN_ROTATION;
+  const tokens = actor.getActiveTokens(false, true).filter((t) => t.rotation !== rotation);
+  await Promise.all(tokens.map((t) => t.update({ rotation })));
 }
 
 /**
