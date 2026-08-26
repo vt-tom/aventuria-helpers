@@ -2,6 +2,36 @@
 
 This file lists all gameplay-relevant changes to the module – newest version first.
 
+## 0.3.0
+
+### Features
+- **Hero token rotates with its equipment:** When a hero's equipment becomes exhausted (via a roll, the sheet button, or a macro), their token on the scene automatically rotates 90° clockwise - it rotates back once readied again (including automatically at the end of each combat round).
+- **Adventure points & leveling up:** The Character Sheet now has a "Level Up" area with an Adventure Points account (adjustable manually via +/-) and two independent "Level Up" buttons for the Hero Card and Skill Card (cost: 3 Adventure Points each, maximum Level III). A dialog shows exactly which values will change beforehand ("Close Combat 14 → 16" etc.) and must be confirmed before anything is written. Available for the 12 quickstart heroes from "Chalices of Power".
+- **Upgrade action cards:** The "Level Up" area now also lets you upgrade the hero deck itself - swap individual action cards for the same-named, one-level-higher card from the hero's Proficiency Stash (1 Adventure Point per card). A new window shows every possible swap as a pair of card images side by side (current card and target card, with an enlarged preview on hover); multiple cards can be selected at once and confirmed in a single step. Cards can also be downgraded again - the Adventure Points paid for them are fully refunded.
+
+### Bugs
+- Heroes assigned before the "Upgrade action cards" feature existed now automatically receive their Proficiency Stash on the next world start, instead of requiring someone to create it manually via the hint button in the dialog.
+
+## 0.2.2
+
+### Features
+- **"Exhaust card" in the Played Cards window:** Every played card now has its own Exhaust/Ready button, shown by a dimmed card while exhausted. "Discard" and "Take back into hand" have moved into the card's right-click menu for this (alongside the already existing "Shuffle back into deck").
+- **The Played Cards window now docks flush with the bottom of the Hero Tray**, instead of docking a fixed distance below the Hand window and leaving visible empty space underneath.
+- **New "Exhaust Hero" and "Ready Hero" macros:** act on the selected hero token (or your own assigned hero), same effect as the existing Exhaust button on the Hero Sheet. At the end of every combat round, all exhausted heroes are now also readied automatically, alongside the existing card-rotation-reset prompt.
+- **The "View" buttons in the Hero Tray** (Deck, Discard, Hand, Played Cards) now also close the respective window again if clicked while it's already open.
+- **The Hand and Played Cards windows now remember a manually moved position**, even if the window is fully closed and reopened in between.
+
+### Bugs
+- If the Played Cards window was opened before the Hand window, it stayed stuck on the Hand's position instead of docking below it once the Hand was later opened (even "Reset position" didn't help) - fixed.
+- A check's modifier (harder/easier) was incorrectly shown in the result chat card as a deduction from the die roll instead of a change to the target value - the pass/fail outcome itself was unaffected, only the display is now correct.
+- The Hero Tray had no visible background when no hero was assigned - fixed.
+- "Clean up board" missed cards that had automatically moved into the shared "Adventure cards in play" or "Henchmen in play" piles during the game - these are now also shuffled back into their deck.
+- With a small browser window, the Hero Tray could disappear behind Foundry's macro hotbar - fixed.
+- When detaching the Hand or Played Cards window into its own browser window ("Detach Window"), the large card preview on hover wasn't visible - it now appears centered on the game surface in the main window.
+- In Dark Mode, the "Modifier" label in the check dialog was barely readable - fixed.
+- In Dark Mode, the "Aventuria" heading and step titles like "Assign Hero" in the Welcome screen were barely readable - fixed.
+- In Dark Mode, the page titles "Equipment"/"Special Ability" on the Character Sheet were barely readable, and the "Allowed Action Cards" table had a dingy grey background instead of a light one - fixed.
+
 ## 0.2.0 (Beta)
 
 ### Features
