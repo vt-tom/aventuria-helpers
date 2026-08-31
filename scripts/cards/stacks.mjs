@@ -55,6 +55,27 @@ export function resolveStacks(user = game.user) {
 }
 
 /**
+ * Resolves all four `preparePlayer()` sibling stacks starting from *any* one
+ * of them (Deck/Hand/Ablage/Im-Spiel-Stapel), purely by Folder membership -
+ * unlike `resolveHandStacks()`, which trusts the document it's handed to be
+ * the Hand. Used where the starting point is the Im-Spiel-Stapel (the
+ * "Ausgespielte Karten" sheet), especially once the Heldenablage can be
+ * pointed at another player's hero (feature 2.5): a bare `resolveStacks()`
+ * there would resolve the *viewer's* stacks, not the sheet's actual hero.
+ * @param {Cards|null} stack
+ * @returns {{deck: Cards|null, hand: Cards|null, discard: Cards|null, playPile: Cards|null}|null}
+ */
+export function resolveSiblingStacks(stack) {
+  if (!stack?.folder) return null;
+  const siblings = game.cards.filter((c) => c.folder === stack.folder);
+  const deck = siblings.find((c) => c.type === "deck") ?? null;
+  const hand = siblings.find((c) => c.type === "hand") ?? null;
+  const playPile = siblings.find((c) => c.type === "pile" && c.getFlag("aventuria", "pileType") === "play") ?? null;
+  const discard = siblings.find((c) => c.type === "pile" && c !== playPile) ?? null;
+  return { deck, hand, discard, playPile };
+}
+
+/**
  * Resolves an actor's own stacks regardless of which user is currently viewing their
  * sheet - `resolveStacks()` alone only ever looks at `game.user`, which breaks for a
  * GM opening a player's hero sheet (or a player opening someone else's, if permitted).

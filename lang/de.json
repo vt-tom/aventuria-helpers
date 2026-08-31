@@ -273,6 +273,10 @@
     "HeroTray": {
       "Title": "Heldenablage",
       "Config": "Held/Hand konfigurieren",
+      "SwitchHero": "Anderen Helden über die Ablage steuern",
+      "BackToOwn": "Zurück zu meinem Helden",
+      "NoOwnHero": "Kein eigener Held",
+      "ForeignActive": "Du steuerst",
       "PickHero": "Held auswählen (öffnet den Guide)",
       "OpenSheet": "Heldenbogen öffnen",
       "DeleteHero": "Held löschen",

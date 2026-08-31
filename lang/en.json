@@ -273,6 +273,10 @@
     "HeroTray": {
       "Title": "Hero Tray",
       "Config": "Configure hero/hand",
+      "SwitchHero": "Control another hero via the tray",
+      "BackToOwn": "Back to my hero",
+      "NoOwnHero": "No hero of your own",
+      "ForeignActive": "You control",
       "PickHero": "Choose hero (opens the guide)",
       "OpenSheet": "Open hero sheet",
       "DeleteHero": "Delete hero",

@@ -2268,6 +2268,7 @@ body.ahb-tray-active #ui-left {
   flex: none;
 }
 
+.hero-tray .tray-switch,
 .hero-tray .tray-config,
 .hero-tray .tray-help,
 .hero-tray .tray-toggle {
@@ -2282,6 +2283,8 @@ body.ahb-tray-active #ui-left {
   font-size: 0.85rem;
 }
 
+.hero-tray .tray-switch:hover,
+.hero-tray .tray-switch:focus-visible,
 .hero-tray .tray-config:hover,
 .hero-tray .tray-config:focus-visible,
 .hero-tray .tray-help:hover,
@@ -2515,6 +2518,134 @@ body.ahb-tray-active #ui-left {
 .hero-tray .tray-stack-head img.spent {
   filter: grayscale(1);
   opacity: 0.6;
+}
+
+/* ---------- Fremden Helden steuern (feature 2.5, hero-switcher.mjs) ---------- */
+/* Der Tray-Bar-Button (.tray-switch, `fa-users`-Glyphe) teilt sich Grund- und
+   Hover-Stil mit .tray-config/.tray-help weiter oben. */
+
+/* Rubinrotes Band, solange die Ablage einen fremden Helden steuert - bewusst
+   themen-unabhängig rot (wie .adventure-tool-warning), damit man den Fremd-
+   Modus nicht übersieht und nicht versehentlich auf dem Deck eines Mitspielers
+   arbeitet. */
+.hero-tray .tray-foreign {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.6rem;
+  background: #7a2f22;
+  color: #ffe8df;
+  font-family: var(--copper-font);
+  font-size: 0.78rem;
+}
+
+.hero-tray .tray-foreign-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hero-tray .tray-foreign-back {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #ffd9cd;
+  border-radius: 50%;
+  background: #fffaf2;
+  color: #8b3530;
+  cursor: pointer;
+  font-size: 0.65rem;
+}
+
+.hero-tray .tray-foreign-back:hover,
+.hero-tray .tray-foreign-back:focus-visible {
+  border-color: #a8383d;
+  color: #a8383d;
+  outline: none;
+}
+
+/* Radialmenü: bildschirmfüllendes Overlay (fängt Klicks außerhalb ab), darin
+   ein nullgroßer Ankerpunkt (.ahb-hero-switcher-menu) mit absolut um ihn
+   herum verteilten Portrait-Medaillons. Kupfer-/Doppelring-Optik wie die
+   Proben-Medaillons im Charakterbogen. */
+.ahb-hero-switcher {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.ahb-hero-switcher-menu {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.ahb-hero-switcher-item {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  width: 84px;
+  padding: 4px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--copper-font);
+}
+
+.ahb-hero-switcher-item img {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px double var(--copper-frame);
+  background: var(--copper-medallion-bg);
+  box-shadow: var(--copper-medallion-shadow), 0 4px 12px rgba(0, 0, 0, 0.55);
+  padding: 1px;
+  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+}
+
+.ahb-hero-switcher-item.is-centre img {
+  width: 66px;
+  height: 66px;
+}
+
+.ahb-hero-switcher-item span {
+  max-width: 84px;
+  font-size: 0.72rem;
+  line-height: 1.1;
+  text-align: center;
+  color: #fff4e2;
+  text-shadow: 0 1px 3px #000, 0 0 4px #000;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.ahb-hero-switcher-item:hover img,
+.ahb-hero-switcher-item:focus-visible img {
+  transform: scale(1.1);
+  box-shadow: var(--copper-glow), 0 4px 12px rgba(0, 0, 0, 0.55);
+  filter: brightness(1.08) saturate(1.08);
+  outline: none;
+}
+
+.ahb-hero-switcher-item.is-active img {
+  border-color: var(--copper-highlight);
+  box-shadow: var(--copper-glow), 0 4px 12px rgba(0, 0, 0, 0.55);
+}
+
+.ahb-hero-switcher-item:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 
 /* ---------- Hand-Sheet (eigene Optik für Complete Card Managements Docked-Hand-Sheet, siehe scripts/sheets/hand-sheet.mjs) ---------- */
