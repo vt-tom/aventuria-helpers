@@ -1,5 +1,6 @@
 import { AventuriaHelpersHandSheet } from "../sheets/hand-sheet.mjs";
 import { AventuriaHelpersPlayedCardsSheet } from "../sheets/played-cards-sheet.mjs";
+import { AventuriaHelpersEnduranceCardsSheet } from "../sheets/endurance-cards-sheet.mjs";
 import { resolveStacks } from "../cards/stacks.mjs";
 import { getEnduranceStatus, exhaustEndurance, readyEndurance } from "../cards/endurance.mjs";
 import { openWelcomeScreen } from "../macros/open-welcome-screen.mjs";
@@ -44,6 +45,12 @@ let deckSheet = null;
 let discardSheet = null;
 
 /**
+ * The currently open "Ausdauerkarten" sheet, if any - same reuse/toggle-close
+ * pattern as the sheets above (`sheets/endurance-cards-sheet.mjs`, feature 2.6).
+ */
+let enduranceSheet = null;
+
+/**
  * Permanent HUD element showing the current user's own Aventuria hero (portrait,
  * Deck/Ablage/Hand) so they don't have to dig through the Cards sidebar or the
  * canvas placeables for their own cards. Lives in the same UI slot as the native
@@ -68,6 +75,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
       viewDiscard: AventuriaHelpersHeroTray.#onViewDiscard,
       viewHand: AventuriaHelpersHeroTray.#onViewHand,
       viewPlayedCards: AventuriaHelpersHeroTray.#onViewPlayedCards,
+      viewEnduranceCards: AventuriaHelpersHeroTray.#onViewEnduranceCards,
       toggleTray: AventuriaHelpersHeroTray.#onToggleTray,
       openConfig: AventuriaHelpersHeroTray.#onOpenConfig,
       openHelp: AventuriaHelpersHeroTray.#onOpenHelp,
@@ -141,7 +149,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
       return;
     }
     this.#activeUserId = next;
-    for (const sheet of [handSheet, playedCardsSheet, deckSheet, discardSheet]) {
+    for (const sheet of [handSheet, playedCardsSheet, deckSheet, discardSheet, enduranceSheet]) {
       if (sheet?.rendered) await sheet.close();
     }
     await this.render();
@@ -425,6 +433,24 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
   }
 
   /**
+   * Opens the hero's Ausdauer cards in the module's own "Ausdauerkarten" sheet
+   * (the Ausdauer cards in the same Im-Spiel-Stapel, i.e. the opposite
+   * selection of `#onViewPlayedCards()` - see `sheets/endurance-cards-sheet.mjs`,
+   * feature 2.6). Same reuse / toggle-close pattern as the other view buttons.
+   * @this AventuriaHelpersHeroTray
+   */
+  static async #onViewEnduranceCards() {
+    const stacks = this.activeStacks();
+    if (!stacks?.playPile) return;
+    if (enduranceSheet?.rendered && enduranceSheet.document === stacks.playPile) {
+      await enduranceSheet.close();
+      return;
+    }
+    enduranceSheet = new AventuriaHelpersEnduranceCardsSheet(stacks.playPile);
+    await enduranceSheet.render({ force: true });
+  }
+
+  /**
    * Swaps the tray and the native player list in their shared UI slot.
    * @this AventuriaHelpersHeroTray
    */
@@ -506,6 +532,7 @@ async function toggleTray() {
   if (show) {
     handSheet?.updateDockPosition();
     playedCardsSheet?.updateDockPosition();
+    enduranceSheet?.updateDockPosition();
   }
 }
 
@@ -559,6 +586,7 @@ export function registerHeroTray() {
   window.addEventListener("resize", foundry.utils.debounce(() => {
     handSheet?.updateDockPosition();
     playedCardsSheet?.updateDockPosition();
+    enduranceSheet?.updateDockPosition();
   }, 100));
 
   Hooks.on("updateUser", (user, changes) => {

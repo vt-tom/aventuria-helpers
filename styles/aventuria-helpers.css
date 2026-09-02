@@ -2443,6 +2443,31 @@ body.ahb-tray-active #ui-left {
   padding: 0.3rem 0.6rem 0.3rem 0.3rem;
 }
 
+/* "Ausdauerkarten"-Sheet öffnen (feature 2.6) - sitzt rechts nach den beiden
+   Ready/Erschöpft-Hälften (die bleiben flex:1, dieser Button flex:none), also
+   an derselben rechten Position wie die "Ansehen"-Buttons der übrigen Zeilen -
+   Nutzerwunsch 2026-08-31: wirkt konsistenter. Gleiche runde Kupfer-Chip-Optik
+   wie die anderen .tray-stack-actions-Buttons. */
+.hero-tray .tray-endurance-view {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border: 1px solid #79695d;
+  border-radius: 50%;
+  background: var(--copper-chip);
+  color: #4a3f34;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.hero-tray .tray-endurance-view:hover,
+.hero-tray .tray-endurance-view:focus-visible {
+  border-color: var(--copper-highlight);
+  background: var(--copper-chip-hover);
+  color: var(--copper-highlight-ink);
+  outline: none;
+}
+
 .hero-tray .tray-stack-head {
   display: flex;
   align-items: center;
@@ -2952,6 +2977,39 @@ body:not(.ahb-tray-active) .played-cards-sheet {
   color: var(--muted);
   font-size: 0.85rem;
   text-align: center;
+}
+
+/* ---------- Ausdauerkarten-Sheet (feature 2.6, endurance-cards-sheet.mjs) ---------- */
+/* Trägt zusätzlich die .played-cards-sheet-Klasse und erbt darüber die
+   komplette Optik (Kopf, Kartenreihe, Aktions-Buttons, Ausgrauen im
+   erschöpften Zustand, Ausblenden mit der Ablage). Eigen ist nur die
+   schmalere Breite (statt 600px) und das Eck-Badge. Muss NACH der
+   `.hand-sheet, .played-cards-sheet { min-width: 600px }`-Regel oben stehen -
+   gleiche Spezifität, spätere Regel gewinnt. */
+.endurance-cards-sheet {
+  min-width: 340px;
+}
+
+.endurance-cards-sheet .cards .card {
+  position: relative;
+}
+
+/* Kleines Dreh-Symbol oben rechts als Hinweis auf den erschöpften Zustand -
+   das Thumbnail selbst wird bewusst nicht um 90° gekippt (das sprengt die
+   100px-Zeilenhöhe), nur ausgegraut (geerbte `.card.exhausted img`-Regel). */
+.endurance-cards-sheet .card-exhaust-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--copper-frame-dark);
+  color: #fff;
+  font-size: 0.58rem;
+  box-shadow: 0 1px 3px #0009;
 }
 
 /* Floating card preview - a single shared element (see getPreviewEl() in

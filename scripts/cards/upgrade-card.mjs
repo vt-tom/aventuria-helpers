@@ -1,5 +1,5 @@
 import { resolveStacksForActor } from "./stacks.mjs";
-import { clearPlacementUpdateData } from "./played-cards.mjs";
+import { detachCardForReturn } from "./played-cards.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 
@@ -113,8 +113,15 @@ export async function applyCardLevelChanges(actor, selections) {
   for (const change of matched) {
     // Same two-step swap regardless of direction - "up" and "down" only differ in which card
     // was already sitting in the Deck vs. the Erfahrungsschatz, not in the mechanic itself.
-    await stacks.experience.pass(stacks.deck, [change.experienceCardId], { updateData: clearPlacementUpdateData() });
-    await stacks.deck.pass(stacks.experience, [change.deckCardId], { updateData: clearPlacementUpdateData() });
+    // detachCardForReturn() before each pass, not `updateData` inside it - see its doc comment
+    // for why a `flags.-=` key handed to `Cards#pass()` isn't actioned. A no-op in practice
+    // here (deck/Erfahrungsschatz cards aren't scene-placed), kept for consistency/safety.
+    const expCard = stacks.experience.cards.get(change.experienceCardId);
+    const deckCard = stacks.deck.cards.get(change.deckCardId);
+    if (expCard) await detachCardForReturn(expCard);
+    if (deckCard) await detachCardForReturn(deckCard);
+    await stacks.experience.pass(stacks.deck, [change.experienceCardId]);
+    await stacks.deck.pass(stacks.experience, [change.deckCardId]);
   }
 
   const apLog = actor.getFlag(MODULE_ID, "apLog") ?? [];

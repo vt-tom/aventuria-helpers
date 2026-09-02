@@ -17,28 +17,50 @@ const MODULE_ID = "aventuria-helpers";
 const CCM_MODULE_ID = "complete-card-management";
 
 /**
- * Clears every complete-card-management scene-placement flag from the
- * `updateData` merged into a `Cards#pass()`-created card copy - `pass()`
- * copies the source card's *entire* data (`card.toObject()`, confirmed in
- * the local v14 core source, `client/documents/cards.mjs`) into the new
- * embedded Card it creates in the destination stack, flags included. Without
- * this, a played card - which is always placed on a scene, see
- * `cards/endurance.mjs`'s header comment on the shared placement mechanism -
- * would leave behind a "ghost" placeable: a brand new Card document
- * inheriting the old one's scene-position flag, rendered on the canvas even
- * though it's now sitting in the discard pile or shuffled into the deck.
- * Same underlying flag `cleanup-board.mjs`'s "Board aufräumen" already has to
- * account for, just via a different API (`unsetFlag()` there vs. a merged
- * deletion key here, since `pass()` builds the new card in one step).
+ * Detaches a card from every scene it's placed on - and, with `alsoModuleFlags`,
+ * drops this module's `usedAsEndurance` flag / re-reveals it (`resetFace`) - via
+ * a real `card.update()` **before** the card is handed to `Cards#pass()`.
  *
- * Exported (not just used locally) since `cards/upgrade-card.mjs`'s Erfahrungsschatz
- * card-swap needs the exact same cleanup for the same reason, even though its cards
- * are never actually scene-placed in practice (deck/Erfahrungsschatz cards, unlike
- * played ones) - defensive reuse instead of a second, near-duplicate implementation.
- * @returns {object}
+ * Both details matter, both learned the hard way (Live-Test-Funde 2026-08-31):
+ *
+ *  - **Per scene key** (`flags.complete-card-management.<sceneId>` set to a
+ *    `ForcedDeletion`), never the whole `complete-card-management` namespace.
+ *    Per-scene deletion is the exact shape CCM's own `unsetFlag(scope, sceneId)`
+ *    produces (`ccm.mjs`), and its `updateCard` / `CanvasCard.update` only tears
+ *    the canvas placeable down when it sees `flatChanges["flags.complete-card-
+ *    management.<sceneId>"] instanceof ForcedDeletion`. Deleting the whole
+ *    namespace leaves the placeable orphaned - and dragging that ghost then
+ *    throws "The card doesn't have location data for the current scene" from
+ *    CCM's `CanvasCard` constructor.
+ *
+ *  - **Before `pass()`, not after.** `pass()` builds the new card with
+ *    `foundry.utils.mergeObject(card.toObject(), updateData)` and default
+ *    `applyOperators: false`, so a `ForcedDeletion` handed to it via `updateData`
+ *    is *retained un-applied* on `flags[<ns>]` rather than actioned
+ *    (`common/utils/helpers.mjs`), which then clobbers a fresh placement the
+ *    next time the card is played. Cleaning the *source* first means
+ *    `card.toObject()` carries no scene data, so the copy `pass()` creates never
+ *    spins up a placeable of its own and needs no post-fix.
+ *
+ * Uses `foundry.data.operators.ForcedDeletion` directly (same as core
+ * `Document#unsetFlag`) rather than the legacy `flags.-=<key>` string form,
+ * which logs a deprecation warning on every call in v14.
+ * @param {Card} card
+ * @param {{alsoModuleFlags?: boolean, resetFace?: boolean}} [options]
+ * @returns {Promise<void>}
  */
-export function clearPlacementUpdateData() {
-  return { [`flags.-=${CCM_MODULE_ID}`]: null };
+export async function detachCardForReturn(card, { alsoModuleFlags = false, resetFace = false } = {}) {
+  const del = () => new foundry.data.operators.ForcedDeletion();
+  const update = {};
+  const placements = card.flags?.[CCM_MODULE_ID];
+  if (placements && (typeof placements === "object")) {
+    for (const sceneId of Object.keys(placements)) {
+      foundry.utils.setProperty(update, `flags.${CCM_MODULE_ID}.${sceneId}`, del());
+    }
+  }
+  if (alsoModuleFlags) foundry.utils.setProperty(update, `flags.${MODULE_ID}.usedAsEndurance`, del());
+  if (resetFace) update.face = 0;
+  if (Object.keys(update).length) await card.update(update);
 }
 
 /**
@@ -48,7 +70,8 @@ export function clearPlacementUpdateData() {
  * @returns {Promise<Card[]>}
  */
 export async function discardPlayedCard(card, discard) {
-  return card.parent.pass(discard, [card.id], { updateData: clearPlacementUpdateData() });
+  await detachCardForReturn(card);
+  return card.parent.pass(discard, [card.id]);
 }
 
 /**
@@ -58,7 +81,8 @@ export async function discardPlayedCard(card, discard) {
  * @returns {Promise<Card[]>}
  */
 export async function returnPlayedCardToDeck(card, deck) {
-  const result = await card.parent.pass(deck, [card.id], { updateData: clearPlacementUpdateData() });
+  await detachCardForReturn(card);
+  const result = await card.parent.pass(deck, [card.id]);
   await deck.shuffle();
   return result;
 }
@@ -74,7 +98,37 @@ export async function returnPlayedCardToDeck(card, deck) {
  * @returns {Promise<Card[]>}
  */
 export async function returnPlayedCardToHand(card, hand) {
-  return card.parent.pass(hand, [card.id], { updateData: clearPlacementUpdateData() });
+  await detachCardForReturn(card);
+  return card.parent.pass(hand, [card.id]);
+}
+
+/**
+ * Moves an Ausdauer card (`cards/endurance.mjs`) back onto the hero's hand - the
+ * "undo playing it as Ausdauer" action for the "Ausdauerkarten"-Sheet
+ * (`sheets/endurance-cards-sheet.mjs`). Unlike `returnPlayedCardToHand()` it
+ * also drops the `usedAsEndurance` flag (so the card stops counting towards
+ * `getEnduranceStatus()` if later played normally) and re-reveals the card
+ * (`face: 0` - Ausdauer play sets `face: null`).
+ * @param {Card} card    The Ausdauer card, currently embedded in the hero's Im-Spiel-Stapel.
+ * @param {Cards} hand   The hero's hand.
+ * @returns {Promise<Card[]>}
+ */
+export async function returnEnduranceCardToHand(card, hand) {
+  await detachCardForReturn(card, { alsoModuleFlags: true, resetFace: true });
+  return card.parent.pass(hand, [card.id]);
+}
+
+/**
+ * Moves an Ausdauer card into the discard pile (right-click menu on the
+ * "Ausdauerkarten"-Sheet). Same flag/face cleanup as
+ * `returnEnduranceCardToHand()`.
+ * @param {Card} card       The Ausdauer card, currently embedded in the hero's Im-Spiel-Stapel.
+ * @param {Cards} discard   The hero's discard pile.
+ * @returns {Promise<Card[]>}
+ */
+export async function discardEnduranceCard(card, discard) {
+  await detachCardForReturn(card, { alsoModuleFlags: true, resetFace: true });
+  return card.parent.pass(discard, [card.id]);
 }
 
 /**
@@ -109,24 +163,21 @@ export async function toggleCardExhausted(card) {
  * "ghost" placeable on the canvas mid-loop the same way `cleanup-board.mjs`'s own generic
  * scene loop used to - see the fix there for that specific bug).
  *
- * Also strips the *entire* `aventuria-helpers` flag namespace, not just the
- * `complete-card-management` one `clearPlacementUpdateData()` already covers - a card played
- * `usedAsEndurance` (`cards/endurance.mjs`) still carries that flag afterwards, which
- * `returnPlayedCardToDeck()`/`discardPlayedCard()`/`returnPlayedCardToHand()` above never had
- * to account for (`played-cards-sheet.mjs` filters Ausdauer cards out of its own list, so
- * those three never actually run against one in practice) - but board cleanup deliberately
- * resets *every* played card including Ausdauer ones, so a leftover flag here would make a
- * reshuffled card wrongly count towards `getEnduranceStatus()` (`cards/endurance.mjs`) if it's
- * later drawn and played normally instead of as Ausdauer again.
+ * Also drops the `usedAsEndurance` flag per card (`detachCardForReturn`'s `alsoModuleFlags`) -
+ * `returnPlayedCardToDeck()`/`discardPlayedCard()`/`returnPlayedCardToHand()` above never had to
+ * (those never run against an Ausdauer card), but board cleanup deliberately resets *every*
+ * played card including Ausdauer ones, so a leftover flag here would make a reshuffled card
+ * wrongly count towards `getEnduranceStatus()` (`cards/endurance.mjs`) if it's later drawn and
+ * played normally instead of as Ausdauer again.
  * @param {Cards} playPile
  * @param {Cards} deck
  * @returns {Promise<Card[]>}
  */
 export async function returnAllPlayedCardsToDeck(playPile, deck) {
-  const ids = playPile.cards.map((c) => c.id);
-  if (!ids.length) return [];
-  const updateData = { ...clearPlacementUpdateData(), [`flags.-=${MODULE_ID}`]: null };
-  const result = await playPile.pass(deck, ids, { updateData });
+  const cards = [...playPile.cards];
+  if (!cards.length) return [];
+  await Promise.all(cards.map((c) => detachCardForReturn(c, { alsoModuleFlags: true })));
+  const created = await playPile.pass(deck, cards.map((c) => c.id));
   await deck.shuffle();
-  return result;
+  return created;
 }

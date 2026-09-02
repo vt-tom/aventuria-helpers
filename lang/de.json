@@ -292,9 +292,12 @@
       "ViewDiscard": "Ablage ansehen",
       "ViewHand": "Hand ansehen",
       "ViewPlayedCards": "Ausgespielte Karten ansehen",
+      "ViewEnduranceCards": "Ausdauerkarten ansehen",
       "PlayedTooltip": "Ausgespielte Karten – nicht als Ausdauer gespielte Karten im Im-Spiel-Stapel",
       "DiscardCard": "Ablegen",
       "ReturnToHand": "Zurück auf die Hand nehmen",
+      "ReturnEnduranceCard": "Zurück auf die Hand nehmen",
+      "NoEnduranceCards": "Keine Ausdauerkarten.",
       "ReturnToDeck": "Zurück ins Deck mischen",
       "NoPlayedCards": "Keine ausgespielten Karten.",
       "PlayCard": "Karte ausspielen",
@@ -351,6 +354,9 @@
       "ConfirmTitle": "Board aufräumen",
       "ConfirmBody": "Alle Karten werden von der Spieloberfläche entfernt (zurück in ihre Decks/Stapel) und die Spielmarken an ihre Ausgangsposition zurückgesetzt. Fortfahren?",
       "Done": "Board aufgeräumt: {count} Karte(n) entfernt, Spielmarken zurückgesetzt."
+    },
+    "Migration": {
+      "CardPlacements": "{count} Karte(n) mit fehlerhafter Platzierung bereinigt."
     },
     "Compendium": {
       "Macros": "Aventuria Helfer Makros",
