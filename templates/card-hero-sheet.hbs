@@ -147,27 +147,37 @@
           <div class="card-levelup-tracks">
             <div class="card-levelup-track">
               <span>{{localize "AVENTURIA_HELPERS.HeroSheet.CharacterArt"}} {{lookup levelChoices heroCardLevel}}</span>
-              {{#if levelUpKnown}}
-                {{#unless levelUpHero.atMax}}
-                  <button type="button" class="always-active" data-action="levelUp" data-track="hero" {{#if levelUpHero.dataMissing}}disabled data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.DataMissing'}}"{{/if}}>{{localize "AVENTURIA_HELPERS.LevelUp.LevelUpButton"}}</button>
+              <span class="card-levelup-track-actions">
+                {{#if levelUpKnown}}
+                  {{#unless levelUpHero.atMax}}
+                    <button type="button" class="always-active" data-action="levelUp" data-track="hero" {{#if levelUpHero.dataMissing}}disabled data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.DataMissing'}}"{{/if}}>{{localize "AVENTURIA_HELPERS.LevelUp.LevelUpButton"}}</button>
+                  {{else}}
+                    <span class="muted">{{localize "AVENTURIA_HELPERS.LevelUp.AtMax"}}</span>
+                  {{/unless}}
                 {{else}}
-                  <span class="muted">{{localize "AVENTURIA_HELPERS.LevelUp.AtMax"}}</span>
-                {{/unless}}
-              {{else}}
-                <span class="muted" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.NotAvailable'}}">{{localize "AVENTURIA_HELPERS.LevelUp.NotAvailableShort"}}</span>
-              {{/if}}
+                  <span class="muted" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.NotAvailable'}}">{{localize "AVENTURIA_HELPERS.LevelUp.NotAvailableShort"}}</span>
+                {{/if}}
+                {{#if levelDownHero.hasSnapshot}}
+                  <button type="button" class="always-active card-levelup-undo" data-action="levelUp" data-track="hero" data-direction="down" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.DowngradeTooltip'}}">{{localize "AVENTURIA_HELPERS.LevelUp.DowngradeButton"}}</button>
+                {{/if}}
+              </span>
             </div>
             <div class="card-levelup-track">
               <span>{{localize "AVENTURIA_HELPERS.HeroSheet.SkillCard"}} {{lookup levelChoices skillCardLevel}}</span>
-              {{#if levelUpKnown}}
-                {{#unless levelUpSkill.atMax}}
-                  <button type="button" class="always-active" data-action="levelUp" data-track="skill" {{#if levelUpSkill.dataMissing}}disabled data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.DataMissing'}}"{{/if}}>{{localize "AVENTURIA_HELPERS.LevelUp.LevelUpButton"}}</button>
+              <span class="card-levelup-track-actions">
+                {{#if levelUpKnown}}
+                  {{#unless levelUpSkill.atMax}}
+                    <button type="button" class="always-active" data-action="levelUp" data-track="skill" {{#if levelUpSkill.dataMissing}}disabled data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.DataMissing'}}"{{/if}}>{{localize "AVENTURIA_HELPERS.LevelUp.LevelUpButton"}}</button>
+                  {{else}}
+                    <span class="muted">{{localize "AVENTURIA_HELPERS.LevelUp.AtMax"}}</span>
+                  {{/unless}}
                 {{else}}
-                  <span class="muted">{{localize "AVENTURIA_HELPERS.LevelUp.AtMax"}}</span>
-                {{/unless}}
-              {{else}}
-                <span class="muted" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.NotAvailable'}}">{{localize "AVENTURIA_HELPERS.LevelUp.NotAvailableShort"}}</span>
-              {{/if}}
+                  <span class="muted" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.NotAvailable'}}">{{localize "AVENTURIA_HELPERS.LevelUp.NotAvailableShort"}}</span>
+                {{/if}}
+                {{#if levelDownSkill.hasSnapshot}}
+                  <button type="button" class="always-active card-levelup-undo" data-action="levelUp" data-track="skill" data-direction="down" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.DowngradeTooltip'}}">{{localize "AVENTURIA_HELPERS.LevelUp.DowngradeButton"}}</button>
+                {{/if}}
+              </span>
             </div>
           </div>
           <div class="card-levelup-cards">

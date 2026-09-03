@@ -1,53 +1,93 @@
 <div class="aventuria-welcome level-up-dialog-body">
-  {{#if (not preview.known)}}
-    <p class="assign-hero-warning">
-      <i class="fa-solid fa-triangle-exclamation"></i>
-      {{localize "AVENTURIA_HELPERS.LevelUp.NotAvailable"}}
-    </p>
-  {{else if preview.atMax}}
-    <p class="assign-hero-warning">
-      <i class="fa-solid fa-triangle-exclamation"></i>
-      {{localize "AVENTURIA_HELPERS.LevelUp.AtMax"}}
-    </p>
-  {{else if preview.dataMissing}}
-    <p class="assign-hero-warning">
-      <i class="fa-solid fa-triangle-exclamation"></i>
-      {{localize "AVENTURIA_HELPERS.LevelUp.DataMissing"}}
-    </p>
-  {{else}}
-    <p class="level-up-summary">
-      {{localize "AVENTURIA_HELPERS.LevelUp.StepSummary" from=preview.fromLevel to=preview.toLevel}}
-    </p>
-
-    <table class="level-up-changes">
-      <tbody>
-        {{#each preview.changes}}
-          <tr>
-            <th>{{localize this.label}}</th>
-            <td class="from">{{this.from}}</td>
-            <td class="arrow"><i class="fa-solid fa-arrow-right"></i></td>
-            <td class="to">{{this.to}}</td>
-          </tr>
-          {{#if this.description}}
-            <tr class="level-up-ability-description"><td colspan="4">{{{this.description}}}</td></tr>
-          {{/if}}
-        {{/each}}
-      </tbody>
-    </table>
-
-    <p class="level-up-ap{{#unless canConfirm}} insufficient{{/unless}}">
-      {{localize "AVENTURIA_HELPERS.LevelUp.ApCost" cost=cost current=currentAp}}
-    </p>
-    {{#unless canConfirm}}
+  {{#if (eq direction "down")}}
+    {{#if preview.atMin}}
       <p class="assign-hero-warning">
         <i class="fa-solid fa-triangle-exclamation"></i>
-        {{localize "AVENTURIA_HELPERS.LevelUp.NotEnoughAp"}}
+        {{localize "AVENTURIA_HELPERS.LevelUp.AtMin"}}
       </p>
-    {{/unless}}
+    {{else if (not preview.hasSnapshot)}}
+      <p class="assign-hero-warning">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        {{localize "AVENTURIA_HELPERS.LevelUp.NoUndo"}}
+      </p>
+    {{else}}
+      <p class="level-up-summary">
+        {{localize "AVENTURIA_HELPERS.LevelUp.StepSummary" from=preview.fromLevel to=preview.toLevel}}
+      </p>
+
+      <table class="level-up-changes">
+        <tbody>
+          {{#each preview.changes}}
+            <tr>
+              <th>{{localize this.label}}</th>
+              <td class="from">{{this.from}}</td>
+              <td class="arrow"><i class="fa-solid fa-arrow-right"></i></td>
+              <td class="to">{{this.to}}</td>
+            </tr>
+            {{#if this.description}}
+              <tr class="level-up-ability-description"><td colspan="4">{{{this.description}}}</td></tr>
+            {{/if}}
+          {{/each}}
+        </tbody>
+      </table>
+
+      <p class="level-up-ap">
+        {{localize "AVENTURIA_HELPERS.LevelUp.RefundInfo" refund=refund current=currentAp}}
+      </p>
+    {{/if}}
+  {{else}}
+    {{#if (not preview.known)}}
+      <p class="assign-hero-warning">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        {{localize "AVENTURIA_HELPERS.LevelUp.NotAvailable"}}
+      </p>
+    {{else if preview.atMax}}
+      <p class="assign-hero-warning">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        {{localize "AVENTURIA_HELPERS.LevelUp.AtMax"}}
+      </p>
+    {{else if preview.dataMissing}}
+      <p class="assign-hero-warning">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        {{localize "AVENTURIA_HELPERS.LevelUp.DataMissing"}}
+      </p>
+    {{else}}
+      <p class="level-up-summary">
+        {{localize "AVENTURIA_HELPERS.LevelUp.StepSummary" from=preview.fromLevel to=preview.toLevel}}
+      </p>
+
+      <table class="level-up-changes">
+        <tbody>
+          {{#each preview.changes}}
+            <tr>
+              <th>{{localize this.label}}</th>
+              <td class="from">{{this.from}}</td>
+              <td class="arrow"><i class="fa-solid fa-arrow-right"></i></td>
+              <td class="to">{{this.to}}</td>
+            </tr>
+            {{#if this.description}}
+              <tr class="level-up-ability-description"><td colspan="4">{{{this.description}}}</td></tr>
+            {{/if}}
+          {{/each}}
+        </tbody>
+      </table>
+
+      <p class="level-up-ap{{#unless canConfirm}} insufficient{{/unless}}">
+        {{localize "AVENTURIA_HELPERS.LevelUp.ApCost" cost=cost current=currentAp}}
+      </p>
+      {{#unless canConfirm}}
+        <p class="assign-hero-warning">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          {{localize "AVENTURIA_HELPERS.LevelUp.NotEnoughAp"}}
+        </p>
+      {{/unless}}
+    {{/if}}
   {{/if}}
 
   <div class="welcome-actions">
     <button type="button" class="w-btn ghost" data-action="close">{{localize "AVENTURIA_HELPERS.Welcome.Back"}}</button>
-    <button type="button" class="w-btn" data-action="confirm" {{#unless canConfirm}}disabled{{/unless}}>{{localize "AVENTURIA_HELPERS.LevelUp.Confirm"}}</button>
+    <button type="button" class="w-btn" data-action="confirm" {{#unless canConfirm}}disabled{{/unless}}>
+      {{#if (eq direction "down")}}{{localize "AVENTURIA_HELPERS.LevelUp.ConfirmDown"}}{{else}}{{localize "AVENTURIA_HELPERS.LevelUp.Confirm"}}{{/if}}
+    </button>
   </div>
 </div>

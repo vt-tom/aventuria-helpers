@@ -870,6 +870,23 @@
   border-color: var(--line);
 }
 
+.aventuria-hero-sheet .levelup-track-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.aventuria-hero-sheet .levelup-track .levelup-undo {
+  border-color: var(--muted);
+  color: var(--muted);
+}
+
+.aventuria-hero-sheet .levelup-track .levelup-undo:hover,
+.aventuria-hero-sheet .levelup-track .levelup-undo:focus-visible {
+  background: var(--muted);
+  color: var(--verdigris-ink);
+}
+
 /* ---------- Skills ---------- */
 
 .aventuria-hero-sheet .skills {

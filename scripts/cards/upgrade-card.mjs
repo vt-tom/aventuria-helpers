@@ -1,5 +1,4 @@
 import { resolveStacksForActor } from "./stacks.mjs";
-import { detachCardForReturn } from "./played-cards.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 
@@ -88,6 +87,15 @@ export function getCardLevelChanges(actor) {
  * defense, same reasoning as `applyLevelUp()`'s re-check), then swaps every selected card pair
  * between Deck and Erfahrungsschatz via `Cards#pass()`, and finally writes the net AP delta plus
  * one `apLog` entry per card in a single `actor.update()`.
+ *
+ * The swap itself is done with explicit `deleteEmbeddedDocuments`/`createEmbeddedDocuments` rather
+ * than `Cards#pass()` (Bugfix 2026-09-03): Deck and Erfahrungsschatz are *both* `type:"deck"`
+ * Cards documents, and `pass()` between two decks only ever *copies* the card into the destination
+ * (with `keepId: true`) and never removes it from the source - so the old two-`pass()` swap both
+ * silently duplicated cards in the Deck and, on any later swap of the same pair (e.g. a refund),
+ * threw "The _id [...] already exists within the parent collection" when `createEmbeddedDocuments`'
+ * `keepId` hit the copy the first upgrade had left behind. Recreating with fresh ids sidesteps
+ * both problems and round-trips cleanly across repeated up/down.
  * @param {Actor} actor
  * @param {Array<{deckCardId: string, direction: "up"|"down"}>} selections
  * @returns {Promise<void>}
@@ -111,17 +119,30 @@ export async function applyCardLevelChanges(actor, selections) {
   }
 
   for (const change of matched) {
-    // Same two-step swap regardless of direction - "up" and "down" only differ in which card
-    // was already sitting in the Deck vs. the Erfahrungsschatz, not in the mechanic itself.
-    // detachCardForReturn() before each pass, not `updateData` inside it - see its doc comment
-    // for why a `flags.-=` key handed to `Cards#pass()` isn't actioned. A no-op in practice
-    // here (deck/Erfahrungsschatz cards aren't scene-placed), kept for consistency/safety.
+    // Same swap regardless of direction - "up" and "down" only differ in which card was already
+    // sitting in the Deck vs. the Erfahrungsschatz, not in the mechanic itself: drop the current
+    // card from each stack and recreate the other stack's card there with a fresh id.
     const expCard = stacks.experience.cards.get(change.experienceCardId);
     const deckCard = stacks.deck.cards.get(change.deckCardId);
-    if (expCard) await detachCardForReturn(expCard);
-    if (deckCard) await detachCardForReturn(deckCard);
-    await stacks.experience.pass(stacks.deck, [change.experienceCardId]);
-    await stacks.deck.pass(stacks.experience, [change.deckCardId]);
+    if (!expCard || !deckCard) continue;
+
+    const intoDeck = foundry.utils.mergeObject(
+      expCard.toObject(),
+      { origin: stacks.deck.id, drawn: false },
+      { inplace: false },
+    );
+    const intoExperience = foundry.utils.mergeObject(
+      deckCard.toObject(),
+      { origin: stacks.experience.id, drawn: false },
+      { inplace: false },
+    );
+    delete intoDeck._id;
+    delete intoExperience._id;
+
+    await stacks.deck.deleteEmbeddedDocuments("Card", [deckCard.id]);
+    await stacks.experience.deleteEmbeddedDocuments("Card", [expCard.id]);
+    await stacks.deck.createEmbeddedDocuments("Card", [intoDeck]);
+    await stacks.experience.createEmbeddedDocuments("Card", [intoExperience]);
   }
 
   const apLog = actor.getFlag(MODULE_ID, "apLog") ?? [];

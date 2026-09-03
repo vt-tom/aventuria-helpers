@@ -61,11 +61,19 @@
       "DataMissing": "Zielwerte für diese Stufe sind noch nicht erfasst.",
       "TitleHero": "Heldenkarte steigern",
       "TitleSkill": "Talentkarte steigern",
+      "TitleHeroDown": "Heldenkarte zurückstufen",
+      "TitleSkillDown": "Talentkarte zurückstufen",
       "StepSummary": "Stufe {from} → {to}",
       "ApCost": "Kosten: {cost} AP · Kontostand: {current} AP",
+      "RefundInfo": "Erstattung: {refund} AP · Kontostand: {current} AP",
       "NotEnoughAp": "Nicht genug Abenteuerpunkte für diese Steigerung.",
+      "AtMin": "Bereits auf Stufe I - nichts zurückzustufen.",
+      "NoUndo": "Diese Steigerung lässt sich nicht rückgängig machen - sie wurde vor diesem Update durchgeführt (oder manuell gesetzt), sodass die vorherigen Werte nicht gespeichert sind.",
+      "DowngradeButton": "Zurückstufen",
+      "DowngradeTooltip": "Diese Steigerung rückgängig machen und die Abenteuerpunkte erstatten",
       "Confirm": "Steigern",
-      "Failed": "Steigern fehlgeschlagen."
+      "ConfirmDown": "Zurückstufen",
+      "Failed": "Stufenänderung fehlgeschlagen."
     },
     "CardUpgrade": {
       "SectionTitle": "Aktionskarten verbessern",

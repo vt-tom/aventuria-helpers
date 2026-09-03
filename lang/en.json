@@ -61,11 +61,19 @@
       "DataMissing": "Target values for this level haven't been recorded yet.",
       "TitleHero": "Level Up Hero Card",
       "TitleSkill": "Level Up Skill Card",
+      "TitleHeroDown": "Roll Back Hero Card",
+      "TitleSkillDown": "Roll Back Skill Card",
       "StepSummary": "Level {from} → {to}",
       "ApCost": "Cost: {cost} AP · Balance: {current} AP",
+      "RefundInfo": "Refund: {refund} AP · Balance: {current} AP",
       "NotEnoughAp": "Not enough adventure points for this level-up.",
+      "AtMin": "Already at Level I - nothing to roll back.",
+      "NoUndo": "This level-up can't be undone - it was done before this update (or set manually), so the previous values weren't stored.",
+      "DowngradeButton": "Roll Back",
+      "DowngradeTooltip": "Undo this level-up and refund the adventure points",
       "Confirm": "Level Up",
-      "Failed": "Level-up failed."
+      "ConfirmDown": "Roll Back",
+      "Failed": "Level change failed."
     },
     "CardUpgrade": {
       "SectionTitle": "Upgrade Action Cards",

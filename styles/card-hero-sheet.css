@@ -332,6 +332,12 @@
   font-weight: 700;
 }
 .card-levelup-track button:disabled { opacity: .5; cursor: default; }
+.card-levelup-track-actions { display: flex; align-items: center; gap: 6px; }
+.card-levelup-track .card-levelup-undo {
+  border-color: var(--copper-frame);
+  color: #6d4632;
+  background: linear-gradient(#f4ece0, #e3d4c2);
+}
 .card-levelup-cards { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #a77b63; font-size: 13px; color: var(--card-ink); }
 .card-levelup-cards button {
   flex: 0 0 auto;

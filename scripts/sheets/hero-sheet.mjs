@@ -1,6 +1,12 @@
 import { rollAttribute, rollSkill, rollEquipment } from "../probe-roll.mjs";
 import { isHeroExhausted, setHeroExhausted } from "../actors/hero-exhaust.mjs";
-import { getHeroFirstName, getLevelUpPreview, getAdventurePoints, getCardLevel } from "../cards/level-up-hero.mjs";
+import {
+  getHeroFirstName,
+  getLevelUpPreview,
+  getLevelDownPreview,
+  getAdventurePoints,
+  getCardLevel,
+} from "../cards/level-up-hero.mjs";
 import { AventuriaHelpersLevelUpDialog } from "../apps/level-up-dialog.mjs";
 import { AventuriaHelpersCardUpgradeDialog } from "../apps/card-upgrade-dialog.mjs";
 
@@ -177,6 +183,8 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
       levelUpKnown: !!getHeroFirstName(this.actor),
       levelUpHero: getLevelUpPreview(this.actor, "hero"),
       levelUpSkill: getLevelUpPreview(this.actor, "skill"),
+      levelDownHero: getLevelDownPreview(this.actor, "hero"),
+      levelDownSkill: getLevelDownPreview(this.actor, "skill"),
       tabs: {
         held: { active: this.tab === "held" },
         talente: { active: this.tab === "talente" },
@@ -422,14 +430,16 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
   }
 
   /**
-   * Opens the Level-Up dialog for one of the two independent tracks (Heldenkarte/Talentkarte).
+   * Opens the level-change dialog for one of the two independent tracks (Heldenkarte/Talentkarte).
+   * `data-direction` selects steigern (`"up"`, default) vs. zurückstufen (`"down"`).
    * @this AventuriaHelpersHeroSheet
    * @param {PointerEvent} event
    * @param {HTMLElement} target
    */
   static async #levelUp(event, target) {
     const track = target.dataset.track;
-    new AventuriaHelpersLevelUpDialog(this.actor, track).render({ force: true });
+    const direction = target.dataset.direction === "down" ? "down" : "up";
+    new AventuriaHelpersLevelUpDialog(this.actor, track, direction).render({ force: true });
   }
 
   /**
