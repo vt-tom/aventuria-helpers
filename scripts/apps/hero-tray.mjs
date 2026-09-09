@@ -1,10 +1,12 @@
 import { AventuriaHelpersHandSheet } from "../sheets/hand-sheet.mjs";
 import { AventuriaHelpersPlayedCardsSheet } from "../sheets/played-cards-sheet.mjs";
+import { AventuriaHelpersEnduranceCardsSheet } from "../sheets/endurance-cards-sheet.mjs";
 import { resolveStacks } from "../cards/stacks.mjs";
 import { getEnduranceStatus, exhaustEndurance, readyEndurance } from "../cards/endurance.mjs";
 import { openWelcomeScreen } from "../macros/open-welcome-screen.mjs";
 import { AventuriaHelpersWelcomeScreen } from "./welcome-screen.mjs";
 import { deleteExistingHero } from "../cards/prepare-hero.mjs";
+import { openHeroSwitcher, closeHeroSwitcher } from "./hero-switcher.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -43,6 +45,12 @@ let deckSheet = null;
 let discardSheet = null;
 
 /**
+ * The currently open "Ausdauerkarten" sheet, if any - same reuse/toggle-close
+ * pattern as the sheets above (`sheets/endurance-cards-sheet.mjs`, feature 2.6).
+ */
+let enduranceSheet = null;
+
+/**
  * Permanent HUD element showing the current user's own Aventuria hero (portrait,
  * Deck/Ablage/Hand) so they don't have to dig through the Cards sidebar or the
  * canvas placeables for their own cards. Lives in the same UI slot as the native
@@ -57,6 +65,8 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
     window: { frame: false, positioned: false },
     actions: {
       pickHero: AventuriaHelpersHeroTray.#onPickHero,
+      switchHero: AventuriaHelpersHeroTray.#onSwitchHero,
+      switchHomeHero: AventuriaHelpersHeroTray.#onSwitchHomeHero,
       openSheet: AventuriaHelpersHeroTray.#onOpenSheet,
       drawCard: AventuriaHelpersHeroTray.#onDrawCard,
       shuffleDeck: AventuriaHelpersHeroTray.#onShuffleDeck,
@@ -65,6 +75,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
       viewDiscard: AventuriaHelpersHeroTray.#onViewDiscard,
       viewHand: AventuriaHelpersHeroTray.#onViewHand,
       viewPlayedCards: AventuriaHelpersHeroTray.#onViewPlayedCards,
+      viewEnduranceCards: AventuriaHelpersHeroTray.#onViewEnduranceCards,
       toggleTray: AventuriaHelpersHeroTray.#onToggleTray,
       openConfig: AventuriaHelpersHeroTray.#onOpenConfig,
       openHelp: AventuriaHelpersHeroTray.#onOpenHelp,
@@ -80,6 +91,69 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
       template: "modules/aventuria-helpers/templates/hero-tray.hbs",
     },
   };
+
+  /* -------------------------------------------------- */
+
+  /**
+   * Feature 2.5 (project/TODO.md): the tray can be pointed at another player's
+   * hero for solo play. Instance-only, no persistence - resets to the viewer's
+   * own hero on every reload/restart (Nutzerentscheidung 2026-08-31). `null`
+   * means "the viewer's own hero".
+   * @type {string|null}
+   */
+  #activeUserId = null;
+
+  /** The active user id, or `null` while showing the viewer's own hero. */
+  get activeUserId() {
+    return this.#activeUserId;
+  }
+
+  /** The user whose hero the tray currently operates on. */
+  get activeUser() {
+    return (this.#activeUserId && game.users.get(this.#activeUserId)) || game.user;
+  }
+
+  /** True while the tray is showing a hero that isn't the viewer's own. */
+  get viewingForeignHero() {
+    return this.#activeUserId != null && this.#activeUserId !== game.user.id;
+  }
+
+  /**
+   * `resolveStacks()` for the currently active hero. Falls back to the
+   * viewer's own hero (and clears the override) if the foreign one can no
+   * longer be resolved - e.g. it was deleted or reassigned while being viewed.
+   * @returns {ReturnType<typeof resolveStacks>}
+   */
+  activeStacks() {
+    if (this.#activeUserId && this.#activeUserId !== game.user.id) {
+      const user = game.users.get(this.#activeUserId);
+      const stacks = user ? resolveStacks(user) : null;
+      if (stacks) return stacks;
+      this.#activeUserId = null;
+    }
+    return resolveStacks();
+  }
+
+  /**
+   * Points the tray (and only the tray plus the windows it opens) at another
+   * player's hero, or back at the viewer's own hero when `userId` is falsy or
+   * the viewer's own id. Never touches `user.character`. Any docked/opened
+   * card windows bound to the previous hero are closed - they reopen against
+   * the new hero on demand via the tray's own "Ansehen" buttons.
+   * @param {string|null} userId
+   */
+  async setActiveHero(userId) {
+    const next = userId && userId !== game.user.id ? userId : null;
+    if (next === this.#activeUserId) {
+      await this.render();
+      return;
+    }
+    this.#activeUserId = next;
+    for (const sheet of [handSheet, playedCardsSheet, deckSheet, discardSheet, enduranceSheet]) {
+      if (sheet?.rendered) await sheet.close();
+    }
+    await this.render();
+  }
 
   /* -------------------------------------------------- */
 
@@ -100,7 +174,8 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
   /** @inheritdoc */
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
-    const stacks = resolveStacks();
+    const stacks = this.activeStacks();
+    context.foreign = this.viewingForeignHero;
 
     if (!stacks) {
       context.empty = true;
@@ -109,7 +184,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
 
     context.empty = false;
     context.actor = stacks.actor;
-    context.playerName = game.user.name;
+    context.playerName = this.activeUser.name;
     context.deck = stacks.deck && { count: stacks.deck.availableCards.length };
     context.discard = stacks.discard && { count: stacks.discard.cards.size };
     context.hand = { count: stacks.hand.cards.size };
@@ -125,6 +200,28 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
       endurance: ICONS + "endurance.webp",
     };
     return context;
+  }
+
+  /**
+   * Wires the right-click hero switcher onto the portrait (feature 2.5) - a
+   * `contextmenu` listener, since the `actions` map only covers left-click.
+   * Re-attached on every render; the previous element (and its listener) is
+   * discarded when the part re-renders.
+   * @inheritdoc
+   */
+  async _onRender(context, options) {
+    await super._onRender(context, options);
+    const portrait = this.element.querySelector(".tray-portrait");
+    portrait?.addEventListener("contextmenu", (event) => {
+      event.preventDefault();
+      openHeroSwitcher(this, { x: event.clientX, y: event.clientY });
+    });
+  }
+
+  /** @inheritdoc */
+  async _onClose(options) {
+    closeHeroSwitcher();
+    return super._onClose(options);
   }
 
   /* -------------------------------------------------- */
@@ -147,13 +244,34 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
   }
 
   /**
+   * Opens the radial hero switcher centred on the tray-bar button (feature
+   * 2.5, `apps/hero-switcher.mjs`). Also reachable via a right-click on the
+   * portrait - see `_onRender()`.
+   * @this AventuriaHelpersHeroTray
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   */
+  static #onSwitchHero(event, target) {
+    const rect = target.getBoundingClientRect();
+    openHeroSwitcher(this, { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+  }
+
+  /**
+   * "Zurück zu meinem Helden" button in the foreign-hero banner.
+   * @this AventuriaHelpersHeroTray
+   */
+  static async #onSwitchHomeHero() {
+    await this.setActiveHero(null);
+  }
+
+  /**
    * Opens the hero's own actor sheet (whichever sheet class the user has
    * configured for it - not hardcoded to this module's own Hero-Sheet, same as
    * clicking a portrait anywhere else in Foundry).
    * @this AventuriaHelpersHeroTray
    */
   static async #onOpenSheet() {
-    game.user.character?.sheet.render(true);
+    this.activeStacks()?.actor.sheet.render(true);
   }
 
   /**
@@ -166,7 +284,10 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    * @this AventuriaHelpersHeroTray
    */
   static async #onDeleteHero() {
-    const stacks = resolveStacks();
+    // Owner-bound, destructive - never delete another player's hero from a
+    // foreign-mode tray (the button is hidden then anyway, this is defensive).
+    if (this.viewingForeignHero) return;
+    const stacks = this.activeStacks();
     if (!stacks) return;
 
     const proceed = await foundry.applications.api.Dialog.confirm({
@@ -183,7 +304,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    * @this AventuriaHelpersHeroTray
    */
   static async #onDrawCard() {
-    const stacks = resolveStacks();
+    const stacks = this.activeStacks();
     if (!stacks?.deck) return;
     await stacks.hand.draw(stacks.deck, 1);
   }
@@ -193,7 +314,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    * @this AventuriaHelpersHeroTray
    */
   static async #onShuffleDeck() {
-    const stacks = resolveStacks();
+    const stacks = this.activeStacks();
     if (!stacks?.deck) return;
     await stacks.deck.shuffle();
   }
@@ -205,7 +326,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    * @this AventuriaHelpersHeroTray
    */
   static async #onExhaustEndurance() {
-    const stacks = resolveStacks();
+    const stacks = this.activeStacks();
     if (stacks?.playPile) await exhaustEndurance(stacks.playPile);
   }
 
@@ -214,7 +335,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    * @this AventuriaHelpersHeroTray
    */
   static async #onReadyEndurance() {
-    const stacks = resolveStacks();
+    const stacks = this.activeStacks();
     if (stacks?.playPile) await readyEndurance(stacks.playPile);
   }
 
@@ -224,7 +345,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    * @this AventuriaHelpersHeroTray
    */
   static async #onPreviewCards() {
-    const stacks = resolveStacks();
+    const stacks = this.activeStacks();
     if (!stacks?.deck?.availableCards.length) return;
     const amount = await promptCardAmount(stacks.deck.availableCards.length);
     if (!amount) return;
@@ -245,7 +366,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    * @this AventuriaHelpersHeroTray
    */
   static async #onViewDeck() {
-    const stacks = resolveStacks();
+    const stacks = this.activeStacks();
     if (!stacks?.deck) return;
     if (deckSheet?.rendered && deckSheet.document === stacks.deck) {
       await deckSheet.close();
@@ -262,7 +383,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    * @this AventuriaHelpersHeroTray
    */
   static async #onViewDiscard() {
-    const stacks = resolveStacks();
+    const stacks = this.activeStacks();
     if (!stacks?.discard) return;
     if (discardSheet?.rendered && discardSheet.document === stacks.discard) {
       await discardSheet.close();
@@ -281,7 +402,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    * @this AventuriaHelpersHeroTray
    */
   static async #onViewHand() {
-    const stacks = resolveStacks();
+    const stacks = this.activeStacks();
     if (!stacks?.hand) return;
     if (handSheet?.rendered && handSheet.document === stacks.hand) {
       await handSheet.close();
@@ -301,7 +422,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    * @this AventuriaHelpersHeroTray
    */
   static async #onViewPlayedCards() {
-    const stacks = resolveStacks();
+    const stacks = this.activeStacks();
     if (!stacks?.playPile) return;
     if (playedCardsSheet?.rendered && playedCardsSheet.document === stacks.playPile) {
       await playedCardsSheet.close();
@@ -309,6 +430,24 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
     }
     playedCardsSheet = new AventuriaHelpersPlayedCardsSheet(stacks.playPile);
     await playedCardsSheet.render({ force: true });
+  }
+
+  /**
+   * Opens the hero's Ausdauer cards in the module's own "Ausdauerkarten" sheet
+   * (the Ausdauer cards in the same Im-Spiel-Stapel, i.e. the opposite
+   * selection of `#onViewPlayedCards()` - see `sheets/endurance-cards-sheet.mjs`,
+   * feature 2.6). Same reuse / toggle-close pattern as the other view buttons.
+   * @this AventuriaHelpersHeroTray
+   */
+  static async #onViewEnduranceCards() {
+    const stacks = this.activeStacks();
+    if (!stacks?.playPile) return;
+    if (enduranceSheet?.rendered && enduranceSheet.document === stacks.playPile) {
+      await enduranceSheet.close();
+      return;
+    }
+    enduranceSheet = new AventuriaHelpersEnduranceCardsSheet(stacks.playPile);
+    await enduranceSheet.render({ force: true });
   }
 
   /**
@@ -393,6 +532,7 @@ async function toggleTray() {
   if (show) {
     handSheet?.updateDockPosition();
     playedCardsSheet?.updateDockPosition();
+    enduranceSheet?.updateDockPosition();
   }
 }
 
@@ -446,10 +586,14 @@ export function registerHeroTray() {
   window.addEventListener("resize", foundry.utils.debounce(() => {
     handSheet?.updateDockPosition();
     playedCardsSheet?.updateDockPosition();
+    enduranceSheet?.updateDockPosition();
   }, 100));
 
   Hooks.on("updateUser", (user, changes) => {
-    if (user.id !== game.user.id) return;
+    // Also react to the actively-viewed foreign hero's user (feature 2.5), not
+    // just the own user - their character/hand reassignment changes what the
+    // tray should show too.
+    if (user.id !== game.user.id && user.id !== tray?.activeUserId) return;
     if ("character" in changes || foundry.utils.hasProperty(changes, `flags.${CCM_ID}.playerHand`)) {
       refresh();
     }
@@ -459,33 +603,34 @@ export function registerHeroTray() {
   // stack itself; drawing/shuffling/discarding individual cards only touches the
   // embedded Card documents within it (Cards#draw()/#shuffle() call
   // create/update/deleteEmbeddedDocuments("Card", ...), never Cards#update()) -
-  // both kinds of change need their own hook, filtered to the current user's own
-  // stacks so other players' card actions don't cause needless re-renders here.
-  const ownFolder = () => resolveStacks()?.hand.folder;
+  // both kinds of change need their own hook, filtered to the *actively viewed*
+  // hero's stacks (the own hero's, or a foreign one's while switched - feature
+  // 2.5) so other players' card actions don't cause needless re-renders here.
+  const activeFolder = () => tray?.activeStacks()?.hand.folder;
   for (const hook of ["createCards", "updateCards"]) {
     Hooks.on(hook, (doc) => {
-      if (doc.folder && doc.folder === ownFolder()) refresh();
+      if (doc.folder && doc.folder === activeFolder()) refresh();
     });
   }
   for (const hook of ["createCard", "updateCard"]) {
     Hooks.on(hook, (card) => {
-      if (card.parent?.folder && card.parent.folder === ownFolder()) refresh();
+      if (card.parent?.folder && card.parent.folder === activeFolder()) refresh();
     });
   }
 
   // Deleting the Hand itself (e.g. an external "delete this stack" cleanup, or our
-  // own #onDeleteHero() above) makes resolveStacks() - and with it ownFolder() -
+  // own #onDeleteHero() above) makes resolveStacks() - and with it activeFolder() -
   // unresolvable in the same tick, since resolveStacks() needs the Hand to exist to
   // find its Folder at all (see stacks.mjs). Refresh whenever a deleted document's
-  // folder either still matches, or ownFolder() can no longer resolve at all - the
+  // folder either still matches, or activeFolder() can no longer resolve at all - the
   // occasional extra render for an unrelated user's deletion is harmless, refresh()
   // is already debounced.
   Hooks.on("deleteCards", (doc) => {
-    const folder = ownFolder();
+    const folder = activeFolder();
     if (doc.folder && (doc.folder === folder || !folder)) refresh();
   });
   Hooks.on("deleteCard", (card) => {
-    const folder = ownFolder();
+    const folder = activeFolder();
     if (card.parent?.folder && (card.parent.folder === folder || !folder)) refresh();
   });
 
@@ -497,6 +642,12 @@ export function registerHeroTray() {
   // reliable regardless of whether this hook fires before or after the Actor leaves the
   // world collection.
   Hooks.on("deleteActor", (actor) => {
-    if (actor.id === game.user._source.character) refresh();
+    // Own hero, or - while switched to a foreign hero (feature 2.5) - any hero
+    // deletion: `activeStacks()` falls back to the own hero on the next render,
+    // and the tray needs that render to happen.
+    if (
+      actor.id === game.user._source.character
+      || (tray?.viewingForeignHero && actor.type === "aventuria.hero")
+    ) refresh();
   });
 }

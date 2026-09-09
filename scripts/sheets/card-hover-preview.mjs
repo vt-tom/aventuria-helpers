@@ -50,13 +50,16 @@ function getPreviewEl() {
  * @param {HTMLElement} sheetEl    The sheet's root element.
  */
 export function showCardPreview(cardEl, sheetEl) {
-  // Scoped to .card-art specifically (not just "the first img") - some card
-  // rows also have action buttons with their own icons/images.
-  const img = cardEl.querySelector("img.card-art");
-  if (!img?.src) return;
+  // `data-preview-src` wins when present: the "Ausdauerkarten"-Sheet shows each
+  // card face-down (matching its rotated-on-the-table state) but wants the
+  // preview to show the *front* - a preview of a card back is useless. Falls
+  // back to the visible `.card-art` image (scoped to that class, not just "the
+  // first img" - some card rows also have action buttons with their own icons).
+  const src = cardEl.dataset.previewSrc || cardEl.querySelector("img.card-art")?.src;
+  if (!src) return;
 
   const el = getPreviewEl();
-  el.querySelector("img").src = img.src;
+  el.querySelector("img").src = src;
   el.classList.add("visible");
 
   // The hovered card lives in a detached popup, not this (main) window - see this module's own

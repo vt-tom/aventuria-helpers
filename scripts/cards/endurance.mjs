@@ -105,10 +105,14 @@ function findPlayRegion(pile) {
  * Resolves every Ausdauer card currently sitting in the Im-Spiel-Stapel, each with its
  * normalized rotation (`getCardRotation()`, cards/card-rotation.mjs) - rather than assuming the
  * currently viewed scene is the one it was placed on.
+ *
+ * Exported (not just used locally) since the "Ausdauerkarten"-Sheet
+ * (`sheets/endurance-cards-sheet.mjs`) shows this exact per-card list, not just
+ * the ready/spent counts `getEnduranceStatus()` derives from it.
  * @param {Cards} playPile
  * @returns {{card: Card, sceneId: string|undefined, rotation: number}[]}
  */
-function getEnduranceCards(playPile) {
+export function getEnduranceCards(playPile) {
   const cards = [];
   for (const card of playPile.cards) {
     if (!card.getFlag(MODULE_ID, "usedAsEndurance")) continue;

@@ -169,8 +169,6 @@
 .card-life-medallion, .card-level-medallion {
   position: relative;
   z-index: 2;
-  width: 74px;
-  height: 74px;
   display: grid;
   place-content: center;
   justify-items: center;
@@ -180,6 +178,11 @@
   background: radial-gradient(circle at 40% 35%, #fff, #e9dfce 68%, #a99c88);
   box-shadow: 0 3px 8px #000a;
 }
+.card-life-medallion { width: 74px; height: 74px; }
+/* Two of these now sit side by side (Heldenkarte-/Talentkarte-Stufe), so each gets a smaller
+   footprint than the single life medallion above it used to share this rule with. */
+.card-level-medallions { display: flex; gap: 8px; }
+.card-level-medallion { width: 50px; height: 50px; border-width: 4px; }
 .card-life-icon {
   position: absolute;
   z-index: 1;
@@ -202,9 +205,8 @@
 .card-life-medallion input.lp-max-input { width: 22px; font: 700 15px var(--copper-font); }
 .card-life-buttons { display: grid; gap: 4px; }
 .card-life-buttons button { width: 26px; height: 26px; padding: 0; border: 2px solid var(--copper-frame); border-radius: 50%; color: #241c17; background: radial-gradient(circle at 40% 35%, #fff, #d9cebd); box-shadow: 0 2px 4px #0008; }
-.card-level-medallion img { width: 46px; height: 46px; object-fit: contain; }
-.card-level-medallion > span { position: absolute; bottom: -17px; color: #fff; font-weight: 700; }
-.card-level-medallion select { position: absolute; bottom: -24px; width: 55px; height: 22px; padding: 0; color: var(--copper-ink); background: #fff8e9; }
+.card-level-medallion img { width: 30px; height: 30px; object-fit: contain; }
+.card-level-medallion > span { position: absolute; bottom: -15px; color: #fff; font-weight: 700; font-size: 13px; }
 
 .card-name-ribbon {
   position: absolute;
@@ -310,6 +312,45 @@
 .card-ability-description > :first-child { margin-top: 0; }
 .card-ability-description > :last-child { margin-bottom: 0; }
 
+.card-levelup { padding: 8px 12px 10px; border: 1px solid #a77b63; border-radius: 10px; background: var(--copper-panel); }
+.card-levelup-ap { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.card-levelup-ap-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--copper-ghost-ink); }
+.card-levelup-ap strong { min-width: 1.6rem; text-align: center; font-size: 17px; }
+.card-levelup-ap button { width: 26px; height: 26px; padding: 0; border: 2px solid var(--copper-frame); border-radius: 50%; color: #241c17; background: radial-gradient(circle at 40% 35%, #fff, #d9cebd); box-shadow: 0 2px 4px #0008; }
+.card-levelup-tracks { display: flex; flex-direction: column; gap: 6px; }
+.card-levelup-track { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--card-ink); }
+.card-levelup-track .muted { color: var(--copper-ghost-ink); font-size: 12px; }
+.card-levelup-track button {
+  flex: 0 0 auto;
+  padding: 4px 12px;
+  border: 1px solid #809172;
+  border-radius: 999px;
+  color: #315336;
+  background: linear-gradient(#eef5e8, #d6e3ce);
+  box-shadow: inset 0 0 0 1px #fff9;
+  font-size: 12px;
+  font-weight: 700;
+}
+.card-levelup-track button:disabled { opacity: .5; cursor: default; }
+.card-levelup-track-actions { display: flex; align-items: center; gap: 6px; }
+.card-levelup-track .card-levelup-undo {
+  border-color: var(--copper-frame);
+  color: #6d4632;
+  background: linear-gradient(#f4ece0, #e3d4c2);
+}
+.card-levelup-cards { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #a77b63; font-size: 13px; color: var(--card-ink); }
+.card-levelup-cards button {
+  flex: 0 0 auto;
+  padding: 4px 12px;
+  border: 1px solid #809172;
+  border-radius: 999px;
+  color: #315336;
+  background: linear-gradient(#eef5e8, #d6e3ce);
+  box-shadow: inset 0 0 0 1px #fff9;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .card-skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .card-skill { min-width: 0; min-height: 56px; border: 1px solid #b38a72; border-radius: 9px; background: #fffaf2bd; transition: border-color .15s ease, background .15s ease, box-shadow .15s ease; }
 .card-skill button, .card-skill label { width: 100%; height: 100%; padding: 8px 10px; display: grid; grid-template-columns: minmax(0, 1fr) 40px; align-items: center; gap: 7px; border: 0; color: var(--card-ink); background: transparent; text-align: left; }
@@ -359,10 +400,19 @@
 .card-foot-serials input { width: 48px; }
 .card-sheet-foot img { width: 18px; height: 18px; object-fit: contain; }
 
-.card-flag-rail { position: absolute; z-index: 1; top: 280px; width: 68px; display: flex; flex-direction: column; }
+/* top nudged up from 280px (was tuned for 6 flags) to fit the 7th "Stufenaufstieg" flag added
+   2026-08-26 without running past the sheet's bottom edge. First attempt (250px) still let the
+   lock icon poke out below the card (Nutzer-Feedback) - recalculated against the actual
+   available height instead of guessing again (window height 760px minus Foundry's 36px
+   --header-height, .window-content padding is 0 here -> ~724px). Split the correction between
+   a modest further top reduction (250 -> 240px, small enough to stay clear of the header/vitals
+   area above, which the first 250px attempt already fit without complaint) and a slightly
+   smaller flag height below (`.card-flag`) instead of pushing the whole 30px difference into
+   `top` alone. */
+.card-flag-rail { position: absolute; z-index: 1; top: 240px; width: 68px; display: flex; flex-direction: column; }
 .nav-left .card-flag-rail { right: calc(100% - 9px); }
 .nav-right .card-flag-rail { left: calc(100% - 9px); }
-.card-flag { min-height: 56px; padding: 9px; display: grid; place-items: center; border: 3px ridge #777066; background: linear-gradient(90deg, #e8dfd1, #bdae9d); box-shadow: 0 3px 5px #0008; transition: border-color .15s ease, background .15s ease, box-shadow .15s ease; }
+.card-flag { min-height: 54px; padding: 9px; display: grid; place-items: center; border: 3px ridge #777066; background: linear-gradient(90deg, #e8dfd1, #bdae9d); box-shadow: 0 3px 5px #0008; transition: border-color .15s ease, background .15s ease, box-shadow .15s ease; }
 .card-flag + .card-flag { margin-top: -2px; }
 .card-flag img { width: 33px; height: 33px; object-fit: contain; filter: drop-shadow(0 1px 1px #fff8); }
 .card-flag > i { color: #443329; font-size: 25px; filter: drop-shadow(0 1px 1px #fff9); }

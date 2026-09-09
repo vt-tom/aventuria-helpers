@@ -1,6 +1,7 @@
 import { resolveStacks } from "./stacks.mjs";
 import { AventuriaHelpersCardHeroSheet } from "../sheets/card-hero-sheet.mjs";
 import { wirePlayRegion } from "./player-slots.mjs";
+import { ensureExperienceStack } from "./experience-stack.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 const AVENTURIA_ID = "aventuria";
@@ -72,7 +73,7 @@ export async function deleteExistingHero(user) {
     if (tokens.length) await scene.deleteEmbeddedDocuments("Token", tokens.map((t) => t.id));
   }
 
-  const cardIds = [stacks.deck, stacks.discard, stacks.playPile, stacks.hand]
+  const cardIds = [stacks.deck, stacks.discard, stacks.playPile, stacks.hand, stacks.experience]
     .filter(Boolean)
     .map((c) => c.id);
   if (cardIds.length) await Cards.deleteDocuments(cardIds);
@@ -95,7 +96,7 @@ export async function deleteExistingHero(user) {
  * @param {User} options.targetUser
  * @param {number} options.playerSlot
  * @param {Scene} options.scene
- * @returns {Promise<{actor: Actor, deck: Cards, hand: Cards, discard: Cards, playPile: Cards}>}
+ * @returns {Promise<{actor: Actor, deck: Cards, hand: Cards, discard: Cards, playPile: Cards, experience: Cards|null}>}
  */
 export async function prepareAndAssignHero({ heroPack, heroId, targetUser, playerSlot, scene }) {
   await deleteExistingHero(targetUser);
@@ -148,5 +149,7 @@ export async function prepareAndAssignHero({ heroPack, heroId, targetUser, playe
 
   await wirePlayRegion(scene, playerSlot, playPile);
 
-  return { actor, deck, hand, discard, playPile };
+  const experience = await ensureExperienceStack(actor, folder);
+
+  return { actor, deck, hand, discard, playPile, experience };
 }

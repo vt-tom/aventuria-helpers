@@ -1,0 +1,21 @@
+<section class="hand-sheet-inner">
+  {{#if empty}}
+  <p class="played-cards-empty">{{localize 'AVENTURIA_HELPERS.HeroTray.NoEnduranceCards'}}</p>
+  {{else}}
+  <ol class="cards">
+    {{#each cards}}
+    <li class="card{{#if this.exhausted}} exhausted{{/if}}" data-card-id="{{this.card.id}}" data-preview-src="{{this.frontImg}}">
+      {{#if this.exhausted}}
+      <img class="card-art" src="{{this.card.img}}" alt="{{this.card.name}}" data-action="toggleExhaust" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ReadyCard'}}">
+      <span class="card-exhaust-badge" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.Exhausted'}}" aria-hidden="true"><i class="fa-solid fa-rotate-right"></i></span>
+      {{else}}
+      <img class="card-art" src="{{this.card.img}}" alt="{{this.card.name}}" data-action="toggleExhaust" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ExhaustCard'}}">
+      {{/if}}
+      <div class="card-actions">
+        <button type="button" data-action="returnEndurance" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ReturnEnduranceCard'}}" aria-label="{{localize 'AVENTURIA_HELPERS.HeroTray.ReturnEnduranceCard'}}"><i class="fa-solid fa-hand" aria-hidden="true"></i></button>
+      </div>
+    </li>
+    {{/each}}
+  </ol>
+  {{/if}}
+</section>

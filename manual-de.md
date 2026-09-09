@@ -1,6 +1,6 @@
 # Handbuch: aventuria-helpers (Test-Version)
 
-Dieses Handbuch beschreibt die Kernfunktionen des Moduls `aventuria-helpers`: den neuen Charakterbogen, die Heldenablage mit Hand- und Ausgespielte-Karten-Fenster, die Erweiterungen am Kampf-Tracker, den Einrichtungs-Guide und das Abenteuer-Tool. Stand: erste Testversion, Rückmeldungen fließen in die nächste Überarbeitung ein.
+Dieses Handbuch beschreibt die Kernfunktionen des Moduls `aventuria-helpers`: den neuen Charakterbogen, die Heldenablage mit Hand- und Ausgespielte-Karten-Fenster, die Erweiterungen am Kampf-Tracker, den Einrichtungs-Guide, das Abenteuer-Tool sowie Abenteuerpunkte, Stufenaufstieg und das Verbessern von Aktionskarten. Stand: erste Testversion, Rückmeldungen fließen in die nächste Überarbeitung ein.
 
 ## 1. Neuer Charakterbogen
 
@@ -95,6 +95,18 @@ Alle Zahlen aktualisieren sich automatisch, sobald sich etwas an den eigenen Kar
 - **Rechtsklick** auf eine Karte öffnet ein Menü mit dem selteneren Fall "Zurück ins Deck mischen" - mischt die Karte direkt wieder ins Deck.
 - Genau wie beim Hand-Fenster öffnet ein erneuter Klick auf "Ausgespielte Karten ansehen" kein zweites Fenster, sondern holt das bereits offene nach vorne. Über das "X" in der Kopfleiste lässt sich das Fenster ganz normal schließen.
 
+### 2.5 Anderen Helden über die Heldenablage steuern (Solo-Spiel)
+
+Normalerweise steuert die Heldenablage immer den Helden, der dem eigenen Foundry-Benutzer zugewiesen ist. Wer solo mehrere Helden führen möchte, musste bisher pro Held einen eigenen Benutzer in einem zweiten Browser offen halten. Stattdessen lässt sich die Ablage jetzt vorübergehend auf den Helden eines anderen Spielers umstellen.
+
+- **Öffnen:** Der Personengruppen-Button oben in der Ablagen-Kopfleiste (links neben dem Zahnrad) öffnet ein Radialmenü mit allen Helden, die gerade im Spiel sind. Dasselbe Menü öffnet auch ein Rechtsklick auf das Heldenportrait.
+- **Wechseln:** Ein Klick auf ein Helden-Medaillon stellt die komplette Ablage auf diesen Helden um - Deck, Ablage, Hand, Ausdauer, ausgespielte Karten und der über das Portrait geöffnete Heldenbogen gehören ab sofort dem gewählten Helden. Das Medaillon in der Mitte des Radialmenüs schaltet zurück auf den eigenen Helden.
+- **Die eigene Heldenzuweisung ändert sich dabei nicht.** Der Wechsel gilt nur für die Ablage und die daraus geöffneten Fenster; alles andere (Macros wie "Held erschöpfen" usw.) bleibt beim eigenen Helden.
+- **Sichtbarer Hinweis:** Solange ein fremder Held gesteuert wird, zeigt die Ablage ein rotes Band ("Du steuerst: <Held> · <Spieler>") mit einem "Zurück zu meinem Helden"-Knopf. Der Papierkorb-Button (Held löschen) ist in diesem Modus ausgeblendet.
+- **Keine Dauereinstellung:** Nach einem Neuladen der Seite startet die Ablage wieder beim eigenen Helden.
+
+Das Umschalten funktioniert auch, wenn dem eigenen Benutzer selbst kein Held zugewiesen ist - praktisch für eine Spielleitung, die solo alle Helden führt.
+
 ## 3. Kampf-Tracker
 
 ### 3.1 Rotierende Reihenfolge statt Würfeln
@@ -170,3 +182,32 @@ Ein eigenständiges Fenster führt durch die zehn Standard-Abenteuer und ersetzt
 - **Nur eine Person gleichzeitig:** Damit nicht zwei Personen gleichzeitig blättern und sich gegenseitig die Seite wegziehen, ist das Tool ein manuell gesperrtes Ein-Personen-Werkzeug - wer es zuerst öffnet, sieht es normal, alle anderen sehen währenddessen eine Sperre mit dem Namen der Person, die gerade dran ist. Die Sperre hält, bis diese Person das Fenster schließt - es gibt kein automatisches Timeout.
 
 ![Sperr-Anzeige für alle anderen Teilnehmer, während jemand das Abenteuer-Tool nutzt.](assets/screenshots/adventure-locked.webp)
+
+## 6. Abenteuerpunkte, Stufenaufstieg und Aktionskarten verbessern
+
+Auf dem Charakterbogen (Teil 1) gibt es einen eigenen Bereich "Stufenaufstieg" - im neuen Charakterbogen ein eigenes Fähnchen in der linken Icon-Leiste, im alten Heldenbogen direkt unter der Sonderfertigkeit.
+
+### 6.1 Abenteuerpunkte-Konto
+
+Der Bereich zeigt oben den aktuellen Abenteuerpunkte-Stand des Helden. Mit den Plus-/Minus-Knöpfen lässt er sich von Hand anpassen (z.B. um am Abenteuerende vergebene Punkte einzutragen). Manuelle Anpassungen werden - wie bei den Lebenspunkten - nicht protokolliert.
+
+### 6.2 Heldenkarte und Talentkarte steigern
+
+In Aventuria besteht jeder Held aus zwei Karten, die getrennt hochgestuft werden. Der Bereich hat deshalb zwei "Steigern"-Knöpfe: einen für die Heldenkarte (Eigenschaften, Ausrüstung, Sonderfertigkeit) und einen für die Talentkarte (die acht Talente). Beide Stufen erscheinen zusätzlich als je ein kleines Medaillon (I / II / III) im Kopf des Bogens.
+
+- **Kosten:** je 3 Abenteuerpunkte pro Steigerung, unabhängig davon welche Karte. Reicht der Kontostand nicht, ist der Knopf deaktiviert.
+- **Vorschau:** Ein Klick auf "Steigern" öffnet einen Dialog, der Feld für Feld auflistet, was sich ändert ("Nahkampf 14 → 16", "Körperbeherrschung 6 → 8" usw.). Erst nach dem Bestätigen wird geschrieben und der Punktestand abgezogen.
+- **Maximum:** Stufe III ist das Höchste je Karte.
+- **Unterstützte Helden:** Zielwerte liegen für die zwölf Schnellstarter-Helden aus "Kelche der Macht" vor. Für andere Helden zeigt der Bereich "Nicht verfügbar" statt eines Steigern-Knopfs.
+
+### 6.3 Aktionskarten verbessern
+
+Zusätzlich zu Helden- und Talentkarte lässt sich das Heldendeck selbst verbessern: einzelne Aktionskarten gegen die gleichnamige, eine Stufe höhere Karte aus dem "Erfahrungsschatz" des Helden tauschen. Der Knopf "Aktionskarten verbessern" (bzw. "Öffnen") im Stufenaufstieg-Bereich öffnet dafür ein eigenes Fenster.
+
+- **Erfahrungsschatz:** Jede Helden-Profession hat einen eigenen Vorrat an Stufe-2/3-Varianten. Er wird beim Zuweisen eines Helden automatisch mit angelegt; Helden, die vor dieser Funktion zugewiesen wurden, bekommen ihn beim nächsten Weltstart automatisch nachgeliefert (oder per Knopf im Fenster, falls dort ein Hinweis erscheint).
+- **Auswahl:** Das Fenster listet jede mögliche Änderung als Zeile mit zwei Kartenbildern nebeneinander - links die aktuelle Deck-Karte, rechts die Zielkarte, dazwischen Pfeil und Stufenangabe. Mit der Maus über ein Kartenbild fahren zeigt eine große Vorschau.
+- **Kosten:** 1 Abenteuerpunkt je verbesserter Karte. Mehrere Karten lassen sich gleichzeitig ankreuzen; eine Fußzeile zeigt die laufende Summe (Anzahl, Netto-Abenteuerpunkte, Kontostand danach). Verrechnet wird erst beim gemeinsamen "Bestätigen".
+- **Zurückstufen:** Karten lassen sich auch wieder auf die niedrigere Stufe zurücktauschen - die dafür bezahlten Abenteuerpunkte werden dabei voll erstattet.
+- Das Fenster bleibt nach dem Bestätigen offen (für weitere Käufe); ein separater "Fertig"-Knopf schließt es.
+
+Als Steigerung angeboten werden nur exakt gleichnamige Karten - vereinzelte Namensabweichungen im offiziellen Kartenmaterial führen dazu, dass einzelne Karten nicht steigerbar sind.

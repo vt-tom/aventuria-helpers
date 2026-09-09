@@ -57,6 +57,7 @@ export class AventuriaHelpersCardHeroSheet extends AventuriaHelpersHeroSheet {
     context.tabs = {
       held: { active: this.tab === "held" },
       skills: { active: this.tab === "skills" },
+      levelup: { active: this.tab === "levelup" },
       categories: { active: this.tab === "categories" },
       images: { active: this.tab === "images" },
       items: { active: this.tab === "items" },
@@ -66,6 +67,7 @@ export class AventuriaHelpersCardHeroSheet extends AventuriaHelpersHeroSheet {
     context.navLeft = context.navigationSide === "left";
     context.navIcons = {
       skills: `${ICONS}talent.webp`,
+      levelup: `${ICONS}level-3.webp`,
     };
     context.icons.abilityToken = `${ICONS}ability-token.webp`;
     return context;

@@ -71,12 +71,14 @@
         <input type="text" name="name" value="{{actor.name}}" class="s-name" {{#unless editable}}disabled{{/unless}}>
         <div class="s-subline">
           <input type="text" name="system.profession" value="{{system.profession}}" class="s-profession" placeholder="{{localize 'AVENTURIA.Models.Hero.FIELDS.profession.label'}}" {{#unless editable}}disabled{{/unless}}>
-          <label class="s-level" data-tooltip="{{localize 'AVENTURIA.Models.Hero.FIELDS.level.label'}}">
-            <img src="{{icons.level}}" alt="">
-            <select name="system.level" {{#unless editable}}disabled{{/unless}}>
-              {{selectOptions levelChoices selected=system.level}}
-            </select>
-          </label>
+          <span class="s-level" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.CharacterArt'}}">
+            <img src="{{icons.heroLevel}}" alt="">
+            <strong>{{lookup levelChoices heroCardLevel}}</strong>
+          </span>
+          <span class="s-level" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroSheet.SkillCard'}}">
+            <img src="{{icons.skillLevel}}" alt="">
+            <strong>{{lookup levelChoices skillCardLevel}}</strong>
+          </span>
         </div>
       </div>
 
@@ -202,6 +204,52 @@
               data-action="toggleAbilityUsed"
               data-tooltip="{{#if abilityUsed}}{{localize 'AVENTURIA_HELPERS.HeroSheet.MarkUnused'}}{{else}}{{localize 'AVENTURIA_HELPERS.HeroSheet.AbilityUsedTooltip'}}{{/if}}"
             ><span class="icon-badge"><img src="{{icons.exhaust}}" alt=""></span>{{#if abilityUsed}}{{localize "AVENTURIA_HELPERS.HeroSheet.AbilityUsed"}}{{else}}{{localize "AVENTURIA_HELPERS.HeroSheet.Ready"}}{{/if}}</button>
+          </div>
+        </div>
+
+        <div class="levelup">
+          <h3>{{localize "AVENTURIA_HELPERS.LevelUp.SectionTitle"}}</h3>
+          <div class="levelup-ap">
+            <span class="tag muted">{{localize "AVENTURIA_HELPERS.LevelUp.AdventurePoints"}}</span>
+            <button type="button" class="always-active" data-action="adjustAdventurePoints" data-delta="-1" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.DecreaseAp'}}"><i class="fa-solid fa-minus"></i></button>
+            <strong>{{adventurePoints}}</strong>
+            <button type="button" class="always-active" data-action="adjustAdventurePoints" data-delta="1" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.IncreaseAp'}}"><i class="fa-solid fa-plus"></i></button>
+          </div>
+          <div class="levelup-tracks">
+            <div class="levelup-track">
+              <span>{{localize "AVENTURIA_HELPERS.HeroSheet.CharacterArt"}} {{lookup levelChoices heroCardLevel}}</span>
+              <span class="levelup-track-actions">
+                {{#if levelUpKnown}}
+                  {{#unless levelUpHero.atMax}}
+                    <button type="button" class="always-active" data-action="levelUp" data-track="hero" {{#if levelUpHero.dataMissing}}disabled data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.DataMissing'}}"{{/if}}>{{localize "AVENTURIA_HELPERS.LevelUp.LevelUpButton"}}</button>
+                  {{else}}
+                    <span class="muted">{{localize "AVENTURIA_HELPERS.LevelUp.AtMax"}}</span>
+                  {{/unless}}
+                {{else}}
+                  <span class="muted" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.NotAvailable'}}">{{localize "AVENTURIA_HELPERS.LevelUp.NotAvailableShort"}}</span>
+                {{/if}}
+                {{#if levelDownHero.hasSnapshot}}
+                  <button type="button" class="always-active levelup-undo" data-action="levelUp" data-track="hero" data-direction="down" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.DowngradeTooltip'}}">{{localize "AVENTURIA_HELPERS.LevelUp.DowngradeButton"}}</button>
+                {{/if}}
+              </span>
+            </div>
+            <div class="levelup-track">
+              <span>{{localize "AVENTURIA_HELPERS.HeroSheet.SkillCard"}} {{lookup levelChoices skillCardLevel}}</span>
+              <span class="levelup-track-actions">
+                {{#if levelUpKnown}}
+                  {{#unless levelUpSkill.atMax}}
+                    <button type="button" class="always-active" data-action="levelUp" data-track="skill" {{#if levelUpSkill.dataMissing}}disabled data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.DataMissing'}}"{{/if}}>{{localize "AVENTURIA_HELPERS.LevelUp.LevelUpButton"}}</button>
+                  {{else}}
+                    <span class="muted">{{localize "AVENTURIA_HELPERS.LevelUp.AtMax"}}</span>
+                  {{/unless}}
+                {{else}}
+                  <span class="muted" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.NotAvailable'}}">{{localize "AVENTURIA_HELPERS.LevelUp.NotAvailableShort"}}</span>
+                {{/if}}
+                {{#if levelDownSkill.hasSnapshot}}
+                  <button type="button" class="always-active levelup-undo" data-action="levelUp" data-track="skill" data-direction="down" data-tooltip="{{localize 'AVENTURIA_HELPERS.LevelUp.DowngradeTooltip'}}">{{localize "AVENTURIA_HELPERS.LevelUp.DowngradeButton"}}</button>
+                {{/if}}
+              </span>
+            </div>
           </div>
         </div>
       </section>

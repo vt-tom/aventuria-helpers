@@ -31,7 +31,7 @@
  * `hand-sheet.mjs` for the full reasoning, same lazy-build pattern here.
  */
 
-import { resolveStacks } from "../cards/stacks.mjs";
+import { resolveSiblingStacks } from "../cards/stacks.mjs";
 import {
   discardPlayedCard,
   returnPlayedCardToHand,
@@ -162,7 +162,7 @@ export function registerPlayedCardsSheet() {
           icon: "<i class=\"fa-solid fa-fw fa-hand\"></i>",
           callback: async (li) => {
             const card = this.document.cards.get(li.dataset.cardId);
-            const stacks = resolveStacks();
+            const stacks = resolveSiblingStacks(this.document);
             if (!stacks?.hand) return;
             await returnPlayedCardToHand(card, stacks.hand);
           },
@@ -172,7 +172,7 @@ export function registerPlayedCardsSheet() {
           icon: "<i class=\"fa-solid fa-fw fa-trash-can\"></i>",
           callback: async (li) => {
             const card = this.document.cards.get(li.dataset.cardId);
-            const stacks = resolveStacks();
+            const stacks = resolveSiblingStacks(this.document);
             if (!stacks?.discard) return;
             await discardPlayedCard(card, stacks.discard);
           },
@@ -182,7 +182,7 @@ export function registerPlayedCardsSheet() {
           icon: "<i class=\"fa-solid fa-fw fa-shuffle\"></i>",
           callback: async (li) => {
             const card = this.document.cards.get(li.dataset.cardId);
-            const stacks = resolveStacks();
+            const stacks = resolveSiblingStacks(this.document);
             if (!stacks?.deck) return;
             await returnPlayedCardToDeck(card, stacks.deck);
           },

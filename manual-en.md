@@ -1,6 +1,6 @@
 # Manual: aventuria-helpers (Test Version)
 
-This manual describes the core features of the `aventuria-helpers` module: the new character sheet, the hero tray with the hand and played-cards windows, the combat tracker extensions, the setup guide, and the adventure tool. Status: first test version, feedback will flow into the next revision.
+This manual describes the core features of the `aventuria-helpers` module: the new character sheet, the hero tray with the hand and played-cards windows, the combat tracker extensions, the setup guide, the adventure tool, and adventure points, leveling up and upgrading action cards. Status: first test version, feedback will flow into the next revision.
 
 ## 1. New Character Sheet
 
@@ -95,6 +95,18 @@ All numbers update automatically as soon as anything changes about your own card
 - **Right-click** on a card opens a menu with the rarer "Shuffle back into deck" option - shuffles the card straight back into the deck.
 - Just like the hand window, clicking "View played cards" again doesn't open a second window, it brings the already-open one to the front. The "X" in the header closes the window normally.
 
+### 2.5 Controlling Another Hero via the Hero Tray (Solo Play)
+
+Normally the hero tray always drives the hero assigned to your own Foundry user. Anyone running several heroes solo previously had to keep a separate user open in a second browser per hero. Instead, the tray can now be pointed at another player's hero temporarily.
+
+- **Opening:** the people-group button at the top of the tray's header bar (left of the gear) opens a radial menu of every hero currently in play. A right-click on the hero portrait opens the same menu.
+- **Switching:** clicking a hero medallion points the entire tray at that hero - deck, discard pile, hand, Ausdauer, played cards, and the hero sheet opened from the portrait all belong to the chosen hero from then on. The medallion in the centre of the radial menu switches back to your own hero.
+- **Your own hero assignment does not change.** The switch only affects the tray and the windows opened from it; everything else (macros like "Exhaust Hero", etc.) stays on your own hero.
+- **Visible indicator:** while a foreign hero is being controlled, the tray shows a red banner ("Du steuerst: <hero> · <player>") with a "Back to my hero" button. The trash-can button (delete hero) is hidden in this mode.
+- **Not a persistent setting:** after a page reload the tray starts back on your own hero.
+
+Switching also works when your own user has no hero assigned at all - handy for a GM running every hero solo.
+
 ## 3. Combat Tracker
 
 ### 3.1 Rotating Order Instead of Rolling
@@ -170,3 +182,32 @@ A dedicated window walks you through the ten standard adventures, replacing manu
 - **Only one person at a time:** so two people can't flip pages at once and pull the page out from under each other, the tool is a manually-locked, one-person-at-a-time tool - whoever opens it first sees it normally, everyone else sees a lock with that person's name in the meantime. The lock holds until that person closes the window - there's no automatic timeout.
 
 ![Lock display for all other participants while someone is using the adventure tool.](assets/screenshots/adventure-locked.webp)
+
+## 6. Adventure Points, Leveling Up, and Upgrading Action Cards
+
+The character sheet (part 1) has a dedicated "Level Up" area - a separate tab flag in the left icon rail on the new character sheet, directly below the special ability on the old hero sheet.
+
+### 6.1 Adventure Point Account
+
+The area shows the hero's current adventure point total at the top. The plus/minus buttons adjust it by hand (e.g. to enter points awarded at the end of an adventure). Manual adjustments are - like life points - not logged.
+
+### 6.2 Leveling Up the Hero Card and the Skill Card
+
+In Aventuria every hero consists of two cards that are leveled up separately. The area therefore has two "Level Up" buttons: one for the hero card (attributes, equipment, special ability) and one for the skill card (the eight skills). Both levels also appear as a small medallion (I / II / III) in the sheet header.
+
+- **Cost:** 3 adventure points per level-up, regardless of which card. If the balance isn't enough, the button is disabled.
+- **Preview:** clicking "Level Up" opens a dialog that lists field by field what will change ("Melee 14 → 16", "Body 6 → 8", etc.). Nothing is written and no points are deducted until you confirm.
+- **Maximum:** Level III is the highest per card.
+- **Supported heroes:** target values are available for the twelve Quick Start heroes from "Chalices of Power". For other heroes the area shows "Not available" instead of a level-up button.
+
+### 6.3 Upgrading Action Cards
+
+Besides the hero and skill card, the hero deck itself can be upgraded: swap individual action cards for the same-named, one-level-higher card from the hero's "Proficiency Stash". The "Upgrade Action Cards" (or "Open") button in the Level Up area opens a dedicated window for this.
+
+- **Proficiency Stash:** every hero profession has its own supply of level 2/3 variants. It is created automatically when a hero is assigned; heroes assigned before this feature existed receive it automatically on the next world start (or via a button in the window if a hint appears there).
+- **Selection:** the window lists every possible change as a row with two card images side by side - the current deck card on the left, the target card on the right, an arrow and level label in between. Hovering a card image shows a large preview.
+- **Cost:** 1 adventure point per upgraded card. Several cards can be checked at once; a footer shows the running total (count, net adventure points, resulting balance). Nothing is charged until the combined "Confirm".
+- **Downgrading:** cards can also be swapped back down to the lower level - the adventure points paid for them are fully refunded.
+- The window stays open after confirming (for further purchases); a separate "Done" button closes it.
+
+Only exactly same-named cards are offered as an upgrade - occasional name discrepancies in the official card material mean some cards can't be upgraded.

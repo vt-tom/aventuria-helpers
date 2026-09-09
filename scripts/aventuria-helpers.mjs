@@ -10,8 +10,11 @@ import { registerCombat, registerEnemyPhaseCombatant, registerRoundEndCombatant 
 import { registerHeroTray } from "./apps/hero-tray.mjs";
 import { registerHandSheet } from "./sheets/hand-sheet.mjs";
 import { registerPlayedCardsSheet } from "./sheets/played-cards-sheet.mjs";
+import { registerEnduranceCardsSheet } from "./sheets/endurance-cards-sheet.mjs";
 import { registerPlayerSlotAssignments } from "./cards/player-slots.mjs";
 import { registerAdventureState } from "./cards/adventure-state.mjs";
+import { registerExperienceStackMigration, migrateExperienceStacks } from "./cards/experience-stack.mjs";
+import { registerCardPlacementCleanup, cleanUpBrokenCardPlacements } from "./cards/migrate-card-placements.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 
@@ -26,7 +29,7 @@ Hooks.once("init", () => {
   // Manually-moved position of the Hand/Ausgespielte-Karten sheets, so it survives fully
   // closing and reopening them - see DockableSheetMixin's own doc comment (TODO.md Bugs,
   // 2026-08-24). `{}` means "no override, stay docked".
-  for (const key of ["handSheetPosition", "playedCardsSheetPosition"]) {
+  for (const key of ["handSheetPosition", "playedCardsSheetPosition", "enduranceCardsSheetPosition"]) {
     game.settings.register(MODULE_ID, key, {
       scope: "client",
       config: false,
@@ -50,6 +53,8 @@ Hooks.once("init", () => {
   registerChangelogAutoOpen();
   registerPlayerSlotAssignments();
   registerAdventureState();
+  registerExperienceStackMigration();
+  registerCardPlacementCleanup();
   registerCombat();
   registerEnemyPhaseCombatant();
   registerRoundEndCombatant();
@@ -57,9 +62,11 @@ Hooks.once("init", () => {
   // sets up - safe here since relationships.requires guarantees it ran first.
   registerHandSheet();
   registerPlayedCardsSheet();
+  registerEnduranceCardsSheet();
   registerHeroTray();
 
   game.modules.get(MODULE_ID).api = {
-    resetCardRotations, openWelcomeScreen, cleanUpBoard, exhaustHero, readyHero,
+    resetCardRotations, openWelcomeScreen, cleanUpBoard, exhaustHero, readyHero, migrateExperienceStacks,
+    cleanUpBrokenCardPlacements,
   };
 });

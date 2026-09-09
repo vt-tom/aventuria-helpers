@@ -2,6 +2,9 @@
   <div class="tray-bar">
     <span class="tray-label">{{localize 'AVENTURIA_HELPERS.HeroTray.Title'}}</span>
     <div class="tray-bar-actions">
+      <button type="button" class="tray-switch" data-action="switchHero" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.SwitchHero'}}">
+        <i class="fa-solid fa-users"></i>
+      </button>
       <button type="button" class="tray-config" data-action="openConfig" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.Config'}}">
         <i class="fa-solid fa-gear"></i>
       </button>
@@ -13,6 +16,15 @@
       </button>
     </div>
   </div>
+
+  {{#if foreign}}
+  <div class="tray-foreign">
+    <span class="tray-foreign-label">{{localize 'AVENTURIA_HELPERS.HeroTray.ForeignActive'}}: {{actor.name}} · {{playerName}}</span>
+    <button type="button" class="tray-foreign-back" data-action="switchHomeHero" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.BackToOwn'}}">
+      <i class="fa-solid fa-rotate-left"></i>
+    </button>
+  </div>
+  {{/if}}
 
   {{#if empty}}
   <button type="button" class="tray-pick" data-action="pickHero" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.PickHero'}}">
@@ -26,9 +38,11 @@
         <span class="tray-player">{{playerName}}</span>
         <span class="tray-hero" data-tooltip="{{actor.name}}">{{actor.name}}</span>
       </div>
+      {{#unless foreign}}
       <button type="button" class="tray-delete" data-action="deleteHero" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.DeleteHero'}}">
         <i class="fa-solid fa-trash-can"></i>
       </button>
+      {{/unless}}
     </header>
 
     <div class="tray-stack">
@@ -94,6 +108,7 @@
           <button type="button" data-action="readyEndurance" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ReadyEndurance'}}" {{#unless endurance.spent}}disabled{{/unless}}><i class="fa-solid fa-rotate-left"></i></button>
         </div>
       </div>
+      <button type="button" class="tray-endurance-view" data-action="viewEnduranceCards" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ViewEnduranceCards'}}"><i class="fa-solid fa-eye"></i></button>
     </div>
     {{/if}}
   </div>
