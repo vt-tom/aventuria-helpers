@@ -1,9 +1,9 @@
 {
-  "_id": "rdnWEOgmSzFoxP59",
+  "_id": "jW6DcaiQzqvXfZN0",
   "name": "Aventuria Helpers - Changelog (deutsch)",
   "pages": [
     {
-      "_id": "HUQG6WHXirbULrJJ",
+      "_id": "md8Poes4EXda0OYY",
       "name": "Änderungen – Aventuria Helfer",
       "type": "text",
       "system": {},
@@ -31,7 +31,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209259,
+        "createdTime": 1788951589256,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -39,10 +39,127 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rdnWEOgmSzFoxP59.HUQG6WHXirbULrJJ"
+      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.md8Poes4EXda0OYY"
     },
     {
-      "_id": "EE6J0Hn1T17fmr8U",
+      "_id": "AvNi94uP5RZJMd4i",
+      "name": "0.3.0",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>Neues Fenster \"Ausdauerkarten\":</strong> Über den Auge-Button in der Ausdauer-Zeile der Heldenablage öffnet sich ein Fenster mit allen als Ausdauer gespielten Karten. Ein Klick auf eine Karte erschöpft sie bzw. macht sie wieder bereit, der Button darunter nimmt sie zurück auf die Hand, und über das Rechtsklick-Menü lässt sie sich ablegen. Beim Darüberfahren wird die Vorderseite der Karte groß angezeigt (die Karte liegt ja verdeckt). Das Fenster dockt über der Heldenablage an und lässt sich wie die anderen Kartenfenster frei verschieben und per \"…\"-Menü zurücksetzen.</li>\n<li><strong>Anderen Helden über die Heldenablage steuern (Solo-Spiel):</strong> Über den neuen Helden-Button in der Kopfleiste der Heldenablage (oder per Rechtsklick auf das Portrait) öffnet sich ein Radialmenü mit allen im Spiel befindlichen Helden. Wählst du dort einen anderen Helden, steuert die Heldenablage ab sofort dessen Karten, Hand, Ausdauer und ausgespielte Karten - praktisch, wenn du solo mehrere Helden führst, ohne dafür einen zweiten Browser zu öffnen. Deine eigene Heldenzuordnung bleibt dabei unverändert; ein rotes Band und ein \"Zurück zu meinem Helden\"-Button zeigen, dass gerade ein fremder Held gesteuert wird. Beim nächsten Neuladen startet die Ablage wieder bei deinem eigenen Helden.</li>\n<li><strong>Abenteuerpunkte & Stufenaufstieg:</strong> Der Charakterbogen hat jetzt einen Bereich \"Stufenaufstieg\" mit einem Abenteuerpunkte-Konto (manuell per +/- eintragbar) und zwei unabhängigen \"Steigern\"-Buttons für Heldenkarte und Talentkarte (Kosten: je 3 Abenteuerpunkte, maximal Stufe III). Ein Dialog zeigt vorher genau, welche Werte sich ändern (\"Nahkampf 14 → 16\" usw.) und muss bestätigt werden, bevor etwas geschrieben wird. Verfügbar für die 12 Schnellstarter-Helden aus \"Kelche der Macht\". Eine Steigerung lässt sich über einen \"Zurückstufen\"-Button wieder rückgängig machen (Werte auf den vorherigen Stand, Abenteuerpunkte zurück) - je Karte immer die zuletzt durchgeführte Steigerung. Steigerungen, die vor diesem Update gemacht wurden, lassen sich nicht zurückstufen (die alten Werte wurden damals noch nicht gespeichert).</li>\n<li><strong>Aktionskarten verbessern:</strong> Im \"Stufenaufstieg\"-Bereich lässt sich jetzt auch das Heldendeck selbst verbessern - einzelne Aktionskarten gegen die gleichnamige, eine Stufe höhere Karte aus dem Erfahrungsschatz des Helden tauschen (1 Abenteuerpunkt je Karte). Ein neues Fenster zeigt alle möglichen Karten paarweise nebeneinander (aktuelle Karte und Zielkarte, mit vergrößerter Vorschau bei Mouseover), mehrere Karten lassen sich gleichzeitig markieren und in einem Schritt bestätigen. Karten lassen sich auch wieder zurückstufen - die dafür bezahlten Abenteuerpunkte werden dabei vollständig erstattet.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>Eine Karte ausspielen, über das Sheet zurück auf die Hand nehmen und erneut ausspielen ließ die Karte bisher von der Spieloberfläche verschwinden (sie hing unsichtbar im Im-Spiel-Stapel fest); bei Ausdauerkarten tauchte sie danach im falschen Fenster auf. Behoben. Bereits betroffene Welten werden beim nächsten Start automatisch bereinigt – kein manuelles Zurücksetzen nötig.</li>\n<li>Bereits vor dem \"Aktionskarten verbessern\"-Feature zugewiesene Helden bekommen ihren Erfahrungsschatz jetzt automatisch beim nächsten Weltstart nachgeliefert, statt dass ihn erst jemand über den Hinweis-Button im Dialog manuell anlegen muss.</li>\n<li>Aktionskarten verbessern bzw. zurückstufen konnte mit der Konsolenmeldung \"The _id … already exists\" fehlschlagen und legte im Heldendeck stillschweigend Kartendubletten an, statt die Karte sauber gegen die Erfahrungsschatz-Variante zu tauschen. Behoben. Hinweis: bereits vor diesem Fix entstandene Dubletten im Deck müssen einmalig von Hand entfernt werden.</li>\n</ul>",
+        "markdown": "### Features\r\n- **Neues Fenster \"Ausdauerkarten\":** Über den Auge-Button in der Ausdauer-Zeile der Heldenablage öffnet sich ein Fenster mit allen als Ausdauer gespielten Karten. Ein Klick auf eine Karte erschöpft sie bzw. macht sie wieder bereit, der Button darunter nimmt sie zurück auf die Hand, und über das Rechtsklick-Menü lässt sie sich ablegen. Beim Darüberfahren wird die Vorderseite der Karte groß angezeigt (die Karte liegt ja verdeckt). Das Fenster dockt über der Heldenablage an und lässt sich wie die anderen Kartenfenster frei verschieben und per \"…\"-Menü zurücksetzen.\r\n- **Anderen Helden über die Heldenablage steuern (Solo-Spiel):** Über den neuen Helden-Button in der Kopfleiste der Heldenablage (oder per Rechtsklick auf das Portrait) öffnet sich ein Radialmenü mit allen im Spiel befindlichen Helden. Wählst du dort einen anderen Helden, steuert die Heldenablage ab sofort dessen Karten, Hand, Ausdauer und ausgespielte Karten - praktisch, wenn du solo mehrere Helden führst, ohne dafür einen zweiten Browser zu öffnen. Deine eigene Heldenzuordnung bleibt dabei unverändert; ein rotes Band und ein \"Zurück zu meinem Helden\"-Button zeigen, dass gerade ein fremder Held gesteuert wird. Beim nächsten Neuladen startet die Ablage wieder bei deinem eigenen Helden.\r\n- **Abenteuerpunkte & Stufenaufstieg:** Der Charakterbogen hat jetzt einen Bereich \"Stufenaufstieg\" mit einem Abenteuerpunkte-Konto (manuell per +/- eintragbar) und zwei unabhängigen \"Steigern\"-Buttons für Heldenkarte und Talentkarte (Kosten: je 3 Abenteuerpunkte, maximal Stufe III). Ein Dialog zeigt vorher genau, welche Werte sich ändern (\"Nahkampf 14 → 16\" usw.) und muss bestätigt werden, bevor etwas geschrieben wird. Verfügbar für die 12 Schnellstarter-Helden aus \"Kelche der Macht\". Eine Steigerung lässt sich über einen \"Zurückstufen\"-Button wieder rückgängig machen (Werte auf den vorherigen Stand, Abenteuerpunkte zurück) - je Karte immer die zuletzt durchgeführte Steigerung. Steigerungen, die vor diesem Update gemacht wurden, lassen sich nicht zurückstufen (die alten Werte wurden damals noch nicht gespeichert).\r\n- **Aktionskarten verbessern:** Im \"Stufenaufstieg\"-Bereich lässt sich jetzt auch das Heldendeck selbst verbessern - einzelne Aktionskarten gegen die gleichnamige, eine Stufe höhere Karte aus dem Erfahrungsschatz des Helden tauschen (1 Abenteuerpunkt je Karte). Ein neues Fenster zeigt alle möglichen Karten paarweise nebeneinander (aktuelle Karte und Zielkarte, mit vergrößerter Vorschau bei Mouseover), mehrere Karten lassen sich gleichzeitig markieren und in einem Schritt bestätigen. Karten lassen sich auch wieder zurückstufen - die dafür bezahlten Abenteuerpunkte werden dabei vollständig erstattet.\r\n\r\n### Bugs\r\n- Eine Karte ausspielen, über das Sheet zurück auf die Hand nehmen und erneut ausspielen ließ die Karte bisher von der Spieloberfläche verschwinden (sie hing unsichtbar im Im-Spiel-Stapel fest); bei Ausdauerkarten tauchte sie danach im falschen Fenster auf. Behoben. Bereits betroffene Welten werden beim nächsten Start automatisch bereinigt – kein manuelles Zurücksetzen nötig.\r\n- Bereits vor dem \"Aktionskarten verbessern\"-Feature zugewiesene Helden bekommen ihren Erfahrungsschatz jetzt automatisch beim nächsten Weltstart nachgeliefert, statt dass ihn erst jemand über den Hinweis-Button im Dialog manuell anlegen muss.\r\n- Aktionskarten verbessern bzw. zurückstufen konnte mit der Konsolenmeldung \"The _id … already exists\" fehlschlagen und legte im Heldendeck stillschweigend Kartendubletten an, statt die Karte sauber gegen die Erfahrungsschatz-Variante zu tauschen. Behoben. Hinweis: bereits vor diesem Fix entstandene Dubletten im Deck müssen einmalig von Hand entfernt werden.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 100000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1788951589256,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.AvNi94uP5RZJMd4i"
+    },
+    {
+      "_id": "1aJheGcIScgXEBOD",
+      "name": "0.2.3",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>Heldentoken dreht sich mit der Ausrüstung mit:</strong> Wird die Ausrüstung eines Helden erschöpft (per Wurf, Sheet-Button oder Macro), dreht sich sein Token auf der Szene automatisch um 90° im Uhrzeigersinn - beim Bereitmachen (auch automatisch am Ende jeder Kampfrunde) dreht er sich wieder zurück.</li>\n</ul>",
+        "markdown": "### Features\r\n- **Heldentoken dreht sich mit der Ausrüstung mit:** Wird die Ausrüstung eines Helden erschöpft (per Wurf, Sheet-Button oder Macro), dreht sich sein Token auf der Szene automatisch um 90° im Uhrzeigersinn - beim Bereitmachen (auch automatisch am Ende jeder Kampfrunde) dreht er sich wieder zurück.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 200000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1788951589256,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.1aJheGcIScgXEBOD"
+    },
+    {
+      "_id": "jklnlQgy2mTH01Sj",
+      "name": "0.2.2",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>\"Karte erschöpfen\" im Ausgespielte-Karten-Fenster:</strong> Jede ausgespielte Karte hat jetzt einen eigenen Erschöpfen/Bereit-machen-Button, erkennbar an einer gedimmten Kartendarstellung im erschöpften Zustand. \"Ablegen\" und \"Zurück auf die Hand nehmen\" sind dafür (zusammen mit dem bereits vorhandenen \"Zurück ins Deck mischen\") ins Rechtsklick-Menü der Karte gewandert.</li>\n<li><strong>Ausgespielte-Karten-Fenster schließt jetzt bündig mit der Heldenablage ab</strong>, statt mit festem Abstand unter der Hand zu docken und dabei sichtbar Leerraum darunter zu lassen.</li>\n<li><strong>Neue Macros \"Held erschöpfen\" und \"Held bereitmachen\":</strong> wirken auf den ausgewählten Heldentoken (oder den eigenen zugewiesenen Helden), gleicher Effekt wie der bereits vorhandene Erschöpfen-Button auf dem Heldenbogen. Am Ende jeder Kampfrunde werden jetzt zusätzlich automatisch alle erschöpften Helden bereitgemacht, zusammen mit der bestehenden Abfrage zum Kartenzurückdrehen.</li>\n<li><strong>Die \"Ansehen\"-Buttons in der Heldenablage</strong> (Deck, Ablage, Hand, Ausgespielte Karten) schließen das jeweilige Fenster jetzt auch wieder, wenn man sie bei bereits geöffnetem Fenster erneut anklickt.</li>\n<li><strong>Hand- und Ausgespielte-Karten-Fenster merken sich jetzt eine per Hand verschobene Position</strong>, auch wenn das Fenster zwischendurch komplett geschlossen und wieder geöffnet wird.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>Wurde das Ausgespielte-Karten-Fenster geöffnet, bevor das Hand-Fenster offen war, blieb es beim späteren Öffnen der Hand dauerhaft auf deren Position stehen statt automatisch darunter zu rutschen (auch \"Position zurücksetzen\" half nicht) - behoben.</li>\n<li>Eine Erschwernis/Erleichterung bei einer Probe wurde in der Ergebnis-Chatkarte fälschlich als Abzug vom Würfelergebnis dargestellt statt als Änderung des Zielwerts - das Ergebnis (bestanden/nicht bestanden) war davon nicht betroffen, nur die Anzeige ist jetzt korrekt.</li>\n<li>Die Heldenablage hatte ohne zugewiesenen Helden keinen sichtbaren Hintergrund - behoben.</li>\n<li>\"Board aufräumen\" übersah Karten, die während des Spiels automatisch in den gemeinsamen \"Abenteuerkarten im Spiel\"- bzw. \"Schergen im Spiel\"-Stapel gewandert waren - werden jetzt ebenfalls zurück in ihr Deck gemischt.</li>\n<li>Bei kleinem Browserfenster konnte die Heldenablage hinter Foundrys Makro-Leiste verschwinden - behoben.</li>\n<li>Beim Lösen des Hand- oder Ausgespielte-Karten-Fensters in ein eigenes Browser-Fenster (\"Detach Window\") war die große Karten-Vorschau beim Überfahren einer Karte nicht sichtbar - erscheint jetzt zentriert auf der Spieloberfläche im Hauptfenster.</li>\n<li>Im Dark Mode war die Beschriftung \"Modifikator\" im Proben-Dialog kaum lesbar - behoben.</li>\n<li>Im Dark Mode waren die Überschrift \"Aventuria\" und Schritttitel wie \"Held zuweisen\" im Willkommensbildschirm kaum lesbar - behoben.</li>\n<li>Im Dark Mode waren die Seitentitel \"Ausrüstung\"/\"Sonderfertigkeiten\" im Charakterbogen kaum lesbar, und die Tabelle \"Erlaubte Aktionskarten\" hatte einen schmutzig-grauen statt hellen Hintergrund - behoben.</li>\n</ul>",
+        "markdown": "### Features\r\n- **\"Karte erschöpfen\" im Ausgespielte-Karten-Fenster:** Jede ausgespielte Karte hat jetzt einen eigenen Erschöpfen/Bereit-machen-Button, erkennbar an einer gedimmten Kartendarstellung im erschöpften Zustand. \"Ablegen\" und \"Zurück auf die Hand nehmen\" sind dafür (zusammen mit dem bereits vorhandenen \"Zurück ins Deck mischen\") ins Rechtsklick-Menü der Karte gewandert.\r\n- **Ausgespielte-Karten-Fenster schließt jetzt bündig mit der Heldenablage ab**, statt mit festem Abstand unter der Hand zu docken und dabei sichtbar Leerraum darunter zu lassen.\r\n- **Neue Macros \"Held erschöpfen\" und \"Held bereitmachen\":** wirken auf den ausgewählten Heldentoken (oder den eigenen zugewiesenen Helden), gleicher Effekt wie der bereits vorhandene Erschöpfen-Button auf dem Heldenbogen. Am Ende jeder Kampfrunde werden jetzt zusätzlich automatisch alle erschöpften Helden bereitgemacht, zusammen mit der bestehenden Abfrage zum Kartenzurückdrehen.\r\n- **Die \"Ansehen\"-Buttons in der Heldenablage** (Deck, Ablage, Hand, Ausgespielte Karten) schließen das jeweilige Fenster jetzt auch wieder, wenn man sie bei bereits geöffnetem Fenster erneut anklickt.\r\n- **Hand- und Ausgespielte-Karten-Fenster merken sich jetzt eine per Hand verschobene Position**, auch wenn das Fenster zwischendurch komplett geschlossen und wieder geöffnet wird.\r\n\r\n### Bugs\r\n- Wurde das Ausgespielte-Karten-Fenster geöffnet, bevor das Hand-Fenster offen war, blieb es beim späteren Öffnen der Hand dauerhaft auf deren Position stehen statt automatisch darunter zu rutschen (auch \"Position zurücksetzen\" half nicht) - behoben.\r\n- Eine Erschwernis/Erleichterung bei einer Probe wurde in der Ergebnis-Chatkarte fälschlich als Abzug vom Würfelergebnis dargestellt statt als Änderung des Zielwerts - das Ergebnis (bestanden/nicht bestanden) war davon nicht betroffen, nur die Anzeige ist jetzt korrekt.\r\n- Die Heldenablage hatte ohne zugewiesenen Helden keinen sichtbaren Hintergrund - behoben.\r\n- \"Board aufräumen\" übersah Karten, die während des Spiels automatisch in den gemeinsamen \"Abenteuerkarten im Spiel\"- bzw. \"Schergen im Spiel\"-Stapel gewandert waren - werden jetzt ebenfalls zurück in ihr Deck gemischt.\r\n- Bei kleinem Browserfenster konnte die Heldenablage hinter Foundrys Makro-Leiste verschwinden - behoben.\r\n- Beim Lösen des Hand- oder Ausgespielte-Karten-Fensters in ein eigenes Browser-Fenster (\"Detach Window\") war die große Karten-Vorschau beim Überfahren einer Karte nicht sichtbar - erscheint jetzt zentriert auf der Spieloberfläche im Hauptfenster.\r\n- Im Dark Mode war die Beschriftung \"Modifikator\" im Proben-Dialog kaum lesbar - behoben.\r\n- Im Dark Mode waren die Überschrift \"Aventuria\" und Schritttitel wie \"Held zuweisen\" im Willkommensbildschirm kaum lesbar - behoben.\r\n- Im Dark Mode waren die Seitentitel \"Ausrüstung\"/\"Sonderfertigkeiten\" im Charakterbogen kaum lesbar, und die Tabelle \"Erlaubte Aktionskarten\" hatte einen schmutzig-grauen statt hellen Hintergrund - behoben.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 300000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1788951589256,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.jklnlQgy2mTH01Sj"
+    },
+    {
+      "_id": "5OOXeFGmc7tzwpps",
       "name": "0.2.0 (Beta)",
       "type": "text",
       "system": {},
@@ -62,7 +179,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 100000,
+      "sort": 400000,
       "ownership": {
         "default": -1
       },
@@ -70,7 +187,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209259,
+        "createdTime": 1788951589256,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -78,10 +195,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rdnWEOgmSzFoxP59.EE6J0Hn1T17fmr8U"
+      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.5OOXeFGmc7tzwpps"
     },
     {
-      "_id": "i5aAnyuJYFew9sM3",
+      "_id": "5N5JGZ2nAsLR6CIr",
       "name": "0.1.5",
       "type": "text",
       "system": {},
@@ -101,7 +218,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 200000,
+      "sort": 500000,
       "ownership": {
         "default": -1
       },
@@ -109,7 +226,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209259,
+        "createdTime": 1788951589256,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -117,10 +234,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rdnWEOgmSzFoxP59.i5aAnyuJYFew9sM3"
+      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.5N5JGZ2nAsLR6CIr"
     },
     {
-      "_id": "bVg76zJlpwSXWmSB",
+      "_id": "QmIrU8OgPYwbsS8Q",
       "name": "0.1.4.1",
       "type": "text",
       "system": {},
@@ -140,7 +257,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 300000,
+      "sort": 600000,
       "ownership": {
         "default": -1
       },
@@ -148,7 +265,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209259,
+        "createdTime": 1788951589256,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -156,10 +273,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rdnWEOgmSzFoxP59.bVg76zJlpwSXWmSB"
+      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.QmIrU8OgPYwbsS8Q"
     },
     {
-      "_id": "V6FZGowYSWQDIZhq",
+      "_id": "SKSoZ3wNykbGvl5F",
       "name": "0.1.4",
       "type": "text",
       "system": {},
@@ -179,7 +296,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 400000,
+      "sort": 700000,
       "ownership": {
         "default": -1
       },
@@ -187,7 +304,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209259,
+        "createdTime": 1788951589256,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -195,10 +312,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rdnWEOgmSzFoxP59.V6FZGowYSWQDIZhq"
+      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.SKSoZ3wNykbGvl5F"
     },
     {
-      "_id": "awv42Ra48LJbWRSZ",
+      "_id": "TQCAT9N6h9frVV6b",
       "name": "0.1.3",
       "type": "text",
       "system": {},
@@ -218,7 +335,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 500000,
+      "sort": 800000,
       "ownership": {
         "default": -1
       },
@@ -226,7 +343,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209259,
+        "createdTime": 1788951589256,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -234,10 +351,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rdnWEOgmSzFoxP59.awv42Ra48LJbWRSZ"
+      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.TQCAT9N6h9frVV6b"
     },
     {
-      "_id": "MJLCOKgBIhb7XfOK",
+      "_id": "0e1Zp4dR1YWCC6md",
       "name": "0.1.2",
       "type": "text",
       "system": {},
@@ -257,7 +374,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 600000,
+      "sort": 900000,
       "ownership": {
         "default": -1
       },
@@ -265,7 +382,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209259,
+        "createdTime": 1788951589256,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -273,10 +390,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rdnWEOgmSzFoxP59.MJLCOKgBIhb7XfOK"
+      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.0e1Zp4dR1YWCC6md"
     },
     {
-      "_id": "xpg1DDcgdccp1Mej",
+      "_id": "GaUxFE2Gc4aKurqA",
       "name": "0.1.1",
       "type": "text",
       "system": {},
@@ -296,7 +413,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 700000,
+      "sort": 1000000,
       "ownership": {
         "default": -1
       },
@@ -304,7 +421,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209259,
+        "createdTime": 1788951589256,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -312,10 +429,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rdnWEOgmSzFoxP59.xpg1DDcgdccp1Mej"
+      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.GaUxFE2Gc4aKurqA"
     },
     {
-      "_id": "A3KK4MzcrAUnNRQ6",
+      "_id": "SVAb1MuETgkTQKeT",
       "name": "0.1.0",
       "type": "text",
       "system": {},
@@ -335,7 +452,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 800000,
+      "sort": 1100000,
       "ownership": {
         "default": -1
       },
@@ -343,7 +460,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209259,
+        "createdTime": 1788951589256,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -351,7 +468,7 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!rdnWEOgmSzFoxP59.A3KK4MzcrAUnNRQ6"
+      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.SVAb1MuETgkTQKeT"
     }
   ],
   "folder": null,
@@ -364,7 +481,7 @@
   "_stats": {
     "compendiumSource": null,
     "coreVersion": "14.364",
-    "createdTime": 1787305209259,
+    "createdTime": 1788951589256,
     "duplicateSource": null,
     "exportSource": null,
     "lastModifiedBy": null,
@@ -372,5 +489,5 @@
     "systemId": "universal-tabletop-system",
     "systemVersion": "1.2.1"
   },
-  "_key": "!journal!rdnWEOgmSzFoxP59"
+  "_key": "!journal!jW6DcaiQzqvXfZN0"
 }

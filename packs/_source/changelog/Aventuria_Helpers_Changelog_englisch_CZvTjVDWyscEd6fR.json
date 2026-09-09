@@ -1,9 +1,9 @@
 {
-  "_id": "3lQZgdHIXXBZ6XFf",
+  "_id": "CZvTjVDWyscEd6fR",
   "name": "Aventuria Helpers - Changelog (englisch)",
   "pages": [
     {
-      "_id": "0QHEbKRYF1PXlSpm",
+      "_id": "AuxPi2djHICFdMEs",
       "name": "Changes – Aventuria Helpers",
       "type": "text",
       "system": {},
@@ -31,7 +31,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209273,
+        "createdTime": 1788951589273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -39,10 +39,127 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.0QHEbKRYF1PXlSpm"
+      "_key": "!journal.pages!CZvTjVDWyscEd6fR.AuxPi2djHICFdMEs"
     },
     {
-      "_id": "9aSGIEHYX1ZwnHAY",
+      "_id": "jdaHCsdDmfpIk4XE",
+      "name": "0.3.0",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>New \"Ausdauer cards\" window:</strong> the eye button in the hero tray's Ausdauer row opens a window with every card played as Ausdauer. Clicking a card exhausts it or makes it ready again, the button below it takes it back into your hand, and the right-click menu discards it. Hovering shows the card's front face at full size (the card lies face-down). The window docks above the hero tray and, like the other card windows, can be moved freely and reset via the \"…\" menu.</li>\n<li><strong>Control another hero via the Hero Tray (solo play):</strong> The new hero button in the Hero Tray's header bar (or a right-click on the portrait) opens a radial menu of every hero currently in play. Pick a different hero there and the Hero Tray immediately drives that hero's cards, hand, Ausdauer and played cards - handy when running several heroes solo without opening a second browser. Your own hero assignment stays unchanged; a red banner and a \"Back to my hero\" button make it clear a foreign hero is being controlled. On the next reload the tray starts back on your own hero.</li>\n<li><strong>Adventure points & leveling up:</strong> The Character Sheet now has a \"Level Up\" area with an Adventure Points account (adjustable manually via +/-) and two independent \"Level Up\" buttons for the Hero Card and Skill Card (cost: 3 Adventure Points each, maximum Level III). A dialog shows exactly which values will change beforehand (\"Close Combat 14 → 16\" etc.) and must be confirmed before anything is written. Available for the 12 quickstart heroes from \"Chalices of Power\".</li>\n<li><strong>Upgrade action cards:</strong> The \"Level Up\" area now also lets you upgrade the hero deck itself - swap individual action cards for the same-named, one-level-higher card from the hero's Proficiency Stash (1 Adventure Point per card). A new window shows every possible swap as a pair of card images side by side (current card and target card, with an enlarged preview on hover); multiple cards can be selected at once and confirmed in a single step. Cards can also be downgraded again - the Adventure Points paid for them are fully refunded.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>Playing a card, taking it back into your hand via the sheet, and playing it again used to make the card vanish from the scene (it stayed stuck, invisible, in the Im-Spiel-Stapel); for Ausdauer cards it then showed up in the wrong window. Fixed. Worlds already affected are cleaned up automatically on the next start – no manual reset needed.</li>\n<li>Heroes assigned before the \"Upgrade action cards\" feature existed now automatically receive their Proficiency Stash on the next world start, instead of requiring someone to create it manually via the hint button in the dialog.</li>\n<li>Upgrading or downgrading an action card could fail with the console message \"The _id … already exists\" and silently created card duplicates in the hero deck instead of cleanly swapping the card for its Proficiency Stash variant. Fixed. Note: duplicates already created in the deck before this fix have to be removed by hand once.</li>\n</ul>",
+        "markdown": "### Features\r\n- **New \"Ausdauer cards\" window:** the eye button in the hero tray's Ausdauer row opens a window with every card played as Ausdauer. Clicking a card exhausts it or makes it ready again, the button below it takes it back into your hand, and the right-click menu discards it. Hovering shows the card's front face at full size (the card lies face-down). The window docks above the hero tray and, like the other card windows, can be moved freely and reset via the \"…\" menu.\r\n- **Control another hero via the Hero Tray (solo play):** The new hero button in the Hero Tray's header bar (or a right-click on the portrait) opens a radial menu of every hero currently in play. Pick a different hero there and the Hero Tray immediately drives that hero's cards, hand, Ausdauer and played cards - handy when running several heroes solo without opening a second browser. Your own hero assignment stays unchanged; a red banner and a \"Back to my hero\" button make it clear a foreign hero is being controlled. On the next reload the tray starts back on your own hero.\r\n- **Adventure points & leveling up:** The Character Sheet now has a \"Level Up\" area with an Adventure Points account (adjustable manually via +/-) and two independent \"Level Up\" buttons for the Hero Card and Skill Card (cost: 3 Adventure Points each, maximum Level III). A dialog shows exactly which values will change beforehand (\"Close Combat 14 → 16\" etc.) and must be confirmed before anything is written. Available for the 12 quickstart heroes from \"Chalices of Power\".\r\n- **Upgrade action cards:** The \"Level Up\" area now also lets you upgrade the hero deck itself - swap individual action cards for the same-named, one-level-higher card from the hero's Proficiency Stash (1 Adventure Point per card). A new window shows every possible swap as a pair of card images side by side (current card and target card, with an enlarged preview on hover); multiple cards can be selected at once and confirmed in a single step. Cards can also be downgraded again - the Adventure Points paid for them are fully refunded.\r\n\r\n### Bugs\r\n- Playing a card, taking it back into your hand via the sheet, and playing it again used to make the card vanish from the scene (it stayed stuck, invisible, in the Im-Spiel-Stapel); for Ausdauer cards it then showed up in the wrong window. Fixed. Worlds already affected are cleaned up automatically on the next start – no manual reset needed.\r\n- Heroes assigned before the \"Upgrade action cards\" feature existed now automatically receive their Proficiency Stash on the next world start, instead of requiring someone to create it manually via the hint button in the dialog.\r\n- Upgrading or downgrading an action card could fail with the console message \"The _id … already exists\" and silently created card duplicates in the hero deck instead of cleanly swapping the card for its Proficiency Stash variant. Fixed. Note: duplicates already created in the deck before this fix have to be removed by hand once.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 100000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1788951589273,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!CZvTjVDWyscEd6fR.jdaHCsdDmfpIk4XE"
+    },
+    {
+      "_id": "8LVDDilOraKoiA0W",
+      "name": "0.2.3",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>Hero token rotates with its equipment:</strong> When a hero's equipment becomes exhausted (via a roll, the sheet button, or a macro), their token on the scene automatically rotates 90° clockwise - it rotates back once readied again (including automatically at the end of each combat round).</li>\n</ul>",
+        "markdown": "### Features\r\n- **Hero token rotates with its equipment:** When a hero's equipment becomes exhausted (via a roll, the sheet button, or a macro), their token on the scene automatically rotates 90° clockwise - it rotates back once readied again (including automatically at the end of each combat round).",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 200000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1788951589273,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!CZvTjVDWyscEd6fR.8LVDDilOraKoiA0W"
+    },
+    {
+      "_id": "9tMiczzoEiPgslnV",
+      "name": "0.2.2",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<h3>Features</h3>\n<ul>\n<li><strong>\"Exhaust card\" in the Played Cards window:</strong> Every played card now has its own Exhaust/Ready button, shown by a dimmed card while exhausted. \"Discard\" and \"Take back into hand\" have moved into the card's right-click menu for this (alongside the already existing \"Shuffle back into deck\").</li>\n<li><strong>The Played Cards window now docks flush with the bottom of the Hero Tray</strong>, instead of docking a fixed distance below the Hand window and leaving visible empty space underneath.</li>\n<li><strong>New \"Exhaust Hero\" and \"Ready Hero\" macros:</strong> act on the selected hero token (or your own assigned hero), same effect as the existing Exhaust button on the Hero Sheet. At the end of every combat round, all exhausted heroes are now also readied automatically, alongside the existing card-rotation-reset prompt.</li>\n<li><strong>The \"View\" buttons in the Hero Tray</strong> (Deck, Discard, Hand, Played Cards) now also close the respective window again if clicked while it's already open.</li>\n<li><strong>The Hand and Played Cards windows now remember a manually moved position</strong>, even if the window is fully closed and reopened in between.</li>\n</ul>\n<h3>Bugs</h3>\n<ul>\n<li>If the Played Cards window was opened before the Hand window, it stayed stuck on the Hand's position instead of docking below it once the Hand was later opened (even \"Reset position\" didn't help) - fixed.</li>\n<li>A check's modifier (harder/easier) was incorrectly shown in the result chat card as a deduction from the die roll instead of a change to the target value - the pass/fail outcome itself was unaffected, only the display is now correct.</li>\n<li>The Hero Tray had no visible background when no hero was assigned - fixed.</li>\n<li>\"Clean up board\" missed cards that had automatically moved into the shared \"Adventure cards in play\" or \"Henchmen in play\" piles during the game - these are now also shuffled back into their deck.</li>\n<li>With a small browser window, the Hero Tray could disappear behind Foundry's macro hotbar - fixed.</li>\n<li>When detaching the Hand or Played Cards window into its own browser window (\"Detach Window\"), the large card preview on hover wasn't visible - it now appears centered on the game surface in the main window.</li>\n<li>In Dark Mode, the \"Modifier\" label in the check dialog was barely readable - fixed.</li>\n<li>In Dark Mode, the \"Aventuria\" heading and step titles like \"Assign Hero\" in the Welcome screen were barely readable - fixed.</li>\n<li>In Dark Mode, the page titles \"Equipment\"/\"Special Ability\" on the Character Sheet were barely readable, and the \"Allowed Action Cards\" table had a dingy grey background instead of a light one - fixed.</li>\n</ul>",
+        "markdown": "### Features\r\n- **\"Exhaust card\" in the Played Cards window:** Every played card now has its own Exhaust/Ready button, shown by a dimmed card while exhausted. \"Discard\" and \"Take back into hand\" have moved into the card's right-click menu for this (alongside the already existing \"Shuffle back into deck\").\r\n- **The Played Cards window now docks flush with the bottom of the Hero Tray**, instead of docking a fixed distance below the Hand window and leaving visible empty space underneath.\r\n- **New \"Exhaust Hero\" and \"Ready Hero\" macros:** act on the selected hero token (or your own assigned hero), same effect as the existing Exhaust button on the Hero Sheet. At the end of every combat round, all exhausted heroes are now also readied automatically, alongside the existing card-rotation-reset prompt.\r\n- **The \"View\" buttons in the Hero Tray** (Deck, Discard, Hand, Played Cards) now also close the respective window again if clicked while it's already open.\r\n- **The Hand and Played Cards windows now remember a manually moved position**, even if the window is fully closed and reopened in between.\r\n\r\n### Bugs\r\n- If the Played Cards window was opened before the Hand window, it stayed stuck on the Hand's position instead of docking below it once the Hand was later opened (even \"Reset position\" didn't help) - fixed.\r\n- A check's modifier (harder/easier) was incorrectly shown in the result chat card as a deduction from the die roll instead of a change to the target value - the pass/fail outcome itself was unaffected, only the display is now correct.\r\n- The Hero Tray had no visible background when no hero was assigned - fixed.\r\n- \"Clean up board\" missed cards that had automatically moved into the shared \"Adventure cards in play\" or \"Henchmen in play\" piles during the game - these are now also shuffled back into their deck.\r\n- With a small browser window, the Hero Tray could disappear behind Foundry's macro hotbar - fixed.\r\n- When detaching the Hand or Played Cards window into its own browser window (\"Detach Window\"), the large card preview on hover wasn't visible - it now appears centered on the game surface in the main window.\r\n- In Dark Mode, the \"Modifier\" label in the check dialog was barely readable - fixed.\r\n- In Dark Mode, the \"Aventuria\" heading and step titles like \"Assign Hero\" in the Welcome screen were barely readable - fixed.\r\n- In Dark Mode, the page titles \"Equipment\"/\"Special Ability\" on the Character Sheet were barely readable, and the \"Allowed Action Cards\" table had a dingy grey background instead of a light one - fixed.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 300000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1788951589273,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!CZvTjVDWyscEd6fR.9tMiczzoEiPgslnV"
+    },
+    {
+      "_id": "xKAIB8w7CDNMH0WO",
       "name": "0.2.0 (Beta)",
       "type": "text",
       "system": {},
@@ -62,7 +179,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 100000,
+      "sort": 400000,
       "ownership": {
         "default": -1
       },
@@ -70,7 +187,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209273,
+        "createdTime": 1788951589273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -78,10 +195,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.9aSGIEHYX1ZwnHAY"
+      "_key": "!journal.pages!CZvTjVDWyscEd6fR.xKAIB8w7CDNMH0WO"
     },
     {
-      "_id": "qxZRbiSSRGhpxgiD",
+      "_id": "YnjRX1Hx3WXu3SfW",
       "name": "0.1.5",
       "type": "text",
       "system": {},
@@ -101,7 +218,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 200000,
+      "sort": 500000,
       "ownership": {
         "default": -1
       },
@@ -109,7 +226,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209273,
+        "createdTime": 1788951589273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -117,10 +234,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.qxZRbiSSRGhpxgiD"
+      "_key": "!journal.pages!CZvTjVDWyscEd6fR.YnjRX1Hx3WXu3SfW"
     },
     {
-      "_id": "9plaWNl4XNkTp8QG",
+      "_id": "v9FE1xdSRBKDEEIF",
       "name": "0.1.4.1",
       "type": "text",
       "system": {},
@@ -140,7 +257,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 300000,
+      "sort": 600000,
       "ownership": {
         "default": -1
       },
@@ -148,7 +265,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209273,
+        "createdTime": 1788951589273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -156,10 +273,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.9plaWNl4XNkTp8QG"
+      "_key": "!journal.pages!CZvTjVDWyscEd6fR.v9FE1xdSRBKDEEIF"
     },
     {
-      "_id": "fBpmEjGwAl0Hh5Ty",
+      "_id": "vRNGE1a2fQsMT1by",
       "name": "0.1.4",
       "type": "text",
       "system": {},
@@ -179,7 +296,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 400000,
+      "sort": 700000,
       "ownership": {
         "default": -1
       },
@@ -187,7 +304,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209273,
+        "createdTime": 1788951589273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -195,10 +312,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.fBpmEjGwAl0Hh5Ty"
+      "_key": "!journal.pages!CZvTjVDWyscEd6fR.vRNGE1a2fQsMT1by"
     },
     {
-      "_id": "ppNdqGFpZNGoBsZE",
+      "_id": "oG3hVm6XFWKIA6XH",
       "name": "0.1.3",
       "type": "text",
       "system": {},
@@ -218,7 +335,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 500000,
+      "sort": 800000,
       "ownership": {
         "default": -1
       },
@@ -226,7 +343,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209273,
+        "createdTime": 1788951589273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -234,10 +351,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.ppNdqGFpZNGoBsZE"
+      "_key": "!journal.pages!CZvTjVDWyscEd6fR.oG3hVm6XFWKIA6XH"
     },
     {
-      "_id": "k0IAMR5I4HBtDXOc",
+      "_id": "yNzF6u8kF2INVyhC",
       "name": "0.1.2",
       "type": "text",
       "system": {},
@@ -257,7 +374,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 600000,
+      "sort": 900000,
       "ownership": {
         "default": -1
       },
@@ -265,7 +382,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209273,
+        "createdTime": 1788951589273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -273,10 +390,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.k0IAMR5I4HBtDXOc"
+      "_key": "!journal.pages!CZvTjVDWyscEd6fR.yNzF6u8kF2INVyhC"
     },
     {
-      "_id": "bD4fRSq9oHrcA8Je",
+      "_id": "AIZKlNfgBfCobGrH",
       "name": "0.1.1",
       "type": "text",
       "system": {},
@@ -296,7 +413,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 700000,
+      "sort": 1000000,
       "ownership": {
         "default": -1
       },
@@ -304,7 +421,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209273,
+        "createdTime": 1788951589273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -312,10 +429,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.bD4fRSq9oHrcA8Je"
+      "_key": "!journal.pages!CZvTjVDWyscEd6fR.AIZKlNfgBfCobGrH"
     },
     {
-      "_id": "DOdA0rnYLLMTiSwc",
+      "_id": "Y7T8GHeDKxpyCYt7",
       "name": "0.1.0",
       "type": "text",
       "system": {},
@@ -335,7 +452,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 800000,
+      "sort": 1100000,
       "ownership": {
         "default": -1
       },
@@ -343,7 +460,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1787305209273,
+        "createdTime": 1788951589273,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -351,7 +468,7 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!3lQZgdHIXXBZ6XFf.DOdA0rnYLLMTiSwc"
+      "_key": "!journal.pages!CZvTjVDWyscEd6fR.Y7T8GHeDKxpyCYt7"
     }
   ],
   "folder": null,
@@ -364,7 +481,7 @@
   "_stats": {
     "compendiumSource": null,
     "coreVersion": "14.364",
-    "createdTime": 1787305209273,
+    "createdTime": 1788951589273,
     "duplicateSource": null,
     "exportSource": null,
     "lastModifiedBy": null,
@@ -372,5 +489,5 @@
     "systemId": "universal-tabletop-system",
     "systemVersion": "1.2.1"
   },
-  "_key": "!journal!3lQZgdHIXXBZ6XFf"
+  "_key": "!journal!CZvTjVDWyscEd6fR"
 }
