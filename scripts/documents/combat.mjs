@@ -116,16 +116,25 @@ export function registerCombat() {
       if (updates.length) this.updateEmbeddedDocuments("Combatant", updates);
     }
 
-    /** @inheritdoc */
+    /**
+     * Bugfix 2026-09-10 (Nutzerfeedback): must re-sort `this.turns` into the new round's
+     * rotated order *before* calling into the base class, not after. Round changes don't
+     * trigger a re-sort of `turns` in core Foundry, since the default sort only depends on
+     * `initiative`, which doesn't change between rounds - ours does. But core's own
+     * `_onUpdate()` (`client/documents/combat.mjs`) already reads `this.turns` in that same
+     * call, via `_getCurrentState()` and `_updateTurnMarkers()`, to work out who the new
+     * "current" combatant is and move the canvas token turn marker onto them. Calling our
+     * `setupTurns()` only afterwards (the previous order here) left both of those reading the
+     * *previous* round's seating for one round-change cycle: the marker landed on whoever sat
+     * first under the old rotation instead of the new one - invisible whenever that seat's
+     * occupant lacks a token (or isn't part of the rotation at all, e.g. a phase marker), and
+     * only catching up once a manual turn-to-turn step forced a fresh, by-then-correctly-sorted
+     * read. @inheritdoc
+     */
     _onUpdate(changed, options, userId) {
+      if ("round" in changed) this.setupTurns();
       super._onUpdate(changed, options, userId);
-
-      // Round changes don't trigger a re-sort of `turns` in core Foundry, since the default
-      // sort only depends on `initiative`, which doesn't change between rounds. Ours does.
-      if ("round" in changed) {
-        this.setupTurns();
-        if (this.isView) ui.combat.render();
-      }
+      if ("round" in changed && this.isView) ui.combat.render();
     }
   }
 
@@ -178,5 +187,29 @@ export function registerRoundEndCombatant() {
         flags: { [MODULE_ID]: { [ROUND_END_FLAG]: true } },
       }]),
     });
+  });
+}
+
+/**
+ * Hides the per-combatant initiative badge (`.token-initiative`, `templates/sidebar/tabs/combat/
+ * tracker.hbs`) for every combatant that's part of the party's fixed seat rotation, once the
+ * encounter has actually started. Nutzerfrage 2026-09-10 (CLAUDE.md "Combat Tracker"): the number
+ * shown there is nothing but the 1..X seat-assignment auto-numbering from when combatants were
+ * added (`_onCreateDescendantDocuments` above) - correct and useful *before* `startCombat()`
+ * (it's the actual sort key the GM can still see/adjust to reorder seats), but frozen and
+ * meaningless afterwards, since `_sortCombatants` then sorts by captured seat position instead
+ * and never touches the raw value again - reads as a bug ("warum ändert sich die Zahl nicht,
+ * obwohl sich die Reihenfolge dreht?") rather than the harmless leftover it actually is. Left
+ * showing for the fixed phase markers ("Gegneraktionen"/"Rundenende") - their `0`/`-1` initiative
+ * is a real, unchanging value, not a rotation artifact.
+ */
+export function registerHideRotationInitiative() {
+  Hooks.on("renderCombatTracker", (app, html) => {
+    const combat = app.viewed;
+    if (!combat?.started) return;
+    for (const combatant of combat.combatants) {
+      if (isPhaseMarker(combatant)) continue;
+      html.querySelector(`.combatant[data-combatant-id="${combatant.id}"] .token-initiative`)?.remove();
+    }
   });
 }
