@@ -412,7 +412,14 @@
 .card-flag-rail { position: absolute; z-index: 1; top: 240px; width: 68px; display: flex; flex-direction: column; }
 .nav-left .card-flag-rail { right: calc(100% - 9px); }
 .nav-right .card-flag-rail { left: calc(100% - 9px); }
-.card-flag { min-height: 54px; padding: 9px; display: grid; place-items: center; border: 3px ridge #777066; background: linear-gradient(90deg, #e8dfd1, #bdae9d); box-shadow: 0 3px 5px #0008; transition: border-color .15s ease, background .15s ease, box-shadow .15s ease; }
+/* Solid 2px dark ring (Nutzerfeedback 2026-09-10: Fähnchen auf unruhigem Spielbrett-Hintergrund
+   schwer zu erkennen) added alongside the existing soft drop shadow below - the flags already
+   have an opaque background of their own, so the visibility problem wasn't transparency but edge
+   contrast: a warm, light parchment panel with a muted grey-brown bevel border can read as "more
+   wood grain" against an equally warm-toned wooden game table. A near-black solid-color outline
+   (not just a blurred shadow) gives every flag a crisp, background-independent silhouette instead
+   - the same trick token borders/game-HUD icons use to stay legible over arbitrary content. */
+.card-flag { min-height: 54px; padding: 9px; display: grid; place-items: center; border: 3px ridge #777066; background: linear-gradient(90deg, #e8dfd1, #bdae9d); box-shadow: 0 0 0 2px rgba(20, 14, 8, .75), 0 3px 6px rgba(0, 0, 0, .55); transition: border-color .15s ease, background .15s ease, box-shadow .15s ease; }
 .card-flag + .card-flag { margin-top: -2px; }
 .card-flag img { width: 33px; height: 33px; object-fit: contain; filter: drop-shadow(0 1px 1px #fff8); }
 .card-flag > i { color: #443329; font-size: 25px; filter: drop-shadow(0 1px 1px #fff9); }
@@ -424,8 +431,8 @@
 .nav-right .card-flag.active { translate: 9px; }
 .card-flag-rail:hover, .card-flag-rail:focus-within { z-index: 4; }
 .card-flag:hover, .card-flag:focus-visible { z-index: 3; outline: 0; border-color: #43474a; background: linear-gradient(90deg, #dad8d2, #f3eee5); }
-.nav-left .card-flag:hover, .nav-left .card-flag:focus-visible { box-shadow: inset 5px 0 #43474a, 0 2px 5px #0006; }
-.nav-right .card-flag:hover, .nav-right .card-flag:focus-visible { box-shadow: inset -5px 0 #43474a, 0 2px 5px #0006; }
+.nav-left .card-flag:hover, .nav-left .card-flag:focus-visible { box-shadow: 0 0 0 2px rgba(20, 14, 8, .75), inset 5px 0 #43474a, 0 2px 5px #0006; }
+.nav-right .card-flag:hover, .nav-right .card-flag:focus-visible { box-shadow: 0 0 0 2px rgba(20, 14, 8, .75), inset -5px 0 #43474a, 0 2px 5px #0006; }
 .card-rail-control { width: 46px; height: 46px; margin: 8px auto 0; border: 5px double #847c72; border-radius: 50%; color: #fff9ed; background: radial-gradient(circle, #604c3d, var(--copper-ink)); box-shadow: 0 4px 7px #0009; }
 .card-rail-control.card-lock { margin-top: 5px; }
 
