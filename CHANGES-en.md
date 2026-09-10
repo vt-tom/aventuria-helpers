@@ -2,6 +2,20 @@
 
 This file lists all gameplay-relevant changes to the module – newest version first.
 
+## 0.3.1
+
+### Bugs
+- Skills on the character sheet are now sorted alphabetically (in German and English, each in its own correct order) instead of sitting in a fixed, technically-driven order.
+- If "Place on the Gameboard scene" wasn't run right after "Assign hero", the hero could no longer be placed afterwards without a full reassignment (which would have lost the deck/hand/discard pile). The guide now jumps straight back to the placement step when reopening "Pick Hero" if an assignment is still pending.
+- After a round change in the Combat Tracker, the current combatant's turn marker ring didn't appear on their token right away - it only showed up once you manually stepped forward once. Fixed.
+- On some servers, assigning a hero could rarely end up registering the discard pile instead of the hand as "my cards". Affected assignments are corrected automatically on the next world start; newly assigned heroes are no longer affected in the first place.
+- If assigning a hero, importing tokens, creating a Proficiency Stash, or preparing the quickstart decks was run from a client set to a different Foundry language than the rest of the table, the resulting material could end up in the wrong language (e.g. an English Proficiency Stash next to a German hero deck, which then made "Upgrade action cards" find no matches at all for that hero). These steps now follow the Gameboard's actual language instead of the executing client's.
+
+### Features
+- The Starting Hero Token is now placed automatically on the Gameboard scene during token import (still freely movable/passable afterwards).
+- The Combat Tracker no longer shows the initiative number next to a combatant's name once combat has started, since it doesn't change with the rotating turn order anyway and was more confusing than helpful.
+- The Character Sheet's navigation flags now stand out more clearly against the Gameboard background thanks to an added dark outline.
+
 ## 0.3.0
 
 ### Features

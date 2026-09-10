@@ -2,6 +2,20 @@
 
 Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Version zuerst.
 
+## 0.3.1
+
+### Bugs
+- Die Talente auf dem Heldenbogen sind jetzt alphabetisch sortiert (in Deutsch und Englisch jeweils passend zur eigenen Reihenfolge), statt in einer festen, technisch bedingten Reihenfolge zu stehen.
+- Wenn nach "Held zuweisen" das "Auf der Spielbrett-Szene platzieren" nicht sofort ausgeführt wurde, ließ sich der Held danach nicht mehr platzieren, ohne ihn komplett neu zuzuweisen (wodurch Deck/Hand/Ablage verloren gegangen wären). Der Guide springt jetzt beim erneuten Öffnen von "Helden auswählen" direkt zum Platzieren-Schritt zurück, wenn eine Zuweisung noch offen ist.
+- Nach einem Rundenwechsel im Kampf-Tracker wurde der Markierungsring des aktuell handelnden Teilnehmenden nicht sofort auf der Karte angezeigt, sondern erst, wenn man einmal manuell weitergesprungen ist. Behoben.
+- Bei der Heldenzuweisung konnte auf manchen Servern (selten) versehentlich die Ablage statt der Hand als "meine Handkarten" hinterlegt werden. Betroffene Zuordnungen werden beim nächsten Weltstart automatisch korrigiert; neu zugewiesene Helden sind von vornherein nicht mehr betroffen.
+- Wenn Held zuweisen, Marken-Import, Erfahrungsschatz-Anlage oder die Schnellstarter-Decks von einem Client mit anderer Foundry-Sprache als der restlichen Spielrunde ausgeführt wurden, konnte das jeweils erzeugte Material in der falschen Sprache landen (z.B. ein Erfahrungsschatz auf Englisch neben einem deutschen Heldendeck, wodurch "Aktionskarten verbessern" für diesen Helden keine Treffer mehr fand). Diese Schritte richten sich jetzt nach der tatsächlichen Sprache des Spielbretts statt nach der Sprache des ausführenden Clients.
+
+### Features
+- Die Startspielermarke wird beim Marken-Import jetzt automatisch mit auf der Spielbrett-Szene platziert (bleibt weiterhin frei verschiebbar/weiterreichbar).
+- Im Kampf-Tracker wird die Initiative-Zahl neben dem Namen nach Kampfbeginn nicht mehr angezeigt, da sie sich mit der rotierenden Reihenfolge ohnehin nicht mehr ändert und daher eher verwirrte als half.
+- Die Fähnchen der Navigationsleiste auf dem Charakterbogen heben sich jetzt durch einen zusätzlichen dunklen Rand deutlicher vom Spielbrett-Hintergrund ab.
+
 ## 0.3.0
 
 ### Features
