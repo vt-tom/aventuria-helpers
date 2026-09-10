@@ -112,7 +112,18 @@ export async function prepareAndAssignHero({ heroPack, heroId, targetUser, playe
   const deckSource = await fromUuid(actor.getFlag(AVENTURIA_ID, "deck"));
   const folder = await Folder.create({ name: actor.name, type: "Cards" });
 
-  const [deck, hand, discard, playPile] = await Cards.createDocuments([
+  // Bugfix 2026-09-10 (Live-Fund, siehe project/CHANGELOG.md): die vier erzeugten Cards-
+  // Dokumente wurden bisher per Array-Destrukturierung positional aus dem `createDocuments()`-
+  // Rückgabewert gegriffen (`const [deck, hand, discard, playPile] = await Cards.createDocuments([...])`),
+  // in derselben Reihenfolge wie die vier Eingabe-Objekte. Das setzt voraus, dass der Server die
+  // Erstellungsreihenfolge exakt in seiner Antwort spiegelt - auf einem echten Remote-Server (nicht
+  // im lokalen Testbetrieb, wo GM und "Server" derselbe Prozess sind) traf das mindestens einmal
+  // nicht zu: `hand` band sich an das tatsächlich als drittes erzeugte Ablage-Dokument, wodurch
+  // `flags.complete-card-management.playerHand` unten auf die Ablage statt die echte Hand zeigte
+  // ("Ablage ist auf einmal die Hand", Nutzer-Report). Jetzt unabhängig von der Rückgabereihenfolge
+  // per `type`/Flag aus dem Ergebnis-Array herausgesucht - exakt dieselbe Unterscheidung, die
+  // `resolveHandStacks()` (`cards/stacks.mjs`) für bereits bestehende Stapel schon verwendet.
+  const created = await Cards.createDocuments([
     {
       ...game.cards.fromCompendium(deckSource),
       img: "modules/aventuria/assets/player-draw-back.webp",
@@ -144,6 +155,10 @@ export async function prepareAndAssignHero({ heroPack, heroId, targetUser, playe
       },
     },
   ]);
+  const deck = created.find((c) => c.type === "deck");
+  const hand = created.find((c) => c.type === "hand");
+  const playPile = created.find((c) => (c.type === "pile") && (c.getFlag(AVENTURIA_ID, "pileType") === "play"));
+  const discard = created.find((c) => (c.type === "pile") && (c !== playPile));
 
   await targetUser.update({ character: actor.id, [`flags.${CCM_ID}.playerHand`]: hand.id });
 

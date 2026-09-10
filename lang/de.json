@@ -364,7 +364,8 @@
       "Done": "Board aufgeräumt: {count} Karte(n) entfernt, Spielmarken zurückgesetzt."
     },
     "Migration": {
-      "CardPlacements": "{count} Karte(n) mit fehlerhafter Platzierung bereinigt."
+      "CardPlacements": "{count} Karte(n) mit fehlerhafter Platzierung bereinigt.",
+      "PlayerHand": "{count} Spieler-Handkarten-Zuordnung(en) korrigiert (zeigten auf die falsche Kartenablage)."
     },
     "Compendium": {
       "Macros": "Aventuria Helfer Makros",

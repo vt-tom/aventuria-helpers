@@ -364,7 +364,8 @@
       "Done": "Board cleaned up: {count} card(s) removed, marker tokens reset."
     },
     "Migration": {
-      "CardPlacements": "Cleaned up {count} card(s) with a broken placement."
+      "CardPlacements": "Cleaned up {count} card(s) with a broken placement.",
+      "PlayerHand": "Fixed {count} player hand assignment(s) that pointed at the wrong card stack."
     },
     "Compendium": {
       "Macros": "Aventuria Helpers Macros",
