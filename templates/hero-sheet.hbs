@@ -174,13 +174,13 @@
         </div>
 
         <div class="skills">
-          {{#each system.skills as |value key|}}
+          {{#each skillEntries as |skill|}}
             <label class="skill">
-              <button type="button" class="skill-roll always-active" data-action="rollSkill" data-skill="{{key}}" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}">{{localize (concat "AVENTURIA.Models.Hero.FIELDS.skills." key ".label")}}</button>
+              <button type="button" class="skill-roll always-active" data-action="rollSkill" data-skill="{{skill.key}}" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}">{{skill.label}}</button>
               {{#if editable}}
-                <input type="number" class="skill-value" name="system.skills.{{key}}" value="{{value}}">
+                <input type="number" class="skill-value" name="system.skills.{{skill.key}}" value="{{skill.value}}">
               {{else}}
-                <button type="button" class="skill-value always-active" data-action="rollSkill" data-skill="{{key}}" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}">{{value}}</button>
+                <button type="button" class="skill-value always-active" data-action="rollSkill" data-skill="{{skill.key}}" data-tooltip="{{localize 'AVENTURIA.Macros.RollTest.Title'}}">{{skill.value}}</button>
               {{/if}}
             </label>
           {{/each}}

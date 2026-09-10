@@ -123,12 +123,12 @@
         {{#unless locked}}<span class="card-editing-label"><i class="fa-solid fa-pen"></i> {{localize "DOCUMENT.Update" type=(localize "AVENTURIA_HELPERS.CardHeroSheet.SkillsTab")}}</span>{{/unless}}
         <h2>{{localize "AVENTURIA_HELPERS.CardHeroSheet.SkillsTab"}}</h2>
         <div class="card-skills">
-          {{#each system.skills as |value key|}}
+          {{#each skillEntries as |skill|}}
             <div class="card-skill">
               {{#if ../editable}}
-                <label><span>{{localize (concat "AVENTURIA.Models.Hero.FIELDS.skills." key ".label")}}</span><input type="number" name="system.skills.{{key}}" value="{{value}}"></label>
+                <label><span>{{skill.label}}</span><input type="number" name="system.skills.{{skill.key}}" value="{{skill.value}}"></label>
               {{else}}
-                <button type="button" class="always-active" data-action="rollSkill" data-skill="{{key}}"><span>{{localize (concat "AVENTURIA.Models.Hero.FIELDS.skills." key ".label")}}</span><span class="card-skill-value"><strong>{{value}}</strong><i class="fa-solid fa-dice-d20" aria-hidden="true"></i></span></button>
+                <button type="button" class="always-active" data-action="rollSkill" data-skill="{{skill.key}}"><span>{{skill.label}}</span><span class="card-skill-value"><strong>{{skill.value}}</strong><i class="fa-solid fa-dice-d20" aria-hidden="true"></i></span></button>
               {{/if}}
             </div>
           {{/each}}

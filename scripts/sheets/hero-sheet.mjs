@@ -49,6 +49,29 @@ const OTHER_CATEGORIES = ["equipment", "advantage", "disadvantage", "talent", "c
 
 const ATTACK_TYPE_ICONS = { close: "close-combat.webp", ranged: "ranged-combat.webp", magic: "magic.webp" };
 
+const SKILL_KEYS = ["body", "craft", "knowledge", "perception", "persuade", "stealth", "survival", "willpower"];
+
+/**
+ * Builds the 8 Talente as `{key, value, label}` rows, sorted alphabetically by their
+ * *localized* label rather than left in `system.skills`' fixed schema declaration order
+ * (Nutzerwunsch 2026-09-10) - since German and English sort differently (e.g. "Beherrschung"
+ * vs. "Willpower" don't share a position), this can't be a single fixed key order and has to
+ * be resorted per render, in the currently active language. Shared by both hero sheets (the
+ * old icon-tab one and the card sheet that extends it) since both just `{{#each}}` this array
+ * instead of `system.skills` directly.
+ * @param {object} system - `actor.system`, for the raw `skills` values.
+ * @returns {{key: string, value: number, label: string}[]}
+ */
+function sortedSkillEntries(system) {
+  return SKILL_KEYS
+    .map((key) => ({
+      key,
+      value: system.skills[key],
+      label: game.i18n.localize(`AVENTURIA.Models.Hero.FIELDS.skills.${key}.label`),
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label, game.i18n.lang));
+}
+
 /**
  * Groups an actor's Active Effects into temporary/passive/inactive buckets, same
  * split UTSActorSheet uses for its own effects tab.
@@ -206,6 +229,7 @@ export class AventuriaHelpersHeroSheet extends api.HandlebarsApplicationMixin(sh
         heroLevel: `${ICONS}level-${this.heroCardLevel}.webp`,
         skillLevel: `${ICONS}level-${this.skillCardLevel}.webp`,
       },
+      skillEntries: sortedSkillEntries(system),
       basicEquipmentIcon: this.#attackTypeIcon(system.basicEquipment.attackType),
       secondEquipmentIcon: this.#attackTypeIcon(system.secondEquipment.attackType),
       categoryRows: CATEGORY_ROWS.map((row) => ({
