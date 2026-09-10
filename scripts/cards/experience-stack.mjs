@@ -1,4 +1,5 @@
 import { resolveStacksForActor } from "./stacks.mjs";
+import { resolveWorldLanguage } from "../world-language.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 const HERO_TYPE = "aventuria.hero";
@@ -60,7 +61,11 @@ export async function ensureExperienceStack(actor, folder) {
   );
   if (existing) return existing;
 
-  const lang = game.i18n.lang === "de" ? "de" : "en";
+  // Bugfix 2026-09-10: must match the hero's own deck language (resolveWorldLanguage()), not
+  // whoever's client happens to call this - an Erfahrungsschatz in the wrong language silently
+  // breaks "Aktionskarten verbessern" for this hero, since getCardLevelChanges() (upgrade-card.mjs)
+  // matches purely by exact card name.
+  const lang = resolveWorldLanguage();
   const deckName = PROFESSION_TO_EXPERIENCE_DECK[actor.system.profession]?.[lang];
   if (!deckName) {
     console.warn(`aventuria-helpers | No Erfahrungsschatz mapping for profession "${actor.system.profession}"`);

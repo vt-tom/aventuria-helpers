@@ -1,5 +1,6 @@
 import { resolveStacks } from "./stacks.mjs";
 import { playCardAsEndurance } from "./endurance.mjs";
+import { resolveWorldLanguage } from "../world-language.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 const CCM_MODULE_ID = "complete-card-management";
@@ -233,7 +234,9 @@ export async function prepareQuickstartHeroes() {
 async function prepareAdventureDeck() {
   if (game.cards.find((c) => c.getFlag(MODULE_ID, ADVENTURE_DECK_FLAG))) return null;
 
-  const lang = game.i18n.lang === "de" ? "de" : "en";
+  // resolveWorldLanguage(), not game.i18n.lang directly (bugfix 2026-09-10) - this deck is
+  // shared table content, not a per-viewer display choice.
+  const lang = resolveWorldLanguage();
   const source = await fromUuid(ADVENTURE_DECK_UUID[lang]);
   if (!source) return null;
 
@@ -299,7 +302,9 @@ export async function prepareQuickstartAdventure() {
 async function prepareHenchmenDeck() {
   if (game.cards.find((c) => c.getFlag(MODULE_ID, HENCHMEN_DECK_FLAG))) return null;
 
-  const lang = game.i18n.lang === "de" ? "de" : "en";
+  // resolveWorldLanguage(), not game.i18n.lang directly (bugfix 2026-09-10) - this deck is
+  // shared table content, not a per-viewer display choice.
+  const lang = resolveWorldLanguage();
   const master = await fromUuid(MASTER_CARDS_UUID[lang]);
   const [min, max] = HENCHMAN_RANGE;
   const cards = master.cards
@@ -341,14 +346,19 @@ export async function prepareQuickstartHenchmen() {
 }
 
 /**
- * Step 4 of the "Schnellstarter vorbereiten" guide section: opens the language-appropriate
- * Schnellstarter journal directly on its "Das Abenteuer" page. Own step rather than folded
- * into step 3 (Nutzerentscheidung 2026-08-16) - purely a read action, so unlike the other
- * three steps this isn't GM-gated (same as `openChangelogJournal()`/`#onOpenGuide()`).
+ * Step 4 of the "Schnellstarter vorbereiten" guide section: opens the Schnellstarter journal
+ * directly on its "Das Abenteuer" page. Own step rather than folded into step 3
+ * (Nutzerentscheidung 2026-08-16) - purely a read action, so unlike the other three steps this
+ * isn't GM-gated (same as `openChangelogJournal()`/`#onOpenGuide()`). Uses
+ * `resolveWorldLanguage()` rather than the opening viewer's own client language (bugfix
+ * 2026-09-10) - unlike the Guide/Changelog journals (genuinely per-viewer reading aids), this
+ * journal describes the exact adventure/henchmen deck `prepareQuickstartAdventure()`/
+ * `prepareQuickstartHenchmen()` just created for the whole table, so it needs to match that
+ * material's language, not whoever happens to click the button.
  * @returns {Promise<boolean>}
  */
 export async function openQuickstartJournal() {
-  const { uuid, pageId } = ADVENTURE_JOURNAL[game.i18n.lang === "de" ? "de" : "en"];
+  const { uuid, pageId } = ADVENTURE_JOURNAL[resolveWorldLanguage()];
   const journal = await fromUuid(uuid);
   if (!journal) return false;
   await journal.sheet.render(true, { pageId });

@@ -1,5 +1,6 @@
 import { resolvePlayerSlotOccupant, resolvePlayerSlot } from "../cards/player-slots.mjs";
 import { resolveHeroOccupant, prepareAndAssignHero } from "../cards/prepare-hero.mjs";
+import { resolveWorldLanguage } from "../world-language.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -183,10 +184,16 @@ export class AventuriaHelpersAssignHeroDialog extends HandlebarsApplicationMixin
     return context;
   }
 
-  /** Fetches and caches the language-appropriate level-1 hero list, once per instance. */
+  /**
+   * Fetches and caches the level-1 hero list, once per instance. Uses `resolveWorldLanguage()`
+   * (not the assigning GM's own client language, bugfix 2026-09-10) - the hero's compendium
+   * language here becomes that hero's deck language for the rest of the game, so it has to
+   * match the table's already-established language, not whichever client happens to run this
+   * dialog.
+   */
   async #loadHeroes() {
     if (this.heroOptions) return;
-    const lang = game.i18n.lang === "de" ? "deutsch" : "english";
+    const lang = resolveWorldLanguage() === "de" ? "deutsch" : "english";
     this.heroPack = game.packs.get(`aventuria.heroes-${lang}`);
     if (!this.heroPack) {
       this.heroOptions = [];

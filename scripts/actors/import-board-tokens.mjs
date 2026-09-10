@@ -1,20 +1,23 @@
 import { placeActorToken } from "../cards/place-hero-stacks.mjs";
+import { resolveWorldLanguage } from "../world-language.mjs";
 
 export const TOKEN_FOLDER_NAME = "Aventuria Tokens";
 
 /**
- * Live-captured Gameboard positions for 12 of the 13 token actors (Stand 2026-08-16, same
- * capture method as `HERO_PLACEMENTS`: user placed each token by hand, then read the
- * positions back via console). Matched by name in *either* language, since the world's
- * imported actors carry whichever language `importBoardTokens()` used at import time, and
- * the two Actor compendiums (`aventuria.heroes-deutsch`/`-english`) don't share matching
+ * Live-captured Gameboard positions for all 13 token actors (Stand 2026-08-16 für die ersten
+ * 12, gleiche Erfassungsmethode wie `HERO_PLACEMENTS`: Nutzer platziert jeden Token von Hand,
+ * Position danach per Konsole ausgelesen). Matched by name in *either* language, since the
+ * world's imported actors carry whichever language `importBoardTokens()` used at import time,
+ * and the two Actor compendiums (`aventuria.heroes-deutsch`/`-english`) don't share matching
  * folder-index order (verified live - `Threat Point`/`Gefahrenpunktmarke` and
  * `Adventure Token (5)`/`Abenteuermarke (5)` sit at different positions in each pack's
  * "Tokens" folder), so pairing has to go by translated meaning, not by list position.
  *
- * Deliberately excludes "Starting Hero Token"/"Startspielermarke" - Nutzerentscheidung
- * 2026-08-16, that one isn't placed automatically (handed out/moved manually during play
- * instead of sitting at a fixed spot).
+ * "Starting Hero Token"/"Startspielermarke" war ursprünglich bewusst ausgenommen
+ * (Nutzerentscheidung 2026-08-16: wird während des Spiels manuell weitergereicht statt fest
+ * zu liegen) - seit 2026-09-10 auf Nutzerwunsch doch mit festem Startpunkt wie die übrigen 12,
+ * bleibt dabei genau wie sie unlocked und damit weiterhin frei verschiebbar/weiterreichbar
+ * während des Spiels (`placeActorToken()` sperrt keinen der Board-Token).
  */
 const TOKEN_PLACEMENTS = [
   { de: "Fertigkeitsmarke", en: "Ability Token", x: 4690, y: 4180, rotation: 278.53076560994816 },
@@ -29,6 +32,7 @@ const TOKEN_PLACEMENTS = [
   { de: "Lebenspunktemarke", en: "Life Point", x: 4804, y: 4995, rotation: 347.347443499442 },
   { de: "Abenteuermarke", en: "Adventure Token", x: 4746, y: 3906, rotation: 0 },
   { de: "Zeitmarke", en: "Time Counter", x: 5387, y: 4351, rotation: 0 },
+  { de: "Startspielermarke", en: "Starting Hero Token", x: 4596, y: 2840, rotation: 181.10614993683976 },
 ];
 
 /**
@@ -36,11 +40,13 @@ const TOKEN_PLACEMENTS = [
  * counters - the physical game's marker tokens, not NPCs) from the language-appropriate
  * "Aventuria Heroes"/"Aventuria Helden" Actor compendium's "Tokens"/"Token" folder into a
  * dedicated world Actor folder, same dedupe-by-name-then-bulk-import shape as
- * `#onImportMacros()` (`welcome-screen.mjs`).
+ * `#onImportMacros()` (`welcome-screen.mjs`). Language via `resolveWorldLanguage()` (bugfix
+ * 2026-09-10), not the importing GM's own client language - these token actors are shared,
+ * table-visible world content.
  * @returns {Promise<boolean>}
  */
 export async function importBoardTokens() {
-  const lang = game.i18n.lang === "de" ? "de" : "en";
+  const lang = resolveWorldLanguage();
   const packId = lang === "de" ? "aventuria.heroes-deutsch" : "aventuria.heroes-english";
   const pack = game.packs.get(packId);
   if (!pack) {
