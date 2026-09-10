@@ -11,6 +11,7 @@ import {
 } from "../cards/prepare-quickstart.mjs";
 import { importBoardTokens } from "../actors/import-board-tokens.mjs";
 import { cleanUpBoard } from "../cards/cleanup-board.mjs";
+import { resolveWorldLanguage } from "../world-language.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -31,10 +32,23 @@ function pascalCase(key) {
 const REOPEN_STEP_SETTING = "reopenGettingStartedStep";
 
 /**
- * Registers `REOPEN_STEP_SETTING` and the `ready` hook that consumes it. Called once
- * from the module's `init` hook, same pattern as `registerHeroTray()` - the setting
- * itself can be registered at `init`, but reopening the app needs `game.i18n`/rendering
- * to be ready.
+ * Client setting backing `heroAssignment` (see its own doc comment below) - persists the
+ * "Helden auswählen" section's step-1 pick (`{userId, slot}`) across a full close/reopen of
+ * the guide window, not just across re-renders of one still-open instance. Bugfix 2026-09-10
+ * (Nutzerfeedback): without this, forgetting to click "Auf der Spielbrett-Szene platzieren"
+ * right after assigning a hero (step 2) meant the only way back to that step was to redo step
+ * 1 - and `prepareAndAssignHero()` (`cards/prepare-hero.mjs`) unconditionally deletes and
+ * recreates the target player's hero (Actor + all four Cards stacks) every time it runs, even
+ * when re-picking the exact same player/hero, so "redo step 1" meant silently discarding
+ * whatever the player had already done with their fresh deck/hand in the meantime.
+ */
+const PENDING_HERO_ASSIGNMENT_SETTING = "pendingHeroAssignment";
+
+/**
+ * Registers `REOPEN_STEP_SETTING`/`PENDING_HERO_ASSIGNMENT_SETTING` and the `ready` hook that
+ * consumes the former. Called once from the module's `init` hook, same pattern as
+ * `registerHeroTray()` - the settings themselves can be registered at `init`, but reopening
+ * the app needs `game.i18n`/rendering to be ready.
  */
 export function registerWelcomeScreenReopen() {
   game.settings.register(MODULE_ID, REOPEN_STEP_SETTING, {
@@ -42,6 +56,12 @@ export function registerWelcomeScreenReopen() {
     config: false,
     type: Number,
     default: -1,
+  });
+  game.settings.register(MODULE_ID, PENDING_HERO_ASSIGNMENT_SETTING, {
+    scope: "client",
+    config: false,
+    type: Object,
+    default: null,
   });
 
   Hooks.once("ready", async () => {
@@ -119,8 +139,11 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
   /**
    * `{user, slot}` chosen in the "Helden auswählen" section's first page - reused by
    * its later steps so they don't have to ask again (Nutzerfeedback 2026-08-14: having
-   * to pick the player/slot twice felt clunky). Reset only by picking again; simply
-   * stays stale if the guide is closed and reopened, same as `stepIndex` resetting to 0.
+   * to pick the player/slot twice felt clunky). Backed by `PENDING_HERO_ASSIGNMENT_SETTING`
+   * since 2026-09-10 (see its own doc comment) - `#onShowSection()` restores it from there
+   * and jumps straight to step 2 ("Platzieren") when a saved assignment still resolves to a
+   * real user, instead of always restarting at step 1 like every other section does. Cleared
+   * (field and setting) once step 2 actually succeeds, or overwritten by picking again.
    */
   heroAssignment = null;
 
@@ -227,13 +250,44 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
   /**
    * Switches sections. `position.height` stays "auto" in DEFAULT_OPTIONS, so re-rendering
    * naturally resizes the window to fit whichever section is now shown. Entering any
-   * step-based section always starts back at the first page, so its button on the
-   * welcome page has predictable behavior regardless of where it was left last time.
+   * step-based section always starts back at the first page - *except* "Helden auswählen"
+   * when a still-resolvable pending assignment was saved by a previous, unfinished visit
+   * (`#restorePendingAssignment()`, bugfix 2026-09-10): that one jumps straight to step 2
+   * ("Platzieren") instead, so a hero already assigned but not yet placed on the board stays
+   * reachable without redoing step 1 - see `heroAssignment`'s doc comment for why redoing it
+   * would be destructive, not just redundant.
    */
   static async #onShowSection(event, target) {
     this.section = target.dataset.section;
-    if (this.section !== "welcome") this.stepIndex = 0;
+    if (this.section === "pickHero" && this.#restorePendingAssignment()) {
+      this.stepIndex = 1;
+    } else if (this.section !== "welcome") {
+      this.stepIndex = 0;
+    }
     await this.render();
+  }
+
+  /**
+   * Restores `heroAssignment` from `PENDING_HERO_ASSIGNMENT_SETTING` if the in-memory field
+   * is currently empty (a fresh instance - the guide was fully closed and reopened since the
+   * assignment was made) and the saved user id still resolves to a real user. Doesn't verify
+   * the hero itself still exists/is still theirs - `placeHeroStacks()` already reports that
+   * failure gracefully (`PickHero.Steps.PlaceStacks.NotPrepared`) if it doesn't.
+   * @returns {boolean} Whether a usable assignment is now available on `this.heroAssignment`.
+   */
+  #restorePendingAssignment() {
+    if (this.heroAssignment) return true;
+    const saved = game.settings.get(MODULE_ID, PENDING_HERO_ASSIGNMENT_SETTING);
+    const user = saved ? game.users.get(saved.userId) : null;
+    if (!user) return false;
+    this.heroAssignment = { user, slot: saved.slot };
+    return true;
+  }
+
+  /** Persists (or, given `null`, clears) `heroAssignment` to `PENDING_HERO_ASSIGNMENT_SETTING`. */
+  async #savePendingAssignment() {
+    const value = this.heroAssignment ? { userId: this.heroAssignment.user.id, slot: this.heroAssignment.slot } : null;
+    await game.settings.set(MODULE_ID, PENDING_HERO_ASSIGNMENT_SETTING, value);
   }
 
   /** One page back, or - from the first page - out to the welcome section. */
@@ -353,9 +407,14 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
    * languages while the display name isn't. Activates the imported scene right away,
    * since "Spielbrett vorbereiten"/"Decks und Stapel platzieren" both need it to be the
    * currently viewed scene.
+   *
+   * Language via `resolveWorldLanguage()`, same as every other world-mutating step since the
+   * 2026-09-10 bugfix - here it's a no-op fallback in practice (this step *is* what first
+   * creates the Gameboard scene the helper would otherwise read the language back from), but
+   * routing it through the same helper keeps the whole module on one consistent mechanism.
    */
   static async #onImportScene() {
-    const lang = game.i18n.lang === "de" ? "de" : "en";
+    const lang = resolveWorldLanguage();
 
     const existing = game.scenes.find((s) => s.getFlag("aventuria", "gameBoard") === lang);
     if (existing) {
@@ -477,6 +536,7 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
       if (!assignment) return;
 
       this.heroAssignment = assignment;
+      await this.#savePendingAssignment();
       await this.#advance();
     } finally {
       this.#heroStepBusy = false;
@@ -493,7 +553,7 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
    */
   static async #onPlaceHeroStacks() {
     if (this.#heroStepBusy) return;
-    if (!this.heroAssignment) {
+    if (!this.#restorePendingAssignment()) {
       ui.notifications.warn(game.i18n.localize("AVENTURIA_HELPERS.PickHero.Steps.PlaceStacks.NoAssignment"));
       return;
     }
@@ -502,7 +562,11 @@ export class AventuriaHelpersWelcomeScreen extends HandlebarsApplicationMixin(Ap
     try {
       const { user, slot } = this.heroAssignment;
       const success = await placeHeroStacks(user, slot);
-      if (success) await this.#advance();
+      if (success) {
+        this.heroAssignment = null;
+        await this.#savePendingAssignment();
+        await this.#advance();
+      }
     } finally {
       this.#heroStepBusy = false;
     }
