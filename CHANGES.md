@@ -10,6 +10,7 @@ Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Ve
 - Nach einem Rundenwechsel im Kampf-Tracker wurde der Markierungsring des aktuell handelnden Teilnehmenden nicht sofort auf der Karte angezeigt, sondern erst, wenn man einmal manuell weitergesprungen ist. Behoben.
 - Bei der Heldenzuweisung konnte auf manchen Servern (selten) versehentlich die Ablage statt der Hand als "meine Handkarten" hinterlegt werden. Betroffene Zuordnungen werden beim nächsten Weltstart automatisch korrigiert; neu zugewiesene Helden sind von vornherein nicht mehr betroffen.
 - Wenn Held zuweisen, Marken-Import, Erfahrungsschatz-Anlage oder die Schnellstarter-Decks von einem Client mit anderer Foundry-Sprache als der restlichen Spielrunde ausgeführt wurden, konnte das jeweils erzeugte Material in der falschen Sprache landen (z.B. ein Erfahrungsschatz auf Englisch neben einem deutschen Heldendeck, wodurch "Aktionskarten verbessern" für diesen Helden keine Treffer mehr fand). Diese Schritte richten sich jetzt nach der tatsächlichen Sprache des Spielbretts statt nach der Sprache des ausführenden Clients.
+- Im Safari-Browser wurden Kartenbilder in der Hand-Ablage, im Ausgespielte-Karten- und im Ausdauerkarten-Fenster (sowie im "Aktionskarten verbessern"-Dialog) stark verzerrt in die Breite gezogen dargestellt. Behoben.
 
 ### Features
 - Die Startspielermarke wird beim Marken-Import jetzt automatisch mit auf der Spielbrett-Szene platziert (bleibt weiterhin frei verschiebbar/weiterreichbar).

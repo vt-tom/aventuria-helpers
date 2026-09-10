@@ -1797,9 +1797,13 @@ button.skill-value:active {
   cursor: default;
 }
 
+/* width: auto, not fit-content - same Safari-Vorsicht wie bei der Hand-/Ausgespielte-Karten-
+   Bildgröße unten (2026-09-10), auch wenn dieses Bild kein Flex-Stretch-Elternteil hat: `auto`
+   ist der eigentliche CSS-Default für "Breite folgt dem Seitenverhältnis bei fester Höhe" und
+   braucht keine browserspezifische Unterstützung für den neueren `fit-content`-Schlüsselwert. */
 .upgrade-card img.card-art {
   height: 72px;
-  width: fit-content;
+  width: auto;
   border-radius: 6px;
   border: 3px solid var(--copper-frame-dark);
   box-shadow: 0 2px 6px #0008;
@@ -2865,11 +2869,27 @@ body:not(.ahb-tray-active) .played-cards-sheet {
    rendered cards at their full natural image resolution - Nutzerfeedback
    2026-08-17 ("viel zu groß"). Setting it here for both makes it
    self-contained instead of depending on which CCM base class happens to add
-   that class. */
+   that class.
+
+   Bugfix 2026-09-10 (Safari-Live-Fund, per Web Inspector bestätigt: das Bild
+   berechnete dort 564x100px statt seines Seitenverhältnisses, massiv in die
+   Breite gezogen): `width: fit-content` - copied from ccm.css's own pattern
+   above - isn't reliable for an `<img>` cross-browser. `.card` is a column
+   flexbox with `align-items: stretch` (the flex default); the working theory
+   is that Safari doesn't resolve `fit-content` here the way Chrome/Firefox
+   do and effectively falls back to `auto`, which under `align-items: stretch`
+   means "fill the container's width" - exactly the distorted card art
+   reported. `width: auto` (the actual CSS default, following the image's own
+   aspect ratio at a fixed height - simpler than `fit-content` and needs no
+   special browser support) plus an explicit `align-self: flex-start` fixes
+   both possible causes at once: the image is never stretched by its flex
+   parent regardless of how `width` resolves, and its width follows its own
+   intrinsic ratio. */
 .hand-sheet .cards .card img,
 .played-cards-sheet .cards .card img {
   height: 100px;
-  width: fit-content;
+  width: auto;
+  align-self: flex-start;
   border-radius: 8px;
   border: 3px solid var(--copper-frame-dark);
   box-shadow: 0 3px 8px #000a;

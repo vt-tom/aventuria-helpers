@@ -10,6 +10,7 @@ This file lists all gameplay-relevant changes to the module – newest version f
 - After a round change in the Combat Tracker, the current combatant's turn marker ring didn't appear on their token right away - it only showed up once you manually stepped forward once. Fixed.
 - On some servers, assigning a hero could rarely end up registering the discard pile instead of the hand as "my cards". Affected assignments are corrected automatically on the next world start; newly assigned heroes are no longer affected in the first place.
 - If assigning a hero, importing tokens, creating a Proficiency Stash, or preparing the quickstart decks was run from a client set to a different Foundry language than the rest of the table, the resulting material could end up in the wrong language (e.g. an English Proficiency Stash next to a German hero deck, which then made "Upgrade action cards" find no matches at all for that hero). These steps now follow the Gameboard's actual language instead of the executing client's.
+- In Safari, card images in the Hand, Played Cards, and Ausdauer windows (and in the "Upgrade action cards" dialog) were rendered heavily stretched sideways. Fixed.
 
 ### Features
 - The Starting Hero Token is now placed automatically on the Gameboard scene during token import (still freely movable/passable afterwards).
