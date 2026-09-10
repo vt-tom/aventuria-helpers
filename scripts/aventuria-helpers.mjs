@@ -6,7 +6,9 @@ import { resetCardRotations } from "./macros/reset-card-rotations.mjs";
 import { openWelcomeScreen } from "./macros/open-welcome-screen.mjs";
 import { cleanUpBoard } from "./cards/cleanup-board.mjs";
 import { exhaustHero, readyHero } from "./actors/hero-exhaust.mjs";
-import { registerCombat, registerEnemyPhaseCombatant, registerRoundEndCombatant } from "./documents/combat.mjs";
+import {
+  registerCombat, registerEnemyPhaseCombatant, registerRoundEndCombatant, registerHideRotationInitiative,
+} from "./documents/combat.mjs";
 import { registerHeroTray } from "./apps/hero-tray.mjs";
 import { registerHandSheet } from "./sheets/hand-sheet.mjs";
 import { registerPlayedCardsSheet } from "./sheets/played-cards-sheet.mjs";
@@ -15,6 +17,7 @@ import { registerPlayerSlotAssignments } from "./cards/player-slots.mjs";
 import { registerAdventureState } from "./cards/adventure-state.mjs";
 import { registerExperienceStackMigration, migrateExperienceStacks } from "./cards/experience-stack.mjs";
 import { registerCardPlacementCleanup, cleanUpBrokenCardPlacements } from "./cards/migrate-card-placements.mjs";
+import { registerPlayerHandAssignmentFix, fixMisassignedPlayerHands } from "./cards/migrate-hand-assignment.mjs";
 
 const MODULE_ID = "aventuria-helpers";
 
@@ -55,9 +58,11 @@ Hooks.once("init", () => {
   registerAdventureState();
   registerExperienceStackMigration();
   registerCardPlacementCleanup();
+  registerPlayerHandAssignmentFix();
   registerCombat();
   registerEnemyPhaseCombatant();
   registerRoundEndCombatant();
+  registerHideRotationInitiative();
   // Depends on globalThis.ccm, which complete-card-management's own init hook
   // sets up - safe here since relationships.requires guarantees it ran first.
   registerHandSheet();
@@ -67,6 +72,6 @@ Hooks.once("init", () => {
 
   game.modules.get(MODULE_ID).api = {
     resetCardRotations, openWelcomeScreen, cleanUpBoard, exhaustHero, readyHero, migrateExperienceStacks,
-    cleanUpBrokenCardPlacements,
+    cleanUpBrokenCardPlacements, fixMisassignedPlayerHands,
   };
 });
