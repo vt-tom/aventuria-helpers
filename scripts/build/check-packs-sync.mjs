@@ -51,6 +51,7 @@ try {
         "--type", "Module",
         "--id", MODULE_ID,
         "--compendiumType", compendiumType,
+        "--in", path.join(MODULE_ROOT, "packs"),
         "--out", outDir,
       ],
       { cwd: MODULE_ROOT, encoding: "utf8", shell: true },

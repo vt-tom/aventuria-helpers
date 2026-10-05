@@ -211,3 +211,16 @@ Zusätzlich zu Helden- und Talentkarte lässt sich das Heldendeck selbst verbess
 - Das Fenster bleibt nach dem Bestätigen offen (für weitere Käufe); ein separater "Fertig"-Knopf schließt es.
 
 Als Steigerung angeboten werden nur exakt gleichnamige Karten - vereinzelte Namensabweichungen im offiziellen Kartenmaterial führen dazu, dass einzelne Karten nicht steigerbar sind.
+## 7. Gemeinsame Karten und Karten-Zähler
+
+Die Heldenablage bietet „Schicksalskarte ziehen“ und „Ressourcenkarte ziehen“, auch ohne zugewiesenen Helden. Eine Spielleitung muss verbunden sein. Schicksalskarten erscheinen bei allen verbundenen Personen in einer Großansicht und liegen anschließend in der Schicksalsablage. Ressourcenkarten werden offen auf dem Spielbrett platziert. Dafür muss die Spielleitung dasselbe Spielbrett geöffnet haben und die Platzierungsposition eingerichtet sein.
+
+Gegnerkarten erhalten automatisch einen sichtbaren Lebenspunkte-Zähler, Ressourcenkarten einen Abenteuermarken-Zähler. Im per Rechtsklick geöffneten Kartenmenü lassen sich über Herz und Raute zusätzliche Zähler aktivieren oder bestehende deaktivieren. Mit Minus/Plus verändert man den Wert; ein Klick auf die Zahl erlaubt direkte Eingabe. Lebenspunkte liegen zwischen 0 und dem Maximum. Abenteuermarken haben kein Maximum und beginnen bei 0; zum Herunterzählen kann ein beliebiger Startwert eingegeben werden. Bearbeiten können Personen mit Schreibrecht auf die Karte. Beim erneuten Ziehen werden Lebenspunkte auf das Maximum und Abenteuermarken auf 0 zurückgesetzt. Verschieben auf der Szene setzt die Werte nicht zurück.
+
+Die Karten-Zähler bleiben auf die Breite ihrer Karte begrenzt. Zahlen und Buttons werden beim Herauszoomen vergrößert, soweit innerhalb dieser Breite Platz ist.
+
+Über „Ressourcenkarte auswählen“ öffnet sich eine alphabetisch sortierte Übersicht aller noch im Ressourcenstapel verfügbaren Karten. Mouseover zeigt die große Kartenvorschau. Ein Klick auf eine Karte legt genau diese Karte an der Ressourcenposition aus. Bereits entnommene Karten werden nicht angeboten; eine inzwischen von jemand anderem entnommene Karte kann nicht ein zweites Mal gewählt werden.
+
+Lebenspunkte-Leisten zeigen zusätzlich den Füllstand: über 50 % grün, über 25 % gelb, bis 25 % rot. Die farbige Fläche entspricht dem Anteil aktueller Lebenspunkte am Maximum.
+
+LEP- und Abenteuermarken-Leisten bleiben auch sichtbar, wenn links eine andere Steuerung als die Kartensteuerung ausgewählt ist.

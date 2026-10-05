@@ -211,3 +211,17 @@ Besides the hero and skill card, the hero deck itself can be upgraded: swap indi
 - The window stays open after confirming (for further purchases); a separate "Done" button closes it.
 
 Only exactly same-named cards are offered as an upgrade - occasional name discrepancies in the official card material mean some cards can't be upgraded.
+
+## 7. Shared cards and card trackers
+
+The hero tray offers “Draw fate card” and “Draw resource card”, even without an assigned hero. A GM must be connected. Fate cards appear in a large image window for all connected users and are then in the fate discard pile. Resource cards are placed face-up on the gameboard. The GM must be viewing the same gameboard and the placement position must be configured.
+
+Enemy cards automatically receive a visible life-point tracker; resource cards receive an adventure counter. Right-click a card and use the heart and diamond controls to enable or disable trackers. Use minus/plus to adjust the value or click the number to enter it directly. Life points range from 0 to their maximum. Adventure counters have no maximum and start at 0; enter any starting value to count down. Editing requires ownership of the card. Drawing again resets life points to their maximum and counters to 0. Moving a card on the scene does not reset its values.
+
+Card trackers stay within the width of their card. Numbers and buttons grow when zooming out as far as that width permits.
+
+“Choose resource card” opens an alphabetical list of all cards still available in the resource deck. Hover for a large preview. Clicking a card places that specific card at the resource position. Cards already taken are omitted; a card taken by another user in the meantime cannot be selected again.
+
+Life-point bars also show their fill level: green above 50%, yellow above 25%, red at 25% or less. The colored area represents current life points as a fraction of the maximum.
+
+Life-point and adventure-counter bars remain visible when a canvas control other than the card controls is selected.

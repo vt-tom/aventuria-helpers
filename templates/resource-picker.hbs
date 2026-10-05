@@ -1,0 +1,13 @@
+<div class="resource-picker-content">
+  <p>{{localize "AVENTURIA_HELPERS.SharedDraw.SelectResourceHint"}}</p>
+  <div class="resource-picker-grid">
+    {{#each cards}}
+    <button type="button" class="resource-choice" data-action="selectResource" data-card-id="{{id}}" data-preview-src="{{img}}" {{#if ../busy}}disabled{{/if}}>
+      <img class="card-art" src="{{img}}" alt="{{name}}">
+      <span>{{name}}</span>
+    </button>
+    {{else}}
+    <p>{{localize "AVENTURIA_HELPERS.SharedDraw.EmptyDeck"}}</p>
+    {{/each}}
+  </div>
+</div>

@@ -371,6 +371,29 @@
       "Macros": "Aventuria Helfer Makros",
       "Guide": "Aventuria Helpers Guide",
       "Changelog": "Aventuria Helpers Changelog"
+    },
+    "SharedDraw": {
+      "Fate": "Schicksalskarte ziehen",
+      "Resource": "Ressourcenkarte auswählen",
+      "MissingDeck": "Der gemeinsame Kartenstapel fehlt. Bitte zuerst das Spielbrett vorbereiten.",
+      "EmptyDeck": "Der Kartenstapel ist leer.",
+      "MissingPile": "Die gemeinsame Kartenablage fehlt.",
+      "WrongScene": "Zum Auslegen muss die Spielleitung dasselbe Spielbrett geöffnet haben.",
+      "MissingPosition": "Die Position für Ressourcenkarten ist noch nicht eingerichtet.",
+      "MissingCcm": "Complete Card Management ist nicht aktiv.",
+      "NoGM": "Zum Ziehen muss eine Spielleitung verbunden sein.",
+      "Timeout": "Keine Antwort von der Spielleitung. Bitte vor einem erneuten Versuch den Stapel prüfen.",
+      "SelectResource": "Ressourcenkarte auswählen",
+      "SelectResourceHint": "Wähle eine verfügbare Karte aus. Die Karten sind alphabetisch sortiert; beim Darüberfahren erscheint eine große Vorschau.",
+      "UnavailableCard": "Diese Ressourcenkarte ist nicht mehr im Deck verfügbar. Bitte eine andere auswählen."
+    },
+    "CardTracker": {
+      "HP": "Lebenspunkte",
+      "Marker": "Abenteuermarken",
+      "Value": "Wert",
+      "Maximum": "Maximale Lebenspunkte",
+      "Activate": "Aktivieren",
+      "Deactivate": "Deaktivieren"
     }
   }
 }

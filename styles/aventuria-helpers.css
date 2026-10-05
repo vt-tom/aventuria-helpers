@@ -3375,3 +3375,12 @@ body:not(.ahb-tray-active) .played-cards-sheet {
 .adventure-tool-content {
   line-height: 1.5;
 }
+/* Shared decks remain available even without an assigned hero. */
+.hero-tray .tray-shared-draw { display: flex; gap: 4px; padding: 6px; }
+.hero-tray .tray-shared-draw button { flex: 1; height: auto; min-height: 32px; font-size: 11px; line-height: 1.3; white-space: normal; }
+
+.resource-picker .window-content { overflow-y: auto; }
+.resource-picker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; }
+.resource-picker .resource-choice { display: flex; flex-direction: column; align-items: center; gap: 8px; height: auto; padding: 10px; white-space: normal; }
+.resource-picker .resource-choice .card-art { width: auto; max-width: 100%; height: 160px; object-fit: contain; align-self: center; }
+.resource-picker .resource-choice span { font-weight: bold; }

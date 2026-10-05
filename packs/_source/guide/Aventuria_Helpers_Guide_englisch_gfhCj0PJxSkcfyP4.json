@@ -1,9 +1,9 @@
 {
-  "_id": "hOJWGfL5zJV8AaBH",
+  "_id": "gfhCj0PJxSkcfyP4",
   "name": "Aventuria Helpers Guide (englisch)",
   "pages": [
     {
-      "_id": "akyuO6pQrqKSfmjm",
+      "_id": "Y4ZOFFM7lCmV5poo",
       "name": "Manual: aventuria-helpers (Test Version)",
       "type": "text",
       "system": {},
@@ -31,7 +31,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788157375585,
+        "createdTime": 1791204933685,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -39,10 +39,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!hOJWGfL5zJV8AaBH.akyuO6pQrqKSfmjm"
+      "_key": "!journal.pages!gfhCj0PJxSkcfyP4.Y4ZOFFM7lCmV5poo"
     },
     {
-      "_id": "oQG5Hu7UO4M182mJ",
+      "_id": "rQ5yBmxtgoUVcaNX",
       "name": "1. New Character Sheet",
       "type": "text",
       "system": {},
@@ -70,7 +70,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788157375585,
+        "createdTime": 1791204933685,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -78,10 +78,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!hOJWGfL5zJV8AaBH.oQG5Hu7UO4M182mJ"
+      "_key": "!journal.pages!gfhCj0PJxSkcfyP4.rQ5yBmxtgoUVcaNX"
     },
     {
-      "_id": "I6WHdK44SjmaKWuK",
+      "_id": "kTd1B43zgpoRTtDs",
       "name": "2. Hero Tray with Hand and Played-Cards Windows",
       "type": "text",
       "system": {},
@@ -109,7 +109,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788157375585,
+        "createdTime": 1791204933685,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -117,10 +117,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!hOJWGfL5zJV8AaBH.I6WHdK44SjmaKWuK"
+      "_key": "!journal.pages!gfhCj0PJxSkcfyP4.kTd1B43zgpoRTtDs"
     },
     {
-      "_id": "neTERlZUgED4NTJZ",
+      "_id": "7tDTkuBwQ0xEzAZc",
       "name": "3. Combat Tracker",
       "type": "text",
       "system": {},
@@ -148,7 +148,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788157375585,
+        "createdTime": 1791204933685,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -156,10 +156,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!hOJWGfL5zJV8AaBH.neTERlZUgED4NTJZ"
+      "_key": "!journal.pages!gfhCj0PJxSkcfyP4.7tDTkuBwQ0xEzAZc"
     },
     {
-      "_id": "sO9kbloLOSrDd8Pt",
+      "_id": "VqZU7JtxDZtwefY8",
       "name": "4. Setup Guide",
       "type": "text",
       "system": {},
@@ -187,7 +187,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788157375585,
+        "createdTime": 1791204933685,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -195,10 +195,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!hOJWGfL5zJV8AaBH.sO9kbloLOSrDd8Pt"
+      "_key": "!journal.pages!gfhCj0PJxSkcfyP4.VqZU7JtxDZtwefY8"
     },
     {
-      "_id": "XpP490ampbu3Lo2I",
+      "_id": "EshM43C12lvs3rcx",
       "name": "5. Play Adventure",
       "type": "text",
       "system": {},
@@ -226,7 +226,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788157375585,
+        "createdTime": 1791204933685,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -234,10 +234,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!hOJWGfL5zJV8AaBH.XpP490ampbu3Lo2I"
+      "_key": "!journal.pages!gfhCj0PJxSkcfyP4.EshM43C12lvs3rcx"
     },
     {
-      "_id": "cD0oaSaG2nKN0qcs",
+      "_id": "ZKcvn80rTxGVRnZi",
       "name": "6. Adventure Points, Leveling Up, and Upgrading Action Cards",
       "type": "text",
       "system": {},
@@ -265,7 +265,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788157375585,
+        "createdTime": 1791204933685,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -273,7 +273,46 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!hOJWGfL5zJV8AaBH.cD0oaSaG2nKN0qcs"
+      "_key": "!journal.pages!gfhCj0PJxSkcfyP4.ZKcvn80rTxGVRnZi"
+    },
+    {
+      "_id": "Ugh7jFVBKcXRbju3",
+      "name": "7. Shared cards and card trackers",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<p>The hero tray offers “Draw fate card” and “Draw resource card”, even without an assigned hero. A GM must be connected. Fate cards appear in a large image window for all connected users and are then in the fate discard pile. Resource cards are placed face-up on the gameboard. The GM must be viewing the same gameboard and the placement position must be configured.</p>\n<p>Enemy cards automatically receive a visible life-point tracker; resource cards receive an adventure counter. Right-click a card and use the heart and diamond controls to enable or disable trackers. Use minus/plus to adjust the value or click the number to enter it directly. Life points range from 0 to their maximum. Adventure counters have no maximum and start at 0; enter any starting value to count down. Editing requires ownership of the card. Drawing again resets life points to their maximum and counters to 0. Moving a card on the scene does not reset its values.</p>\n<p>Card trackers stay within the width of their card. Numbers and buttons grow when zooming out as far as that width permits.</p>\n<p>“Choose resource card” opens an alphabetical list of all cards still available in the resource deck. Hover for a large preview. Clicking a card places that specific card at the resource position. Cards already taken are omitted; a card taken by another user in the meantime cannot be selected again.</p>\n<p>Life-point bars also show their fill level: green above 50%, yellow above 25%, red at 25% or less. The colored area represents current life points as a fraction of the maximum.</p>\n<p>Life-point and adventure-counter bars remain visible when a canvas control other than the card controls is selected.</p>",
+        "markdown": "The hero tray offers “Draw fate card” and “Draw resource card”, even without an assigned hero. A GM must be connected. Fate cards appear in a large image window for all connected users and are then in the fate discard pile. Resource cards are placed face-up on the gameboard. The GM must be viewing the same gameboard and the placement position must be configured.\r\n\r\nEnemy cards automatically receive a visible life-point tracker; resource cards receive an adventure counter. Right-click a card and use the heart and diamond controls to enable or disable trackers. Use minus/plus to adjust the value or click the number to enter it directly. Life points range from 0 to their maximum. Adventure counters have no maximum and start at 0; enter any starting value to count down. Editing requires ownership of the card. Drawing again resets life points to their maximum and counters to 0. Moving a card on the scene does not reset its values.\r\n\r\nCard trackers stay within the width of their card. Numbers and buttons grow when zooming out as far as that width permits.\r\n\r\n“Choose resource card” opens an alphabetical list of all cards still available in the resource deck. Hover for a large preview. Clicking a card places that specific card at the resource position. Cards already taken are omitted; a card taken by another user in the meantime cannot be selected again.\r\n\r\nLife-point bars also show their fill level: green above 50%, yellow above 25%, red at 25% or less. The colored area represents current life points as a fraction of the maximum.\r\n\r\nLife-point and adventure-counter bars remain visible when a canvas control other than the card controls is selected.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 700000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1791204933685,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!gfhCj0PJxSkcfyP4.Ugh7jFVBKcXRbju3"
     }
   ],
   "folder": null,
@@ -286,7 +325,7 @@
   "_stats": {
     "compendiumSource": null,
     "coreVersion": "14.364",
-    "createdTime": 1788157375585,
+    "createdTime": 1791204933685,
     "duplicateSource": null,
     "exportSource": null,
     "lastModifiedBy": null,
@@ -294,5 +333,5 @@
     "systemId": "universal-tabletop-system",
     "systemVersion": "1.2.1"
   },
-  "_key": "!journal!hOJWGfL5zJV8AaBH"
+  "_key": "!journal!gfhCj0PJxSkcfyP4"
 }

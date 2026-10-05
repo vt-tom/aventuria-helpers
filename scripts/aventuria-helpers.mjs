@@ -1,4 +1,6 @@
 import { AventuriaHelpersHeroSheet } from "./sheets/hero-sheet.mjs";
+import { registerSharedDraw, drawSharedCard, setResourcePosition } from "./cards/shared-draw.mjs";
+import { registerCardTrackers } from "./cards/card-trackers.mjs";
 import { AventuriaHelpersCardHeroSheet } from "./sheets/card-hero-sheet.mjs";
 import { registerWelcomeScreenReopen } from "./apps/welcome-screen.mjs";
 import { registerChangelogAutoOpen } from "./apps/changelog.mjs";
@@ -69,8 +71,12 @@ Hooks.once("init", () => {
   registerPlayedCardsSheet();
   registerEnduranceCardsSheet();
   registerHeroTray();
+  registerSharedDraw();
+  registerCardTrackers();
 
   game.modules.get(MODULE_ID).api = {
+    drawSharedCard,
+    setResourcePosition,
     resetCardRotations, openWelcomeScreen, cleanUpBoard, exhaustHero, readyHero, migrateExperienceStacks,
     cleanUpBrokenCardPlacements, fixMisassignedPlayerHands,
   };

@@ -371,6 +371,29 @@
       "Macros": "Aventuria Helpers Macros",
       "Guide": "Aventuria Helpers Guide",
       "Changelog": "Aventuria Helpers Changelog"
+    },
+    "SharedDraw": {
+      "Fate": "Draw fate card",
+      "Resource": "Choose resource card",
+      "MissingDeck": "The shared deck is missing. Prepare the gameboard first.",
+      "EmptyDeck": "The deck is empty.",
+      "MissingPile": "The shared card pile is missing.",
+      "WrongScene": "The GM must be viewing the same gameboard to place the card.",
+      "MissingPosition": "The resource card position has not been configured yet.",
+      "MissingCcm": "Complete Card Management is not active.",
+      "NoGM": "A GM must be connected to draw a card.",
+      "Timeout": "No response from the GM. Check the deck before trying again.",
+      "SelectResource": "Choose resource card",
+      "SelectResourceHint": "Choose an available card. Cards are sorted alphabetically; hover to see a large preview.",
+      "UnavailableCard": "This resource card is no longer available in the deck. Choose another card."
+    },
+    "CardTracker": {
+      "HP": "Life points",
+      "Marker": "Adventure counters",
+      "Value": "Value",
+      "Maximum": "Maximum life points",
+      "Activate": "Enable",
+      "Deactivate": "Disable"
     }
   }
 }

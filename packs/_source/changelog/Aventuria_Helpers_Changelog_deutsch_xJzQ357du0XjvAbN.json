@@ -1,9 +1,9 @@
 {
-  "_id": "jW6DcaiQzqvXfZN0",
+  "_id": "xJzQ357du0XjvAbN",
   "name": "Aventuria Helpers - Changelog (deutsch)",
   "pages": [
     {
-      "_id": "md8Poes4EXda0OYY",
+      "_id": "k1RBbDUOmV3tVvoW",
       "name": "Änderungen – Aventuria Helfer",
       "type": "text",
       "system": {},
@@ -31,7 +31,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788951589256,
+        "createdTime": 1791204934120,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -39,10 +39,88 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.md8Poes4EXda0OYY"
+      "_key": "!journal.pages!xJzQ357du0XjvAbN.k1RBbDUOmV3tVvoW"
     },
     {
-      "_id": "AvNi94uP5RZJMd4i",
+      "_id": "zTSXKwd8YGNLkKBO",
+      "name": "0.4.0-beta.1",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<h3>Features</h3>\n<ul>\n<li>Schicksals- und Ressourcenkarten direkt über die Heldenablage ziehen. Schicksalskarten werden allen verbundenen Personen als Großansicht gezeigt und abgelegt; Ressourcenkarten werden offen auf dem Spielbrett platziert.</li>\n<li>Sichtbare Lebenspunkte- und Abenteuermarken-Zähler direkt an einzelnen Karten. Gegner erhalten Lebenspunkte automatisch; Ressourcenkarten erhalten automatisch einen Marken-Zähler. Zähler lassen sich über das Kartenmenü aktivieren/deaktivieren, per +/- verändern und durch Klick auf die Zahl direkt bearbeiten. Erneutes Ziehen setzt Lebenspunkte auf das Maximum und Marken auf 0 zurück.</li>\n</ul>",
+        "markdown": "### Features\r\n- Schicksals- und Ressourcenkarten direkt über die Heldenablage ziehen. Schicksalskarten werden allen verbundenen Personen als Großansicht gezeigt und abgelegt; Ressourcenkarten werden offen auf dem Spielbrett platziert.\r\n- Sichtbare Lebenspunkte- und Abenteuermarken-Zähler direkt an einzelnen Karten. Gegner erhalten Lebenspunkte automatisch; Ressourcenkarten erhalten automatisch einen Marken-Zähler. Zähler lassen sich über das Kartenmenü aktivieren/deaktivieren, per +/- verändern und durch Klick auf die Zahl direkt bearbeiten. Erneutes Ziehen setzt Lebenspunkte auf das Maximum und Marken auf 0 zurück.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 100000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1791204934120,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!xJzQ357du0XjvAbN.zTSXKwd8YGNLkKBO"
+    },
+    {
+      "_id": "4e3jBNuNmFR3rAmH",
+      "name": "0.3.1",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<h3>Bugs</h3>\n<ul>\n<li>Die Talente auf dem Heldenbogen sind jetzt alphabetisch sortiert (in Deutsch und Englisch jeweils passend zur eigenen Reihenfolge), statt in einer festen, technisch bedingten Reihenfolge zu stehen.</li>\n<li>Wenn nach \"Held zuweisen\" das \"Auf der Spielbrett-Szene platzieren\" nicht sofort ausgeführt wurde, ließ sich der Held danach nicht mehr platzieren, ohne ihn komplett neu zuzuweisen (wodurch Deck/Hand/Ablage verloren gegangen wären). Der Guide springt jetzt beim erneuten Öffnen von \"Helden auswählen\" direkt zum Platzieren-Schritt zurück, wenn eine Zuweisung noch offen ist.</li>\n<li>Nach einem Rundenwechsel im Kampf-Tracker wurde der Markierungsring des aktuell handelnden Teilnehmenden nicht sofort auf der Karte angezeigt, sondern erst, wenn man einmal manuell weitergesprungen ist. Behoben.</li>\n<li>Bei der Heldenzuweisung konnte auf manchen Servern (selten) versehentlich die Ablage statt der Hand als \"meine Handkarten\" hinterlegt werden. Betroffene Zuordnungen werden beim nächsten Weltstart automatisch korrigiert; neu zugewiesene Helden sind von vornherein nicht mehr betroffen.</li>\n<li>Wenn Held zuweisen, Marken-Import, Erfahrungsschatz-Anlage oder die Schnellstarter-Decks von einem Client mit anderer Foundry-Sprache als der restlichen Spielrunde ausgeführt wurden, konnte das jeweils erzeugte Material in der falschen Sprache landen (z.B. ein Erfahrungsschatz auf Englisch neben einem deutschen Heldendeck, wodurch \"Aktionskarten verbessern\" für diesen Helden keine Treffer mehr fand). Diese Schritte richten sich jetzt nach der tatsächlichen Sprache des Spielbretts statt nach der Sprache des ausführenden Clients.</li>\n<li>Im Safari-Browser wurden Kartenbilder in der Hand-Ablage, im Ausgespielte-Karten- und im Ausdauerkarten-Fenster (sowie im \"Aktionskarten verbessern\"-Dialog) stark verzerrt in die Breite gezogen dargestellt. Behoben.</li>\n</ul>\n<h3>Features</h3>\n<ul>\n<li>Die Startspielermarke wird beim Marken-Import jetzt automatisch mit auf der Spielbrett-Szene platziert (bleibt weiterhin frei verschiebbar/weiterreichbar).</li>\n<li>Im Kampf-Tracker wird die Initiative-Zahl neben dem Namen nach Kampfbeginn nicht mehr angezeigt, da sie sich mit der rotierenden Reihenfolge ohnehin nicht mehr ändert und daher eher verwirrte als half.</li>\n<li>Die Fähnchen der Navigationsleiste auf dem Charakterbogen heben sich jetzt durch einen zusätzlichen dunklen Rand deutlicher vom Spielbrett-Hintergrund ab.</li>\n</ul>",
+        "markdown": "### Bugs\r\n- Die Talente auf dem Heldenbogen sind jetzt alphabetisch sortiert (in Deutsch und Englisch jeweils passend zur eigenen Reihenfolge), statt in einer festen, technisch bedingten Reihenfolge zu stehen.\r\n- Wenn nach \"Held zuweisen\" das \"Auf der Spielbrett-Szene platzieren\" nicht sofort ausgeführt wurde, ließ sich der Held danach nicht mehr platzieren, ohne ihn komplett neu zuzuweisen (wodurch Deck/Hand/Ablage verloren gegangen wären). Der Guide springt jetzt beim erneuten Öffnen von \"Helden auswählen\" direkt zum Platzieren-Schritt zurück, wenn eine Zuweisung noch offen ist.\r\n- Nach einem Rundenwechsel im Kampf-Tracker wurde der Markierungsring des aktuell handelnden Teilnehmenden nicht sofort auf der Karte angezeigt, sondern erst, wenn man einmal manuell weitergesprungen ist. Behoben.\r\n- Bei der Heldenzuweisung konnte auf manchen Servern (selten) versehentlich die Ablage statt der Hand als \"meine Handkarten\" hinterlegt werden. Betroffene Zuordnungen werden beim nächsten Weltstart automatisch korrigiert; neu zugewiesene Helden sind von vornherein nicht mehr betroffen.\r\n- Wenn Held zuweisen, Marken-Import, Erfahrungsschatz-Anlage oder die Schnellstarter-Decks von einem Client mit anderer Foundry-Sprache als der restlichen Spielrunde ausgeführt wurden, konnte das jeweils erzeugte Material in der falschen Sprache landen (z.B. ein Erfahrungsschatz auf Englisch neben einem deutschen Heldendeck, wodurch \"Aktionskarten verbessern\" für diesen Helden keine Treffer mehr fand). Diese Schritte richten sich jetzt nach der tatsächlichen Sprache des Spielbretts statt nach der Sprache des ausführenden Clients.\r\n- Im Safari-Browser wurden Kartenbilder in der Hand-Ablage, im Ausgespielte-Karten- und im Ausdauerkarten-Fenster (sowie im \"Aktionskarten verbessern\"-Dialog) stark verzerrt in die Breite gezogen dargestellt. Behoben.\r\n\r\n### Features\r\n- Die Startspielermarke wird beim Marken-Import jetzt automatisch mit auf der Spielbrett-Szene platziert (bleibt weiterhin frei verschiebbar/weiterreichbar).\r\n- Im Kampf-Tracker wird die Initiative-Zahl neben dem Namen nach Kampfbeginn nicht mehr angezeigt, da sie sich mit der rotierenden Reihenfolge ohnehin nicht mehr ändert und daher eher verwirrte als half.\r\n- Die Fähnchen der Navigationsleiste auf dem Charakterbogen heben sich jetzt durch einen zusätzlichen dunklen Rand deutlicher vom Spielbrett-Hintergrund ab.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 200000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1791204934120,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!xJzQ357du0XjvAbN.4e3jBNuNmFR3rAmH"
+    },
+    {
+      "_id": "2X4ItdUfu3oDq4Xm",
       "name": "0.3.0",
       "type": "text",
       "system": {},
@@ -62,7 +140,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 100000,
+      "sort": 300000,
       "ownership": {
         "default": -1
       },
@@ -70,7 +148,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788951589256,
+        "createdTime": 1791204934120,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -78,10 +156,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.AvNi94uP5RZJMd4i"
+      "_key": "!journal.pages!xJzQ357du0XjvAbN.2X4ItdUfu3oDq4Xm"
     },
     {
-      "_id": "1aJheGcIScgXEBOD",
+      "_id": "tzLInMGpPwq6zEwe",
       "name": "0.2.3",
       "type": "text",
       "system": {},
@@ -101,7 +179,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 200000,
+      "sort": 400000,
       "ownership": {
         "default": -1
       },
@@ -109,7 +187,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788951589256,
+        "createdTime": 1791204934120,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -117,10 +195,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.1aJheGcIScgXEBOD"
+      "_key": "!journal.pages!xJzQ357du0XjvAbN.tzLInMGpPwq6zEwe"
     },
     {
-      "_id": "jklnlQgy2mTH01Sj",
+      "_id": "bxY90RiWZJzZ8q6s",
       "name": "0.2.2",
       "type": "text",
       "system": {},
@@ -140,7 +218,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 300000,
+      "sort": 500000,
       "ownership": {
         "default": -1
       },
@@ -148,7 +226,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788951589256,
+        "createdTime": 1791204934120,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -156,10 +234,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.jklnlQgy2mTH01Sj"
+      "_key": "!journal.pages!xJzQ357du0XjvAbN.bxY90RiWZJzZ8q6s"
     },
     {
-      "_id": "5OOXeFGmc7tzwpps",
+      "_id": "GtPkIGT2RmPJs5Rr",
       "name": "0.2.0 (Beta)",
       "type": "text",
       "system": {},
@@ -179,7 +257,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 400000,
+      "sort": 600000,
       "ownership": {
         "default": -1
       },
@@ -187,7 +265,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788951589256,
+        "createdTime": 1791204934120,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -195,10 +273,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.5OOXeFGmc7tzwpps"
+      "_key": "!journal.pages!xJzQ357du0XjvAbN.GtPkIGT2RmPJs5Rr"
     },
     {
-      "_id": "5N5JGZ2nAsLR6CIr",
+      "_id": "RJKW0R6zoeaz8ZSg",
       "name": "0.1.5",
       "type": "text",
       "system": {},
@@ -218,7 +296,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 500000,
+      "sort": 700000,
       "ownership": {
         "default": -1
       },
@@ -226,7 +304,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788951589256,
+        "createdTime": 1791204934120,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -234,10 +312,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.5N5JGZ2nAsLR6CIr"
+      "_key": "!journal.pages!xJzQ357du0XjvAbN.RJKW0R6zoeaz8ZSg"
     },
     {
-      "_id": "QmIrU8OgPYwbsS8Q",
+      "_id": "DEGbYpGPRpnQxnYB",
       "name": "0.1.4.1",
       "type": "text",
       "system": {},
@@ -257,7 +335,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 600000,
+      "sort": 800000,
       "ownership": {
         "default": -1
       },
@@ -265,7 +343,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788951589256,
+        "createdTime": 1791204934120,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -273,10 +351,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.QmIrU8OgPYwbsS8Q"
+      "_key": "!journal.pages!xJzQ357du0XjvAbN.DEGbYpGPRpnQxnYB"
     },
     {
-      "_id": "SKSoZ3wNykbGvl5F",
+      "_id": "me78ZHqMTCoDaR90",
       "name": "0.1.4",
       "type": "text",
       "system": {},
@@ -296,7 +374,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 700000,
+      "sort": 900000,
       "ownership": {
         "default": -1
       },
@@ -304,7 +382,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788951589256,
+        "createdTime": 1791204934120,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -312,10 +390,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.SKSoZ3wNykbGvl5F"
+      "_key": "!journal.pages!xJzQ357du0XjvAbN.me78ZHqMTCoDaR90"
     },
     {
-      "_id": "TQCAT9N6h9frVV6b",
+      "_id": "5oBcLxDbHbKBoyru",
       "name": "0.1.3",
       "type": "text",
       "system": {},
@@ -335,7 +413,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 800000,
+      "sort": 1000000,
       "ownership": {
         "default": -1
       },
@@ -343,7 +421,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788951589256,
+        "createdTime": 1791204934120,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -351,10 +429,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.TQCAT9N6h9frVV6b"
+      "_key": "!journal.pages!xJzQ357du0XjvAbN.5oBcLxDbHbKBoyru"
     },
     {
-      "_id": "0e1Zp4dR1YWCC6md",
+      "_id": "l8wnuQOID8HQh34V",
       "name": "0.1.2",
       "type": "text",
       "system": {},
@@ -374,7 +452,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 900000,
+      "sort": 1100000,
       "ownership": {
         "default": -1
       },
@@ -382,7 +460,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788951589256,
+        "createdTime": 1791204934120,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -390,10 +468,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.0e1Zp4dR1YWCC6md"
+      "_key": "!journal.pages!xJzQ357du0XjvAbN.l8wnuQOID8HQh34V"
     },
     {
-      "_id": "GaUxFE2Gc4aKurqA",
+      "_id": "pf5z4sOKX6Y8IziD",
       "name": "0.1.1",
       "type": "text",
       "system": {},
@@ -413,7 +491,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 1000000,
+      "sort": 1200000,
       "ownership": {
         "default": -1
       },
@@ -421,7 +499,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788951589256,
+        "createdTime": 1791204934120,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -429,10 +507,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.GaUxFE2Gc4aKurqA"
+      "_key": "!journal.pages!xJzQ357du0XjvAbN.pf5z4sOKX6Y8IziD"
     },
     {
-      "_id": "SVAb1MuETgkTQKeT",
+      "_id": "rf6Au83tZaOBGJhY",
       "name": "0.1.0",
       "type": "text",
       "system": {},
@@ -452,7 +530,7 @@
       },
       "src": null,
       "category": null,
-      "sort": 1100000,
+      "sort": 1300000,
       "ownership": {
         "default": -1
       },
@@ -460,7 +538,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788951589256,
+        "createdTime": 1791204934120,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -468,7 +546,7 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!jW6DcaiQzqvXfZN0.SVAb1MuETgkTQKeT"
+      "_key": "!journal.pages!xJzQ357du0XjvAbN.rf6Au83tZaOBGJhY"
     }
   ],
   "folder": null,
@@ -481,7 +559,7 @@
   "_stats": {
     "compendiumSource": null,
     "coreVersion": "14.364",
-    "createdTime": 1788951589256,
+    "createdTime": 1791204934120,
     "duplicateSource": null,
     "exportSource": null,
     "lastModifiedBy": null,
@@ -489,5 +567,5 @@
     "systemId": "universal-tabletop-system",
     "systemVersion": "1.2.1"
   },
-  "_key": "!journal!jW6DcaiQzqvXfZN0"
+  "_key": "!journal!xJzQ357du0XjvAbN"
 }

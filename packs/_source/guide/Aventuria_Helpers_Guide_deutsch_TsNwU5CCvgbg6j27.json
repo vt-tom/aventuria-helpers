@@ -1,9 +1,9 @@
 {
-  "_id": "B8d8Vsa2yS8RduRY",
+  "_id": "TsNwU5CCvgbg6j27",
   "name": "Aventuria Helpers Guide (deutsch)",
   "pages": [
     {
-      "_id": "C2DGqhFxMOBXG6ug",
+      "_id": "bSAPGRzakIVLkLBm",
       "name": "Handbuch: aventuria-helpers (Test-Version)",
       "type": "text",
       "system": {},
@@ -31,7 +31,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788157375570,
+        "createdTime": 1791204933669,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -39,10 +39,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!B8d8Vsa2yS8RduRY.C2DGqhFxMOBXG6ug"
+      "_key": "!journal.pages!TsNwU5CCvgbg6j27.bSAPGRzakIVLkLBm"
     },
     {
-      "_id": "jBx6pIM0xdseFPgq",
+      "_id": "OZdxiHdgx89uBIOj",
       "name": "1. Neuer Charakterbogen",
       "type": "text",
       "system": {},
@@ -70,7 +70,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788157375570,
+        "createdTime": 1791204933669,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -78,10 +78,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!B8d8Vsa2yS8RduRY.jBx6pIM0xdseFPgq"
+      "_key": "!journal.pages!TsNwU5CCvgbg6j27.OZdxiHdgx89uBIOj"
     },
     {
-      "_id": "ApRhR7ohZdh5PRXL",
+      "_id": "Gy1bLGXmDh0k6AmV",
       "name": "2. Heldenablage mit Hand- und Ausgespielte-Karten-Fenster",
       "type": "text",
       "system": {},
@@ -109,7 +109,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788157375570,
+        "createdTime": 1791204933669,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -117,10 +117,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!B8d8Vsa2yS8RduRY.ApRhR7ohZdh5PRXL"
+      "_key": "!journal.pages!TsNwU5CCvgbg6j27.Gy1bLGXmDh0k6AmV"
     },
     {
-      "_id": "0TmDWWX46EeXRLMG",
+      "_id": "UcPUAFer1XdiZXWv",
       "name": "3. Kampf-Tracker",
       "type": "text",
       "system": {},
@@ -148,7 +148,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788157375570,
+        "createdTime": 1791204933669,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -156,10 +156,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!B8d8Vsa2yS8RduRY.0TmDWWX46EeXRLMG"
+      "_key": "!journal.pages!TsNwU5CCvgbg6j27.UcPUAFer1XdiZXWv"
     },
     {
-      "_id": "PBnCxlHUi5EEb2uH",
+      "_id": "tfv26jwqZLKZtEjC",
       "name": "4. Einrichtungs-Guide",
       "type": "text",
       "system": {},
@@ -187,7 +187,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788157375570,
+        "createdTime": 1791204933669,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -195,10 +195,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!B8d8Vsa2yS8RduRY.PBnCxlHUi5EEb2uH"
+      "_key": "!journal.pages!TsNwU5CCvgbg6j27.tfv26jwqZLKZtEjC"
     },
     {
-      "_id": "OoxymeJEwCpkAVht",
+      "_id": "mWUJmJVdS5hQzs6k",
       "name": "5. Abenteuer spielen",
       "type": "text",
       "system": {},
@@ -226,7 +226,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788157375570,
+        "createdTime": 1791204933669,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -234,10 +234,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!B8d8Vsa2yS8RduRY.OoxymeJEwCpkAVht"
+      "_key": "!journal.pages!TsNwU5CCvgbg6j27.mWUJmJVdS5hQzs6k"
     },
     {
-      "_id": "C7DuEQEYEcLZj9bB",
+      "_id": "B27L6DKbat674JTE",
       "name": "6. Abenteuerpunkte, Stufenaufstieg und Aktionskarten verbessern",
       "type": "text",
       "system": {},
@@ -265,7 +265,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1788157375570,
+        "createdTime": 1791204933669,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -273,7 +273,46 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!B8d8Vsa2yS8RduRY.C7DuEQEYEcLZj9bB"
+      "_key": "!journal.pages!TsNwU5CCvgbg6j27.B27L6DKbat674JTE"
+    },
+    {
+      "_id": "POy4Ex96gOzAYKCH",
+      "name": "7. Gemeinsame Karten und Karten-Zähler",
+      "type": "text",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "content": "<p>Die Heldenablage bietet „Schicksalskarte ziehen“ und „Ressourcenkarte ziehen“, auch ohne zugewiesenen Helden. Eine Spielleitung muss verbunden sein. Schicksalskarten erscheinen bei allen verbundenen Personen in einer Großansicht und liegen anschließend in der Schicksalsablage. Ressourcenkarten werden offen auf dem Spielbrett platziert. Dafür muss die Spielleitung dasselbe Spielbrett geöffnet haben und die Platzierungsposition eingerichtet sein.</p>\n<p>Gegnerkarten erhalten automatisch einen sichtbaren Lebenspunkte-Zähler, Ressourcenkarten einen Abenteuermarken-Zähler. Im per Rechtsklick geöffneten Kartenmenü lassen sich über Herz und Raute zusätzliche Zähler aktivieren oder bestehende deaktivieren. Mit Minus/Plus verändert man den Wert; ein Klick auf die Zahl erlaubt direkte Eingabe. Lebenspunkte liegen zwischen 0 und dem Maximum. Abenteuermarken haben kein Maximum und beginnen bei 0; zum Herunterzählen kann ein beliebiger Startwert eingegeben werden. Bearbeiten können Personen mit Schreibrecht auf die Karte. Beim erneuten Ziehen werden Lebenspunkte auf das Maximum und Abenteuermarken auf 0 zurückgesetzt. Verschieben auf der Szene setzt die Werte nicht zurück.</p>\n<p>Die Karten-Zähler bleiben auf die Breite ihrer Karte begrenzt. Zahlen und Buttons werden beim Herauszoomen vergrößert, soweit innerhalb dieser Breite Platz ist.</p>\n<p>Über „Ressourcenkarte auswählen“ öffnet sich eine alphabetisch sortierte Übersicht aller noch im Ressourcenstapel verfügbaren Karten. Mouseover zeigt die große Kartenvorschau. Ein Klick auf eine Karte legt genau diese Karte an der Ressourcenposition aus. Bereits entnommene Karten werden nicht angeboten; eine inzwischen von jemand anderem entnommene Karte kann nicht ein zweites Mal gewählt werden.</p>\n<p>Lebenspunkte-Leisten zeigen zusätzlich den Füllstand: über 50 % grün, über 25 % gelb, bis 25 % rot. Die farbige Fläche entspricht dem Anteil aktueller Lebenspunkte am Maximum.</p>\n<p>LEP- und Abenteuermarken-Leisten bleiben auch sichtbar, wenn links eine andere Steuerung als die Kartensteuerung ausgewählt ist.</p>",
+        "markdown": "Die Heldenablage bietet „Schicksalskarte ziehen“ und „Ressourcenkarte ziehen“, auch ohne zugewiesenen Helden. Eine Spielleitung muss verbunden sein. Schicksalskarten erscheinen bei allen verbundenen Personen in einer Großansicht und liegen anschließend in der Schicksalsablage. Ressourcenkarten werden offen auf dem Spielbrett platziert. Dafür muss die Spielleitung dasselbe Spielbrett geöffnet haben und die Platzierungsposition eingerichtet sein.\r\n\r\nGegnerkarten erhalten automatisch einen sichtbaren Lebenspunkte-Zähler, Ressourcenkarten einen Abenteuermarken-Zähler. Im per Rechtsklick geöffneten Kartenmenü lassen sich über Herz und Raute zusätzliche Zähler aktivieren oder bestehende deaktivieren. Mit Minus/Plus verändert man den Wert; ein Klick auf die Zahl erlaubt direkte Eingabe. Lebenspunkte liegen zwischen 0 und dem Maximum. Abenteuermarken haben kein Maximum und beginnen bei 0; zum Herunterzählen kann ein beliebiger Startwert eingegeben werden. Bearbeiten können Personen mit Schreibrecht auf die Karte. Beim erneuten Ziehen werden Lebenspunkte auf das Maximum und Abenteuermarken auf 0 zurückgesetzt. Verschieben auf der Szene setzt die Werte nicht zurück.\r\n\r\nDie Karten-Zähler bleiben auf die Breite ihrer Karte begrenzt. Zahlen und Buttons werden beim Herauszoomen vergrößert, soweit innerhalb dieser Breite Platz ist.\r\n\r\nÜber „Ressourcenkarte auswählen“ öffnet sich eine alphabetisch sortierte Übersicht aller noch im Ressourcenstapel verfügbaren Karten. Mouseover zeigt die große Kartenvorschau. Ein Klick auf eine Karte legt genau diese Karte an der Ressourcenposition aus. Bereits entnommene Karten werden nicht angeboten; eine inzwischen von jemand anderem entnommene Karte kann nicht ein zweites Mal gewählt werden.\r\n\r\nLebenspunkte-Leisten zeigen zusätzlich den Füllstand: über 50 % grün, über 25 % gelb, bis 25 % rot. Die farbige Fläche entspricht dem Anteil aktueller Lebenspunkte am Maximum.\r\n\r\nLEP- und Abenteuermarken-Leisten bleiben auch sichtbar, wenn links eine andere Steuerung als die Kartensteuerung ausgewählt ist.",
+        "format": 2
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "sort": 700000,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "coreVersion": "14.364",
+        "createdTime": 1791204933669,
+        "duplicateSource": null,
+        "exportSource": null,
+        "lastModifiedBy": null,
+        "modifiedTime": null,
+        "systemId": "universal-tabletop-system",
+        "systemVersion": "1.2.1"
+      },
+      "_key": "!journal.pages!TsNwU5CCvgbg6j27.POy4Ex96gOzAYKCH"
     }
   ],
   "folder": null,
@@ -286,7 +325,7 @@
   "_stats": {
     "compendiumSource": null,
     "coreVersion": "14.364",
-    "createdTime": 1788157375570,
+    "createdTime": 1791204933669,
     "duplicateSource": null,
     "exportSource": null,
     "lastModifiedBy": null,
@@ -294,5 +333,5 @@
     "systemId": "universal-tabletop-system",
     "systemVersion": "1.2.1"
   },
-  "_key": "!journal!B8d8Vsa2yS8RduRY"
+  "_key": "!journal!TsNwU5CCvgbg6j27"
 }

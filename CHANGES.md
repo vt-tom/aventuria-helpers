@@ -2,6 +2,12 @@
 
 Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Version zuerst.
 
+## 0.4.0-beta.1
+
+### Features
+- Schicksals- und Ressourcenkarten direkt über die Heldenablage ziehen. Schicksalskarten werden allen verbundenen Personen als Großansicht gezeigt und abgelegt; Ressourcenkarten werden offen auf dem Spielbrett platziert.
+- Sichtbare Lebenspunkte- und Abenteuermarken-Zähler direkt an einzelnen Karten. Gegner erhalten Lebenspunkte automatisch; Ressourcenkarten erhalten automatisch einen Marken-Zähler. Zähler lassen sich über das Kartenmenü aktivieren/deaktivieren, per +/- verändern und durch Klick auf die Zahl direkt bearbeiten. Erneutes Ziehen setzt Lebenspunkte auf das Maximum und Marken auf 0 zurück.
+
 ## 0.3.1
 
 ### Bugs

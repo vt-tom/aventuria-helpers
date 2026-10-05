@@ -2,6 +2,12 @@
 
 This file lists all gameplay-relevant changes to the module – newest version first.
 
+## 0.4.0-beta.1
+
+### Features
+- Draw fate and resource cards from the hero tray. Fate cards are shown to all connected users and discarded; resource cards are placed face-up on the gameboard.
+- Visible life-point and adventure-counter trackers on individual cards. Enemies automatically receive life points; resource cards receive an adventure counter. Enable or disable trackers through the card HUD, adjust them with +/- or click the number to edit it. Drawing again resets life points to their maximum and counters to 0.
+
 ## 0.3.1
 
 ### Bugs

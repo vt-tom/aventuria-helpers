@@ -7,6 +7,7 @@ import { openWelcomeScreen } from "../macros/open-welcome-screen.mjs";
 import { AventuriaHelpersWelcomeScreen } from "./welcome-screen.mjs";
 import { deleteExistingHero } from "../cards/prepare-hero.mjs";
 import { openHeroSwitcher, closeHeroSwitcher } from "./hero-switcher.mjs";
+import { drawSharedCard } from "../cards/shared-draw.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -69,6 +70,8 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
       switchHomeHero: AventuriaHelpersHeroTray.#onSwitchHomeHero,
       openSheet: AventuriaHelpersHeroTray.#onOpenSheet,
       drawCard: AventuriaHelpersHeroTray.#onDrawCard,
+      drawFate: AventuriaHelpersHeroTray.#onDrawFate,
+      drawResource: AventuriaHelpersHeroTray.#onDrawResource,
       shuffleDeck: AventuriaHelpersHeroTray.#onShuffleDeck,
       previewCards: AventuriaHelpersHeroTray.#onPreviewCards,
       viewDeck: AventuriaHelpersHeroTray.#onViewDeck,
@@ -307,6 +310,16 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
     const stacks = this.activeStacks();
     if (!stacks?.deck) return;
     await stacks.hand.draw(stacks.deck, 1);
+  }
+
+  static async #onDrawFate(event, target) {
+    target.disabled = true;
+    try { await drawSharedCard("fate"); } finally { target.disabled = false; }
+  }
+
+  static async #onDrawResource(event, target) {
+    target.disabled = true;
+    try { await drawSharedCard("resource"); } finally { target.disabled = false; }
   }
 
   /**
