@@ -67,6 +67,8 @@ Alle Zahlen aktualisieren sich automatisch, sobald sich etwas an den eigenen Kar
 
 **Held/Hand konfigurieren:** Das Zahnrad-Symbol oben in der Ablage (neben dem Umschalt-Button) öffnet Foundrys Nutzer-Einstellungen mit zwei relevanten Feldern: welcher Held zugewiesen ist ("Character") und welche Hand als eigene Hand gilt ("Player Hand"). Nützlich, um ohne erneuten "Bereite Spieler vor"-Durchlauf auf einen bereits vorhandenen Helden oder eine bereits vorhandene Hand umzustellen.
 
+Zufällige Heldenauswahl veröffentlicht eine Chatkarte mit Spielername, Heldenname und Portrait. Nur verbundene Nutzer mit zugewiesenem Helden zählen; derselbe Held wird nur einmal berücksichtigt.
+
 ### 2.3 Der Hand-Bogen
 
 Über "Hand ansehen" öffnet sich ein eigenes Fenster mit allen Karten der aktuellen Hand, nebeneinander als Reihe.
@@ -81,6 +83,8 @@ Alle Zahlen aktualisieren sich automatisch, sobald sich etwas an den eigenen Kar
 - **Ziehen/Ablegen:** Karten lassen sich weiterhin wie gewohnt per Drag & Drop verschieben (z.B. auf die Spieloberfläche).
 - **Rechtsklick** auf eine Karte öffnet ein Menü zum Umdrehen bzw. zur nächsten/vorherigen Kartenseite (sofern die Karte mehrere Seiten hat).
 - Ein erneuter Klick auf "Hand ansehen" öffnet kein zweites Fenster, sondern holt ein bereits offenes nur wieder nach vorne. Über das "X" in der Kopfleiste lässt sich das Fenster ganz normal schließen.
+
+**Handkarten-Kontextmenü:** Rechtsklick auf eine Handkarte bietet zusätzlich „Ablegen“ und „Zurück ins Deck mischen“. Ziel sind Ablage bzw. Deck des zugehörigen Helden, auch nach einem Heldenwechsel. Das Deck wird nach der Rückgabe gemischt.
 
 ### 2.4 Ausgespielte Karten
 
@@ -106,6 +110,23 @@ Normalerweise steuert die Heldenablage immer den Helden, der dem eigenen Foundry
 - **Keine Dauereinstellung:** Nach einem Neuladen der Seite startet die Ablage wieder beim eigenen Helden.
 
 Das Umschalten funktioniert auch, wenn dem eigenen Benutzer selbst kein Held zugewiesen ist - praktisch für eine Spielleitung, die solo alle Helden führt.
+
+### 2.6 Heldenwerte und schnelle Proben (Beta)
+
+Unter dem Heldnamen stehen Lebenspunkte und persönliche Schicksalspunkte. Minus/Plus ändert die LEP direkt; Klick auf die Zahl erlaubt Eingabe in der Leiste. Enter oder Verlassen des Felds speichert, Escape verwirft. LEP liegen zwischen 0 und dem Maximum; das Maximum bleibt am Heldenbogen bearbeitbar. Der Balken zeigt grün/gelb/rot den Füllstand. Hand und Im-Spiel-Karten stehen nebeneinander mit je eigenem Auge-Button.
+
+Der Würfel rechts neben dem Namen öffnet die Auswahl für Kampf (einschließlich Ausweichen), Talente und Ausrüstung. Talente sind alphabetisch und tragen eindeutige Anfangsbuchstaben; der Tooltip zeigt Name und Wert. Die Proben verwenden dieselben Regeln wie der Heldenbogen. Im ersten Menü kann außerdem ein zufälliger Held bestimmt werden: jeder zugewiesene Held verbundener Nutzer zählt einmal, auch bei GM-Rolle. Das Ergebnis erscheint öffentlich im Chat für alle; der gesteuerte Held wechselt dadurch nicht.
+
+### 2.7 Schicksalspunkte und gemeinsamer Pool (Beta)
+
+Zu Beginn eines Abenteuers beträgt der gemeinsame Pool Anzahl Helden verbundener Nutzer × 2. Nach einer misslungenen Kampfprobe darf ein Held einen Punkt nehmen; das wird manuell ausgelöst, nicht automatisch anhand von Würfen geprüft.
+
+Im Fußbereich der Heldenablage können alle den Pool direkt einstellen. Enter oder Verlassen des Felds speichert, Escape verwirft. Das kleine Reset-Symbol setzt den Pool auf Helden verbundener Nutzer × 2; jeder Held zählt einmal, einschließlich GM-Zuweisungen. Offline-Nutzer zählen nicht. Persönliche Bestände werden dabei nicht zurückgesetzt.
+
+Plus am persönlichen Schicksalszähler nimmt einen Punkt aus dem Pool, Minus gibt ihn zurück. Direkte Zahleneingabe überträgt entsprechend die Differenz. Ein leerer Pool erlaubt keine weitere Entnahme. Gleichzeitige Änderungen werden durch einen verbundenen GM-Client koordiniert; alle Mitspieler müssen wie beim Aventuria-Setup vorgesehen Gamemaster sein. Die Werte bleiben gespeichert.
+
+
+Für die zwölf Standardhelden verwenden Heldenablage und Hauptportrait unseres Charakterbogens automatisch die neuen Einzelportraits aus Aventuria. Akteur- und Tokenbilder bleiben unverändert; der Bilder-Tab zeigt weiterhin das ursprüngliche Bild. Klick auf das Hauptportrait öffnet dessen Großansicht. Für unbekannte Helden oder fehlende neue Bilder wird das bisherige Akteurbild angezeigt. Auch das radiale Heldenwechsel-Menü zeigt diese Portraits; die Zuordnung funktioniert für deutsche und englische Heldnamen.
 
 ## 3. Kampf-Tracker
 
@@ -213,7 +234,7 @@ Zusätzlich zu Helden- und Talentkarte lässt sich das Heldendeck selbst verbess
 Als Steigerung angeboten werden nur exakt gleichnamige Karten - vereinzelte Namensabweichungen im offiziellen Kartenmaterial führen dazu, dass einzelne Karten nicht steigerbar sind.
 ## 7. Gemeinsame Karten und Karten-Zähler
 
-Die Heldenablage bietet „Schicksalskarte ziehen“ und „Ressourcenkarte ziehen“, auch ohne zugewiesenen Helden. Eine Spielleitung muss verbunden sein. Schicksalskarten erscheinen bei allen verbundenen Personen in einer Großansicht und liegen anschließend in der Schicksalsablage. Ressourcenkarten werden offen auf dem Spielbrett platziert. Dafür muss die Spielleitung dasselbe Spielbrett geöffnet haben und die Platzierungsposition eingerichtet sein.
+Die Heldenablage bietet unten „Schicksal“ und „Ressourcen“, auch ohne zugewiesenen Helden. Ein GM-Client muss verbunden sein. Schicksalskarten erscheinen bei allen verbundenen Personen in einer Großansicht und liegen anschließend in der Schicksalsablage. Ressourcenkarten werden offen auf dem Spielbrett platziert. Dafür muss die Spielleitung dasselbe Spielbrett geöffnet haben und die Ressourcenposition verfügbar sein (Standardposition ist hinterlegt).
 
 Gegnerkarten erhalten automatisch einen sichtbaren Lebenspunkte-Zähler, Ressourcenkarten einen Abenteuermarken-Zähler. Im per Rechtsklick geöffneten Kartenmenü lassen sich über Herz und Raute zusätzliche Zähler aktivieren oder bestehende deaktivieren. Mit Minus/Plus verändert man den Wert; ein Klick auf die Zahl erlaubt direkte Eingabe. Lebenspunkte liegen zwischen 0 und dem Maximum. Abenteuermarken haben kein Maximum und beginnen bei 0; zum Herunterzählen kann ein beliebiger Startwert eingegeben werden. Bearbeiten können Personen mit Schreibrecht auf die Karte. Beim erneuten Ziehen werden Lebenspunkte auf das Maximum und Abenteuermarken auf 0 zurückgesetzt. Verschieben auf der Szene setzt die Werte nicht zurück.
 
@@ -224,3 +245,13 @@ Die Karten-Zähler bleiben auf die Breite ihrer Karte begrenzt. Zahlen und Butto
 Lebenspunkte-Leisten zeigen zusätzlich den Füllstand: über 50 % grün, über 25 % gelb, bis 25 % rot. Die farbige Fläche entspricht dem Anteil aktueller Lebenspunkte am Maximum.
 
 LEP- und Abenteuermarken-Leisten bleiben auch sichtbar, wenn links eine andere Steuerung als die Kartensteuerung ausgewählt ist.
+
+Beim Board-Aufräumen werden die persönlichen Schicksalspunkte aller Helden auf 0 gesetzt und in den gemeinsamen Pool zurückgegeben.
+
+### 7.1 Gegnerwürfe
+
+Öffne die Großansicht einer Schergen-, Anführer-, Zwielichtgestalten- oder Dämonenkarte auf der Szene (in der installierten CCM-Version per Doppellinksklick). „W20 würfeln“ und „W6 würfeln“ veröffentlichen einen Wurf mit Kartennamen im Chat. Treffer und Schäden werden nicht automatisch angewendet.
+
+Die Würfelbuttons stehen kompakt in der Mitte unter dem Bild. Würfelsymbole unterscheiden W20 und W6; ein heller Hintergrund verbessert die Lesbarkeit.
+
+Beim Gegner-W6 kannst du die Anzahl der Würfel (1–100) und den Bonus einstellen. Ein negativer Bonus wird abgezogen, etwa 2W6−1. Standard ist 1W6 ohne Bonus; die Einstellungen gelten für die geöffnete Vorschau.

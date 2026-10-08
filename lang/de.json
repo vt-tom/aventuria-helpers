@@ -330,7 +330,35 @@
       "ResetDock": "Position zurücksetzen",
       "PreviewTitle": "Kartenvorschau",
       "PreviewAmount": "Anzahl Karten",
-      "Preview": "Ansehen"
+      "Preview": "Ansehen",
+      "HeroActions": "Heldenaktionen",
+      "Probes": "Proben würfeln",
+      "LifePoints": "Lebenspunkte",
+      "FateShort": "Schicksal",
+      "ResourceShort": "Ressourcen",
+      "RandomHero": "Zufälligen Helden bestimmen",
+      "RandomResult": "Zufälliger Held: {name}",
+      "NoOnlineHero": "Kein Held eines verbundenen Spielers verfügbar.",
+      "CombatProbes": "Kampf",
+      "TalentProbes": "Talente",
+      "EquipmentProbes": "Ausrüstung",
+      "Back": "Zurück",
+      "CloseMenu": "Menü schließen",
+      "EditLife": "Lebenspunkte bearbeiten",
+      "CurrentLife": "Aktuelle Lebenspunkte",
+      "MaximumLife": "Maximale Lebenspunkte",
+      "InvalidLife": "Bitte ganze Zahlen ab 0 eingeben. Die aktuellen Lebenspunkte dürfen das Maximum nicht überschreiten.",
+      "DecreaseLife": "Lebenspunkte um 1 verringern",
+      "IncreaseLife": "Lebenspunkte um 1 erhöhen",
+      "FatePoints": "Schicksalspunkte",
+      "DecreaseFate": "Einen Schicksalspunkt in den Pool zurückgeben",
+      "IncreaseFate": "Einen Schicksalspunkt aus dem Pool nehmen",
+      "FatePool": "Schicksalspool",
+      "StartFatePool": "Abenteuerbeginn: Pool auf Anzahl Helden angemeldeter Spieler × 2 setzen",
+      "FateInvalid": "Ungültige Schicksalspunkte-Änderung.",
+      "FatePoolEmpty": "Im gemeinsamen Pool sind nicht genügend Schicksalspunkte.",
+      "FateNoGM": "Zum Ändern der Schicksalspunkte muss eine Spielleitung verbunden sein.",
+      "FateTimeout": "Die Spielleitung hat die Schicksalspunkte-Änderung nicht rechtzeitig bestätigt."
     },
     "Macros": {
       "ResetCardRotations": {
@@ -394,6 +422,13 @@
       "Maximum": "Maximale Lebenspunkte",
       "Activate": "Aktivieren",
       "Deactivate": "Deaktivieren"
+    },
+    "EnemyActions": {
+      "RollD20": "W20 würfeln",
+      "RollD6": "W6 würfeln",
+      "DiceCount": "Anzahl W6",
+      "Modifier": "Bonus (+/−)",
+      "InvalidDice": "Bitte 1 bis 100 Würfel und einen ganzzahligen Bonus eingeben."
     }
   }
 }

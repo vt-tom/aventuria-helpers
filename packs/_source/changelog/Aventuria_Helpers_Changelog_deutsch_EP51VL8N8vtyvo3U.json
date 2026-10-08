@@ -1,9 +1,9 @@
 {
-  "_id": "xJzQ357du0XjvAbN",
+  "_id": "EP51VL8N8vtyvo3U",
   "name": "Aventuria Helpers - Changelog (deutsch)",
   "pages": [
     {
-      "_id": "k1RBbDUOmV3tVvoW",
+      "_id": "SeZu6PBeHh7pELFg",
       "name": "Änderungen – Aventuria Helfer",
       "type": "text",
       "system": {},
@@ -31,7 +31,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1791204934120,
+        "createdTime": 1791446921588,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -39,11 +39,11 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!xJzQ357du0XjvAbN.k1RBbDUOmV3tVvoW"
+      "_key": "!journal.pages!EP51VL8N8vtyvo3U.SeZu6PBeHh7pELFg"
     },
     {
-      "_id": "zTSXKwd8YGNLkKBO",
-      "name": "0.4.0-beta.1",
+      "_id": "lEgP0EeHI5USj5PT",
+      "name": "0.4.0",
       "type": "text",
       "system": {},
       "title": {
@@ -52,8 +52,8 @@
       },
       "image": {},
       "text": {
-        "content": "<h3>Features</h3>\n<ul>\n<li>Schicksals- und Ressourcenkarten direkt über die Heldenablage ziehen. Schicksalskarten werden allen verbundenen Personen als Großansicht gezeigt und abgelegt; Ressourcenkarten werden offen auf dem Spielbrett platziert.</li>\n<li>Sichtbare Lebenspunkte- und Abenteuermarken-Zähler direkt an einzelnen Karten. Gegner erhalten Lebenspunkte automatisch; Ressourcenkarten erhalten automatisch einen Marken-Zähler. Zähler lassen sich über das Kartenmenü aktivieren/deaktivieren, per +/- verändern und durch Klick auf die Zahl direkt bearbeiten. Erneutes Ziehen setzt Lebenspunkte auf das Maximum und Marken auf 0 zurück.</li>\n</ul>",
-        "markdown": "### Features\r\n- Schicksals- und Ressourcenkarten direkt über die Heldenablage ziehen. Schicksalskarten werden allen verbundenen Personen als Großansicht gezeigt und abgelegt; Ressourcenkarten werden offen auf dem Spielbrett platziert.\r\n- Sichtbare Lebenspunkte- und Abenteuermarken-Zähler direkt an einzelnen Karten. Gegner erhalten Lebenspunkte automatisch; Ressourcenkarten erhalten automatisch einen Marken-Zähler. Zähler lassen sich über das Kartenmenü aktivieren/deaktivieren, per +/- verändern und durch Klick auf die Zahl direkt bearbeiten. Erneutes Ziehen setzt Lebenspunkte auf das Maximum und Marken auf 0 zurück.",
+        "content": "<h3>Features</h3>\n<ul>\n<li>Schicksalskarten gemeinsam ziehen und Ressourcenkarten gezielt auswählen und auslegen.</li>\n<li>Lebenspunkte und Abenteuermarken direkt an Karten anzeigen und bearbeiten. Erneutes Ziehen setzt Lebenspunkte auf das Maximum und Marken auf 0 zurück.</li>\n<li>Kompakte Heldenablage mit editierbarem Lebenspunkte-Balken, persönlichen Schicksalspunkten und gemeinsamen Pool. Hand und Im-Spiel-Karten stehen nebeneinander.</li>\n<li>Den Startpool auf Helden angemeldeter Spieler × 2 setzen; GM-Nutzer zählen mit, jeder Held einmal. Plus entnimmt Punkte, Minus gibt sie zurück. Board-Aufräumen gibt die persönlichen Punkte aller Helden zurück in den Pool.</li>\n<li>Proben für Kampf, Talente und Ausrüstung direkt über das Würfelmenü. Talente haben eindeutige Abkürzungen.</li>\n<li>Zufälligen Helden aus den angemeldeten Spielern auswählen und das Ergebnis öffentlich mit Spielername, Heldenname und Portrait im Chat anzeigen.</li>\n<li>Neue Aventuria-Einzelportraits für alle zwölf Standardhelden im eigenen Charakterbogen, in der Heldenablage und in der runden Heldenauswahl. Akteur- und Tokenbilder bleiben erhalten.</li>\n<li>Handkarten per Rechtsklick ablegen oder zurück ins zugehörige Deck mischen.</li>\n<li>Kartenvorschau für Schergen, Anführer, Zwielichtgestalten und Dämonen mit zentrierten W20-/W6-Würfelbuttons. Beim W6 sind Anzahl und Bonus/Malus einstellbar; Würfe erscheinen öffentlich mit Kartennamen im Chat.</li>\n</ul>\n<h3>Darstellung</h3>\n<ul>\n<li>Aventuria-Symbole und gut erkennbare Lebenspunkte-Füllstände in den Kartenleisten.</li>\n<li>Lesbare Poolzahlen und Bedienelemente auch im Dark Mode.</li>\n</ul>",
+        "markdown": "### Features\r\n\r\n- Schicksalskarten gemeinsam ziehen und Ressourcenkarten gezielt auswählen und auslegen.\r\n- Lebenspunkte und Abenteuermarken direkt an Karten anzeigen und bearbeiten. Erneutes Ziehen setzt Lebenspunkte auf das Maximum und Marken auf 0 zurück.\r\n- Kompakte Heldenablage mit editierbarem Lebenspunkte-Balken, persönlichen Schicksalspunkten und gemeinsamen Pool. Hand und Im-Spiel-Karten stehen nebeneinander.\r\n- Den Startpool auf Helden angemeldeter Spieler × 2 setzen; GM-Nutzer zählen mit, jeder Held einmal. Plus entnimmt Punkte, Minus gibt sie zurück. Board-Aufräumen gibt die persönlichen Punkte aller Helden zurück in den Pool.\r\n- Proben für Kampf, Talente und Ausrüstung direkt über das Würfelmenü. Talente haben eindeutige Abkürzungen.\r\n- Zufälligen Helden aus den angemeldeten Spielern auswählen und das Ergebnis öffentlich mit Spielername, Heldenname und Portrait im Chat anzeigen.\r\n- Neue Aventuria-Einzelportraits für alle zwölf Standardhelden im eigenen Charakterbogen, in der Heldenablage und in der runden Heldenauswahl. Akteur- und Tokenbilder bleiben erhalten.\r\n- Handkarten per Rechtsklick ablegen oder zurück ins zugehörige Deck mischen.\r\n- Kartenvorschau für Schergen, Anführer, Zwielichtgestalten und Dämonen mit zentrierten W20-/W6-Würfelbuttons. Beim W6 sind Anzahl und Bonus/Malus einstellbar; Würfe erscheinen öffentlich mit Kartennamen im Chat.\r\n\r\n### Darstellung\r\n\r\n- Aventuria-Symbole und gut erkennbare Lebenspunkte-Füllstände in den Kartenleisten.\r\n- Lesbare Poolzahlen und Bedienelemente auch im Dark Mode.",
         "format": 2
       },
       "video": {
@@ -70,7 +70,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1791204934120,
+        "createdTime": 1791446921588,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -78,10 +78,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!xJzQ357du0XjvAbN.zTSXKwd8YGNLkKBO"
+      "_key": "!journal.pages!EP51VL8N8vtyvo3U.lEgP0EeHI5USj5PT"
     },
     {
-      "_id": "4e3jBNuNmFR3rAmH",
+      "_id": "GuU8v65meWQCg16d",
       "name": "0.3.1",
       "type": "text",
       "system": {},
@@ -109,7 +109,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1791204934120,
+        "createdTime": 1791446921588,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -117,10 +117,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!xJzQ357du0XjvAbN.4e3jBNuNmFR3rAmH"
+      "_key": "!journal.pages!EP51VL8N8vtyvo3U.GuU8v65meWQCg16d"
     },
     {
-      "_id": "2X4ItdUfu3oDq4Xm",
+      "_id": "kDXC2fG03ugKgnt5",
       "name": "0.3.0",
       "type": "text",
       "system": {},
@@ -148,7 +148,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1791204934120,
+        "createdTime": 1791446921588,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -156,10 +156,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!xJzQ357du0XjvAbN.2X4ItdUfu3oDq4Xm"
+      "_key": "!journal.pages!EP51VL8N8vtyvo3U.kDXC2fG03ugKgnt5"
     },
     {
-      "_id": "tzLInMGpPwq6zEwe",
+      "_id": "HE8fAlMvUiNMCNhC",
       "name": "0.2.3",
       "type": "text",
       "system": {},
@@ -187,7 +187,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1791204934120,
+        "createdTime": 1791446921588,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -195,10 +195,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!xJzQ357du0XjvAbN.tzLInMGpPwq6zEwe"
+      "_key": "!journal.pages!EP51VL8N8vtyvo3U.HE8fAlMvUiNMCNhC"
     },
     {
-      "_id": "bxY90RiWZJzZ8q6s",
+      "_id": "UyqMDquRgM0PctBG",
       "name": "0.2.2",
       "type": "text",
       "system": {},
@@ -226,7 +226,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1791204934120,
+        "createdTime": 1791446921588,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -234,10 +234,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!xJzQ357du0XjvAbN.bxY90RiWZJzZ8q6s"
+      "_key": "!journal.pages!EP51VL8N8vtyvo3U.UyqMDquRgM0PctBG"
     },
     {
-      "_id": "GtPkIGT2RmPJs5Rr",
+      "_id": "qnMxA1qQcQcFGPFC",
       "name": "0.2.0 (Beta)",
       "type": "text",
       "system": {},
@@ -265,7 +265,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1791204934120,
+        "createdTime": 1791446921588,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -273,10 +273,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!xJzQ357du0XjvAbN.GtPkIGT2RmPJs5Rr"
+      "_key": "!journal.pages!EP51VL8N8vtyvo3U.qnMxA1qQcQcFGPFC"
     },
     {
-      "_id": "RJKW0R6zoeaz8ZSg",
+      "_id": "RPIrhEuSY0LmzIAX",
       "name": "0.1.5",
       "type": "text",
       "system": {},
@@ -304,7 +304,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1791204934120,
+        "createdTime": 1791446921588,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -312,10 +312,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!xJzQ357du0XjvAbN.RJKW0R6zoeaz8ZSg"
+      "_key": "!journal.pages!EP51VL8N8vtyvo3U.RPIrhEuSY0LmzIAX"
     },
     {
-      "_id": "DEGbYpGPRpnQxnYB",
+      "_id": "hODsnppNPMsn3kUr",
       "name": "0.1.4.1",
       "type": "text",
       "system": {},
@@ -343,7 +343,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1791204934120,
+        "createdTime": 1791446921588,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -351,10 +351,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!xJzQ357du0XjvAbN.DEGbYpGPRpnQxnYB"
+      "_key": "!journal.pages!EP51VL8N8vtyvo3U.hODsnppNPMsn3kUr"
     },
     {
-      "_id": "me78ZHqMTCoDaR90",
+      "_id": "7fvVU1UczEEe7w5U",
       "name": "0.1.4",
       "type": "text",
       "system": {},
@@ -382,7 +382,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1791204934120,
+        "createdTime": 1791446921588,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -390,10 +390,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!xJzQ357du0XjvAbN.me78ZHqMTCoDaR90"
+      "_key": "!journal.pages!EP51VL8N8vtyvo3U.7fvVU1UczEEe7w5U"
     },
     {
-      "_id": "5oBcLxDbHbKBoyru",
+      "_id": "1yCTaJzTfxScmd8H",
       "name": "0.1.3",
       "type": "text",
       "system": {},
@@ -421,7 +421,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1791204934120,
+        "createdTime": 1791446921588,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -429,10 +429,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!xJzQ357du0XjvAbN.5oBcLxDbHbKBoyru"
+      "_key": "!journal.pages!EP51VL8N8vtyvo3U.1yCTaJzTfxScmd8H"
     },
     {
-      "_id": "l8wnuQOID8HQh34V",
+      "_id": "f7OLVqoKSIEO97AX",
       "name": "0.1.2",
       "type": "text",
       "system": {},
@@ -460,7 +460,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1791204934120,
+        "createdTime": 1791446921588,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -468,10 +468,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!xJzQ357du0XjvAbN.l8wnuQOID8HQh34V"
+      "_key": "!journal.pages!EP51VL8N8vtyvo3U.f7OLVqoKSIEO97AX"
     },
     {
-      "_id": "pf5z4sOKX6Y8IziD",
+      "_id": "szKwnE5F5pKpi0Er",
       "name": "0.1.1",
       "type": "text",
       "system": {},
@@ -499,7 +499,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1791204934120,
+        "createdTime": 1791446921588,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -507,10 +507,10 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!xJzQ357du0XjvAbN.pf5z4sOKX6Y8IziD"
+      "_key": "!journal.pages!EP51VL8N8vtyvo3U.szKwnE5F5pKpi0Er"
     },
     {
-      "_id": "rf6Au83tZaOBGJhY",
+      "_id": "TuLcOzwrEdAS9LIC",
       "name": "0.1.0",
       "type": "text",
       "system": {},
@@ -538,7 +538,7 @@
       "_stats": {
         "compendiumSource": null,
         "coreVersion": "14.364",
-        "createdTime": 1791204934120,
+        "createdTime": 1791446921588,
         "duplicateSource": null,
         "exportSource": null,
         "lastModifiedBy": null,
@@ -546,7 +546,7 @@
         "systemId": "universal-tabletop-system",
         "systemVersion": "1.2.1"
       },
-      "_key": "!journal.pages!xJzQ357du0XjvAbN.rf6Au83tZaOBGJhY"
+      "_key": "!journal.pages!EP51VL8N8vtyvo3U.TuLcOzwrEdAS9LIC"
     }
   ],
   "folder": null,
@@ -559,7 +559,7 @@
   "_stats": {
     "compendiumSource": null,
     "coreVersion": "14.364",
-    "createdTime": 1791204934120,
+    "createdTime": 1791446921588,
     "duplicateSource": null,
     "exportSource": null,
     "lastModifiedBy": null,
@@ -567,5 +567,5 @@
     "systemId": "universal-tabletop-system",
     "systemVersion": "1.2.1"
   },
-  "_key": "!journal!xJzQ357du0XjvAbN"
+  "_key": "!journal!EP51VL8N8vtyvo3U"
 }

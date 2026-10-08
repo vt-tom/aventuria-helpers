@@ -67,6 +67,8 @@ All numbers update automatically as soon as anything changes about your own card
 
 **Configure hero/hand:** the gear icon at the top of the tray (next to the toggle button) opens Foundry's user settings with two relevant fields: which hero is assigned ("Character") and which hand counts as your own hand ("Player Hand"). Useful for switching to an already-existing hero or hand without running through "Prepare Player" again.
 
+Random hero selection posts a public chat card with the player name, hero name and portrait. Only connected users with assigned heroes count; each hero is included once.
+
 ### 2.3 The Hand Sheet
 
 "View hand" opens its own window with all the cards of the current hand, laid out side by side in a row.
@@ -81,6 +83,8 @@ All numbers update automatically as soon as anything changes about your own card
 - **Dragging/dropping:** cards can still be moved via drag & drop as usual (e.g. onto the scene).
 - **Right-click** on a card opens a menu to flip it or move to the next/previous card face (if the card has multiple faces).
 - Clicking "View hand" again doesn't open a second window, it just brings an already-open one back to the front. The "X" in the header closes the window normally.
+
+**Hand card context menu:** Right-click a hand card to discard it or shuffle it back into its hero’s deck, including when controlling another hero. Returning a card also shuffles the deck.
 
 ### 2.4 Played Cards
 
@@ -106,6 +110,23 @@ Normally the hero tray always drives the hero assigned to your own Foundry user.
 - **Not a persistent setting:** after a page reload the tray starts back on your own hero.
 
 Switching also works when your own user has no hero assigned at all - handy for a GM running every hero solo.
+
+### 2.6 Hero Counters and Quick Tests (Beta)
+
+Life points and personal fate points appear below the hero name. Minus/plus adjusts life points directly; click the number to type in the bar. Enter or leaving the field saves, Escape cancels. Life points are limited to 0 through the maximum; edit the maximum on the character sheet. The bar shows remaining life in green/yellow/red. Hand and Played Cards share a row with separate view buttons.
+
+The dice button beside the name opens combat (including dodge), skills and equipment tests, using the same roll rules as the character sheet. Skills are alphabetized with distinct initials; tooltips show the full name and value. The first menu also chooses a random hero: each assigned hero of a connected user counts once, including GM users. The result appears publicly in chat for everyone without changing the controlled hero.
+
+### 2.7 Fate Points and Shared Pool (Beta)
+
+At the start of an adventure, the shared pool equals the number of heroes × 2. A hero may take a point after a failed combat test. This is done manually, without automatic roll monitoring.
+
+Everyone can edit the pool in the tray footer. Enter or leaving the field saves, Escape cancels. The small reset icon sets it to connected users’ assigned heroes × 2, counting each hero once, including GM assignments. Offline users do not count. Personal counters remain unchanged.
+
+Plus on the personal counter transfers a point from the pool; minus returns it. Direct entry transfers the corresponding difference. An empty pool prevents further claims. A connected GM client coordinates concurrent changes; all participants must have the Gamemaster role as required by the Aventuria setup. Values are saved.
+
+
+For the twelve standard heroes, our tray and main character-sheet portrait automatically use the new individual Aventuria artwork. Actor and token images stay unchanged; the Images tab still shows the original image. Clicking the main portrait opens its large view. Unknown heroes or missing new artwork fall back to the actor image. The radial hero switcher also shows these portraits; matching works with German and English hero names.
 
 ## 3. Combat Tracker
 
@@ -214,7 +235,7 @@ Only exactly same-named cards are offered as an upgrade - occasional name discre
 
 ## 7. Shared cards and card trackers
 
-The hero tray offers “Draw fate card” and “Draw resource card”, even without an assigned hero. A GM must be connected. Fate cards appear in a large image window for all connected users and are then in the fate discard pile. Resource cards are placed face-up on the gameboard. The GM must be viewing the same gameboard and the placement position must be configured.
+The tray footer offers “Fate” and “Resources”, even without an assigned hero. A GM client must be connected. Fate cards appear in a large image window for all connected users and are then in the fate discard pile. Resource cards are placed face-up on the gameboard. The GM must be viewing the same gameboard and a resource position must be available (a default position is provided).
 
 Enemy cards automatically receive a visible life-point tracker; resource cards receive an adventure counter. Right-click a card and use the heart and diamond controls to enable or disable trackers. Use minus/plus to adjust the value or click the number to enter it directly. Life points range from 0 to their maximum. Adventure counters have no maximum and start at 0; enter any starting value to count down. Editing requires ownership of the card. Drawing again resets life points to their maximum and counters to 0. Moving a card on the scene does not reset its values.
 
@@ -225,3 +246,13 @@ Card trackers stay within the width of their card. Numbers and buttons grow when
 Life-point bars also show their fill level: green above 50%, yellow above 25%, red at 25% or less. The colored area represents current life points as a fraction of the maximum.
 
 Life-point and adventure-counter bars remain visible when a canvas control other than the card controls is selected.
+
+Board cleanup resets every hero’s personal fate points to 0 and returns them to the shared pool.
+
+### 7.1 Enemy rolls
+
+Open a henchman, leader, wildcard or demon card’s large preview on the scene (double-left-click in the installed CCM version). “Roll D20” and “Roll D6” post public rolls with the card name. Hits and damage are not applied automatically.
+
+Compact dice buttons are centered below the image. Dice icons distinguish D20 and D6; a light background improves readability.
+
+For enemy D6 rolls, set the dice count (1–100) and modifier. Negative modifiers are subtracted, for example 2D6−1. The default is 1D6 with no modifier; settings apply to the open preview.

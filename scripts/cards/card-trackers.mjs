@@ -115,14 +115,26 @@ function renderOverlay(object) {
     }
     row.eventMode = "static";
     row.hitArea = new PIXI.Rectangle(0, 0, rowWidth, 38);
-    const text = new PIXI.Text(`${kind === "hp" ? "♥" : "◆"} ${state.value}${kind === "hp" ? `/${state.max}` : ""}`, { fontFamily: "Arial", fontSize: 23, fontWeight: "bold", fill: 0xfff4d9, stroke: 0x171512, strokeThickness: 3 });
+    if (kind === "hp") {
+      const medallion = new PIXI.Graphics().beginFill(0x171512, 1)
+        .lineStyle(1, 0xd8c39b).drawCircle(51, 19, 16).endFill();
+      medallion.eventMode = "none";
+      row.addChild(medallion);
+    }
+    const icon = PIXI.Sprite.from(`modules/aventuria/assets/icons/${kind === "hp" ? "life-point" : "adventure-token"}.webp`);
+    icon.anchor.set(0.5);
+    icon.position.set(51, 19);
+    icon.width = icon.height = 26;
+    icon.eventMode = "none";
+    row.addChild(icon);
+    const text = new PIXI.Text(`${state.value}${kind === "hp" ? `/${state.max}` : ""}`, { fontFamily: "Arial", fontSize: 23, fontWeight: "bold", fill: 0xfff4d9, stroke: 0x171512, strokeThickness: 3 });
     text.anchor.set(0.5);
-    text.position.set(rowWidth / 2, 19);
-    if (text.width > rowWidth - 80) text.scale.set((rowWidth - 80) / text.width);
+    text.position.set((rowWidth + 28) / 2, 19);
+    if (text.width > rowWidth - 108) text.scale.set((rowWidth - 108) / text.width);
     row.addChild(text);
     if (!card.isOwner) return;
     text.eventMode = "static";
-    text.hitArea = new PIXI.Rectangle(-rowWidth / 2 + 38, -19, rowWidth - 76, 38);
+    text.hitArea = new PIXI.Rectangle(-(rowWidth + 28) / 2 + 38, -19, rowWidth - 76, 38);
     text.cursor = "pointer";
     text.on("pointerdown", event => { event.stopPropagation(); if (event.button === 0) void promptValue(card, kind); });
     for (const [symbol, delta, x] of [["−", -1, 19], ["+", 1, rowWidth - 19]]) {

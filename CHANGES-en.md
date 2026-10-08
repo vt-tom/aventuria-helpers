@@ -2,11 +2,24 @@
 
 This file lists all gameplay-relevant changes to the module – newest version first.
 
-## 0.4.0-beta.1
+## 0.4.0
 
 ### Features
-- Draw fate and resource cards from the hero tray. Fate cards are shown to all connected users and discarded; resource cards are placed face-up on the gameboard.
-- Visible life-point and adventure-counter trackers on individual cards. Enemies automatically receive life points; resource cards receive an adventure counter. Enable or disable trackers through the card HUD, adjust them with +/- or click the number to edit it. Drawing again resets life points to their maximum and counters to 0.
+
+- Draw shared fate cards and select resource cards to place on the board.
+- Display and edit life points and adventure counters on individual cards. Drawing again resets life points to their maximum and counters to 0.
+- Compact hero tray with an editable life-point bar, personal fate points and a shared pool. Hand and Played Cards appear side by side.
+- Set the starting pool to connected users’ assigned heroes × 2, including GM users and counting each hero once. Plus claims points; minus returns them. Board cleanup returns every hero’s personal points to the pool.
+- Combat, skill and equipment tests directly from the dice menu, with distinct skill abbreviations.
+- Choose a random hero from connected users and post a public chat card with player name, hero name and portrait.
+- New Aventuria portraits for all twelve standard heroes in our character sheet, hero tray and circular hero selector. Original actor and token images are preserved.
+- Right-click hand cards to discard them or shuffle them back into their hero’s deck.
+- Henchman, leader, wildcard and demon previews offer centered D20/D6 buttons. D6 rolls support dice count and positive or negative modifiers; rolls are public and include the card name.
+
+### Appearance
+
+- Aventuria icons and clear life-point fill bars on cards.
+- Readable pool values and controls in dark mode.
 
 ## 0.3.1
 

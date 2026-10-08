@@ -1,5 +1,6 @@
 import { placeBoardTokens, TOKEN_FOLDER_NAME } from "../actors/import-board-tokens.mjs";
 import { resolveStacks } from "./stacks.mjs";
+import { returnAllFatePoints } from "../actors/hero-fate.mjs";
 import { returnAllPlayedCardsToDeck } from "./played-cards.mjs";
 import { ADVENTURE_DECK_FLAG, HENCHMEN_DECK_FLAG } from "./prepare-quickstart.mjs";
 
@@ -141,6 +142,8 @@ export async function cleanUpBoard() {
 
   const tokenFolder = game.folders.find((f) => f.type === "Actor" && f.name === TOKEN_FOLDER_NAME);
   if (tokenFolder) await placeBoardTokens(tokenFolder);
+
+  if (!await returnAllFatePoints()) return false;
 
   ui.notifications.info(
     game.i18n.format("AVENTURIA_HELPERS.CleanUpBoard.Done", { count: removedUuids.length + returnedCount }),

@@ -21,9 +21,8 @@
  * still need to ship; the release workflow runs `npm run packs` to (re)build
  * them from `packs/_source/**` immediately before this script.
  *
- * No versioning yet (matches the current `project/TODO.md`/`project/PROJECT.md`
- * stance) - re-run via `npm run zip` any time a fresh snapshot is needed, e.g.
- * for manual distribution before a GitHub release pipeline exists.
+ * The version comes from module.json. Re-run via `npm run zip` after building
+ * the compendiums; the tag-driven GitHub release workflow uses the same script.
  */
 
 import { cpSync, mkdtempSync, rmSync, statSync } from "node:fs";
@@ -36,7 +35,7 @@ const ROOT = resolve(import.meta.dirname, "..", "..");
 const OUT_ZIP = resolve(ROOT, "..", `${MODULE_ID}.zip`);
 
 const EXCLUDE_DIRS = new Set([".git", "node_modules", "project"]);
-const EXCLUDE_ROOT_FILES = new Set(["CLAUDE.md"]);
+const EXCLUDE_ROOT_FILES = new Set(["CLAUDE.md", "AGENTS.md"]);
 
 /** @param {string} src Absolute path of the file/dir currently being copied. */
 function shouldExclude(src) {

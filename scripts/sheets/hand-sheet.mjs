@@ -30,6 +30,7 @@
  */
 
 import { resolveHandStacks } from "../cards/stacks.mjs";
+import { discardPlayedCard, returnPlayedCardToDeck } from "../cards/played-cards.mjs";
 import { playCard, playCardAsEndurance, getEnduranceStatus } from "../cards/endurance.mjs";
 import { DockableSheetMixin } from "./dockable-sheet-mixin.mjs";
 import { showCardPreview, hideCardPreview } from "./card-hover-preview.mjs";
@@ -165,6 +166,28 @@ export function registerHandSheet() {
         template: "modules/aventuria-helpers/templates/hand-sheet.hbs",
       },
     };
+
+    _getCardContextOptions() {
+      const entries = super._getCardContextOptions();
+      if (!this.isEditable) return entries;
+      const move = async (li, destination, callback) => {
+        if (!this.isEditable) return;
+        const card = this.document.cards.get(li.dataset.cardId);
+        const target = resolveHandStacks(this.document)?.[destination];
+        if (!card || !target || !card.isOwner || !target.isOwner) return;
+        hideCardPreview();
+        await callback(card, target);
+      };
+      return [...entries, {
+        label: "AVENTURIA_HELPERS.HeroTray.DiscardCard",
+        icon: "fa-solid fa-trash-can",
+        callback: li => move(li, "discard", discardPlayedCard),
+      }, {
+        label: "AVENTURIA_HELPERS.HeroTray.ReturnToDeck",
+        icon: "fa-solid fa-shuffle",
+        callback: li => move(li, "deck", returnPlayedCardToDeck),
+      }];
+    }
 
     /**
      * Re-docks the sheet (see `DockableSheetMixin`, no-op if manually moved)

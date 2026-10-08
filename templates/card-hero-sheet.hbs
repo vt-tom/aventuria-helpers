@@ -14,7 +14,7 @@
   <div class="card-sheet-shell">
     <header class="card-sheet-head">
       <div class="card-portrait-frame">
-        <img src="{{actor.img}}" alt="{{actor.name}}" {{#if editable}}data-action="editImage" data-edit="img"{{else}}data-action="viewImage" data-src="{{actor.img}}" data-title="{{actor.name}}"{{/if}}>
+        <img src="{{portrait}}" data-portrait-fallback="{{actor.img}}" alt="{{actor.name}}" data-action="viewImage" data-src="{{portrait}}" data-title="{{actor.name}}">
       </div>
 
       <div class="card-core-stats">

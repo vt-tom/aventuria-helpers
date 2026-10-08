@@ -16,6 +16,7 @@
  */
 
 import { resolveStacks } from "../cards/stacks.mjs";
+import { heroPortrait, bindPortraitFallback } from "../actors/hero-portrait.mjs";
 
 /** The single open overlay, if any. */
 let overlay = null;
@@ -38,7 +39,7 @@ function onKey(event) {
  * @param {{img: string, label: string, sub: string, active?: boolean, disabled?: boolean}} opts
  * @returns {HTMLButtonElement}
  */
-function buildMedallion({ img, label, sub, active, disabled }) {
+function buildMedallion({ img, fallback, label, sub, active, disabled }) {
   const el = document.createElement("button");
   el.type = "button";
   el.className = "ahb-hero-switcher-item";
@@ -50,6 +51,7 @@ function buildMedallion({ img, label, sub, active, disabled }) {
   const image = document.createElement("img");
   image.src = img;
   image.alt = "";
+  if (fallback) image.dataset.portraitFallback = fallback;
   el.append(image, span);
   return el;
 }
@@ -94,7 +96,8 @@ export function openHeroSwitcher(tray, anchor) {
 
   const own = targets.find((entry) => entry.user.id === ownId);
   const centre = buildMedallion({
-    img: own?.actor.img ?? "icons/svg/mystery-man.svg",
+    img: own ? heroPortrait(own.actor) : "icons/svg/mystery-man.svg",
+    fallback: own?.actor.img,
     label: own
       ? game.i18n.localize("AVENTURIA_HELPERS.HeroTray.BackToOwn")
       : game.i18n.localize("AVENTURIA_HELPERS.HeroTray.NoOwnHero"),
@@ -112,7 +115,8 @@ export function openHeroSwitcher(tray, anchor) {
   others.forEach((entry, index) => {
     const angle = ((-90 + (360 / others.length) * index) * Math.PI) / 180;
     const el = buildMedallion({
-      img: entry.actor.img,
+      img: heroPortrait(entry.actor),
+      fallback: entry.actor.img,
       label: entry.actor.name,
       sub: entry.user.name,
       active: tray.activeUserId === entry.user.id,
@@ -128,5 +132,6 @@ export function openHeroSwitcher(tray, anchor) {
 
   overlay.append(menu);
   document.body.append(overlay);
+  bindPortraitFallback(overlay);
   document.addEventListener("keydown", onKey, true);
 }

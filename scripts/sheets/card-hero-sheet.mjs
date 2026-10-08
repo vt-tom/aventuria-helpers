@@ -1,3 +1,4 @@
+import { heroPortrait, bindPortraitFallback } from "../actors/hero-portrait.mjs";
 import { AventuriaHelpersHeroSheet } from "./hero-sheet.mjs";
 
 const MODULE_ID = "aventuria-helpers";
@@ -54,6 +55,7 @@ export class AventuriaHelpersCardHeroSheet extends AventuriaHelpersHeroSheet {
 
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
+    context.portrait = heroPortrait(this.actor);
     context.tabs = {
       held: { active: this.tab === "held" },
       skills: { active: this.tab === "skills" },
@@ -71,6 +73,11 @@ export class AventuriaHelpersCardHeroSheet extends AventuriaHelpersHeroSheet {
     };
     context.icons.abilityToken = `${ICONS}ability-token.webp`;
     return context;
+  }
+
+  async _onRender(context, options) {
+    await super._onRender(context, options);
+    bindPortraitFallback(this.element);
   }
 
   static async _toggleNavigationSide() {

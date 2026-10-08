@@ -16,10 +16,14 @@ Add-on module for [Foundry VTT](https://foundryvtt.com/) (v14) that extends the 
 - **Setup guide**: walks step by step through world setup, hero assignment, quickstart preparation, and running the adventures.
 - **Additional macros**: reset card rotations, clean up the board, reopen the guide - most of these are also directly accessible through the other features.
 - **Extended combat tracker**: initiative is handled according to the Aventuria rules, with a fixed enemy-actions slot and an end-of-round prompt to keep the flow of combat easy to follow.
+- **Cards and henchmen**: fate/resource cards, life-point and adventure counters on cards, and quick D20/D6 rolls for henchmen, leaders, wildcards and demons.
+- **Hero values and tests**: editable life points, shared fate pool, test menu and random hero selection with a chat card.
 
 A complete description of all features is available in the manual bundled with the module (compendium "Aventuria Helpers Guide", reachable via the setup guide) - source: [manual-de.md](manual-de.md) / [manual-en.md](manual-en.md).
 
 ## Requirements
+
+All participants need the Foundry **Gamemaster** role.
 
 - Foundry VTT v14 (minimum compatibility, same as Aventuria itself)
 - Module [Aventuria](https://foundryvtt.com/packages/aventuria)

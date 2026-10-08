@@ -2,11 +2,24 @@
 
 Diese Datei listet alle spielrelevanten Neuerungen des Moduls auf – neueste Version zuerst.
 
-## 0.4.0-beta.1
+## 0.4.0
 
 ### Features
-- Schicksals- und Ressourcenkarten direkt über die Heldenablage ziehen. Schicksalskarten werden allen verbundenen Personen als Großansicht gezeigt und abgelegt; Ressourcenkarten werden offen auf dem Spielbrett platziert.
-- Sichtbare Lebenspunkte- und Abenteuermarken-Zähler direkt an einzelnen Karten. Gegner erhalten Lebenspunkte automatisch; Ressourcenkarten erhalten automatisch einen Marken-Zähler. Zähler lassen sich über das Kartenmenü aktivieren/deaktivieren, per +/- verändern und durch Klick auf die Zahl direkt bearbeiten. Erneutes Ziehen setzt Lebenspunkte auf das Maximum und Marken auf 0 zurück.
+
+- Schicksalskarten gemeinsam ziehen und Ressourcenkarten gezielt auswählen und auslegen.
+- Lebenspunkte und Abenteuermarken direkt an Karten anzeigen und bearbeiten. Erneutes Ziehen setzt Lebenspunkte auf das Maximum und Marken auf 0 zurück.
+- Kompakte Heldenablage mit editierbarem Lebenspunkte-Balken, persönlichen Schicksalspunkten und gemeinsamen Pool. Hand und Im-Spiel-Karten stehen nebeneinander.
+- Den Startpool auf Helden angemeldeter Spieler × 2 setzen; GM-Nutzer zählen mit, jeder Held einmal. Plus entnimmt Punkte, Minus gibt sie zurück. Board-Aufräumen gibt die persönlichen Punkte aller Helden zurück in den Pool.
+- Proben für Kampf, Talente und Ausrüstung direkt über das Würfelmenü. Talente haben eindeutige Abkürzungen.
+- Zufälligen Helden aus den angemeldeten Spielern auswählen und das Ergebnis öffentlich mit Spielername, Heldenname und Portrait im Chat anzeigen.
+- Neue Aventuria-Einzelportraits für alle zwölf Standardhelden im eigenen Charakterbogen, in der Heldenablage und in der runden Heldenauswahl. Akteur- und Tokenbilder bleiben erhalten.
+- Handkarten per Rechtsklick ablegen oder zurück ins zugehörige Deck mischen.
+- Kartenvorschau für Schergen, Anführer, Zwielichtgestalten und Dämonen mit zentrierten W20-/W6-Würfelbuttons. Beim W6 sind Anzahl und Bonus/Malus einstellbar; Würfe erscheinen öffentlich mit Kartennamen im Chat.
+
+### Darstellung
+
+- Aventuria-Symbole und gut erkennbare Lebenspunkte-Füllstände in den Kartenleisten.
+- Lesbare Poolzahlen und Bedienelemente auch im Dark Mode.
 
 ## 0.3.1
 

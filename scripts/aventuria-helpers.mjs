@@ -1,5 +1,7 @@
+import { registerEnemyActions } from "./apps/enemy-actions.mjs";
 import { AventuriaHelpersHeroSheet } from "./sheets/hero-sheet.mjs";
 import { registerSharedDraw, drawSharedCard, setResourcePosition } from "./cards/shared-draw.mjs";
+import { registerFatePool } from "./actors/hero-fate.mjs";
 import { registerCardTrackers } from "./cards/card-trackers.mjs";
 import { AventuriaHelpersCardHeroSheet } from "./sheets/card-hero-sheet.mjs";
 import { registerWelcomeScreenReopen } from "./apps/welcome-screen.mjs";
@@ -70,9 +72,11 @@ Hooks.once("init", () => {
   registerHandSheet();
   registerPlayedCardsSheet();
   registerEnduranceCardsSheet();
+  registerFatePool();
   registerHeroTray();
   registerSharedDraw();
   registerCardTrackers();
+  registerEnemyActions();
 
   game.modules.get(MODULE_ID).api = {
     drawSharedCard,

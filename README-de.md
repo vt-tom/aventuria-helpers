@@ -16,10 +16,14 @@ Zusatzmodul für [Foundry VTT](https://foundryvtt.com/) (v14), das das offiziell
 - **Einrichtungs-Guide**: führt Schritt für Schritt durch Welt-Einrichtung, Heldenzuweisung, Schnellstarter-Vorbereitung und das Leiten der Abenteuer.
 - **Zusätzliche Macros**: Karten zurückdrehen, Spielbrett aufräumen, den Guide erneut öffnen – die meisten davon sind auch direkt über die anderen Funktionen erreichbar.
 - **Erweiterter Kampf-Tracker**: Die Initiative wird nach den Aventuria-Regeln gehandhabt, mit festem Gegneraktionen-Platz und Rundenende-Abfrage, um den Kampfablauf gut im Blick zu behalten.
+- **Karten und Schergen**: Schicksals-/Ressourcenkarten, Lebenspunkte-/Markenzähler an Karten und schnelle W20-/W6-Würfe für Schergen, Anführer, Zwielichtgestalten und Dämonen.
+- **Heldenwerte und Proben**: editierbare Lebenspunkte, gemeinsamer Schicksalspool, Probenmenü und zufällige Heldenauswahl mit Chatkarte.
 
 Eine vollständige Beschreibung aller Funktionen gibt es im Handbuch, das direkt im Modul enthalten ist (Kompendium "Aventuria Helpers Guide", über den Einrichtungs-Guide erreichbar) – Quelltext dazu: [manual-de.md](manual-de.md) / [manual-en.md](manual-en.md).
 
 ## Voraussetzungen
+
+Alle Mitspieler benötigen die Foundry-Rolle **Gamemaster**.
 
 - Foundry VTT v14 (min. Kompatibilität wie Aventuria selbst)
 - Modul [Aventuria](https://foundryvtt.com/packages/aventuria)

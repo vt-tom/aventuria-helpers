@@ -330,7 +330,35 @@
       "ResetDock": "Reset position",
       "PreviewTitle": "Card Preview",
       "PreviewAmount": "Number of cards",
-      "Preview": "View"
+      "Preview": "View",
+      "HeroActions": "Hero actions",
+      "Probes": "Roll tests",
+      "LifePoints": "Life points",
+      "FateShort": "Fate",
+      "ResourceShort": "Resources",
+      "RandomHero": "Choose a random hero",
+      "RandomResult": "Random hero: {name}",
+      "NoOnlineHero": "No hero assigned to a connected player is available.",
+      "CombatProbes": "Combat",
+      "TalentProbes": "Skills",
+      "EquipmentProbes": "Equipment",
+      "Back": "Back",
+      "CloseMenu": "Close menu",
+      "EditLife": "Edit life points",
+      "CurrentLife": "Current life points",
+      "MaximumLife": "Maximum life points",
+      "InvalidLife": "Enter whole numbers of 0 or more. Current life points cannot exceed the maximum.",
+      "DecreaseLife": "Decrease life points by 1",
+      "IncreaseLife": "Increase life points by 1",
+      "FatePoints": "Fate points",
+      "DecreaseFate": "Return one fate point to the pool",
+      "IncreaseFate": "Take one fate point from the pool",
+      "FatePool": "Fate pool",
+      "StartFatePool": "Adventure start: set pool to connected users’ heroes × 2",
+      "FateInvalid": "Invalid fate points change.",
+      "FatePoolEmpty": "Not enough fate points in the shared pool.",
+      "FateNoGM": "A GM must be connected to change fate points.",
+      "FateTimeout": "The GM did not confirm the fate points change in time."
     },
     "Macros": {
       "ResetCardRotations": {
@@ -394,6 +422,13 @@
       "Maximum": "Maximum life points",
       "Activate": "Enable",
       "Deactivate": "Disable"
+    },
+    "EnemyActions": {
+      "RollD20": "Roll D20",
+      "RollD6": "Roll D6",
+      "DiceCount": "D6 count",
+      "Modifier": "Bonus (+/−)",
+      "InvalidDice": "Enter 1 to 100 dice and a whole-number modifier."
     }
   }
 }

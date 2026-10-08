@@ -33,16 +33,38 @@
   {{else}}
   <div class="tray-board">
     <header class="tray-head">
-      <img class="tray-portrait" src="{{actor.img}}" alt="{{actor.name}}" data-action="openSheet" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.OpenSheet'}}">
-      <div class="tray-id">
-        <span class="tray-player">{{playerName}}</span>
-        <span class="tray-hero" data-tooltip="{{actor.name}}">{{actor.name}}</span>
+      <div class="tray-portrait-wrap">
+      <img class="tray-portrait" src="{{portrait}}" data-portrait-fallback="{{actor.img}}" alt="{{actor.name}}" data-action="openSheet" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.OpenSheet'}}">
+
       </div>
+      <div class="tray-id">
+        <div class="tray-player-line"><span class="tray-player">{{playerName}}</span>
       {{#unless foreign}}
       <button type="button" class="tray-delete" data-action="deleteHero" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.DeleteHero'}}">
         <i class="fa-solid fa-trash-can"></i>
       </button>
       {{/unless}}
+        </div>
+        <span class="tray-hero" data-tooltip="{{actor.name}}">{{actor.name}}</span>
+      </div>
+      <div class="tray-vitals">
+        <div class="tray-life-controls">
+          <button type="button" class="tray-life-step" data-action="decreaseLife" aria-label="{{localize 'AVENTURIA_HELPERS.HeroTray.DecreaseLife'}}" {{#unless canRoll}}disabled{{/unless}}>−</button>
+          <div class="tray-life tray-life-{{life.tone}}">
+            <span class="tray-life-fill" style="width: {{life.percent}}%" aria-hidden="true"></span>
+            <span class="tray-life-label"><img src="modules/aventuria/assets/icons/life-point.webp" alt=""><input type="number" class="tray-life-input" value="{{life.value}}" min="0" max="{{life.max}}" step="1" readonly aria-label="{{localize 'AVENTURIA_HELPERS.HeroTray.CurrentLife'}}" {{#unless canRoll}}disabled{{/unless}}><span>/{{life.max}}</span></span>
+          </div>
+          <button type="button" class="tray-life-step" data-action="increaseLife" aria-label="{{localize 'AVENTURIA_HELPERS.HeroTray.IncreaseLife'}}" {{#unless canRoll}}disabled{{/unless}}>+</button>
+        </div>
+          <div class="tray-fate-controls">
+            <button type="button" class="tray-life-step" data-action="decreaseFate" aria-label="{{localize 'AVENTURIA_HELPERS.HeroTray.DecreaseFate'}}" {{#unless canRoll}}disabled{{/unless}}>−</button>
+            <img src="modules/aventuria/assets/icons/fate-point.webp" alt="" title="{{localize 'AVENTURIA_HELPERS.HeroTray.FatePoints'}}">
+            <input type="number" class="tray-life-input tray-fate-input" value="{{fatePoints}}" min="0" step="1" readonly aria-label="{{localize 'AVENTURIA_HELPERS.HeroTray.FatePoints'}}" {{#unless canRoll}}disabled{{/unless}}>
+            <button type="button" class="tray-life-step" data-action="increaseFate" aria-label="{{localize 'AVENTURIA_HELPERS.HeroTray.IncreaseFate'}}" {{#unless canRoll}}disabled{{/unless}}>+</button>
+          </div>
+      </div>
+      <button type="button" class="tray-probes" data-action="openProbes" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.Probes'}}" aria-label="{{localize 'AVENTURIA_HELPERS.HeroTray.Probes'}}" {{#unless canRoll}}disabled{{/unless}}><i class="fa-solid fa-dice-d20"></i></button>
+
     </header>
 
     <div class="tray-stack">
@@ -68,7 +90,8 @@
       </div>
     </div>
 
-    <div class="tray-stack">
+    <div class="tray-stack tray-stack-endurance tray-stack-cards">
+      <div class="tray-endurance-half">
       <div class="tray-stack-head" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.HandTooltip'}}">
         <i class="fa-solid fa-hand-holding"></i>
         <span class="tray-count">{{hand.count}}</span>
@@ -78,7 +101,7 @@
       </div>
     </div>
 
-    <div class="tray-stack">
+      <div class="tray-endurance-half">
       <div class="tray-stack-head" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.PlayedTooltip'}}">
         <i class="fa-solid fa-cards"></i>
         <span class="tray-count">{{played.count}}</span>
@@ -86,6 +109,8 @@
       <div class="tray-stack-actions">
         <button type="button" data-action="viewPlayedCards" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.ViewPlayedCards'}}"><i class="fa-solid fa-eye"></i></button>
       </div>
+    </div>
+
     </div>
 
     {{#if endurance}}
@@ -113,8 +138,16 @@
     {{/if}}
   </div>
   {{/if}}
+  <div class="tray-common">
+  <div class="tray-fate-pool">
+    <img src="modules/aventuria/assets/icons/fate-point.webp" alt="">
+    <label for="tray-fate-pool">{{localize 'AVENTURIA_HELPERS.HeroTray.FatePool'}}</label>
+    <input id="tray-fate-pool" class="tray-pool-input" type="number" min="0" step="1" value="{{fatePool}}">
+    <button type="button" data-action="startFatePool" data-tooltip="{{localize 'AVENTURIA_HELPERS.HeroTray.StartFatePool'}}" aria-label="{{localize 'AVENTURIA_HELPERS.HeroTray.StartFatePool'}}"><i class="fa-solid fa-rotate-left"></i></button>
+  </div>
   <div class="tray-shared-draw">
-    <button type="button" data-action="drawFate" data-tooltip="{{localize 'AVENTURIA_HELPERS.SharedDraw.Fate'}}"><i class="fa-solid fa-star"></i> {{localize 'AVENTURIA_HELPERS.SharedDraw.Fate'}}</button>
-    <button type="button" data-action="drawResource" data-tooltip="{{localize 'AVENTURIA_HELPERS.SharedDraw.Resource'}}"><i class="fa-solid fa-coins"></i> {{localize 'AVENTURIA_HELPERS.SharedDraw.Resource'}}</button>
+    <button type="button" data-action="drawFate" data-tooltip="{{localize 'AVENTURIA_HELPERS.SharedDraw.Fate'}}"><i class="fa-solid fa-star"></i> {{localize 'AVENTURIA_HELPERS.HeroTray.FateShort'}}</button>
+    <button type="button" data-action="drawResource" data-tooltip="{{localize 'AVENTURIA_HELPERS.SharedDraw.Resource'}}"><i class="fa-solid fa-coins"></i> {{localize 'AVENTURIA_HELPERS.HeroTray.ResourceShort'}}</button>
+  </div>
   </div>
 </div>

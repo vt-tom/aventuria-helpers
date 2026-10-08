@@ -1,3 +1,4 @@
+import { heroPortrait, bindPortraitFallback } from "../actors/hero-portrait.mjs";
 import { AventuriaHelpersHandSheet } from "../sheets/hand-sheet.mjs";
 import { AventuriaHelpersPlayedCardsSheet } from "../sheets/played-cards-sheet.mjs";
 import { AventuriaHelpersEnduranceCardsSheet } from "../sheets/endurance-cards-sheet.mjs";
@@ -7,6 +8,9 @@ import { openWelcomeScreen } from "../macros/open-welcome-screen.mjs";
 import { AventuriaHelpersWelcomeScreen } from "./welcome-screen.mjs";
 import { deleteExistingHero } from "../cards/prepare-hero.mjs";
 import { openHeroSwitcher, closeHeroSwitcher } from "./hero-switcher.mjs";
+import { changeFate, heroFate, fateState, setFatePool, startFatePool } from "../actors/hero-fate.mjs";
+import { changeLife } from "../actors/hero-life.mjs";
+import { openTrayProbes, closeTrayMenu } from "./tray-menu.mjs";
 import { drawSharedCard } from "../cards/shared-draw.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
@@ -69,6 +73,12 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
       switchHero: AventuriaHelpersHeroTray.#onSwitchHero,
       switchHomeHero: AventuriaHelpersHeroTray.#onSwitchHomeHero,
       openSheet: AventuriaHelpersHeroTray.#onOpenSheet,
+      openProbes: AventuriaHelpersHeroTray.#onOpenProbes,
+      decreaseLife: AventuriaHelpersHeroTray.#onDecreaseLife,
+      increaseLife: AventuriaHelpersHeroTray.#onIncreaseLife,
+      decreaseFate: AventuriaHelpersHeroTray.#onDecreaseFate,
+      increaseFate: AventuriaHelpersHeroTray.#onIncreaseFate,
+      startFatePool: AventuriaHelpersHeroTray.#onStartFatePool,
       drawCard: AventuriaHelpersHeroTray.#onDrawCard,
       drawFate: AventuriaHelpersHeroTray.#onDrawFate,
       drawResource: AventuriaHelpersHeroTray.#onDrawResource,
@@ -151,6 +161,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
       await this.render();
       return;
     }
+    closeTrayMenu();
     this.#activeUserId = next;
     for (const sheet of [handSheet, playedCardsSheet, deckSheet, discardSheet, enduranceSheet]) {
       if (sheet?.rendered) await sheet.close();
@@ -177,6 +188,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
   /** @inheritdoc */
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
+    context.fatePool = fateState().pool;
     const stacks = this.activeStacks();
     context.foreign = this.viewingForeignHero;
 
@@ -187,7 +199,15 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
 
     context.empty = false;
     context.actor = stacks.actor;
+    context.portrait = heroPortrait(stacks.actor);
     context.playerName = this.activeUser.name;
+    const life = stacks.actor.system.lifePoints;
+    context.life = { value: life?.value ?? 0, max: life?.max ?? 0 };
+    context.life.percent = context.life.max > 0
+      ? Math.max(0, Math.min(100, context.life.value / context.life.max * 100)) : 0;
+    context.life.tone = context.life.percent > 50 ? "healthy" : context.life.percent > 25 ? "wounded" : "critical";
+    context.fatePoints = heroFate(stacks.actor);
+    context.canRoll = stacks.actor.isOwner;
     context.deck = stacks.deck && { count: stacks.deck.availableCards.length };
     context.discard = stacks.discard && { count: stacks.discard.cards.size };
     context.hand = { count: stacks.hand.cards.size };
@@ -214,9 +234,43 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    */
   async _onRender(context, options) {
     await super._onRender(context, options);
+    bindPortraitFallback(this.element);
+    const poolInput = this.element.querySelector(".tray-pool-input");
+    if (poolInput) {
+      let cancelled = false;
+      poolInput.addEventListener("focus", () => { cancelled = false; poolInput.select(); });
+      poolInput.addEventListener("keydown", event => {
+        if (event.key === "Enter") { event.preventDefault(); poolInput.blur(); }
+        if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); cancelled = true; poolInput.blur(); }
+      });
+      poolInput.addEventListener("blur", async () => {
+        if (!cancelled && poolInput.value !== "" && Number.isSafeInteger(Number(poolInput.value)) && Number(poolInput.value) >= 0)
+          await setFatePool(Number(poolInput.value));
+        poolInput.value = fateState().pool;
+      });
+    }
+    const actor = this.activeStacks()?.actor;
+    for (const input of this.element.querySelectorAll(".tray-life-input, .tray-fate-input")) {
+      if (!actor?.isOwner) continue;
+      const isFate = input.classList.contains("tray-fate-input");
+      let cancelled = false;
+      input.addEventListener("focus", () => { cancelled = false; input.readOnly = false; input.select(); });
+      input.addEventListener("keydown", event => {
+        if (event.key === "Enter") { event.preventDefault(); input.blur(); }
+        if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); cancelled = true; input.blur(); }
+      });
+      input.addEventListener("blur", async () => {
+        input.readOnly = true;
+        if (!cancelled && input.value !== "" && Number.isInteger(Number(input.value))) {
+          await (isFate ? changeFate : changeLife)(actor, { value: Number(input.value) });
+        }
+        input.value = isFate ? heroFate(actor) : actor.system.lifePoints.value;
+      });
+    }
     const portrait = this.element.querySelector(".tray-portrait");
     portrait?.addEventListener("contextmenu", (event) => {
       event.preventDefault();
+      closeTrayMenu();
       openHeroSwitcher(this, { x: event.clientX, y: event.clientY });
     });
   }
@@ -224,6 +278,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
   /** @inheritdoc */
   async _onClose(options) {
     closeHeroSwitcher();
+    closeTrayMenu();
     return super._onClose(options);
   }
 
@@ -256,6 +311,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    */
   static #onSwitchHero(event, target) {
     const rect = target.getBoundingClientRect();
+    closeTrayMenu();
     openHeroSwitcher(this, { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
   }
 
@@ -263,6 +319,33 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
    * "Zurück zu meinem Helden" button in the foreign-hero banner.
    * @this AventuriaHelpersHeroTray
    */
+  static #onOpenProbes(event, target) {
+    const actor = this.activeStacks()?.actor;
+    if (!actor?.isOwner) return;
+    const rect = target.getBoundingClientRect();
+    openTrayProbes(actor, { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+  }
+
+  static async #onDecreaseLife() {
+    await changeLife(this.activeStacks()?.actor, { delta: -1 });
+  }
+
+  static async #onIncreaseLife() {
+    await changeLife(this.activeStacks()?.actor, { delta: 1 });
+  }
+
+  static async #onStartFatePool() {
+    await startFatePool();
+  }
+
+  static async #onDecreaseFate() {
+    await changeFate(this.activeStacks()?.actor, { delta: -1 });
+  }
+
+  static async #onIncreaseFate() {
+    await changeFate(this.activeStacks()?.actor, { delta: 1 });
+  }
+
   static async #onSwitchHomeHero() {
     await this.setActiveHero(null);
   }
@@ -539,6 +622,8 @@ async function promptCardAmount(max) {
  * (zero-size) tray and wouldn't otherwise get a correct position to reappear at.
  */
 async function toggleTray() {
+  closeTrayMenu();
+  closeHeroSwitcher();
   const show = !document.body.classList.contains("ahb-tray-active");
   document.body.classList.toggle("ahb-tray-active", show);
   await game.user.setFlag(MODULE_ID, "showHeroTray", show);
@@ -591,6 +676,8 @@ export function registerHeroTray() {
     await tray.render({ force: true });
     document.body.classList.toggle("ahb-tray-active", !!game.user.getFlag(MODULE_ID, "showHeroTray"));
   });
+
+  Hooks.on("aventuriaHelpersFateUpdate", refresh);
 
   Hooks.on("renderPlayers", (app, element) => injectToggleButton(element));
 
@@ -654,6 +741,10 @@ export function registerHeroTray() {
   // field, so comparing against the raw source ID (`game.user._source.character`) stays
   // reliable regardless of whether this hook fires before or after the Actor leaves the
   // world collection.
+  Hooks.on("updateActor", actor => {
+    if (actor.id === tray?.activeStacks()?.actor.id) refresh();
+  });
+
   Hooks.on("deleteActor", (actor) => {
     // Own hero, or - while switched to a foreign hero (feature 2.5) - any hero
     // deletion: `activeStacks()` falls back to the own hero on the next render,
