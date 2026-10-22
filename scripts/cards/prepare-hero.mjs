@@ -24,7 +24,7 @@ const HERO_SHEET_ID = `${MODULE_ID}.${AventuriaHelpersCardHeroSheet.name}`;
 
 /**
  * Deliberate, isolated exception to this module's usual "never rebuild aventuria's
- * own logic, always call it wholesale" rule (see `CLAUDE.md`'s Grundregel) -
+ * own logic, always call it wholesale" rule (see `.projects/PROJEKTDOKU.md`'s Grundregel) -
  * Nutzerentscheidung 2026-08-14: calling aventuria's own "Bereite Spieler vor"
  * dialog (`preparePlayer()` in `aventuria/dist/index.js:849-932`) as a *second*,
  * unrelated dialog right after our own player+slot picker produced a genuinely bad

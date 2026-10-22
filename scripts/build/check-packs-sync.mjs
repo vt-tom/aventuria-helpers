@@ -7,7 +7,7 @@ import { isDeepStrictEqual } from "node:util";
 
 /**
  * Pre-release gate: `packs/_source/**` (tracked in git) is the source of truth for the
- * compiled `packs/<name>` LevelDB directories (gitignored - see CLAUDE.md's "Release-Ablauf");
+ * compiled `packs/<name>` LevelDB directories (gitignored - see .projects/PROJEKTDOKU.md's "Release-Ablauf");
  * `npm run packs` rebuilds them from source right before a release zip is built. This script
  * catches the failure mode that setup enables: editing a macro or journal page live in Foundry
  * changes the compiled pack on disk but not `packs/_source/**`, and without a sync check that

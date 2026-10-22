@@ -10,7 +10,7 @@
  * the action actually used during play) - same mechanism CCM's own
  * `DockedHandSheet` already uses for flip/next-face/previous-face -
  * `this._createContextMenu()`, a core `ApplicationV2` method, so no CCM
- * internals needed. project/PROJECT.md 2.2 - built on the same docking mixin as the Hand sheet
+ * internals needed. .projects/AUFGABEN.md 2.2 - built on the same docking mixin as the Hand sheet
  * (`DockableSheetMixin`, `dockable-sheet-mixin.mjs`), docked below the Hand
  * sheet (same right-of-tray column, Nutzerfeedback 2026-08-17: not below the
  * tray itself, which felt like the wrong place) when it's open, falling back
@@ -129,7 +129,7 @@ export function registerPlayedCardsSheet() {
      * `toggleCardExhausted()` in `cards/played-cards.mjs`) - the sheet's own
      * permanent button, unlike discard/return-to-hand/return-to-deck below,
      * which all moved into the right-click context menu (Nutzerwunsch
-     * 2026-08-24, project/TODO.md).
+     * 2026-08-24, .projects/AUFGABEN.md).
      * @this AventuriaHelpersPlayedCardsSheet
      * @param {PointerEvent} event
      * @param {HTMLElement} target
@@ -145,7 +145,7 @@ export function registerPlayedCardsSheet() {
      * Right-click context menu entries for a played card - "Ablegen", "Zurück
      * auf die Hand nehmen" and "Zurück ins Deck mischen", none common enough
      * during play to keep as permanent buttons next to "Karte erschöpfen"
-     * (Nutzerwunsch 2026-08-24, project/TODO.md - "Zurück ins Deck mischen"
+     * (Nutzerwunsch 2026-08-24, .projects/AUFGABEN.md - "Zurück ins Deck mischen"
      * was already here since 2026-08-19, the other two moved in alongside
      * it). Same `_createContextMenu()`/`ContextMenuEntry` mechanism CCM's own
      * `DockedHandSheet._getCardContextOptions()` uses for flip/next-face/

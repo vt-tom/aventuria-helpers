@@ -1,8 +1,8 @@
 /**
  * Toggling a hero's shared equipment-exhaust status ("erschöpft") from outside the character
- * sheet - a "Held erschöpfen"/"Held bereitmachen" macro pair (project/TODO.md Features,
+ * sheet - a "Held erschöpfen"/"Held bereitmachen" macro pair (.projects/AUFGABEN.md Features,
  * 2026-08-24, matching aventuria's own reference macro names `Exhaust`/`Ready` - see
- * CLAUDE.md's macro list), plus the automatic ready-up every hero gets at the start of a new
+ * .projects/PROJEKTDOKU.md's macro list), plus the automatic ready-up every hero gets at the start of a new
  * combat round, alongside the existing "Karten zurückdrehen" card-rotation reset
  * (`documents/combat.mjs`) - same underlying rule (whatever a hero used last round becomes
  * available again). `AventuriaHelpersHeroSheet#toggleExhaust` (sheets/hero-sheet.mjs) and
@@ -47,7 +47,7 @@ export async function setHeroExhausted(actor, exhausted) {
 /**
  * Mirrors the equipment-exhaust state on the board: rotates every one of the hero's tokens on
  * the currently viewed Scene 90° clockwise while exhausted, back to the upright 0° `place-hero-
- * stacks.mjs`/`HERO_PLACEMENTS` default once readied (project/TODO.md, 2026-08-26 - matches
+ * stacks.mjs`/`HERO_PLACEMENTS` default once readied (.projects/AUFGABEN.md, 2026-08-26 - matches
  * Aventuria's own reference "Exhaust Hero" macro naming, see module doc comment above). A no-op
  * if the hero has no token on the current scene yet (canvas not ready, or never placed) -
  * `Actor#getActiveTokens()` already returns an empty array in that case.

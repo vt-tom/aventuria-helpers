@@ -111,7 +111,7 @@ export async function migrateExperienceStacks() {
 /**
  * Registers the world-scoped "already migrated" flag and runs `migrateExperienceStacks()` once
  * per world on `ready`. Gated on `game.users.activeGM` rather than a plain `game.user.isGM`
- * check - per CLAUDE.md, every player at this table has the Gamemaster role for other reasons
+ * check - per .projects/PROJEKTDOKU.md, every player at this table has the Gamemaster role for other reasons
  * (complete-card-management/aventuria need it), so a plain `isGM` check would run this
  * concurrently on every connected client and risk two clients both seeing "no Erfahrungsschatz
  * yet" and racing to create one each. `activeGM` deterministically designates a single one of

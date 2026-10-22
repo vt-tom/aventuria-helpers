@@ -295,7 +295,7 @@ export async function prepareQuickstartAdventure() {
  * `HENCHMAN_RANGE` instead of asking via its interactive Name/Keywords/Min/Max dialog -
  * Nutzerentscheidung 2026-08-16, same "don't call a dialog-only API wholesale from an
  * automated one-click step" precedent as `prepare-hero.mjs` already set for `preparePlayer()`
- * (see `CLAUDE.md`'s Grundregel). No-op if a quickstart henchmen deck already exists in the
+ * (see `.projects/PROJEKTDOKU.md`'s Grundregel). No-op if a quickstart henchmen deck already exists in the
  * world (idempotent re-runs, same convention as `#onImportMacros()`).
  * @returns {Promise<Cards|null>}
  */

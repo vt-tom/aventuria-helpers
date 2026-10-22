@@ -51,3 +51,5 @@ Via this repo's [GitHub Issues](https://github.com/vt-tom/aventuria-helpers/issu
 ## License
 
 The code of this module (created entirely with AI assistance) is released under the [MIT license](LICENSE) for free use and reuse. Images/graphics are excluded, see the note above.
+
+Contributor instructions: [AGENTS.md](AGENTS.md). Local project knowledge and tasks: `.projects/PROJEKTDOKU.md` and `.projects/AUFGABEN.md` (not shipped).

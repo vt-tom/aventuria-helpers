@@ -37,7 +37,7 @@ const SLOTS = [
  * not "corrected", since matching the real data is what matters here). English
  * forms are unverified guesses (English doesn't grammatically gender nouns the
  * way German does, so one form likely covers both, but not confirmed against the
- * English compendium). See `CLAUDE.md`'s "Bekannte Datenstruktur" for the full
+ * English compendium). See `.projects/PROJEKTDOKU.md`'s "Bekannte Datenstruktur" for the full
  * filename/DE/EN reference table - covers the professions of the level-1 heroes
  * currently in the compendium, not necessarily every profession in the game.
  */

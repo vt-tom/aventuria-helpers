@@ -1,5 +1,5 @@
 /**
- * Radial hero picker for the Heldenablage (feature 2.5, project/TODO.md).
+ * Radial hero picker for the Heldenablage (feature 2.5, .projects/AUFGABEN.md).
  *
  * Lets one person run several heroes' Heldenablagen from a single Foundry
  * client - the use case is solo play, where switching hero previously meant

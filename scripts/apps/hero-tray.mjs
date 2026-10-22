@@ -108,7 +108,7 @@ export class AventuriaHelpersHeroTray extends HandlebarsApplicationMixin(Applica
   /* -------------------------------------------------- */
 
   /**
-   * Feature 2.5 (project/TODO.md): the tray can be pointed at another player's
+   * Feature 2.5 (.projects/AUFGABEN.md): the tray can be pointed at another player's
    * hero for solo play. Instance-only, no persistence - resets to the viewer's
    * own hero on every reload/restart (Nutzerentscheidung 2026-08-31). `null`
    * means "the viewer's own hero".

@@ -1,6 +1,6 @@
 /**
  * Stufe-II/III-Zielwerte fuer die 12 Level-1-Schnellstarter-Helden (Steigern der Heldenkarte
- * bzw. Talentkarte, Feature 1.5 - AP-System, siehe project/TODO.md).
+ * bzw. Talentkarte, Feature 1.5 - AP-System, siehe .projects/AUFGABEN.md).
  *
  * Herkunft (Stand 2026-08-26): direkt aus dem offiziellen Kompendium `aventuria.heroes-deutsch`
  * extrahiert (`fvtt package unpack`, siehe project/reference/hero-level-values.md fuer die volle

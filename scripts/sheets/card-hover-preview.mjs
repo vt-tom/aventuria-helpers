@@ -7,7 +7,7 @@
  * regardless of which sheet triggered it.
  *
  * Extracted from hand-sheet.mjs when Played-Cards-Sheet needed the exact
- * same behavior (project/PROJECT.md 2.2 follow-up, Nutzerwunsch 2026-08-19) - same
+ * same behavior (.projects/AUFGABEN.md 2.2 follow-up, Nutzerwunsch 2026-08-19) - same
  * "genuine, immediate duplication" reasoning as `DockableSheetMixin`.
  *
  * Always lives in *this script's own* `document` (the main Foundry window) - this module never

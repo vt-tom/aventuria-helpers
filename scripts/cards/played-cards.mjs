@@ -7,7 +7,7 @@
  * Ausdauer ready/spent counters (cards/endurance.mjs) remain a separate,
  * count-based mechanism for Ausdauer cards specifically - Nutzerentscheidung
  * 2026-08-17: this sheet only shows non-Ausdauer played cards
- * (project/PROJECT.md 2.2), a dedicated view for Ausdauer cards is a possible
+ * (.projects/AUFGABEN.md 2.2), a dedicated view for Ausdauer cards is a possible
  * later idea, not built here.
  */
 
@@ -145,7 +145,7 @@ export function isCardExhausted(card) {
  * Toggles whether a played card is exhausted, using the same canvas-rotation mechanism
  * `cards/endurance.mjs` uses for a hero's Ausdauer cards and "Karten zurückdrehen"
  * (macros/reset-card-rotations.mjs) resets at round end (0° ready, 90° exhausted) - a manual
- * per-card "Karte erschöpfen" toggle on the played-cards sheet (project/TODO.md), independent
+ * per-card "Karte erschöpfen" toggle on the played-cards sheet (.projects/AUFGABEN.md), independent
  * of a hero's Ausdauer ready/spent count, for cards exhausted by use (e.g. Aventuria's rule
  * that using a weapon exhausts the whole hero card) without an automated trigger for it yet.
  * @param {Card} card    The played card, currently embedded in the hero's Im-Spiel-Stapel.

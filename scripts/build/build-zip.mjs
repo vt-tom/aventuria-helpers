@@ -9,7 +9,7 @@
  * and `.git` itself (not part of `.gitignore` - git doesn't need to ignore
  * itself - but obviously not part of the module either). NOT a mirror of
  * `.gitignore`: the compiled `packs/<name>` LevelDB directories are gitignored
- * (build output of `npm run pack:*` from `packs/_source/**`, see CLAUDE.md's
+ * (build output of `npm run pack:*` from `packs/_source/**`, see .projects/PROJEKTDOKU.md's
  * "Compendium-Packs: Source/Build-Trennung") but must still ship in the zip -
  * `shouldExclude()` deliberately does not exclude them. If `.gitignore` grows
  * a new pattern, judge per-pattern whether it belongs here too; don't assume
@@ -34,7 +34,7 @@ const MODULE_ID = "aventuria-helpers";
 const ROOT = resolve(import.meta.dirname, "..", "..");
 const OUT_ZIP = resolve(ROOT, "..", `${MODULE_ID}.zip`);
 
-const EXCLUDE_DIRS = new Set([".git", "node_modules", "project", "tools", ".deploy"]);
+const EXCLUDE_DIRS = new Set([".git", "node_modules", "project", ".projects", ".claude", "tools", ".deploy"]);
 const EXCLUDE_ROOT_FILES = new Set(["CLAUDE.md", "AGENTS.md"]);
 
 /** @param {string} src Absolute path of the file/dir currently being copied. */

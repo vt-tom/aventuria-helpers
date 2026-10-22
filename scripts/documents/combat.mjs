@@ -70,7 +70,7 @@ export function registerCombat() {
     /**
      * After a round ends, offers to reset every card on the current scene back to its upright
      * rotation via this module's own card-rotation macro (Complete Card Management), and
-     * (project/TODO.md Features, 2026-08-24) ready every hero's exhausted equipment at the same
+     * (.projects/AUFGABEN.md Features, 2026-08-24) ready every hero's exhausted equipment at the same
      * time - same underlying rule for both: whatever was used last round becomes available
      * again at the start of the next one. Shares one confirmation instead of asking twice per
      * round. The hero-readying half doesn't need Complete Card Management (it's a plain Actor
@@ -193,7 +193,7 @@ export function registerRoundEndCombatant() {
 /**
  * Hides the per-combatant initiative badge (`.token-initiative`, `templates/sidebar/tabs/combat/
  * tracker.hbs`) for every combatant that's part of the party's fixed seat rotation, once the
- * encounter has actually started. Nutzerfrage 2026-09-10 (CLAUDE.md "Combat Tracker"): the number
+ * encounter has actually started. Nutzerfrage 2026-09-10 (.projects/PROJEKTDOKU.md "Combat Tracker"): the number
  * shown there is nothing but the 1..X seat-assignment auto-numbering from when combatants were
  * added (`_onCreateDescendantDocuments` above) - correct and useful *before* `startCombat()`
  * (it's the actual sort key the GM can still see/adjust to reorder seats), but frozen and

@@ -4,7 +4,7 @@
  * played-cards sheet (cards/played-cards.mjs) model ready/spent as the same underlying
  * per-scene `rotation` flag CCM's own card HUD rotate control writes (0° ready, anything else
  * spent) - extracted here instead of duplicated once the played-cards sheet grew its own
- * generic exhaust toggle (project/TODO.md).
+ * generic exhaust toggle (.projects/AUFGABEN.md).
  */
 
 const CCM_MODULE_ID = "complete-card-management";

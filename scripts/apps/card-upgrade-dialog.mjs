@@ -38,7 +38,7 @@ export class AventuriaHelpersCardUpgradeDialog extends HandlebarsApplicationMixi
     // vermutlich über `scrollHeight`, das die volle (durch `max-height`/`overflow-y` auf
     // `.window-content` eigentlich schon geclampte) Inhaltshöhe liefert statt der sichtbaren -
     // dieselbe Art Messproblem, die `card-hero-sheet.hbs`s Vorgänger (Ausgespielte-Karten-Sheet,
-    // siehe CLAUDE.md) schon einmal von "auto" auf eine feste Höhe umziehen ließ. Mit fester Höhe
+    // siehe .projects/PROJEKTDOKU.md) schon einmal von "auto" auf eine feste Höhe umziehen ließ. Mit fester Höhe
     // greift der bereits vorhandene interne Scrollbalken (`.window-content { max-height: 80vh;
     // overflow-y: auto; }`) zuverlässig, `resizable` erlaubt bei Bedarf mehr Platz.
     position: { width: 640, height: 600 },

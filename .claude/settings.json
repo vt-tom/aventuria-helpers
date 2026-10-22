@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node D:/Development/aventuria-helpers/tools/sync-github-issues.mjs",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}

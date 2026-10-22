@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import { changeLife } from '../../scripts/actors/hero-life.mjs';
+const actor={id:'a',isOwner:true,system:{lifePoints:{value:5,max:10}},async update(data){await new Promise(resolve=>setTimeout(resolve,2));this.system.lifePoints.value=data['system.lifePoints.value'];}};
+await Promise.all(Array.from({length:4},()=>changeLife(actor,{delta:-1})));
+assert.equal(actor.system.lifePoints.value,1,'Rapid clicks must accumulate');
+await changeLife(actor,{value:99});assert.equal(actor.system.lifePoints.value,10);
+await changeLife(actor,{value:-3});assert.equal(actor.system.lifePoints.value,0);
+await changeLife(actor,{value:2.5});assert.equal(actor.system.lifePoints.value,0);
+actor.isOwner=false;await changeLife(actor,{delta:1});assert.equal(actor.system.lifePoints.value,0);
+assert.equal(actor.system.lifePoints.max,10,'Current-life edits preserve maximum');
+console.log('Passed: rapid LEP edits, bounds, whole numbers, permissions, maximum preserved.');

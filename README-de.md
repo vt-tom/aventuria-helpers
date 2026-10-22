@@ -51,3 +51,5 @@ Siehe [CHANGES.md](CHANGES.md) für ein spielrelevantes Changelog pro Version (a
 ## Lizenz
 
 Der Code dieses Moduls (vollständig mit KI-Unterstützung entstanden) steht unter der [MIT-Lizenz](LICENSE) zur freien Nutzung und Nachnutzung zur Verfügung. Grafiken/Bilder sind davon ausgenommen, siehe Hinweis oben.
+
+Arbeitsanweisungen: [AGENTS.md](AGENTS.md). Lokales Projektwissen und Aufgaben: `.projects/PROJEKTDOKU.md` und `.projects/AUFGABEN.md` (nicht ausgeliefert).

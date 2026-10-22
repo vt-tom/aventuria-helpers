@@ -22,7 +22,7 @@ export function registerAdventureState() {
   // `#handleUserActivity`, local v14 core source) - every online client checks it and clears
   // the lock if the user going offline happens to be its holder. Safe for several clients to
   // react to the same disconnect: `game.settings.set()` is idempotent here, and every player
-  // needs the Gamemaster role in a correctly set-up Aventuria world anyway (see CLAUDE.md), so
+  // needs the Gamemaster role in a correctly set-up Aventuria world anyway (see .projects/PROJEKTDOKU.md), so
   // world-setting writes aren't GM-exclusive to begin with.
   Hooks.on("userConnected", (user, connected) => {
     if (connected) return;

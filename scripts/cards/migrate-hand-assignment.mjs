@@ -15,7 +15,7 @@
  * `deleteExistingHero()`, which itself trusted the already-broken flag and thus never included the
  * real Hand document in what it deleted) - same "don't auto-fix data problems, just don't
  * perpetuate them" stance as `migrate-card-placements.mjs`/the Aktionskarten-Dubletten note in
- * `CLAUDE.md`: that orphan is left alone here, the affected GM/player has to remove it by hand.
+ * `.projects/PROJEKTDOKU.md`: that orphan is left alone here, the affected GM/player has to remove it by hand.
  */
 
 const MODULE_ID = "aventuria-helpers";
@@ -52,7 +52,7 @@ export async function fixMisassignedPlayerHands() {
 /**
  * Registers the world setting that records the one-time run and schedules it on `ready`, gated
  * to the single active GM (same pattern as `registerCardPlacementCleanup()`/
- * `registerExperienceStackMigration()`) - per CLAUDE.md, every player at this table has the
+ * `registerExperienceStackMigration()`) - per .projects/PROJEKTDOKU.md, every player at this table has the
  * Gamemaster role, so a plain `isGM` check would run this concurrently on every connected client.
  */
 export function registerPlayerHandAssignmentFix() {
