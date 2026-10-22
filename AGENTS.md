@@ -11,7 +11,7 @@ Lies zu Beginn jeder neuen Projektsitzung `CLAUDE.md`, insbesondere „Technisch
 - Foundry v14; Aventuria und Universal Tabletop System ergänzen, Abhängigkeiten nicht ändern.
 - Alle Mitspieler haben die Foundry-Rolle Gamemaster. GM-Rolle niemals als Ausschlusskriterium für Spieler-/Heldenauswahl verwenden. `game.users.activeGM` koordiniert Vorgänge, die genau einmal oder serialisiert ausgeführt werden müssen.
 - Keine geplanten Backlog-Features ohne Nutzerauftrag implementieren.
-- Den bestehenden Checkout nutzen; laufende Foundry-Packs nicht überschreiben. Keine Veröffentlichungen oder Versions-Bumps ohne entsprechenden Auftrag.
+- Den bestehenden Checkout unter `D:\Development\aventuria-helpers` nutzen; laufende Foundry-Packs nicht überschreiben. Keine Veröffentlichungen oder Versions-Bumps ohne entsprechenden Auftrag.
 - Automatische Syntax-/Mock-Prüfungen und echte Foundry-Tests getrennt ausweisen; nicht geprüfte Darstellung/Mehrclient-Verhalten als offen dokumentieren.
 
 ## Dokumentationspflege
@@ -26,3 +26,11 @@ Nach abgeschlossenen Features, Fixes und Entscheidungen gemäß CLAUDE.md aktual
 - Nach Handbuch-/Changelog-Änderungen `npm run build:guide` und `npm run build:changelog` für die Journal-Quellen ausführen. Kompilierte Packs nur bei gestopptem Foundry bzw. im Release-Workflow bauen.
 
 CLAUDE.md und `project/` bleiben lokale Projektdateien; AGENTS.md enthält nur den Verweis und kurze Arbeitsregeln.
+
+## Arbeitskopie und Foundry-Kopie
+
+Maßgeblicher Arbeitsordner: `D:\Development\aventuria-helpers`. Nur dort entwickeln.
+Der Ordner unter `D:\FoundryVTT\user-data-paths\v14-aventuria\Data\modules\aventuria-helpers` ist eine austauschbare Laufzeitkopie.
+Übertragung: `powershell -NoProfile -ExecutionPolicy Bypass -File tools/deploy-foundry.ps1 deploy` (Code, Foundry darf laufen) bzw. `deploy-packs` (Compendien, nur bei gestopptem Foundry; mit `-Restart` stoppt/startet das Skript Foundry per pm2 selbst); Live-Bearbeitungen in Foundry per `export-packs` + `node tools/foundry-packs.mjs adopt` zurückholen. Die beiden Werkzeugdateien sind in dsa5-helpers/melliador-helpers identisch; Änderungen dort nachziehen.
+Vorher `compare`, danach `status`; jede Übertragung sichert den alten Stand außerhalb der Foundry-Daten. Details in CLAUDE.md „Arbeitskopie und Foundry-Kopie“.
+Keine Commits, Pushes oder GitHub-Schreibaktionen ohne Auftrag.

@@ -9,3 +9,6 @@ node_modules/
 packs/macros/
 packs/guide/
 packs/changelog/
+
+# Local deploy state of tools/deploy-foundry.ps1 (last deployed packs/_source snapshot).
+.deploy/

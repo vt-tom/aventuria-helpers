@@ -34,7 +34,7 @@ const MODULE_ID = "aventuria-helpers";
 const ROOT = resolve(import.meta.dirname, "..", "..");
 const OUT_ZIP = resolve(ROOT, "..", `${MODULE_ID}.zip`);
 
-const EXCLUDE_DIRS = new Set([".git", "node_modules", "project"]);
+const EXCLUDE_DIRS = new Set([".git", "node_modules", "project", "tools", ".deploy"]);
 const EXCLUDE_ROOT_FILES = new Set(["CLAUDE.md", "AGENTS.md"]);
 
 /** @param {string} src Absolute path of the file/dir currently being copied. */
