@@ -16,3 +16,6 @@ packs/changelog/
 
 # Local internal documentation (same visibility as former project/).
 .projects/
+
+# Local backups of the internal coordination docs (.projects/).
+.coordination-backups/

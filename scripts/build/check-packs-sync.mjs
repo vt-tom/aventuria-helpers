@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync, mkdtempSync, rmSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -15,6 +15,12 @@ import { isDeepStrictEqual } from "node:util";
  * compiled pack is rebuilt from the now-stale source. Run via `npm run check:packs` before
  * tagging a release; on drift it reports which pack/document and which `unpack:<name>` script
  * to run to resolve it.
+ *
+ * Since 2026-10-21 Foundry no longer runs from this checkout: the live packs sit in the runtime
+ * copy managed by tools/deploy-foundry.ps1, and local `packs/<name>` only exists after a manual
+ * `npm run packs`. Without such a local build there is nothing to compare here (and opening a
+ * missing LevelDB directory would just create empty LOCK/LOG stubs), so the check is skipped with
+ * a pointer to the real live-edit gate: `deploy-foundry.ps1 status` + `export-packs`.
  */
 
 const MODULE_ROOT = path.resolve(fileURLToPath(import.meta.url), "../../..");
@@ -34,6 +40,21 @@ function readDocsById(dir) {
     docs.set(doc._id, { file, doc });
   }
   return docs;
+}
+
+const missingBuilds = PACKS.filter(({ name }) => !existsSync(path.join(MODULE_ROOT, "packs", name, "CURRENT")));
+if (missingBuilds.length === PACKS.length) {
+  console.log(
+    "check:packs übersprungen: kein lokaler Pack-Build unter packs/<name>.\n" +
+    "Die Live-Packs liegen in der Foundry-Kopie. Live-Bearbeitungen prüfen mit:\n" +
+    "  powershell -NoProfile -ExecutionPolicy Bypass -File tools/deploy-foundry.ps1 status\n" +
+    "  powershell -NoProfile -ExecutionPolicy Bypass -File tools/deploy-foundry.ps1 export-packs -Restart",
+  );
+  process.exit(0);
+}
+if (missingBuilds.length) {
+  console.error(`Unvollständiger lokaler Pack-Build, es fehlt: ${missingBuilds.map((p) => p.name).join(", ")} - "npm run packs" ausführen oder packs/<name> entfernen.`);
+  process.exit(1);
 }
 
 let ok = true;
